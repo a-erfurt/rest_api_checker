@@ -1,0 +1,477 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "WebApiEDXValidator",
+    "version": "1.0"
+  },
+  "paths": {
+    "/edx/data/tablebody": {
+      "post": {
+        "tags": [
+          "EDXData"
+        ],
+        "summary": "Incoming stream processing to get DataTable (post call to /EDX/data/TableBody)",
+        "requestBody": {
+          "description": "binary request body (POST)",
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "byte"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/edx/data/databasevaluesbody": {
+      "post": {
+        "tags": [
+          "EDXData"
+        ],
+        "summary": "Incoming stream processing to get DataTable (post call to /EDX/data/DatabaseValuesBody)",
+        "requestBody": {
+          "description": "binary request body (POST)",
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "byte"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseValues"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseValues"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseValues"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/edx/validation/body": {
+      "post": {
+        "tags": [
+          "EDXValidation"
+        ],
+        "summary": "Validation of incoming stream from POST body (post call to /EDX/Validation/body)",
+        "requestBody": {
+          "description": "binary request body (POST)",
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "byte"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeValidatorResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeValidatorResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeValidatorResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CompositionElement": {
+        "type": "object",
+        "properties": {
+          "compoundIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "elementName": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueAbsolute": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valuePercent": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompositionValue": {
+        "type": "object",
+        "properties": {
+          "deletePreviousProperties": {
+            "type": "boolean"
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyValue"
+            },
+            "nullable": true
+          },
+          "compositionElements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompositionElement"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompositionsForSampleUpdate": {
+        "type": "object",
+        "properties": {
+          "predicate": {
+            "$ref": "#/components/schemas/Predicate"
+          },
+          "deletePreviousProperties": {
+            "type": "boolean"
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyValue"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoordinatesResult": {
+        "type": "object",
+        "properties": {
+          "coordinateNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatabaseValues": {
+        "type": "object",
+        "properties": {
+          "deletePreviousProperties": {
+            "type": "boolean"
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyValue"
+            },
+            "nullable": true
+          },
+          "deletePreviousCompositions": {
+            "type": "boolean"
+          },
+          "compositions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompositionValue"
+            },
+            "nullable": true
+          },
+          "compositionsForSampleUpdate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompositionsForSampleUpdate"
+            },
+            "nullable": true
+          },
+          "parentPropertiesAppend": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyValue"
+            },
+            "nullable": true
+          },
+          "objectsUpdate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompositionsForSampleUpdate"
+            },
+            "nullable": true
+          },
+          "warning": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DependenciesResult": {
+        "type": "object",
+        "properties": {
+          "dependencyNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Predicate": {
+        "type": "object",
+        "properties": {
+          "objectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyValue"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyComment": {
+        "type": "object",
+        "properties": {
+          "userComment": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "serviceInformation": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "isRequired": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "linkObject": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "validationSchema": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyType": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PropertyValue": {
+        "type": "object",
+        "properties": {
+          "propertyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Type": {
+            "$ref": "#/components/schemas/PropertyType"
+          },
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "nullable": true
+          },
+          "valueEpsilon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "sortCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "row": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "commentObject": {
+            "$ref": "#/components/schemas/PropertyComment"
+          },
+          "sourceObjectId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringStringKeyValuePair": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Table": {
+        "type": "object",
+        "properties": {
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableColumn"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": { }
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/CoordinatesResult"
+          },
+          "dependencies": {
+            "$ref": "#/components/schemas/DependenciesResult"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TableColumn": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TypeValidatorResult": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "warning": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StringStringKeyValuePair"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "EDXData",
+      "description": "Controller to validate EDX documents"
+    },
+    {
+      "name": "EDXValidation",
+      "description": "Controller to validate EDX documents"
+    }
+  ]
+}

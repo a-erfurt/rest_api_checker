@@ -1,0 +1,25 @@
+{
+  "research_commit": "7e35cd24f7e1d53ee25ff47ca93143194f446032",
+  "methodology": {
+    "03_research_design/research_design_v2.md": "c12bd4e93a080ac467982c142a1d25c62847c066e0790d2dbb05374ad2df9cae",
+    "03_research_design/reference_oracle_protocol_v1.md": "c6e3ff396d47253a509b048e6418b1c82acb811b1042a87e60d585ee2d19bc7b",
+    "03_research_design/oracle_qualification_review_v1.md": "513bb68f714eb2469305d5bb303153b3530a3d83fcbb8c7ad50b3681507e0bdb",
+    "03_research_design/fault_model_v1.md": "c02b2185db370394d913b0cf1831c0791cd05b67f42246a75da0e8daff62bdc9"
+  },
+  "contracts": {
+    "edx": {
+      "source": "04_case_studies/edx/openapi/edx_openapi_3.0.4.json",
+      "copy": "tests/contracts/edx_openapi_3.0.4.json",
+      "sha256": "4fb9c2bf81b401463dcd66f463c214a3019b75b48f0a88db1cf541a770ea4fbc",
+      "operation_path": "/edx/validation/body",
+      "method": "post"
+    },
+    "htts": {
+      "source": "04_case_studies/htts/openapi/htts_openapi_3.1.0.json",
+      "copy": "tests/contracts/htts_openapi_3.1.0.json",
+      "sha256": "084b2d72929226f0984cda1ce7758c8e7d9fb1aa7e1001e308160da440828e42",
+      "operation_path": "/resistance/validation/file",
+      "method": "post"
+    }
+  }
+}
