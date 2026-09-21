@@ -4,3 +4,8 @@ __pycache__/
 *.egg-info/
 dist/
 .coverage
+
+# Local IDE / AI tooling
+.idea/
+AGENTS.md
+.codex/
