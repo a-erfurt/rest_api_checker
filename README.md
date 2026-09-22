@@ -17,7 +17,9 @@ uv run --locked pytest -v tests/test_oracle_qualification.py
 ```
 
 The lockfile pins all dependencies. Tests need no API service, model, research
-checkout, or network after installation. Both contract hashes are verified at
+checkout, or network after installation. Materialization reads the separate pinned
+research checkout; its tests use temporary archives with test-only acquisition
+metadata. Both contract hashes are verified at
 session start, before fixture loading, and at session end. The committed copies
 are byte-identical to the research snapshots; tests never write to the research
 repository. Do not refresh them from a live service.
@@ -157,6 +159,55 @@ are not admitted cases, even when their construction intent was a control.
 `OracleNotReady` and execution failures propagate without fabricated labels.
 Evidence is retained in memory; no persistence layer is introduced.
 
-No dataset membership, final evaluation cases, Ollama, prompts, database, UI,
-service source-code analysis, or experiment execution is included. Dataset
-construction/release and manual audit require their own later step.
+## Development dataset candidate
+
+Materialize the exact DEV-01–DEV-12 inventory from research
+`03_research_design/development_dataset_v1.md`:
+
+```sh
+uv run --locked python -m rest_api_checker.development_dataset \
+  --research-repository /Users/aerfurt/University/Bachelor/bachelor_rest_api_checker
+```
+
+The default output is `artifacts/development_dataset_v1/`, ignored by Git.
+Use `--output artifacts/development_dataset_v1_repeat` for a second materialization.
+Output must be a fresh or empty directory inside this technical checkout; an
+existing candidate is never overwritten. No research files are written.
+
+`development_dataset_v1.json` is the bounded machine-readable transcription of
+the approved inventory, with byte hashes for the authority documents, contracts,
+and explicit pilot provenance files. These are verification targets and input
+bindings, not executed labels. The materializer refuses changed or missing sources,
+uses the existing construction API, and checks each measured response against
+its specified status, media, exact body hash, vector, overall label and lineage.
+No pilot directory discovery or fault sampling occurs.
+
+`construct_parent` and `construct_control` accept an optional `parent` to preserve
+control context. Explicit control construction may start from a nonconformant
+observation, as DEV-02 requires. It records the before result, full-body byte
+replacement and explicit status/media selection; the resulting control must pass.
+Fault construction still revalidates its conformant immediate parent.
+
+The deterministic `manifest.json` references separate response envelopes, raw
+bodies, replacement bytes, and byte-exact copies of all selected research evidence.
+References are relative to the staging directory and carry SHA-256 and byte count.
+Per-case records preserve origin, root family, immediate parent, before/after
+Oracle decisions and diagnostics, parent hashes and transformation parameters.
+Shared provenance records source commits, protocol/qualification evidence hashes,
+actual dependency versions, Oracle commit, implementation commit, working-tree
+status and source hashes. `manifest.sha256` hashes the exact manifest bytes.
+Repeated runs with the same source bytes, implementation and environment produce
+identical files; a different code commit or dependency version changes provenance.
+
+Admission failure writes `rejection.json` and any available candidate/parent
+artifacts without publishing a manifest. Resolve discrepancies explicitly; do not
+change expected outcomes to force admission. Missing inputs or Oracle exceptions
+never become scientific labels.
+
+Every successful output is `CANDIDATE_PENDING_MANUAL_REVIEW`, with zero of twelve
+cases marked reviewed. The author must independently reference-check all twelve
+exact artifacts and resolve discrepancies under the research protocol before
+release. This command cannot release references or run prompt trials.
+
+No final evaluation data, Ollama, prompts, database, UI, service source-code
+analysis, metrics or experiment execution is included.

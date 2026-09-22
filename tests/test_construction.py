@@ -368,3 +368,44 @@ def test_control_outcome_is_checked_not_assumed(snapshots, monkeypatch):
     with pytest.raises(c.ConstructionRejected, match='UNEXPECTED_CONTROL_PROFILE') as caught:
         c.construct_control('control', snapshots['edx'], 'K01', 'omitted')
     assert caught.value.candidate.result.vector == ('PASS', 'PASS', 'FAIL')
+
+
+def test_explicit_control_retains_nonconformant_context(snapshots):
+    context = c.observe('natural', snapshots['edx'],
+        c.Response(200, 'application/json; charset=utf-8', b'{"Code":0}'),
+        c.Observation('test archive', b'request', b'headers'))
+    control = c.construct_parent('control', snapshots['edx'],
+        c.Response(200, 'application/json', b'{"code":0}'),
+        construction='explicit lowercase control', parent=context)
+    assert control.parent is context
+    assert control.before.vector == ('PASS', 'PASS', 'FAIL')
+    assert control.result.vector == ('PASS',) * 3
+    assert control.transformation.body_edit.apply(context.response.body) == control.response.body
+    assert dict(control.transformation.parameters)['content_type'] == 'application/json'
+    child = c.mutate('fault', control, 'F03')
+    assert child.parent.parent is context
+    assert child.before.vector == ('PASS',) * 3
+
+
+def test_template_control_retains_parent_and_full_replacement(snapshots):
+    original = parent(snapshots, 'htts', body=b'{"Warning":"unchanged context"}')
+    control = c.construct_control('null', snapshots['htts'], 'K02', 'null', parent=original)
+    assert control.parent is original
+    assert control.before == original.result
+    assert control.transformation.body_edit == c.BodyEdit(0, len(original.response.body), b'null')
+
+
+@pytest.mark.parametrize('template', [False, True])
+def test_control_lineage_rejects_contract_mismatch_and_ancestor_id(snapshots, template):
+    original = parent(snapshots)
+
+    def construct(case_id, contract):
+        if template:
+            return c.construct_control(case_id, contract, 'K02', 'null', parent=original)
+        return c.construct_parent(case_id, contract, c.Response(200, 'application/json', b'{}'),
+                                   construction='test', parent=original)
+
+    with pytest.raises(c.ConstructionRejected, match='CONTROL_PARENT_CONTRACT_MISMATCH'):
+        construct('child', snapshots['htts'])
+    with pytest.raises(ValueError, match='distinct case ID'):
+        construct(original.case_id, snapshots['htts'])

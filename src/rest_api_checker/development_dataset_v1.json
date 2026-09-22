@@ -1,0 +1,291 @@
+{
+  "authority": "03_research_design/development_dataset_v1.md",
+  "cases": [
+    {
+      "api": "edx",
+      "case_id": "DEV-01",
+      "content_type": "application/json; charset=utf-8",
+      "expected_body_sha256": "c9b5c8363abd3f59000db18a34419280f2f78382f4208f761f6ac7e294a533fe",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "FAIL"
+      ],
+      "family": null,
+      "origin": "NATURAL",
+      "parent": null,
+      "root_family": "EDX-P02",
+      "status": 200,
+      "variant": null
+    },
+    {
+      "api": "edx",
+      "case_id": "DEV-02",
+      "content_type": "application/json",
+      "expected_body_sha256": "7a97b9b4d758a3929b8a2be53fbe189c9ba9378d6fbb8190d37f7cc14f5cf5d3",
+      "expected_overall": "CONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "family": "K01",
+      "origin": "SYNTHETIC_CONFORMANT",
+      "parent": "DEV-01",
+      "root_family": "EDX-P02",
+      "status": 200,
+      "variant": "minimal_lowercase"
+    },
+    {
+      "api": "edx",
+      "case_id": "DEV-03",
+      "content_type": "application/json",
+      "expected_body_sha256": "7a97b9b4d758a3929b8a2be53fbe189c9ba9378d6fbb8190d37f7cc14f5cf5d3",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "FAIL",
+        "NOT_APPLICABLE",
+        "NOT_APPLICABLE"
+      ],
+      "family": "F01",
+      "origin": "SYNTHETIC_INCONSISTENT",
+      "parent": "DEV-02",
+      "root_family": "EDX-P02",
+      "status": 500,
+      "variant": "status_500"
+    },
+    {
+      "api": "edx",
+      "case_id": "DEV-04",
+      "content_type": "application/xml",
+      "expected_body_sha256": "7a97b9b4d758a3929b8a2be53fbe189c9ba9378d6fbb8190d37f7cc14f5cf5d3",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "FAIL",
+        "NOT_APPLICABLE"
+      ],
+      "family": "F02",
+      "origin": "SYNTHETIC_INCONSISTENT",
+      "parent": "DEV-02",
+      "root_family": "EDX-P02",
+      "status": 200,
+      "variant": "undeclared_media"
+    },
+    {
+      "api": "edx",
+      "case_id": "DEV-05",
+      "content_type": "application/json",
+      "expected_body_sha256": "f2737f5c8e664362e8792eae565ec6e0937113710e96769d6888a542502e967e",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "FAIL"
+      ],
+      "family": "F03",
+      "origin": "SYNTHETIC_INCONSISTENT",
+      "parent": "DEV-02",
+      "root_family": "EDX-P02",
+      "status": 200,
+      "variant": "string"
+    },
+    {
+      "api": "edx",
+      "case_id": "DEV-06",
+      "content_type": "application/json",
+      "expected_body_sha256": "2ea25ba75c6a13459a3eb5f0b398be77948d1a0102beda3d4ebb0bbc9c60abe5",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "FAIL"
+      ],
+      "family": "F04",
+      "origin": "SYNTHETIC_INCONSISTENT",
+      "parent": "DEV-02",
+      "root_family": "EDX-P02",
+      "status": 200,
+      "variant": "root"
+    },
+    {
+      "api": "htts",
+      "case_id": "DEV-07",
+      "content_type": "application/json",
+      "expected_body_sha256": "262d14caaa49f8bebe026dc18c2728b449829ac5fad7558e31559d2b9d4e53c0",
+      "expected_overall": "CONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "family": null,
+      "origin": "NATURAL",
+      "parent": null,
+      "root_family": "HTTS-H01",
+      "status": 200,
+      "variant": null
+    },
+    {
+      "api": "htts",
+      "case_id": "DEV-08",
+      "content_type": "application/json",
+      "expected_body_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected_overall": "CONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "family": "K02",
+      "origin": "SYNTHETIC_CONFORMANT",
+      "parent": "DEV-07",
+      "root_family": "HTTS-H01",
+      "status": 200,
+      "variant": "null"
+    },
+    {
+      "api": "htts",
+      "case_id": "DEV-09",
+      "content_type": "application/json",
+      "expected_body_sha256": "0d378bd7c5ef2524874df312597cd193ae8fb85da9791c71734cbb097d82223a",
+      "expected_overall": "CONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "family": null,
+      "origin": "NATURAL",
+      "parent": null,
+      "root_family": "HTTS-H05",
+      "status": 422,
+      "variant": null
+    },
+    {
+      "api": "htts",
+      "case_id": "DEV-10",
+      "content_type": "application/json",
+      "expected_body_sha256": "84a1a4a63aeb0bb5bca6c0e41a20362008273f4732f2bfe516a731776c4e1153",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "FAIL"
+      ],
+      "family": "F06",
+      "origin": "SYNTHETIC_INCONSISTENT",
+      "parent": "DEV-09",
+      "root_family": "HTTS-H05",
+      "status": 422,
+      "variant": "remove_msg"
+    },
+    {
+      "api": "htts",
+      "case_id": "DEV-11",
+      "content_type": "text/plain",
+      "expected_body_sha256": "262d14caaa49f8bebe026dc18c2728b449829ac5fad7558e31559d2b9d4e53c0",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "FAIL",
+        "NOT_APPLICABLE"
+      ],
+      "family": "F02",
+      "origin": "SYNTHETIC_INCONSISTENT",
+      "parent": "DEV-07",
+      "root_family": "HTTS-H01",
+      "status": 200,
+      "variant": "undeclared_media"
+    },
+    {
+      "api": "htts",
+      "case_id": "DEV-12",
+      "content_type": "application/json",
+      "expected_body_sha256": "be302461cda285db3ed2d45fb767b23e08ca8808b35a638009937df22b332d73",
+      "expected_overall": "INCONSISTENT",
+      "expected_vector": [
+        "PASS",
+        "PASS",
+        "FAIL"
+      ],
+      "family": "F09",
+      "origin": "SYNTHETIC_INCONSISTENT",
+      "parent": "DEV-07",
+      "root_family": "HTTS-H01",
+      "status": 200,
+      "variant": "broken_json"
+    }
+  ],
+  "contracts": {
+    "edx": "04_case_studies/edx/openapi/edx_openapi_3.0.4.json",
+    "htts": "04_case_studies/htts/openapi/htts_openapi_3.1.0.json"
+  },
+  "pilot_source_commit": "7e35cd24f7e1d53ee25ff47ca93143194f446032",
+  "research_commit": "1cbe68ceae2bb2d146870379d72394edc083b256",
+  "roots": {
+    "EDX-P02": {
+      "api": "edx",
+      "files": [
+        "response_body.bin",
+        "response_headers.txt",
+        "curl_result.txt",
+        "request_metadata.txt",
+        "source_path.txt",
+        "input_sha256.txt",
+        "input_size_bytes.txt"
+      ],
+      "source_directory": "04_case_studies/edx/pilot_responses/P02"
+    },
+    "HTTS-H01": {
+      "api": "htts",
+      "files": [
+        "response_body.bin",
+        "response_headers.txt",
+        "curl_result.txt",
+        "request_metadata.txt",
+        "source_path.txt",
+        "input_sha256.txt",
+        "input_size_bytes.txt"
+      ],
+      "source_directory": "04_case_studies/htts/pilot_responses/H01"
+    },
+    "HTTS-H05": {
+      "api": "htts",
+      "files": [
+        "response_body.bin",
+        "response_headers.txt",
+        "curl_result.txt",
+        "request_metadata.txt"
+      ],
+      "source_directory": "04_case_studies/htts/pilot_responses/H05"
+    }
+  },
+  "sources": {
+    "03_research_design/development_dataset_v1.md": "3c8642a4019cd8cb73ae1e8fdb05b8de390f42b13741e64eeb42678c2bd8ba2a",
+    "03_research_design/fault_model_v1.md": "c02b2185db370394d913b0cf1831c0791cd05b67f42246a75da0e8daff62bdc9",
+    "03_research_design/oracle_qualification_review_v1.md": "513bb68f714eb2469305d5bb303153b3530a3d83fcbb8c7ad50b3681507e0bdb",
+    "03_research_design/reference_oracle_protocol_v1.md": "c6e3ff396d47253a509b048e6418b1c82acb811b1042a87e60d585ee2d19bc7b",
+    "04_case_studies/edx/openapi/edx_openapi_3.0.4.json": "4fb9c2bf81b401463dcd66f463c214a3019b75b48f0a88db1cf541a770ea4fbc",
+    "04_case_studies/edx/pilot_responses/P02/curl_result.txt": "38c6cb84adfafd9ee16bf8616a40e5fc7ca3afbc047e586ca0f7c197417f2f07",
+    "04_case_studies/edx/pilot_responses/P02/input_sha256.txt": "98474041f0998f4660cfc4f882ba0af4107476112c5f70f3d305f2d039e6d56e",
+    "04_case_studies/edx/pilot_responses/P02/input_size_bytes.txt": "c37d9bbed29a9c9bac47641aa38534cec5bbb4f52df33fc6b18f5e5d948568cd",
+    "04_case_studies/edx/pilot_responses/P02/request_metadata.txt": "5c247481c0e26892ea1ad30d4e339bb8b5657c766fbd65d6d4c1b096af0f74c0",
+    "04_case_studies/edx/pilot_responses/P02/response_body.bin": "c9b5c8363abd3f59000db18a34419280f2f78382f4208f761f6ac7e294a533fe",
+    "04_case_studies/edx/pilot_responses/P02/response_headers.txt": "b2eba53732a57819e90084ebcd632adadb84e93c3fe2cfee817b244418c5a498",
+    "04_case_studies/edx/pilot_responses/P02/source_path.txt": "4ffa62220c2a20b5d176c6f7201f47a56a6cfce7b607c91016f7a9bb544d1f97",
+    "04_case_studies/htts/openapi/htts_openapi_3.1.0.json": "084b2d72929226f0984cda1ce7758c8e7d9fb1aa7e1001e308160da440828e42",
+    "04_case_studies/htts/pilot_responses/H01/curl_result.txt": "169f454174c7f35c3f710ae3248f4e01d8155f2c670d24660aa2f172d2fa772c",
+    "04_case_studies/htts/pilot_responses/H01/input_sha256.txt": "01e0329a7760d57d18d4feabc31898432f2ced2699de108804b3da7bdcbb24cb",
+    "04_case_studies/htts/pilot_responses/H01/input_size_bytes.txt": "eb1e411894331c5cf4fc04545e782de271937c394ea727d6980ab492049720bd",
+    "04_case_studies/htts/pilot_responses/H01/request_metadata.txt": "5287fdf158d818e096d8cefe5bec31dda6d6420a6bf472d4630a05a5dd7e37d4",
+    "04_case_studies/htts/pilot_responses/H01/response_body.bin": "262d14caaa49f8bebe026dc18c2728b449829ac5fad7558e31559d2b9d4e53c0",
+    "04_case_studies/htts/pilot_responses/H01/response_headers.txt": "83893328763e9815c9c8be8c2f383ea7678aba6dc1bf50da64ee4a9c80f77455",
+    "04_case_studies/htts/pilot_responses/H01/source_path.txt": "dd8f550e5fbb23b29679080dfcddb9b553e1135c4e26d28339b6a2d3085435db",
+    "04_case_studies/htts/pilot_responses/H05/curl_result.txt": "f5518cc7c7f9e209bf05092082627183bbaddc7ff698d00d52f83e22045aa389",
+    "04_case_studies/htts/pilot_responses/H05/request_metadata.txt": "faf7982a8a5aab141bd1ad00fff538d0e4d8f02d9cd6fbcdc9828f96156b8d60",
+    "04_case_studies/htts/pilot_responses/H05/response_body.bin": "0d378bd7c5ef2524874df312597cd193ae8fb85da9791c71734cbb097d82223a",
+    "04_case_studies/htts/pilot_responses/H05/response_headers.txt": "1638ea4fe4e6ed1a67094c954efd4c71a811c469f02ef64609ff048cb42d39c0"
+  }
+}

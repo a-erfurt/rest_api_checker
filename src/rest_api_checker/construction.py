@@ -161,18 +161,45 @@ def observe(case_id: str, contract: ContractSnapshot, response: Response,
 
 
 def construct_parent(case_id: str, contract: ContractSnapshot, response: Response,
-                     *, construction: str) -> DevelopmentCase:
+                     *, construction: str,
+                     parent: DevelopmentCase | None = None) -> DevelopmentCase:
     """Check explicit synthetic parent bytes; never repair them into conformance."""
-    _check_id(case_id)
+    _check_id(case_id, parent)
     if not isinstance(construction, str) or not construction.strip():
         raise ValueError('A construction description is required')
     candidate = DevelopmentCase(
         case_id, contract, response, Origin.CONTROL, _measure(contract, response),
         Transformation(None, 'explicit_parent', (('construction', construction),)),
     )
+    candidate = _control_lineage(candidate, parent)
     if candidate.result.vector != _CONFORMANT:
         raise ConstructionRejected('NONCONFORMANT_PARENT', candidate=candidate)
     return candidate
+
+
+def _control_lineage(candidate: DevelopmentCase,
+                     parent: DevelopmentCase | None) -> DevelopmentCase:
+    """Record explicit control construction, including nonconformant context.
+
+    This is not a single-fault mutation and does not require a conformant parent.
+    The constructed control itself must still pass the usual admission check.
+    """
+    if parent is None:
+        return candidate
+    if parent.contract != candidate.contract:
+        raise ConstructionRejected('CONTROL_PARENT_CONTRACT_MISMATCH', parent=parent)
+    transformation = candidate.transformation
+    transformation = replace(
+        transformation,
+        parameters=transformation.parameters + (
+            ('action', 'explicit_full_body_replacement'),
+            ('status', str(candidate.response.status)),
+            ('content_type', str(candidate.response.content_type)),
+        ),
+        body_edit=BodyEdit(0, len(parent.response.body), candidate.response.body),
+    )
+    return replace(candidate, parent=parent, transformation=transformation,
+                   before=_measure(parent.contract, parent.response))
 
 
 # Concrete boundary shapes in fault_model_v1.md §4 (Q/S examples); these are
@@ -198,9 +225,10 @@ _CONTROLS = {
 
 
 def construct_control(case_id: str, contract: ContractSnapshot, family: str,
-                      variant: str) -> DevelopmentCase:
+                      variant: str, *,
+                      parent: DevelopmentCase | None = None) -> DevelopmentCase:
     """Construct one admitted control shape and measure its actual conformance."""
-    _check_id(case_id)
+    _check_id(case_id, parent)
     if (family, variant) not in _CONTROLS:
         raise ConstructionRejected('UNAPPROVED_CONTROL_VARIANT')
     api, status, body = _CONTROLS[family, variant]
@@ -212,6 +240,7 @@ def construct_control(case_id: str, contract: ContractSnapshot, family: str,
         case_id, contract, response, Origin.CONTROL, _measure(contract, response),
         Transformation(family, variant, (('construction', 'literal UTF-8 template'),)),
     )
+    candidate = _control_lineage(candidate, parent)
     if candidate.result.vector != _CONFORMANT:
         raise ConstructionRejected('UNEXPECTED_CONTROL_PROFILE', candidate=candidate)
     return candidate
