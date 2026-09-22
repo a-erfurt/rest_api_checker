@@ -1,0 +1,83 @@
+{
+  "approval_authority": "Author explicit approval of DEV-01 through DEV-12",
+  "approval_date": "2026-09-22",
+  "approved_manifest_sha256": "8cac438a328c67a550ba883cbf9953a4867dc17ad8b5ed1fdf0f2bb55b0bb974",
+  "cases": [
+    {
+      "approved": true,
+      "case_id": "DEV-01",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-02",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-03",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-04",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-05",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-06",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-07",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-08",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-09",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-10",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-11",
+      "manually_reviewed": true
+    },
+    {
+      "approved": true,
+      "case_id": "DEV-12",
+      "manually_reviewed": true
+    }
+  ],
+  "excluded_from_final_evaluation": true,
+  "excluded_from_final_headline_metrics": true,
+  "format": "development-dataset-v1-author-release",
+  "manual_review": {
+    "completed": 12,
+    "required": 12
+  },
+  "permitted_use": "prompt development",
+  "release_status": "AUTHOR_APPROVED_FOR_PROMPT_DEVELOPMENT",
+  "research_approval": {
+    "commit": "8d87d89a7ce066773c72ea058ed7e5eb9a4cf9b4",
+    "path": "03_research_design/development_dataset_v1.md",
+    "section": "7",
+    "sha256": "3391d4a14c5cf15bc15736126d4733189f925b6fca3fab3d17dae25becdf9588"
+  },
+  "status_precedence": "This hash-bound dated author approval supersedes only the historical release/review fields in the unchanged content manifest."
+}

@@ -1,10 +1,18 @@
 # Implementation State
 
-Last updated: 2026-09-21
+Last updated: 2026-09-22
 
 ## Current milestone
 
-Development-case parent/control construction and approved fault families complete.
+Development dataset v1 materialization complete: exactly DEV-01–DEV-12.
+Author approval recorded on 2026-09-22: DEV-01–DEV-12 manually reviewed (12/12)
+and approved for prompt development. Current release status is
+`AUTHOR_APPROVED_FOR_PROMPT_DEVELOPMENT`, recorded in
+`docs/development_dataset_v1_release.json` and generated staging `release.json`.
+The approved content manifest remains byte-identical:
+`8cac438a328c67a550ba883cbf9953a4867dc17ad8b5ed1fdf0f2bb55b0bb974`.
+Its pending-review fields preserve the historical materialization state;
+the separate hash-bound author-approval record supplies current release status.
 Reference Oracle and validator qualification remain unchanged.
 
 Baseline implementation commit:
@@ -35,11 +43,40 @@ Baseline implementation commit:
 - Rejection of inapplicable/nonconformant parents, no-op/ineffective mutations,
   unexpected vectors and schema/representation diagnostic mismatches, retaining
   measured candidate evidence where available.
+- Bounded development materializer and machine-readable inventory pinned to
+  `development_dataset_v1.md` at research commit
+  `1cbe68ceae2bb2d146870379d72394edc083b256`.
+- Exactly EDX-P02, HTTS-H01 and HTTS-H05; original pilot bytes and companion
+  provenance are read without modifying research inputs.
+- Optional control-parent provenance in the construction API, retaining explicit
+  full-body replacement and before results for DEV-02 and DEV-08.
+- Ignored generated staging at `artifacts/development_dataset_v1/`, with separate
+  raw bodies/envelopes, transformations, source copies, deterministic manifest and
+  SHA-256 sidecar. Code/dependency/protocol/qualification provenance is recorded.
+- Per-case checks of measured vectors/labels, exact body hashes, origins and
+  lineage; failures retain available evidence without publishing a manifest.
+- No automatic release: materialization records 0/12 at creation; the subsequent
+  explicit author-approval event records 12/12 in separate release metadata.
 
 ## Verified
 
-- 217 tests pass: 141 existing tests and 76 focused construction tests.
-- Targeted construction tests passed before the complete suite.
+- Release finalization on 2026-09-22: all 253 tests passed, including Q01–Q26.
+  Exact DEV-01–DEV-12 membership and artifact-only Oracle remeasurement were
+  checked; every recorded Oracle output and every original staging file hash
+  remained unchanged. Only the separate `release.json` was added to staging.
+  Its 12/12 approval coverage matches the tracked release record; executing the
+  README reproduction command twice produced identical bytes.
+- 253 tests pass: 141 Oracle/validator tests, 80 construction tests and 32
+  dataset materialization/provenance tests.
+- All 112 targeted construction/materialization tests passed before the full suite.
+- Real archive materialization matched all twelve specified bodies, vectors and
+  overall labels: 6 EDX + 6 HTTS; origins 3 natural, 2 synthetic conformant,
+  7 synthetic inconsistent; overall 4 consistent and 8 inconsistent.
+- No specified-versus-measured reference mismatch.
+- Repeated materialization is tested for byte identity of every output file,
+  including the manifest; raw source inputs remain unchanged.
+- Held-out F05/F07/F08 and all held-out variants/controls are absent from the
+  generated development inventory; no unselected pilot siblings are imported.
 - Q01-Q26 all pass.
 - Oracle implementation, interface, schema/media semantics and qualification
   expectations are unchanged. Regression tests verify metadata never enters
@@ -55,7 +92,6 @@ See `docs/validator_spike.md` for validator qualification details.
 
 ## Not implemented
 
-- Development dataset generation.
 - Final evaluation dataset generation/freeze.
 - Ollama runner.
 - Prompt rendering / structured LLM result parsing.
@@ -67,28 +103,32 @@ See `docs/validator_spike.md` for validator qualification details.
 
 These are intentionally absent until required.
 
-## Next planned implementation step
+## Release boundary
 
-Review the construction milestone, then define and authorize a bounded development
-case inventory and manual-audit workflow. No dataset membership, split, quota,
-final evaluation case or release is established by this implementation.
+Author manual review/reference checking is complete for all twelve cases.
+The references are released for prompt development only and remain excluded from
+final evaluation and final headline metrics. No next implementation milestone or
+Ollama prompt trial is started by this documentation/release-status step.
 
 ## Scope and methodology notes
 
 Implementation authority: the explicitly requested milestone and research
-`03_research_design/fault_model_v1.md`, SHA-256
-`c02b2185db370394d913b0cf1831c0791cd05b67f42246a75da0e8daff62bdc9`
-(also recorded in the existing provenance manifest).
+`development_dataset_v1.md`, `fault_model_v1.md` and
+`reference_oracle_protocol_v1.md`. Exact research source hashes and inventory
+verification targets are recorded in
+`src/rest_api_checker/development_dataset_v1.json`.
 
-No unresolved methodological decision was required. The fault model retains
-historical proposal/sign-off caveats; the implementation instruction authorizes
-this development capability, not a dataset release or additional human audit.
-The Q/S-derived control templates and automated tests are implementation probes,
-not scored evaluation cases or additional human-reviewed qualification records.
+No unresolved methodological decision was needed. Approved DEV membership is
+implemented without changing Oracle semantics, fault meaning or final dataset
+rules. The source documents and content manifest retain historical preparation
+states; the separate release record transcribes the author's explicit approval.
+Expected vectors are checked only after
+artifact-only Oracle measurement and are preserved separately from actual results.
 
-Construction is a small in-memory Python API in `construction.py`; no generic
-mutation framework, persistence or runner was added. See the README for API,
-variants, hash format and rejection-evidence handling.
+The materializer is a bounded local Python command, not an experiment runner or
+persistence service. Generated development data is ignored and is not committed
+or copied into the research repository. See README for reproduction, provenance
+format and rejection handling.
 
 ## Methodology guard
 

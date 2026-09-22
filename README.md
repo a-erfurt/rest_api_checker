@@ -17,7 +17,9 @@ uv run --locked pytest -v tests/test_oracle_qualification.py
 ```
 
 The lockfile pins all dependencies. Tests need no API service, model, research
-checkout, or network after installation. Both contract hashes are verified at
+checkout, or network after installation. Materialization reads the separate pinned
+research checkout; its tests use temporary archives with test-only acquisition
+metadata. Both contract hashes are verified at
 session start, before fixture loading, and at session end. The committed copies
 are byte-identical to the research snapshots; tests never write to the research
 repository. Do not refresh them from a live service.
@@ -157,6 +159,116 @@ are not admitted cases, even when their construction intent was a control.
 `OracleNotReady` and execution failures propagate without fabricated labels.
 Evidence is retained in memory; no persistence layer is introduced.
 
-No dataset membership, final evaluation cases, Ollama, prompts, database, UI,
-service source-code analysis, or experiment execution is included. Dataset
-construction/release and manual audit require their own later step.
+## Development dataset v1
+
+DEV-01–DEV-12 were approved by the author on 2026-09-22 (12/12 manually
+reviewed) for prompt development. The current release record is
+[`docs/development_dataset_v1_release.json`](docs/development_dataset_v1_release.json).
+All cases remain excluded from final evaluation and final headline metrics.
+
+### Historical candidate materialization
+
+Materialize the exact DEV-01–DEV-12 inventory from a research checkout at
+`1cbe68ceae2bb2d146870379d72394edc083b256`:
+
+```sh
+uv run --locked python -m rest_api_checker.development_dataset \
+  --research-repository /path/to/research-checkout-at-1cbe68c
+```
+
+The default output is `artifacts/development_dataset_v1/`, ignored by Git.
+Use `--output artifacts/development_dataset_v1_repeat` for a second materialization.
+Output must be a fresh or empty directory inside this technical checkout; an
+existing candidate is never overwritten. No research files are written.
+The current research document includes the later approval and therefore no longer
+matches the pinned input hash. Use the historical checkout for materialization;
+do not repin the inventory or replace the approved artifacts. Full manifest byte
+reproduction also requires the recorded implementation commit and environment.
+
+`development_dataset_v1.json` is the bounded machine-readable transcription of
+the approved inventory, with byte hashes for the authority documents, contracts,
+and explicit pilot provenance files. These are verification targets and input
+bindings, not executed labels. The materializer refuses changed or missing sources,
+uses the existing construction API, and checks each measured response against
+its specified status, media, exact body hash, vector, overall label and lineage.
+No pilot directory discovery or fault sampling occurs.
+
+`construct_parent` and `construct_control` accept an optional `parent` to preserve
+control context. Explicit control construction may start from a nonconformant
+observation, as DEV-02 requires. It records the before result, full-body byte
+replacement and explicit status/media selection; the resulting control must pass.
+Fault construction still revalidates its conformant immediate parent.
+
+The deterministic `manifest.json` references separate response envelopes, raw
+bodies, replacement bytes, and byte-exact copies of all selected research evidence.
+References are relative to the staging directory and carry SHA-256 and byte count.
+Per-case records preserve origin, root family, immediate parent, before/after
+Oracle decisions and diagnostics, parent hashes and transformation parameters.
+Shared provenance records source commits, protocol/qualification evidence hashes,
+actual dependency versions, Oracle commit, implementation commit, working-tree
+status and source hashes. `manifest.sha256` hashes the exact manifest bytes.
+Repeated runs with the same source bytes, implementation and environment produce
+identical files; a different code commit or dependency version changes provenance.
+
+Admission failure writes `rejection.json` and any available candidate/parent
+artifacts without publishing a manifest. Resolve discrepancies explicitly; do not
+change expected outcomes to force admission. Missing inputs or Oracle exceptions
+never become scientific labels.
+
+Every successful output is `CANDIDATE_PENDING_MANUAL_REVIEW`, with zero of twelve
+cases marked reviewed. The author must independently reference-check all twelve
+exact artifacts and resolve discrepancies under the research protocol before
+release. This command cannot release references or run prompt trials.
+
+### Author-approved release metadata
+
+The content manifest SHA-256 remains
+`8cac438a328c67a550ba883cbf9953a4867dc17ad8b5ed1fdf0f2bb55b0bb974`.
+Its `CANDIDATE_PENDING_MANUAL_REVIEW`, 0/12 and per-case false review fields
+are immutable historical evidence. The separate dated release record supersedes
+those review fields for this exact manifest, recording
+`AUTHOR_APPROVED_FOR_PROMPT_DEVELOPMENT` and 12/12 approved cases.
+It does not alter measured results, construction provenance or source bindings.
+
+The ignored staging `release.json` is a deterministic serialization of the tracked
+release record, outside the content manifest. Reproduce it from the repository root
+using the existing materializer helpers (no case regeneration):
+
+```sh
+uv run --locked python - <<'PY'
+import json
+from pathlib import Path
+from rest_api_checker.development_dataset import _json, _sha, _write
+
+output = Path('artifacts/development_dataset_v1')
+release = json.loads(Path('docs/development_dataset_v1_release.json').read_bytes())
+raw = (output / 'manifest.json').read_bytes()
+if _sha(raw) != release['approved_manifest_sha256']:
+    raise ValueError('Approved manifest hash mismatch')
+manifest = json.loads(raw)
+ids = [f'DEV-{i:02}' for i in range(1, 13)]
+if ([c['case_id'] for c in manifest['cases']] != ids
+        or [c['case_id'] for c in release['cases']] != ids
+        or release['manual_review'] != {'required': 12, 'completed': 12}
+        or not all(c['manually_reviewed'] and c['approved'] for c in release['cases'])):
+    raise ValueError('Review coverage mismatch')
+
+def verify_references(value):
+    if isinstance(value, dict):
+        if {'path', 'sha256', 'size_bytes'} <= value.keys():
+            data = (output / value['path']).read_bytes()
+            if _sha(data) != value['sha256'] or len(data) != value['size_bytes']:
+                raise ValueError(f"Artifact mismatch: {value['path']}")
+        for child in value.values():
+            verify_references(child)
+    elif isinstance(value, list):
+        for child in value:
+            verify_references(child)
+
+verify_references(manifest)
+_write(output, 'release.json', _json(release))
+PY
+```
+
+No final evaluation data, Ollama, prompts, database, UI, service source-code
+analysis, metrics or experiment execution is included.

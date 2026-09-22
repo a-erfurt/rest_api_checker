@@ -9,3 +9,6 @@ dist/
 .idea/
 AGENTS.md
 .codex/
+
+# Generated development candidates and reproducibility checks (never commit data)
+artifacts/development_dataset_v1*/
