@@ -5,7 +5,14 @@ Last updated: 2026-09-22
 ## Current milestone
 
 Development dataset v1 materialization complete: exactly DEV-01–DEV-12.
-Generated artifacts are candidates pending author review of all twelve cases.
+Author approval recorded on 2026-09-22: DEV-01–DEV-12 manually reviewed (12/12)
+and approved for prompt development. Current release status is
+`AUTHOR_APPROVED_FOR_PROMPT_DEVELOPMENT`, recorded in
+`docs/development_dataset_v1_release.json` and generated staging `release.json`.
+The approved content manifest remains byte-identical:
+`8cac438a328c67a550ba883cbf9953a4867dc17ad8b5ed1fdf0f2bb55b0bb974`.
+Its pending-review fields preserve the historical materialization state;
+the separate hash-bound author-approval record supplies current release status.
 Reference Oracle and validator qualification remain unchanged.
 
 Baseline implementation commit:
@@ -48,10 +55,17 @@ Baseline implementation commit:
   SHA-256 sidecar. Code/dependency/protocol/qualification provenance is recorded.
 - Per-case checks of measured vectors/labels, exact body hashes, origins and
   lineage; failures retain available evidence without publishing a manifest.
-- No automatic release: manual review remains 0/12.
+- No automatic release: materialization records 0/12 at creation; the subsequent
+  explicit author-approval event records 12/12 in separate release metadata.
 
 ## Verified
 
+- Release finalization on 2026-09-22: all 253 tests passed, including Q01–Q26.
+  Exact DEV-01–DEV-12 membership and artifact-only Oracle remeasurement were
+  checked; every recorded Oracle output and every original staging file hash
+  remained unchanged. Only the separate `release.json` was added to staging.
+  Its 12/12 approval coverage matches the tracked release record; executing the
+  README reproduction command twice produced identical bytes.
 - 253 tests pass: 141 Oracle/validator tests, 80 construction tests and 32
   dataset materialization/provenance tests.
 - All 112 targeted construction/materialization tests passed before the full suite.
@@ -89,11 +103,12 @@ See `docs/validator_spike.md` for validator qualification details.
 
 These are intentionally absent until required.
 
-## Next planned implementation step
+## Release boundary
 
-Author manual review/reference checking of all twelve generated candidate artifacts
-and Oracle labels, resolving discrepancies before development-reference release.
-No next implementation milestone is started; Ollama prompt trials remain deferred.
+Author manual review/reference checking is complete for all twelve cases.
+The references are released for prompt development only and remain excluded from
+final evaluation and final headline metrics. No next implementation milestone or
+Ollama prompt trial is started by this documentation/release-status step.
 
 ## Scope and methodology notes
 
@@ -105,8 +120,9 @@ verification targets are recorded in
 
 No unresolved methodological decision was needed. Approved DEV membership is
 implemented without changing Oracle semantics, fault meaning or final dataset
-rules. The source documents retain historical proposal/sign-off text; generated
-records do not claim new human review. Expected vectors are checked only after
+rules. The source documents and content manifest retain historical preparation
+states; the separate release record transcribes the author's explicit approval.
+Expected vectors are checked only after
 artifact-only Oracle measurement and are preserved separately from actual results.
 
 The materializer is a bounded local Python command, not an experiment runner or
