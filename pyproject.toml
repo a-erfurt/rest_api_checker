@@ -16,6 +16,9 @@ dependencies = [
 
 [dependency-groups]
 dev = ["pytest==9.1.1"]
+sqlserver-probe = [
+    "pyodbc==5.3.0",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

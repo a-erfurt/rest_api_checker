@@ -1,0 +1,8 @@
+{
+  "host_path": "/private/tmp/rac-sqlserver-environment-20260926/rac_env_probe_20260926.bak",
+  "bytes": 4640768,
+  "mode": "0o600",
+  "sha256": "277b52a929fef90d92bb8fe5c26c0b620eb7d89572ede7141861189fe37cfb55",
+  "container_original_and_reimported_hashes_equal": true,
+  "copy_permission_diagnostic": "Initial docker cp created the restore copy with owner root and mode 0600; mssql sha256sum returned Permission denied. Changed owner only on that newly created file to mssql, retained mode 0600, then both hashes matched before restore."
+}

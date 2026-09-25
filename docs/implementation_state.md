@@ -1,8 +1,28 @@
 # Implementation State
 
-Last updated: 2026-09-22
+Last updated: 2026-09-26
 
 ## Current milestone
+
+Bounded SQL Server environment qualification and existing prompt-approval record
+reconciliation completed; see
+[`sqlserver_environment_check_2026-09-26.md`](sqlserver_environment_check_2026-09-26.md).
+The seven requested local data/connection/restart/restore checks passed on the
+pinned SQL Server 2022 CU27 Developer image with native arm64 Python/ODBC.
+An initial timestamp text-conversion probe failure and its verified correction
+are retained. Exact Docker emulator settings remain unverified; final container
+stop reported exit 137 (not OOM), so graceful shutdown remains unqualified.
+This is limited compatibility evidence, not acceptance of the unsupported
+emulated deployment for study execution. The container is stopped; dedicated
+volume and external backup remain. No domain schema or persistence layer exists.
+
+Research O01 is resolved by recording the author's existing exact P1/P2/P3
+approval after matching all supplied byte lengths/hashes. Original approval time
+is unknown; the reconciliation recording date is 2026-09-26. Historical records,
+prompt bytes and D01–D11 remain unchanged. Gate B/final prompt freeze are incomplete.
+No study data import, Oracle/model execution or experiment occurred in this step.
+Only the four focused probe converter tests and the documented SQL fixture checks
+were run; the full Oracle-containing suite was intentionally not rerun.
 
 Development dataset v1 materialization complete: exactly DEV-01–DEV-12.
 Author approval recorded on 2026-09-22: DEV-01–DEV-12 manually reviewed (12/12)
@@ -99,7 +119,7 @@ See `docs/validator_spike.md` for validator qualification details.
 - Main experiment runner.
 - Evaluation metrics/report generation.
 - Result visualizations.
-- Database or web UI.
+- Application-domain database schema, persistence layer or web UI.
 
 These are intentionally absent until required.
 

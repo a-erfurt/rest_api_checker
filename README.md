@@ -272,3 +272,14 @@ PY
 
 No final evaluation data, Ollama, prompts, database, UI, service source-code
 analysis, metrics or experiment execution is included.
+
+## Disposable SQL Server environment check
+
+The separately authorized 2026-09-26 local compatibility probe is documented in
+[`docs/sqlserver_environment_check_2026-09-26.md`](docs/sqlserver_environment_check_2026-09-26.md).
+Its isolated Compose configuration, fabricated fixtures and safe cleanup steps are
+under [`tools/sqlserver_environment/`](tools/sqlserver_environment/README.md).
+The optional `sqlserver-probe` dependency group pins pyodbc; it is not part of the
+Oracle's runtime dependencies. No application schema/persistence layer or study
+execution was added. Deployment support, emulation configuration and graceful
+shutdown limitations remain explicit in the report.
