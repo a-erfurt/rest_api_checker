@@ -1,0 +1,109 @@
+[
+  {
+    "digest": "9d5803d493a991af27b9441c098aa56f2ed7bbd260877f075ec09b575c049bc3",
+    "layers": [
+      {
+        "digest": "sha256:370b24c023f51e75e7f3b70e1b89d59a38ec2fb5af3289fcf92ff78b3fadd619",
+        "mediaType": "application/vnd.docker.container.image.v1+json",
+        "size": 214
+      },
+      {
+        "digest": "sha256:415aad607fc297a2ad84cda238febbde295f49f17c17ad7784e2246060fb06d0",
+        "mediaType": "application/vnd.ollama.image.model",
+        "size": 16837919680
+      },
+      {
+        "digest": "sha256:c24919d9eb66eda0af3d7a62ef49bef7948389099de880e0cb5eefe2d3c31769",
+        "mediaType": "application/vnd.ollama.image.projector",
+        "size": 931145568
+      },
+      {
+        "digest": "sha256:5f3a3c817e78f5b8a4ad2d2c458a3e4b2cce470d6c12642c4eeb12cb8a9bf51d",
+        "mediaType": "application/vnd.ollama.image.license",
+        "size": 11357
+      },
+      {
+        "digest": "sha256:3f3289008cd00add7198019000e37526b44b1fb3f2bd340b0d411a25fb17838c",
+        "mediaType": "application/vnd.ollama.image.params",
+        "size": 114
+      }
+    ],
+    "manifest": "qwen_manifest.json",
+    "name": "qwen3.6:27b",
+    "show": "qwen_show.json",
+    "template_sha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315"
+  },
+  {
+    "digest": "a418f5838eaf7fe2cfe0a3046c8384b68ba43a4435542c942f9db00a5f342203",
+    "layers": [
+      {
+        "digest": "sha256:f838f048d36876f9f411d302e8fc45cea6793a37cd978af1b6a0b042fcfb2f31",
+        "mediaType": "application/vnd.docker.container.image.v1+json",
+        "size": 490
+      },
+      {
+        "digest": "sha256:e796792eba26c4d3b04b0ac5adb01a453dd9ec2dfd83b6c59cbf6fe5f30b0f68",
+        "mediaType": "application/vnd.ollama.image.model",
+        "size": 17396927584
+      },
+      {
+        "digest": "sha256:e0a42594d802e5d31cdc786deb4823edb8adff66094d49de8fffe976d753e348",
+        "mediaType": "application/vnd.ollama.image.template",
+        "size": 358
+      },
+      {
+        "digest": "sha256:dd084c7d92a3c1c14cc09ae77153b903fd2024b64a100a0cc8ec9316063d2dbc",
+        "mediaType": "application/vnd.ollama.image.license",
+        "size": 8432
+      },
+      {
+        "digest": "sha256:3116c52250752e00dd06b16382e952bd33c34fd79fc4fe3a5d2c77cf7de1b14b",
+        "mediaType": "application/vnd.ollama.image.params",
+        "size": 77
+      }
+    ],
+    "manifest": "gemma_manifest.json",
+    "name": "gemma3:27b",
+    "show": "gemma_show.json",
+    "template_sha256": "e0a42594d802e5d31cdc786deb4823edb8adff66094d49de8fffe976d753e348"
+  },
+  {
+    "digest": "5a408ab55df5c1b5cf46533c368813b30bf9e4d8fc39263bf2a3338cfa3b895b",
+    "layers": [
+      {
+        "digest": "sha256:7ae301728ba8f217be575419ca950190a4d43cfa293ffa9732ce6eb6498d7f6d",
+        "mediaType": "application/vnd.docker.container.image.v1+json",
+        "size": 568
+      },
+      {
+        "digest": "sha256:41a5b0c36a28a3a0480ce2e4007d3a21e3298be70e2b9a103960581412997dca",
+        "mediaType": "application/vnd.ollama.image.model",
+        "size": 15177369888
+      },
+      {
+        "digest": "sha256:706c4d1164f7f1bbce2a852f2bc9cfa66b98d24f79300b9034388e07fcda98c8",
+        "mediaType": "application/vnd.ollama.image.template",
+        "size": 699
+      },
+      {
+        "digest": "sha256:9c810f69c610d59a322085379f81ad72814b84916a1c3d0262cf1b1114bbfb36",
+        "mediaType": "application/vnd.ollama.image.system",
+        "size": 2330
+      },
+      {
+        "digest": "sha256:43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1",
+        "mediaType": "application/vnd.ollama.image.license",
+        "size": 11356
+      },
+      {
+        "digest": "sha256:e0daf17ff83eace4813f9e8554b262f6cc33ad880ff8df41a156ff9ef5522ddb",
+        "mediaType": "application/vnd.ollama.image.params",
+        "size": 21
+      }
+    ],
+    "manifest": "mistral_manifest.json",
+    "name": "mistral-small3.2:24b",
+    "show": "mistral_show.json",
+    "template_sha256": "706c4d1164f7f1bbce2a852f2bc9cfa66b98d24f79300b9034388e07fcda98c8"
+  }
+]

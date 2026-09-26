@@ -1,0 +1,12 @@
+{
+  "_debug_info": {
+    "rendered_template": "<start_of_turn>user\nDIAGNOSTIC RUNTIME QUALIFICATION. Fabricated non-study content. Reply with the word READY only.<end_of_turn>\n<start_of_turn>user\nFabricated diagnostic: purple teapot 7301.<end_of_turn>\n<start_of_turn>model\n"
+  },
+  "created_at": "2026-09-26T10:18:36.913075Z",
+  "done": false,
+  "message": {
+    "content": "",
+    "role": ""
+  },
+  "model": "gemma3:27b"
+}

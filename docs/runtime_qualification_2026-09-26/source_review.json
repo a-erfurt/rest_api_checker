@@ -1,0 +1,30 @@
+{
+  "findings": {
+    "limitation": "Exact native runner build source was not available at the attempted public URL. No offline tokenizer replica was substituted; measurements use the installed runner itself with synthetic prompt_eval_count parity.",
+    "native_defaults": "Request options override generation defaults and model parameters. Explicit system message suppresses the stored Mistral system default. Seed does not enter renderPrompt.",
+    "no_truncation": "Qualification sets truncate=false only in render-only diagnostics. Every measured complete request plus 512 fits 32768, so the normal study request requires no truncation.",
+    "render_only": "ChatHandler returns _debug_info.rendered_template before Completion; usesOllamaRenderedChat is true for the captured model configurations. The flag was exercised on fabricated inputs first.",
+    "stream": "Ollama internally streams completion responses and aggregates them when outer stream=false.",
+    "tokenization": "llamaServerRunner uses its loopback /tokenize endpoint. completionPromptForRequest uses add_special=true; diagnostic parity establishes the BOS behavior on each captured model. parse_special=true preserves native delimiters.",
+    "unknown_options": "Options.FromMap warns and ignores unknown keys. Mere HTTP acceptance is therefore insufficient; this qualification reads effective runner slot parameters."
+  },
+  "sources": {
+    "api/types.go": {
+      "sha256": "98b90dd63455b939012806b6e1ff817e3ae2f3fe83f7b01deba218d2175409c0",
+      "url": "https://raw.githubusercontent.com/ollama/ollama/v0.34.4/api/types.go"
+    },
+    "llm/llama_server.go": {
+      "sha256": "10777cca3193c12b4cfcc90f5cfd88085c298f7a2c2c7333b0b95bb6e545d391",
+      "url": "https://raw.githubusercontent.com/ollama/ollama/v0.34.4/llm/llama_server.go"
+    },
+    "server/prompt.go": {
+      "sha256": "79411c4e15ff27fb8bac4dcd96076407e035ec407c0ab1a1840035f9668b4654",
+      "url": "https://raw.githubusercontent.com/ollama/ollama/v0.34.4/server/prompt.go"
+    },
+    "server/routes.go": {
+      "sha256": "3c1beee510431e9f692261837037960e5f3bc62cfb93bb87dc931cb959866322",
+      "url": "https://raw.githubusercontent.com/ollama/ollama/v0.34.4/server/routes.go"
+    }
+  },
+  "version": "0.34.4"
+}

@@ -1,0 +1,49 @@
+{
+  "captured_at": "2026-09-26T12:18:57.668952+02:00",
+  "classification": {
+    "code": "COMPLETE_FINAL_CONTENT",
+    "kind": "FINAL"
+  },
+  "content_bytes": 5,
+  "content_sha256": "c2e3ac47f4a325469c1a2d5f117e463ec943c721986d5d9f09ac4540b7d80526",
+  "envelope": {
+    "created_at": "2026-09-26T10:18:57.667206Z",
+    "done": true,
+    "done_reason": "stop",
+    "eval_count": 3,
+    "eval_duration": 127047000,
+    "load_duration": 19888860250,
+    "model": "mistral-small3.2:24b",
+    "prompt_eval_cached_count": 0,
+    "prompt_eval_count": 46,
+    "prompt_eval_duration": 484748000,
+    "total_duration": 20502418500
+  },
+  "request_sha256": "0af98a40c7af1c75cea87a092d3789dd2f55d749a74712d748dce7e614d158b1",
+  "response_sha256": "d61d29fec3c4f56c0926b01a9b56bd7453c8fadb7d6b520d4bcd63504d7d26c8",
+  "scope": "FABRICATED_RUNTIME_DIAGNOSTIC",
+  "thinking_bytes": 0,
+  "thinking_present": false,
+  "timeout_seconds": 300,
+  "transport": {
+    "complete": true,
+    "duration_ms": 20504,
+    "error_kind": null,
+    "error_message": null,
+    "headers": [
+      [
+        "Content-Type",
+        "application/json; charset=utf-8"
+      ],
+      [
+        "Date",
+        "Sat, 26 Sep 2026 10:18:57 GMT"
+      ],
+      [
+        "Content-Length",
+        "340"
+      ]
+    ],
+    "http_status": 200
+  }
+}

@@ -8,6 +8,7 @@ from .persistence.database import require
 from .persistence.importer import load_development, read_bound, PROMPT_HASHES
 from .persistence.inspection import bindings, status
 from .persistence.migrate import verify
+from . import runtime_evidence
 
 
 def check(root, research, repo=None, experiment_id=None):
@@ -78,12 +79,18 @@ def check(root, research, repo=None, experiment_id=None):
         repo.cn.commit()
     else:
         checks.append(dict(check='Database schema',status='BLOCKED',detail='No database supplied; not verified'))
+    try:
+        runtime = runtime_evidence.inspect(root, research)
+    except (ValueError, OSError, KeyError, TypeError, StopIteration) as exc:
+        runtime = {name: dict(status='FAIL', detail='Runtime evidence invalid: '+str(exc))
+                   for name in ('Full model identities', 'Template and effective options',
+                                'Context fit', 'Failure attribution')}
     for name, detail in (
         ('Full model identities','Actual full manifests, Q4_K_M and runtime/hardware evidence not verified'),
         ('Template and effective options','Native templates, defaults, D07 support and thinking policy require measured evidence'),
         ('Context fit','Actual tokenizer/template-aware measurements for every complete request are absent'),
         ('Failure attribution','Real runtime-specific isolated/systematic failure evidence remains unverified'),
         ('Gate-B artifact acceptance','Complete setup/source closure, application-role deployment and author freeze acceptance pending')):
-        checks.append(dict(check=name,status='BLOCKED',detail=detail))
+        checks.append(dict(check=name, **runtime.get(name, dict(status='BLOCKED',detail=detail))))
     return dict(gate='B',status='FAIL' if any(c['status']=='FAIL' for c in checks) else 'BLOCKED',
                 inference_performed=False,checks=checks)

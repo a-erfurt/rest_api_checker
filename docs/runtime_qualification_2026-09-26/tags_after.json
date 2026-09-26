@@ -1,0 +1,76 @@
+{
+  "models": [
+    {
+      "capabilities": [
+        "completion",
+        "vision"
+      ],
+      "details": {
+        "context_length": 131072,
+        "embedding_length": 5376,
+        "families": [
+          "gemma3"
+        ],
+        "family": "gemma3",
+        "format": "gguf",
+        "parameter_size": "27.4B",
+        "parent_model": "",
+        "quantization_level": "Q4_K_M"
+      },
+      "digest": "a418f5838eaf7fe2cfe0a3046c8384b68ba43a4435542c942f9db00a5f342203",
+      "model": "gemma3:27b",
+      "modified_at": "2026-09-26T09:32:06.054396895+02:00",
+      "name": "gemma3:27b",
+      "size": 17396936941
+    },
+    {
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools"
+      ],
+      "details": {
+        "context_length": 131072,
+        "embedding_length": 5120,
+        "families": [
+          "mistral3"
+        ],
+        "family": "mistral3",
+        "format": "gguf",
+        "parameter_size": "24.0B",
+        "parent_model": "",
+        "quantization_level": "Q4_K_M"
+      },
+      "digest": "5a408ab55df5c1b5cf46533c368813b30bf9e4d8fc39263bf2a3338cfa3b895b",
+      "model": "mistral-small3.2:24b",
+      "modified_at": "2026-09-26T09:32:05.488605255+02:00",
+      "name": "mistral-small3.2:24b",
+      "size": 15177384862
+    },
+    {
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools",
+        "thinking"
+      ],
+      "details": {
+        "context_length": 262144,
+        "embedding_length": 5120,
+        "families": [
+          "qwen35"
+        ],
+        "family": "qwen35",
+        "format": "gguf",
+        "parameter_size": "27.3B",
+        "parent_model": "qwen3.6-source:27b-mtp-q4_K_M-20260824",
+        "quantization_level": "Q4_K_M"
+      },
+      "digest": "9d5803d493a991af27b9441c098aa56f2ed7bbd260877f075ec09b575c049bc3",
+      "model": "qwen3.6:27b",
+      "modified_at": "2026-09-21T18:28:24.613514847+02:00",
+      "name": "qwen3.6:27b",
+      "size": 17769076933
+    }
+  ]
+}

@@ -15,8 +15,9 @@ def test_json_preflight_truthful(capsys):
     captured = capsys.readouterr()
     value = json.loads(captured.out)
     assert code==3 and value['status']=='BLOCKED'
-    assert sum(c['status']=='PASS' for c in value['checks'])==5
-    assert all(c['status']=='BLOCKED' for c in value['checks'][5:])
+    assert sum(c['status']=='PASS' for c in value['checks'])==8
+    assert {c['check'] for c in value['checks'] if c['status']=='BLOCKED'}=={
+        'Database schema','Failure attribution','Gate-B artifact acceptance'}
     assert not value['inference_performed'] and '\x1b' not in captured.out
 
 
