@@ -1,0 +1,11 @@
+{
+  "root": "/Users/aerfurt/University/Bachelor/rest_api_checker",
+  "research": "/Users/aerfurt/University/Bachelor/bachelor_rest_api_checker",
+  "env_file": "/Users/aerfurt/.config/rest-api-checker/application-credentials.env",
+  "database": "rest_api_checker",
+  "container": "rac-sql-env-20260926-sqlserver-1",
+  "compose_project": "rac-sql-env-20260926",
+  "host": "127.0.0.1",
+  "port": 8000,
+  "admin_env_file": "/private/tmp/rac-sqlserver-environment-20260926/credentials.env"
+}

@@ -1,0 +1,54 @@
+{
+  "application_login_enabled": true,
+  "backup_restore_enabled": true,
+  "focused": {
+    "errors": 0,
+    "failures": 0,
+    "original_junit_sha256": "55be4fcd35caf64bfee805a3f0ed1a6145eaf66413a72e96fd5d0af2dc207053",
+    "seconds": 13.323,
+    "skipped": 0,
+    "test_counts_by_class": {
+      "tests.experiment.test_boundaries": 124,
+      "tests.persistence.test_application_security": 12,
+      "tests.persistence.test_freeze": 11,
+      "tests.test_gate_b_closure": 21,
+      "tests.test_operator": 60,
+      "tests.test_runtime_evidence": 13
+    },
+    "tests": 241
+  },
+  "full": {
+    "errors": 0,
+    "failures": 0,
+    "original_junit_sha256": "a15b65298451d28be8510c96243c426ffb601d849433ff6710224b3c150e3247",
+    "seconds": 152.362,
+    "skipped": 0,
+    "test_counts_by_class": {
+      "tests.experiment.test_boundaries": 124,
+      "tests.persistence.test_application_security": 12,
+      "tests.persistence.test_evaluation_cli": 8,
+      "tests.persistence.test_experiment": 19,
+      "tests.persistence.test_freeze": 11,
+      "tests.persistence.test_local": 9,
+      "tests.persistence.test_sqlserver": 34,
+      "tests.persistence.test_web_queries": 14,
+      "tests.test_cli": 10,
+      "tests.test_construction": 80,
+      "tests.test_development_dataset": 32,
+      "tests.test_evaluation": 17,
+      "tests.test_gate_b_closure": 21,
+      "tests.test_operator": 60,
+      "tests.test_oracle_boundaries": 73,
+      "tests.test_oracle_qualification": 27,
+      "tests.test_runtime_evidence": 13,
+      "tests.test_validator_spike": 41,
+      "tests.web.test_app": 74,
+      "tests.web.test_presentation": 13,
+      "tools.sqlserver_environment.test_probe.TimestampTests": 4
+    },
+    "tests": 696
+  },
+  "junit_disposition": "Only aggregate counts/classes retained; raw XML test names may contain synthetic credential strings. No real credentials captured.",
+  "sql_enabled": true,
+  "verified_at": "2026-09-26T13:21:42.352137+02:00"
+}

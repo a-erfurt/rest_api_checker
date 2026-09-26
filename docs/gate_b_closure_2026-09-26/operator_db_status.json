@@ -1,0 +1,1 @@
+{"database": "rest_api_checker", "ledger": [[1, "001_application_schema.sql", "188a3df7dff73c93db132c27c4d7415ba2721181337e31c69587439af63c8ff6"], [2, "002_application_permissions.sql", "26603e3ab54f721ea0354c360486a15114017ea0002bcae17fc47b195daf590b"]], "version": 2}

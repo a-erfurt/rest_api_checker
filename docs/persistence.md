@@ -270,3 +270,19 @@ See [verification and acceptance matrix](persistence_verification_2026-09-26.md)
 for actual results, deferred portions and limitations. The existing full suite
 includes Oracle qualification and synthetic fixture construction tests; these
 are regression checks, not importer remeasurement of the released DEV data.
+
+## Qualified local application principal
+
+The 2026-09-26 [technical closure](gate_b_closure_2026-09-26/report.md) provisions
+`rac_application_login` → `rac_application_user` → migration-002 role
+`rac_application` in `rest_api_checker`. No schema/role grants were redesigned.
+The SQL-login password is generated locally and kept only in the external 0600
+application credential file. The retained admin credential is separate.
+See the [operator precedence](operator_convenience.md#applicationadmin-credential-separation-2026-09-26).
+
+The role's approved design permits source INSERTs and bounded runtime lifecycle
+UPDATEs as well as SELECT; it denies evidence DELETE and schema modification.
+Immutability/lifecycle validation additionally resides in the transactional
+repository. It is not claimed that direct SQL credentials alone make every
+operational column immutable. Administrative database/migration/security/backup
+permissions were tested as denied using disposable resources.

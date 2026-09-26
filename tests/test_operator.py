@@ -321,7 +321,7 @@ def test_preflight_actual_backend_stays_blocked(config, capsys):
     result = json.loads(capsys.readouterr().out)
     assert result['status'] == 'BLOCKED'
     assert not result['inference_performed']
-    assert sum(c['status'] == 'PASS' for c in result['checks']) == 8
+    assert sum(c['status'] == 'PASS' for c in result['checks']) == 9
 
 
 def test_gate_summary_preserves_fail_and_blocked(console):
@@ -409,3 +409,33 @@ def test_advanced_help_returns_to_menu(console, capsys, database):
     menu.advanced(console, database=database)
     assert 'usage: rest-api-checker' in capsys.readouterr().out
     assert 'Examples:' in console.file.getvalue()
+
+
+def test_application_admin_credential_routing(config,tmp_path,monkeypatch):
+    from dataclasses import replace
+    admin=tmp_path/'admin.env'
+    admin.write_text(f'RAC_SQL_PASSWORD={SECRET}\nRAC_SQL_PORT=14339\n')
+    admin.chmod(0o600)
+    config=replace(config,admin_env_file=admin)
+    for command in (['db','migrate'],['db','backup'],['db','init'],['experiment','demo']):
+        args=op.cli_args(config,command)
+        assert args[args.index('--env-file')+1]==str(admin)
+    for command in (['preflight'],['db','status'],['db','import-dev'],['dataset','list'],['experiment','run','1'],['evaluate','list']):
+        args=op.cli_args(config,command)
+        assert args[args.index('--env-file')+1]==str(config.env_file)
+    explicit=replace(config,explicit_env_file=True)
+    args=op.cli_args(explicit,['db','backup'])
+    assert args[args.index('--env-file')+1]==str(config.env_file)
+    config.env_file.unlink()
+    with pytest.raises(cfg.OperatorError): op.cli_args(config,['dataset','list'])
+
+
+def test_admin_config_precedence_and_roundtrip(config,tmp_path,monkeypatch):
+    admin=tmp_path/'admin.env'; admin.write_text('private fixture'); admin.chmod(0o600)
+    monkeypatch.setenv('RAC_ADMIN_ENV_FILE',str(admin))
+    loaded=cfg.load(SimpleNamespace())
+    assert loaded.admin_env_file==admin and not loaded.explicit_env_file
+    cfg.save(loaded)
+    assert cfg.load(SimpleNamespace()).admin_env_file==admin
+    explicit=cfg.load(SimpleNamespace(env_file=str(config.env_file)))
+    assert explicit.explicit_env_file

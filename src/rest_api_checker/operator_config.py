@@ -1,5 +1,5 @@
 """Small, non-secret defaults for the optional operator launcher only."""
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import json
 import os
 from pathlib import Path
@@ -24,11 +24,14 @@ class Config:
     compose_project: str = 'rac-sql-env-20260926'
     host: str = '127.0.0.1'
     port: int = 8000
+    admin_env_file: Path | None = None
+    # Explicit --env-file remains authoritative for the current command.
+    explicit_env_file: bool = False
 
 
 ENV = dict(root='RAC_ROOT', research='RAC_RESEARCH', env_file='RAC_ENV_FILE',
            database='RAC_DATABASE', container='RAC_CONTAINER', compose_project='RAC_COMPOSE_PROJECT',
-           host='RAC_WEB_HOST', port='RAC_WEB_PORT')
+           host='RAC_WEB_HOST', port='RAC_WEB_PORT', admin_env_file='RAC_ADMIN_ENV_FILE')
 
 
 def config_path():
@@ -55,8 +58,10 @@ def load(overrides):
                       os.environ.get(alias) if alias else None, values.get(key), defaults.get(key))
         values[key] = next((value for value in candidates if value is not None), None)
     try:
-        for key in ('root', 'research', 'env_file'):
+        for key in ('root', 'research', 'env_file', 'admin_env_file'):
             value = values[key]
+            if key == 'admin_env_file' and value is None:
+                continue
             if key == 'research' and value is None:
                 value = values['root'].parent/'bachelor_rest_api_checker'
             values[key] = Path(value).expanduser().resolve()
@@ -73,7 +78,21 @@ def load(overrides):
         raise OperatorError('Invalid local defaults: check paths, database/container names, loopback host and port.') from None
     if explicit_credentials and not values['env_file'].is_file():
         raise OperatorError('Configured credentials file is missing. Update its path with --env-file or in config.toml.')
-    return Config(**values)
+    return Config(**values, explicit_env_file=getattr(overrides, 'env_file', None) is not None)
+
+
+def for_command(config, command):
+    """Route only explicit administrative actions; ordinary operations use env_file.
+
+    Older configurations without admin_env_file retain their previous behavior.
+    No application operation ever falls back to administrative credentials.
+    """
+    administrative = (command[:2] == ['experiment','demo'] or
+        len(command)>1 and command[0]=='db' and command[1] in
+        ('init','migrate','create-test','destroy-test','backup','restore-test'))
+    if administrative and config.admin_env_file is not None and not config.explicit_env_file:
+        return replace(config, env_file=config.admin_env_file)
+    return config
 
 
 def credentials(config):
@@ -105,6 +124,8 @@ def save(config):
         with path.open('x') as stream:
             for key in ENV:
                 value = getattr(config, key)
+                if value is None:
+                    continue
                 stream.write(f'{key} = {json.dumps(str(value) if isinstance(value, Path) else value)}\n')
     except FileExistsError:
         raise OperatorError('Config already exists; edit its non-secret settings explicitly. Nothing was overwritten.') from None

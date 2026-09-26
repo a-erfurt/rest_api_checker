@@ -16,3 +16,6 @@ artifacts/development_dataset_v1*/
 # Disposable SQL probes: credentials and backups must stay outside Git.
 tools/sqlserver_environment/*.env
 *.bak
+
+# Hash-bound freeze candidate generated AFTER its immutable execution code commit.
+artifacts/gate_b_freeze_candidate_v1/

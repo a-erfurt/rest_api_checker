@@ -1,0 +1,13 @@
+{
+  "status": "AUTHOR DECISION REQUIRED",
+  "protocol_requires_induced_crash_oom": false,
+  "crash_oom_observed": false,
+  "ambiguous_failure_policy": "RETAIN_AND_BLOCK_ADJUDICATION",
+  "accepted_option": null,
+  "options": {
+    "A": "Accept bounded failure qualification and explicitly document genuine worker crash/OOM as unobserved.",
+    "B": "Require a separately scoped safe real-runtime worker diagnostic; establish exclusive process ownership and reversible tooling support first. No host OOM is authorized."
+  },
+  "protocol": "03_research_design/prompt_development_protocol_v1.md sections 7 and 10",
+  "interpretation": "Crash/OOM is an example of explicit runtime failure, not a required induced-failure test. Technical classification qualification and author acceptance of its limitations remain distinct."
+}

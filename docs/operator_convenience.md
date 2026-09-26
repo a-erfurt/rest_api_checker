@@ -119,3 +119,36 @@ and remains read-only.
 See [verification record](operator_verification_2026-09-26.md). Unit tests mock container
 mutations and browser launch. SQL tests use only the existing opt-in disposable test
 environment. No real Ollama inference or real experiment schedule is dispatched.
+
+## Application/admin credential separation (2026-09-26)
+
+Local `~/.config/rest-api-checker/config.toml` now binds `env_file` to
+`~/.config/rest-api-checker/application-credentials.env` (0600, dedicated
+`rac_application_login`). `admin_env_file` retains
+`/private/tmp/rac-sqlserver-environment-20260926/credentials.env` unchanged.
+Neither file belongs in Git. Keep the retained administrative file available for
+explicit administration; its current temporary-directory location is not a
+backup policy.
+
+Normal `rac` inspection, preflight, experiment/evaluation reads and web use the
+application file. Only explicit `db init`, `migrate`, `create-test`,
+`destroy-test`, `backup`, `restore-test`, and the disposable `experiment demo`
+route to `admin_env_file`. Docker lifecycle commands keep their existing behavior.
+Normal operations never fall back to admin credentials after a permission error.
+The web remains SELECT-only by implementation; the shared application principal
+also has the runtime writes granted by migration 002. No extra web principal was
+introduced.
+
+For each configuration key the precedence is explicit launcher option, `RAC_*`
+environment (including existing web aliases), local TOML, then default. Credential
+routing is applied after this resolution: the admin binding is selected only for
+the listed commands. An explicit `--env-file` overrides routing for that command.
+`RAC_ENV_FILE` selects the normal application binding; `RAC_ADMIN_ENV_FILE` selects
+the administrative binding. Legacy configs without an admin binding keep their
+previous single-file behavior. The original `rest-api-checker --env-file ...`
+commands are unchanged and remain fully explicit.
+
+The menu and existing run/resume commands retain their fabricated-only guards.
+The separate, acceptance-gated comparison adapter is documented in the
+[technical closure report](gate_b_closure_2026-09-26/report.md). Preparing the
+candidate or opening the web UI never schedules an experiment.

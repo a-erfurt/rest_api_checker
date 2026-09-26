@@ -1,0 +1,97 @@
+{
+  "config_rows": [
+    {
+      "draft_num_predict": 0,
+      "id": 1,
+      "min_p": "0.000",
+      "num_ctx": 32768,
+      "num_predict": 512,
+      "repeat_last_n": 64,
+      "repeat_penalty": "1.000",
+      "stream": false,
+      "temperature": "0.200",
+      "think": false,
+      "timeout_seconds": 300,
+      "top_k": 40,
+      "top_p": "0.900"
+    },
+    {
+      "draft_num_predict": 0,
+      "id": 2,
+      "min_p": "0.000",
+      "num_ctx": 32768,
+      "num_predict": 512,
+      "repeat_last_n": 64,
+      "repeat_penalty": "1.000",
+      "stream": false,
+      "temperature": "0.200",
+      "think": null,
+      "timeout_seconds": 300,
+      "top_k": 40,
+      "top_p": "0.900"
+    },
+    {
+      "draft_num_predict": 0,
+      "id": 3,
+      "min_p": "0.000",
+      "num_ctx": 32768,
+      "num_predict": 512,
+      "repeat_last_n": 64,
+      "repeat_penalty": "1.000",
+      "stream": false,
+      "temperature": "0.200",
+      "think": null,
+      "timeout_seconds": 300,
+      "top_k": 40,
+      "top_p": "0.900"
+    }
+  ],
+  "configs": {
+    "gemma3:27b": 2,
+    "mistral-small3.2:24b": 3,
+    "qwen3.6:27b": 1
+  },
+  "experiments": 0,
+  "model_rows": [
+    {
+      "architecture": "qwen35",
+      "context_length": 262144,
+      "digest": "9d5803d493a991af27b9441c098aa56f2ed7bbd260877f075ec09b575c049bc3",
+      "family": "qwen35",
+      "id": 1,
+      "metadata_file_id": 64,
+      "name": "qwen3.6:27b",
+      "parameters_b": "27.30",
+      "quantization": "Q4_K_M"
+    },
+    {
+      "architecture": "gemma3",
+      "context_length": 131072,
+      "digest": "a418f5838eaf7fe2cfe0a3046c8384b68ba43a4435542c942f9db00a5f342203",
+      "family": "gemma3",
+      "id": 2,
+      "metadata_file_id": 65,
+      "name": "gemma3:27b",
+      "parameters_b": "27.40",
+      "quantization": "Q4_K_M"
+    },
+    {
+      "architecture": "mistral3",
+      "context_length": 131072,
+      "digest": "5a408ab55df5c1b5cf46533c368813b30bf9e4d8fc39263bf2a3338cfa3b895b",
+      "family": "mistral3",
+      "id": 3,
+      "metadata_file_id": 66,
+      "name": "mistral-small3.2:24b",
+      "parameters_b": "24.00",
+      "quantization": "Q4_K_M"
+    }
+  ],
+  "models": {
+    "gemma3:27b": 2,
+    "mistral-small3.2:24b": 3,
+    "qwen3.6:27b": 1
+  },
+  "predictions": 0,
+  "runs": 0
+}

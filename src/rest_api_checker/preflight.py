@@ -8,7 +8,7 @@ from .persistence.database import require
 from .persistence.importer import load_development, read_bound, PROMPT_HASHES
 from .persistence.inspection import bindings, status
 from .persistence.migrate import verify
-from . import runtime_evidence
+from . import runtime_evidence, gate_b_closure
 
 
 def check(root, research, repo=None, experiment_id=None):
@@ -85,12 +85,24 @@ def check(root, research, repo=None, experiment_id=None):
         runtime = {name: dict(status='FAIL', detail='Runtime evidence invalid: '+str(exc))
                    for name in ('Full model identities', 'Template and effective options',
                                 'Context fit', 'Failure attribution')}
+    try:
+        runtime.update(gate_b_closure.inspect(root, research))
+    except (ValueError, OSError, KeyError, TypeError, StopIteration) as exc:
+        runtime['Failure attribution'] = dict(status='FAIL', detail='Technical closure invalid: '+str(exc))
+    acceptance_detail = 'Complete setup/source closure, application-role deployment and author freeze acceptance pending'
+    from . import freeze
+    if (root/freeze.CANDIDATE).exists():
+        try:
+            freeze.verify_candidate(json.loads((root/freeze.CANDIDATE).read_bytes()), root, research, repo)
+            acceptance_detail = 'Complete source-bound candidate verified; NOT AUTHOR-ACCEPTED / DO NOT EXECUTE. Failure-limitation decision and hash-bound author acceptance pending.'
+        except (ValueError, OSError, KeyError, TypeError, StopIteration) as exc:
+            runtime['Gate-B artifact acceptance'] = dict(status='FAIL', detail='Freeze candidate invalid: '+str(exc))
     for name, detail in (
         ('Full model identities','Actual full manifests, Q4_K_M and runtime/hardware evidence not verified'),
         ('Template and effective options','Native templates, defaults, D07 support and thinking policy require measured evidence'),
         ('Context fit','Actual tokenizer/template-aware measurements for every complete request are absent'),
         ('Failure attribution','Real runtime-specific isolated/systematic failure evidence remains unverified'),
-        ('Gate-B artifact acceptance','Complete setup/source closure, application-role deployment and author freeze acceptance pending')):
+        ('Gate-B artifact acceptance',acceptance_detail)):
         checks.append(dict(check=name, **runtime.get(name, dict(status='BLOCKED',detail=detail))))
     return dict(gate='B',status='FAIL' if any(c['status']=='FAIL' for c in checks) else 'BLOCKED',
                 inference_performed=False,checks=checks)

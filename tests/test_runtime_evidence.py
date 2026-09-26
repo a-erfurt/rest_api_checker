@@ -5,7 +5,7 @@ import shutil
 
 import pytest
 
-from rest_api_checker import preflight, runtime_evidence
+from rest_api_checker import preflight, runtime_evidence, gate_b_closure
 from rest_api_checker.experiment.encoding import digest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,13 +40,16 @@ def test_no_capture_never_infers_readiness(tmp_path):
     assert runtime_evidence.inspect(tmp_path,tmp_path)=={}
 
 
-def test_captured_readiness_preserves_unqualified_failures_and_author_gate():
+def test_captured_readiness_preserves_limitations_and_author_gate():
     result=preflight.check(ROOT,RESEARCH)
     checks={c['check']:c['status'] for c in result['checks']}
     assert result['status']=='BLOCKED' and result['inference_performed'] is False
     for name in ('Full model identities','Template and effective options','Context fit'):
         assert checks[name]=='PASS'
-    assert checks['Failure attribution']==checks['Gate-B artifact acceptance']=='BLOCKED'
+    assert runtime_evidence.inspect(ROOT,RESEARCH)['Failure attribution']['status']=='BLOCKED'
+    closure=gate_b_closure.inspect(ROOT,RESEARCH)
+    assert checks['Failure attribution']==closure.get('Failure attribution',{'status':'BLOCKED'})['status']
+    assert checks['Gate-B artifact acceptance']=='BLOCKED'
 
 
 def test_evidence_byte_drift_rejected(capture):

@@ -4,21 +4,38 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
-Gate-B runtime qualification evidence captured on Ollama 0.34.4; see the
-[qualification report](runtime_qualification_2026-09-26/report.md). Preflight now
-validates source-bound model identities/Q4_K_M, native templates and effective
-D07 options, and exact native render/tokenize-only context measurements:
-**9 PASS / 2 BLOCKED / 0 FAIL** with SQL. Maximum input counts are 1426/1461/1481
-for Qwen/Gemma/Mistral; all 324 scheduled request identities fit with 512 output
-tokens. Nine fabricated diagnostic completions verified all three seeds; no study
-generation occurred. Genuine runtime crash/OOM attribution and Gate-B artifact
-acceptance remain blocked. The application role has no members; the current
-administrative connection is unsuitable for study execution.
+Final technical Gate-B closure is prepared on `chore/gate-b-closure-freeze`;
+see the [closure report](gate_b_closure_2026-09-26/report.md). Dedicated application
+login/user/role membership and separated local application/admin credentials are
+provisioned without schema or scientific changes. Actual permission tests use
+disposable databases. Three qualified model/configuration bindings are registered;
+the real application database has zero experiments, runs, attempts, predictions
+and reports.
 
-Frozen inputs and the research repository are unchanged. The application database
-still contains zero experiments, runs, attempts, predictions and reports. No
-prompt winner, sensitivity or main evaluation; no author acceptance. Runtime
-snapshot validation does not replace per-attempt live identity verification.
+Bounded failure attribution now validates protocol-bound measured evidence and
+SQL qualification; genuine worker crash/OOM remains unobserved and requires an
+explicit author limitation decision. The measured technical SQL preflight is
+**10 PASS / 1 BLOCKED / 0 FAIL**; final suite **696 passed**, no failures/skips.
+The final candidate verification receipt is beside the generated
+candidate. Final Gate-B author acceptance remains blocked. The historical runtime
+capture (Ollama 0.34.4, Q4_K_M, exact native-token context for all 324 identities)
+is unchanged. No semantic generation was added.
+
+The ignored `artifacts/gate_b_freeze_candidate_v1/candidate.json` is constructed
+after committing its code/evidence so it can bind the exact execution commit.
+It remains **NOT AUTHOR-ACCEPTED / DO NOT EXECUTE**. Its separate acceptance-gated
+adapter validates live identities and pauses technical failures for spool-bound
+review. No acceptance record, real schedule, prompt winner, sensitivity or main
+evaluation was created. Frozen scientific inputs and research working-tree edits
+were preserved.
+
+### Previous runtime qualification milestone (historical)
+
+The runtime evidence pass closed model identity, template/options and exact
+context fit: **9 PASS / 2 BLOCKED / 0 FAIL**. Nine fabricated native-model
+completions verified the seeds; no study generation. At that milestone the
+application role had zero members and the operational credentials were admin.
+See the [runtime report](runtime_qualification_2026-09-26/report.md).
 
 ### Previous operator-convenience milestone (historical)
 

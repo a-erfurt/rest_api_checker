@@ -13,7 +13,7 @@ import webbrowser
 import pyodbc
 
 from . import cli, terminal
-from .operator_config import ENV, OperatorError, credentials, load, save
+from .operator_config import ENV, OperatorError, credentials, for_command, load, save
 from .persistence.database import connect
 from .persistence.inspection import portable
 
@@ -38,6 +38,7 @@ Use rest-api-checker --help for authoritative research/admin commands.
 
 
 def cli_args(config, command, *, plain=False, json_output=False):
+    config = for_command(config, command)
     result = ['--root', str(config.root), '--research', str(config.research), '--database', config.database]
     # Offline preflight remains available without credentials, as in the original CLI.
     if command[0] != 'preflight' or config.env_file.exists():
