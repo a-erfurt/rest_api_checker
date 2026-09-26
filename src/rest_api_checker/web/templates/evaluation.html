@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% from "macros.html" import metric, experiment_selector, technical %}
+{% block content %}
+<header class="page-heading">
+  <div><h1>Evaluation</h1><p class="context">Completed, persisted evaluation reports. Development results remain excluded from final evaluation headline metrics.</p></div>
+  <div class="secondary-controls">{{ experiment_selector(experiments, selected_experiment) }}</div>
+</header>
+
+<nav class="tabs" aria-label="Prompt candidate">
+{% for candidate in (evaluation.prompts if evaluation else []) %}
+  <a href="{{ query_url(prompt=candidate) }}" {% if candidate == evaluation.prompt %}aria-current="page" class="active"{% endif %}>{{ candidate }}</a>
+{% else %}
+  {% for candidate in ('P1', 'P2', 'P3') %}<span {% if candidate == 'P1' %}class="active" aria-current="page"{% endif %}>{{ candidate }}</span>{% endfor %}
+{% endfor %}
+</nav>
+
+{% if not evaluation %}
+<section class="empty-state" role="status">
+  <h2>Evaluation not available yet</h2>
+  <p>{{ evaluation_unavailable_reason|default('A completed experiment and an existing persisted evaluation report are required. Reports are created explicitly through the CLI.') }}</p>
+  {% if experiment %}
+  <dl class="operational-summary">
+    <div><dt>Progress</dt><dd>{{ experiment.completed }} / {{ experiment.planned }}{% if experiment.planned %} · {{ '%.1f'|format(100 * experiment.completed / experiment.planned) }}%{% endif %}</dd></div>
+    <div><dt>! Parser failures</dt><dd>{{ experiment.parser_failure }}</dd></div>
+    <div><dt>⚠ Technical failures</dt><dd>{{ experiment.technical_failure }}</dd></div>
+  </dl>
+  <p><a href="/overview?experiment={{ selected_experiment }}">View experiment progress</a> · <a href="/runs?experiment={{ selected_experiment }}">Inspect runs and failures</a></p>
+  {% endif %}
+</section>
+{% else %}
+{% if evaluation.fabricated %}<p class="notice warning" role="note"><strong>FABRICATED / TEST DATA.</strong> These values and any selection are demonstration results, not study findings.</p>{% endif %}
+<div class="evaluation-selection">
+  <p>Selected prompt{% if evaluation.fabricated %} (demo only){% endif %}: <strong>{{ evaluation.selected_prompt or 'Not available — no selection recorded' }}</strong>
+  {% if evaluation.selected_prompt and report.selection_decided_by %}<span class="muted"> · decided by {{ report.selection_decided_by }}</span>{% endif %}</p>
+</div>
+<section class="metrics metrics-five" aria-label="{{ evaluation.prompt }} primary metrics">
+  {% for name in evaluation.metric_names %}{{ metric(name, evaluation.metrics[name]) }}{% endfor %}
+</section>
+
+<section class="section">
+  <div class="section-heading"><h2>{{ evaluation.prompt }} · Category correctness</h2><p class="muted">End-to-end correctness; all planned runs remain in the denominators.</p></div>
+  <div class="table-region"><table class="scientific-table category-matrix">
+    <caption class="sr-only">Model by category correctness for {{ evaluation.prompt }}</caption>
+    <thead><tr><th scope="col">Model</th>{% for category in evaluation.categories %}<th scope="col">{{ category|upper }}</th>{% endfor %}</tr></thead>
+    <tbody>{% for row in evaluation.rows %}<tr><th scope="row" title="{{ row.model }}">{{ row.name }}</th>{% for category in evaluation.categories %}<td>{{ row.cells[category]|ratio }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div>
+  <p class="table-note">C1 Response Status Conformance · C2 Response Media Type Conformance · C3 Response Body Schema Conformance</p>
+</section>
+
+<section class="section chart-section" aria-labelledby="chart-title">
+  <div class="section-heading"><h2 id="chart-title">{{ evaluation.chart_metric }} comparison</h2>
+  <form class="chart-controls secondary-controls" method="get" action="/evaluation">
+    {% if selected_experiment %}<input type="hidden" name="experiment" value="{{ selected_experiment }}">{% endif %}
+    <input type="hidden" name="prompt" value="{{ evaluation.prompt }}">
+    <label>View <select name="view">{% for key, label in (('models', 'Models'), ('prompts', 'Prompts'), ('categories', 'Categories')) %}<option value="{{ key }}" {% if key == evaluation.view %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+    <label>Metric <select name="metric">{% for name in evaluation.chart_metrics %}<option value="{{ name }}" {% if name == evaluation.chart_metric %}selected{% endif %}>{{ name }}</option>{% endfor %}</select></label>
+    <button type="submit">Apply view</button>
+  </form></div>
+  <p class="context">{{ evaluation.chart_caption }}</p>
+  <div class="chart-container"><canvas id="evaluation-chart" role="img" aria-label="Grouped bar chart of {{ evaluation.chart_metric }}. Exact values are available in the chart data table below."></canvas></div>
+  <p id="chart-unavailable" class="muted" hidden>Chart unavailable. Exact persisted values remain available in the tables.</p>
+  <details class="chart-data-table"><summary>Chart values and denominators</summary><div class="table-region"><table>
+    <thead><tr><th scope="col">Group</th>{% for dataset in evaluation.chart.data.datasets %}<th scope="col">{{ dataset.label }}</th>{% endfor %}</tr></thead>
+    <tbody>{% for label in evaluation.chart.data.labels %}{% set index = loop.index0 %}<tr><th scope="row">{{ label }}</th>{% for dataset in evaluation.chart.data.datasets %}<td>{{ dataset.counts[index] }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div></details>
+</section>
+
+<section class="section">
+  <h2>Model Comparison · {{ evaluation.prompt }}</h2>
+  <div class="table-region"><table><thead><tr><th scope="col">Model</th><th scope="col">C1</th><th scope="col">C2</th><th scope="col">C3</th><th scope="col">Reliability</th></tr></thead>
+    <tbody>{% for row in evaluation.rows %}<tr><th scope="row">{{ row.name }}</th>{% for category in evaluation.categories %}<td>{{ row.cells[category]|ratio }}</td>{% endfor %}<td>{{ row.diagnostic.reliability|ratio }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</section>
+
+<div class="evaluation-secondary">
+<section class="section">
+  <h2>Failure Summary</h2>
+  <p class="context">Terminal logical-run outcomes for {{ evaluation.prompt }}. Failures do not receive semantic predictions.</p>
+  <div class="table-region"><table><thead><tr><th scope="col">Model</th><th scope="col">✓ Valid</th><th scope="col">! Parser failure</th><th scope="col">⚠ Technical failure</th></tr></thead>
+    <tbody>{% for row in evaluation.rows %}<tr><th scope="row">{{ row.name }}</th><td>{{ row.diagnostic.outcomes.get('valid', 0) }}</td><td>{{ row.diagnostic.outcomes.get('parser_failure', 0) }}</td><td>{{ row.diagnostic.outcomes.get('technical_failure', 0) }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</section>
+<section class="section">
+  <h2>Stability</h2>
+  <p class="context">Disagreement is conditional on complete valid triples. Coverage is shown separately; repeated failures are never stable predictions.</p>
+  <div class="table-region"><table><thead><tr><th scope="col">Model</th><th scope="col">Valid triples</th><th scope="col">Vector disagreement</th>{% for category in evaluation.categories %}<th scope="col">{{ category|upper }} disagreement</th>{% endfor %}</tr></thead>
+    <tbody>{% for row in evaluation.rows %}<tr><th scope="row">{{ row.name }}</th><td>{{ row.diagnostic.valid_triple_coverage|ratio }}</td><td>{{ row.diagnostic.repeat_disagreement.vector|ratio }}</td>{% for category in evaluation.categories %}<td>{{ row.diagnostic.repeat_disagreement[category]|ratio }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div>
+</section>
+</div>
+
+<section class="section">
+  <h2>Prompt Ranking Trace</h2>
+  <p class="context">Persisted deterministic ranking: maximize Score → Robust → StableCorrect → Reliability → FullCase, then minimize instruction byte length; final tie rule P1 → P2 → P3. Display rounding never decides selection.</p>
+  <div class="table-region"><table><thead><tr><th scope="col">Rank</th><th scope="col">Prompt</th>{% for name in evaluation.metric_names %}<th scope="col">{{ name }}</th>{% endfor %}<th scope="col">Length (bytes)</th><th scope="col">Tie order</th></tr></thead>
+    <tbody>{% for candidate in evaluation.ranking %}<tr><td>{{ loop.index }}</td><th scope="row">{{ candidate }}</th>{% for name in evaluation.metric_names %}<td>{{ report.metrics[candidate][name]|ratio }}</td>{% endfor %}<td>{{ report.metrics[candidate].Length }}</td><td>{{ report.metrics[candidate].Order }}</td></tr>{% else %}<tr><td colspan="9">No ranking recorded.</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% if evaluation.trace %}<ol class="ranking-trace">{% for step in evaluation.trace %}<li><strong>{{ step.criterion }}</strong>: {% for candidate, value in step['values'].items() %}<span class="mono">{{ candidate }} = {{ value }}</span>{% if not loop.last %}; {% endif %}{% endfor %} → remaining: {{ step.remaining|join(', ') }}</li>{% endfor %}</ol>{% endif %}
+</section>
+
+<details class="section detailed-diagnostics"><summary>Detailed diagnostics</summary>
+  <p class="context">Confusion matrices contain valid outputs only. Rows are reference states and columns are predicted states. Parser and technical failures are reported separately above.</p>
+  {% for row in evaluation.rows %}<details class="model-diagnostics"><summary>{{ row.name }} · confusion matrices and conditional correctness</summary>
+    <p>Valid-output coverage: <strong>{{ row.diagnostic.valid_coverage|ratio }}</strong></p>
+    <div class="confusion-grid">{% for category in evaluation.categories %}<div><h3>{{ category|upper }}</h3><div class="table-region"><table class="confusion-matrix">
+      <caption class="sr-only">{{ row.name }} {{ category|upper }} confusion matrix</caption>
+      <thead><tr><th scope="col">Reference ↓ / Prediction →</th>{% for verdict in evaluation.verdicts %}<th scope="col">{{ verdict }}</th>{% endfor %}</tr></thead>
+      <tbody>{% for reference in evaluation.verdicts %}<tr><th scope="row">{{ reference }}</th>{% for prediction in evaluation.verdicts %}<td>{{ row.diagnostic.confusion[category][reference][prediction] }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+    </table></div><p>Valid-only correctness: {{ row.diagnostic.valid_only[category]|ratio }}</p></div>{% endfor %}</div>
+    <h3>Correctness by repetition</h3><div class="table-region"><table><thead><tr><th scope="col">Repetition</th>{% for category in evaluation.categories %}<th scope="col">{{ category|upper }}</th>{% endfor %}</tr></thead>
+      <tbody>{% for repetition, values in row.diagnostic.per_repetition.items() %}<tr><th scope="row">{{ repetition }}</th>{% for category in evaluation.categories %}<td>{{ values[category]|ratio }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+    </table></div>
+  </details>{% endfor %}
+</details>
+{% if report_metadata %}{{ technical(report_metadata) }}
+{% else %}{{ technical({'Report format': report.get('format'), 'Experiment ID': report.get('experiment_id'), 'Evaluator SHA-256': report.get('evaluator_sha256'), 'Analysis input SHA-256': report.get('input_sha256')}) }}{% endif %}
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if evaluation %}<script defer src="{{ url_for('static', path='vendor/chart-4.4.8.umd.js') }}"></script><script type="application/json" id="chart-data">{{ evaluation.chart|tojson }}</script>{% endif %}
+{% endblock %}

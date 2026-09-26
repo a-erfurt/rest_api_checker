@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import status, pagination %}
+{% block content %}
+<nav class="tabs secondary-controls" aria-label="Data">{% for key in sections %}<a href="{{ scoped_url("/data/" ~ key) }}" {% if section == key %}aria-current="page"{% endif %}>{{ key|title }}</a>{% endfor %}</nav>
+<div class="page-heading"><div><p class="eyebrow">PERSISTED RESEARCH RECORDS</p><h1>{{ section|title }}</h1><p class="lede">{{ {'datasets':'Dataset identity, purpose and case membership.','cases':'Observed response evidence and its bound scientific context.','references':'Versioned C1 / C2 / C3 reference judgments and their original provenance.','artifacts':'Reproducibility records for models, prompts, configurations and evidence.'}[section] }}</p></div></div>
+{% if section == 'artifacts' %}<form method="get" class="artifact-selector secondary-controls">{% if selected_experiment %}<input type="hidden" name="experiment" value="{{ selected_experiment }}">{% endif %}<label for="kind">Record type</label><select id="kind" name="kind">{% for k in kinds %}<option value="{{ k }}" {% if k == kind %}selected{% endif %}>{{ {'configs':'Generation configurations','contracts':'OpenAPI contracts','experiments':'Experiment setups','reports':'Evaluation reports','files':'Archived files','models':'Models','prompts':'Prompts'}[k] }}</option>{% endfor %}</select><button type="submit">View</button></form>{% endif %}
+<div class="table-scroll"><table><thead><tr>
+{% if section == 'datasets' %}<th>Dataset</th><th>Version</th><th>Purpose</th><th class="number">Cases</th>
+{% elif section == 'cases' %}<th>Case</th><th>API</th><th>Family</th><th>Origin</th><th>Operation</th><th>C1</th><th>C2</th><th>C3</th>
+{% elif section == 'references' %}<th>Case</th><th>API</th><th>C1</th><th>C2</th><th>C3</th><th>Version</th>
+{% else %}<th>{{ kind|title }}</th><th>Context</th><th>Details</th>{% endif %}
+</tr></thead><tbody>
+{% for item in result['items'] %}<tr>
+{% set href = '/data/' ~ section ~ '/' ~ item.id ~ ('?kind=' ~ kind if section == 'artifacts' else '') %}
+{% if section == 'datasets' %}<td><a href="{{ scoped_url(href) }}">{{ item.name }}</a></td><td>{{ item.version }}</td><td>{{ item.purpose }}</td><td class="number">{{ item.case_count }}</td>
+{% elif section in ['cases','references'] %}<td><a href="{{ scoped_url(href) }}">{{ item.case }}</a></td><td>{{ item.api }}</td>{% if section == 'cases' %}<td>{{ item.family }}</td><td>{{ item.origin|replace('_',' ') }}</td><td class="operation">{{ item.operation }}</td>{% endif %}{% for c in ['c1','c2','c3'] %}<td>{{ status(item[c]) if item[c] else 'Not available' }}</td>{% endfor %}{% if section == 'references' %}<td>{{ item.version }}</td>{% endif %}
+{% else %}<td><a href="{{ scoped_url(href) }}">{{ item.name|default(item.title|default(kind|title ~ ' record')) }}</a></td><td>{% if kind == 'models' %}{{ item.family }} · {{ item.quantization }}{% elif kind == 'prompts' %}{{ item.strategy }}{% elif kind == 'contracts' %}OpenAPI {{ item.openapi_version }}{% elif kind == 'experiments' %}{{ item.kind }}{% elif kind == 'files' %}{{ item.size_bytes }} bytes{% elif kind == 'reports' %}{{ item.created_at }}{% elif kind == 'configs' %}Context {{ item.num_ctx }} · output {{ item.num_predict }}{% endif %}</td><td>{% if kind == 'models' %}{{ item.parameters_b if item.parameters_b is not none else 'Not available' }} B{% elif kind == 'prompts' %}{{ item.version }}{% elif kind == 'configs' %}Temperature {{ item.temperature }}{% else %}<a href="{{ scoped_url(href) }}">Inspect record →</a>{% endif %}</td>{% endif %}
+</tr>{% else %}<tr><td colspan="8" class="empty-cell">No {{ section }} records available.</td></tr>{% endfor %}
+</tbody></table></div>
+{{ pagination(result,query_url) }}
+{% if section == 'cases' %}<p class="note">Reference columns show the exact dataset-bound revision when unambiguous. Missing or differently bound revisions remain unavailable; all revisions are inspectable in References.</p>{% endif %}
+{% endblock %}

@@ -4,6 +4,34 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+Read-only FastAPI/Jinja2 research UI implemented on the authoritative evaluator
+CLI baseline `aa4001de1e311011f1ea264cd68e3213e8889963`. Overview, Evaluation,
+SQL-paginated Runs and dedicated evidence/Data detail pages consume persisted
+records and reports. No evaluator formula, selection rule, database schema or
+experiment protocol changed. See [web guide](web_ui.md) and
+[verification](web_ui_verification_2026-09-26.md).
+
+The web query layer issues SELECT statements only, rolls back request-owned
+connections and never calls execution, model inference, preflight execution or
+report creation. Incomplete experiments expose operational counts only; absent
+reports/selection/readiness stay unavailable. Local HTMX polls every 3 seconds;
+Chart.js displays stored metric values. Focus Mode, safe evidence viewers,
+responsive tables and print styles are included.
+
+Final verification: **579 passed**, including **71 SQL Server integration tests**,
+zero failures/errors/skips. The focused web suite also passed (**87 tests**)
+after the launcher environment-default review. Offline sdist/wheel packaging
+and console help passed. Chrome visual review used fabricated records at 1120,
+1440 and 2560-pixel widths, including Focus Mode and print preview.
+
+**No real study inference, comparison, sensitivity or main evaluation was
+executed. Frozen scientific inputs and the research repository were untouched.**
+The current UI supports the existing comparison report format. Future sensitivity
+or final-evaluation report formats require backend-defined presentation support.
+Live model/Gate-B readiness cannot be inferred from the current persisted schema.
+
+### Previous evaluation/CLI milestone (historical)
+
 Comparison evaluator, immutable analysis snapshots/reports and the argparse/Rich
 thesis CLI are implemented. See [CLI/evaluation design](evaluation_cli.md) and
 [verification](evaluation_verification_2026-09-26.md). New experiment setups bind
@@ -197,8 +225,7 @@ See `docs/validator_spike.md` for validator qualification details.
 - Actual Gate-B-approved prompt-development execution and sensitivity workflow.
 - Main experiment runner.
 - Reference-correction and sensitivity report workflows.
-- Result visualizations.
-- Web UI.
+- Presentation of future sensitivity/final-evaluation report formats.
 
 These are intentionally absent until required.
 

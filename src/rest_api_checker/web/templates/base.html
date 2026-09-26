@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="htmx-config" content='{"allowEval":false,"allowScriptTags":false,"selfRequestsOnly":true}'>
+  <title>{{ title }} · Research interface</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='app.css') }}">
+  <script defer src="{{ url_for('static', path='vendor/htmx-2.0.4.min.js') }}"></script>
+  {% block scripts %}{% endblock %}
+  <script defer src="{{ url_for('static', path='app.js') }}"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="brand"><a href="/">RestApiChecker</a><span class="brand-short" aria-hidden="true">R</span><span class="brand-caption">RESEARCH WORKSPACE</span></div>
+    <nav>
+      {% for key,label,letter,path in [('overview','Overview','O','/'),('evaluation','Evaluation','E','/evaluation'),('runs','Runs','R','/runs'),('data','Data','D','/data')] %}
+      <a href="{{ path }}{% if selected_experiment %}?experiment={{ selected_experiment }}{% endif %}" class="nav-link{% if page == key %} active{% endif %}" {% if page == key %}aria-current="page"{% endif %} title="{{ label }}"><span class="nav-letter" aria-hidden="true">{{ letter }}</span><span class="nav-label">{{ label }}</span></a>
+      {% endfor %}
+    </nav>
+    <div class="sidebar-foot"><p>Read-only interface<br><span>Execution remains CLI-only</span></p><button type="button" id="sidebar-toggle" aria-expanded="true" aria-label="Collapse sidebar">← <span class="nav-label">Collapse sidebar</span></button></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar secondary-controls"><span>Validation response contract inconsistencies <span class="separator">/</span> Research inspection</span><button type="button" id="focus-toggle" aria-pressed="false">Focus mode</button></header>
+    <button type="button" id="focus-exit" class="focus-exit">Exit focus mode</button>
+    <main id="main" class="page {% if page in ['runs','evaluation','data'] %}page-wide{% endif %}">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="page-footer">C1 · Response Status &nbsp; / &nbsp; C2 · Response Media Type &nbsp; / &nbsp; C3 · Response Body Schema<br>OpenAPI is the API-specific contract authority.</footer>
+  </div>
+</body>
+</html>

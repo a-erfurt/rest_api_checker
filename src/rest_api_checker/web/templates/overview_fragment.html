@@ -1,0 +1,22 @@
+{% from 'macros.html' import metric, run_table %}
+<div id="overview-live" {% if experiment and experiment.started_at and not experiment.finished_at and not unavailable|default(false) %}hx-get="/fragments/overview?experiment={{ experiment.id }}" hx-trigger="every 3s" hx-swap="outerHTML" hx-indicator="#poll-indicator"{% endif %}>
+{% if unavailable|default(false) %}<div class="notice" role="status"><h2>Database unavailable</h2><p>Polling paused. Reload the page after the database connection is restored. Previously shown values may be stale.</p></div>
+{% elif not experiment %}<section class="empty-state"><h2>No experiment data yet</h2><p>Experiments and study execution are managed through the CLI. Persisted experiment records will appear here.</p></section>
+{% else %}
+{% if experiment.fabricated %}<p class="fabricated">FABRICATED / TEST DATA — not study results</p>{% endif %}
+<div class="section-heading"><div><h2>{{ experiment.name }}</h2><p class="muted">{{ experiment.state }}{% if experiment.started_at and not experiment.finished_at %} · recorded as started and unfinished; worker activity is not verified{% endif %}</p></div><span id="poll-indicator" class="htmx-indicator" role="status">Loading…</span></div>
+{% if experiment.finished_at and experiment.pending == 0 and report and report.format == 'comparison-evaluation-v1' %}
+<dl class="metrics overview-completed">
+{{ metric('Selected Prompt', report.get('selected_prompt')) }}
+{% set m = report.metrics.get(report.get('selected_prompt'), {}) %}{{ metric('Score',m.get('Score')) }}{{ metric('Robust',m.get('Robust')) }}{{ metric('Reliability',m.get('Reliability')) }}{{ metric('FullCase',m.get('FullCase')) }}
+</dl><p class="note">{% if report.fabricated %}Demo-only selection. {% endif %}Values from the persisted evaluation report. <a href="/evaluation?experiment={{ experiment.id }}">View evaluation →</a></p>
+{% else %}
+<dl class="metrics"><div class="metric"><dt>Progress</dt><dd>{{ experiment.completed }} <span class="metric-denominator">/ {{ experiment.planned }}</span><small>{{ '%.1f'|format(experiment.completed / experiment.planned * 100) ~ '%' if experiment.planned else 'Not available' }}</small></dd></div>{{ metric('Valid',experiment.valid) }}{{ metric('Parser',experiment.parser_failure) }}{{ metric('Technical',experiment.technical_failure) }}</dl>
+{% if experiment.planned %}<progress value="{{ experiment.completed }}" max="{{ experiment.planned }}" aria-label="Completed logical runs">{{ experiment.completed }} / {{ experiment.planned }}</progress>{% endif %}
+{% if not experiment.started_at %}<p class="note">Experiment not started.</p>{% elif experiment.finished_at %}<p class="notice">Evaluation not available yet. {{ report_unavailable_reason|default('No supported completed report is available.') }} Selected Prompt, Score, Robust, Reliability and FullCase are not available.</p>{% endif %}
+{% endif %}
+<section><div class="section-heading"><h2>Recent runs</h2><a class="secondary-controls" href="/runs?experiment={{ experiment.id }}">All runs →</a></div>{{ run_table(recent_runs, compact=true) }}</section>
+{% if experiment.parser_failure or experiment.technical_failure %}<aside class="attention"><h3>Attention</h3><p>{% if experiment.parser_failure %}<a href="/runs?experiment={{ experiment.id }}&amp;status=parser_failure">! {{ experiment.parser_failure }} parser failure{{ 's' if experiment.parser_failure != 1 }}</a>{% endif %}{% if experiment.technical_failure %}<a href="/runs?experiment={{ experiment.id }}&amp;status=technical_failure">⚠ {{ experiment.technical_failure }} technical failure{{ 's' if experiment.technical_failure != 1 }}</a>{% endif %}</p></aside>{% endif %}
+<p class="poll-status note secondary-controls" role="status">{% if experiment.started_at and not experiment.finished_at %}Operational counts refresh every 3 seconds. Scientific evaluation is not computed here.{% else %}Polling stopped. This view shows persisted records.{% endif %}</p>
+{% endif %}
+</div>

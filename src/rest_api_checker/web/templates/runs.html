@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import run_table, pagination %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">SCIENTIFIC INSPECTION</p><h1>Runs</h1><p class="lede">Logical runs with parser and technical failures retained.</p></div></div>
+{% if experiment and experiment.fabricated %}<p class="fabricated">FABRICATED / TEST DATA — not study results</p>{% endif %}
+<form method="get" class="filters secondary-controls">
+<label>Experiment<select name="experiment">{% for e in experiments %}<option value="{{ e.id }}" {% if e.id == selected_experiment %}selected{% endif %}>{{ e.name }}</option>{% else %}<option>No experiments</option>{% endfor %}</select></label>
+<label>Model<select name="model"><option value="">All models</option>{% for m in options.models %}<option value="{{ m.id }}" {% if m.id == filters.model %}selected{% endif %}>{{ m.name|model_name }}</option>{% endfor %}</select></label>
+<label>Prompt<select name="prompt"><option value="">All prompts</option>{% for p in options.prompts %}<option value="{{ p.id }}" {% if p.id == filters.prompt %}selected{% endif %}>{{ p.name }}</option>{% endfor %}</select></label>
+<label>Status<select name="status"><option value="">All statuses</option>{% for s,label in [('valid','Valid'),('parser_failure','Parser failure'),('technical_failure','Technical failure'),('pending','Pending'),('attention','Failures')] %}<option value="{{ s }}" {% if s == filters.status %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<label>Search case<input name="search" value="{{ filters.search }}" placeholder="Case identifier" maxlength="128"></label><button type="submit">Apply filters</button>
+<details class="more-filters" {% if filters.repetition %}open{% endif %}><summary>More filters</summary><div><label>Repetition<input type="number" min="1" max="32767" name="repetition" value="{{ filters.repetition or '' }}"></label><label>Rows per page<select name="page_size">{% for n in [25,50,100] %}<option value="{{ n }}" {% if result.page_size == n %}selected{% endif %}>{{ n }}</option>{% endfor %}</select></label></div></details>
+</form>
+{{ run_table(result['items']) }}
+{{ pagination(result,query_url) }}
+<p class="note">Filters and pagination run on the server. A pending run has no terminal result; failures are never converted into semantic predictions.</p>
+{% endblock %}

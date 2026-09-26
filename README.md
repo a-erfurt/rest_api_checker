@@ -28,6 +28,16 @@ rest-api-checker --env-file /private/tmp/rac-sqlserver-environment-20260926/cred
 The demo owns a marked disposable SQL Server database. It never calls Ollama.
 See the [command tree, JSON, progress and resume guide](docs/evaluation_cli.md).
 
+The [read-only research web UI](docs/web_ui.md) presents Overview, Evaluation,
+Runs and Data using persisted records and immutable reports. Start it locally:
+
+```sh
+uv run --locked rest-api-checker-web --env-file /path/to/private/credentials.env --database rest_api_checker
+```
+
+Open **http://127.0.0.1:8000**. The UI cannot execute experiments or create reports.
+It includes operational polling, Focus Mode and browser print/PDF styles.
+
 ## Reproduce
 
 Python **3.12.14**, uv **0.12.17** used for the initial qualification. From this
