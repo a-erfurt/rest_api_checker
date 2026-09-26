@@ -19,3 +19,6 @@ tools/sqlserver_environment/*.env
 
 # Hash-bound freeze candidate generated AFTER its immutable execution code commit.
 artifacts/gate_b_freeze_candidate_v1/
+
+# Non-executable sensitivity candidate, generated after its preparation commit.
+artifacts/sensitivity_freeze_candidate_v1/

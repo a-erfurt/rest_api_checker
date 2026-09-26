@@ -4,6 +4,20 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+Candidate-only sensitivity preparation is available in `tools/sensitivity_freeze/prepare.py`.
+It reconstructs 108 approved P2_SENSITIVITY_V1 requests against the accepted
+comparison, measures native render/tokenizer context without completion calls,
+and hashes all database rows before/after SELECT-only inspection. The order is
+the P2 projection of the frozen comparison schedule, renumbered 1..108.
+The prompt approval is research commit `a54ec11b33d90722a482464dcda9823fdc50cf90`.
+
+The candidate remains NOT YET EXECUTABLE and needs exact-hash review. The existing
+execution allowlist and evaluator only support comparison; sensitivity execution
+and D11 paired evaluation adapters are unimplemented and explicit blockers.
+No evaluation logic or runtime policy is changed. See `sensitivity_freeze.md`.
+
+### Previous Gate-B preparation milestone (historical)
+
 Final technical Gate-B closure is prepared on `chore/gate-b-closure-freeze`;
 see the [closure report](gate_b_closure_2026-09-26/report.md). Dedicated application
 login/user/role membership and separated local application/admin credentials are
