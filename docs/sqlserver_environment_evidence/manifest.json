@@ -1,0 +1,138 @@
+{
+  "format": "sqlserver-environment-evidence-v1",
+  "recorded_at": "2026-09-25T22:57:57.618612+00:00",
+  "path_base": "technical_repository_root",
+  "files": [
+    {
+      "path": "docs/sqlserver_environment_evidence/00_docker_configuration.json",
+      "bytes": 176,
+      "sha256": "15542e905b12e463c0bcb0134d530ea0b60936310651acc559db7fbae8e83c1a"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/00_docker_versions.json",
+      "bytes": 1108,
+      "sha256": "f882f9009d8a7865c409aa97710cf888077abe2d3ad9d00c6994a3ca6e0260e1"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/01_initialize.json",
+      "bytes": 7055,
+      "sha256": "9036fad977b2deb2e7a41073597e73b8976ecd47eee3d81eefd07ad7dfb8efa4"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/02_probe_offset_correction.patch",
+      "bytes": 3041,
+      "sha256": "bae22cc1fed95aab4c7f87be08919f6562f1fe7a22f2c5e06680eb7acf8567eb"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/02_timestamp_diagnostic.json",
+      "bytes": 891,
+      "sha256": "1c7daa87c60699d388c9025c03605deb32e7c3dba264e2aab003c7bf0b1b51cd"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/03_native_roundtrip.json",
+      "bytes": 4588,
+      "sha256": "c55efa9b5908a20c4a5d3ca96a5c763c75fd18647bd1212e9774e9e0280da128"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/04_after_restart.json",
+      "bytes": 226,
+      "sha256": "bd1a98c0ac76a71e8f421c1b62129e470d578cca1c325351537d01600f88b3d7"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/04_before_restart.json",
+      "bytes": 216,
+      "sha256": "74d1ae0afbe01e87148aea978d0758ac7ca4372437d0ae68ab6356335ed9fc93"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/05_after_restart_roundtrip.json",
+      "bytes": 4588,
+      "sha256": "e3e79196ae048ad063065b6003d9c5ac3ba0d96a7b90dc47fec60187e5b9fe0b"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/06_resources.json",
+      "bytes": 523,
+      "sha256": "c21797c760b53f5ef81658fc15c590e6f003927582ab6ece54365a3137f89dd3"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/07_backup.json",
+      "bytes": 4741,
+      "sha256": "a9ed7e09895aaead9eec48c5ca3fed005a7c56b626902bba8e2f7a010957ed2e"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/08_backup_container_hashes.txt",
+      "bytes": 229,
+      "sha256": "f5432816bc5e2fba546bf1a883cf2f335209fde11afb49d12e2a46ba9da9b682"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/08_backup_host.json",
+      "bytes": 543,
+      "sha256": "481f9f5532f82e56bdde223f8c2018ab3fbbfc4a0d09354e3e1da2715225444d"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/09_restore.json",
+      "bytes": 4837,
+      "sha256": "c26cba045b8cf076aa7b859c105cbf3839db2ef9149c3b3b3bdbd82de47092c2"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/10_independent_unique_key.json",
+      "bytes": 1611,
+      "sha256": "d85bde201fd1972d07bb47d9269241af4d33d1c7138e1208f9435752f9822044"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/11_container_observations.json",
+      "bytes": 4218,
+      "sha256": "8460640b4fff23d38f7f5b229a2f995da489564eac56c6e2e82d982069a1011c"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/12_final_container_state.json",
+      "bytes": 225,
+      "sha256": "5fe6575fdd1d303bb1b89ea0bf9c9aaf08ba51319fede1d18530903a15607027"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/12_shutdown_tail.json",
+      "bytes": 3672,
+      "sha256": "9e0d8f3b4b08c615f383bde4a1e5528c07445aeab31de89c5e30df90ccb9dd54"
+    },
+    {
+      "path": "docs/sqlserver_environment_evidence/13_approval_verification.json",
+      "bytes": 3298,
+      "sha256": "4b2429f1f64d898d2b18d558e1e2252d7011f46ade625229cc69e2a0cc233cb1"
+    },
+    {
+      "path": "tools/sqlserver_environment/probe.py",
+      "bytes": 15553,
+      "sha256": "316636174ae61f06d906995ac06d27d52daf6f23e8c89c4139ddf9280e0b1e58"
+    },
+    {
+      "path": "tools/sqlserver_environment/test_probe.py",
+      "bytes": 1119,
+      "sha256": "91bf0c7be365d365331deea6579f723faa70245597e215b6f8035c93f5c80d91"
+    },
+    {
+      "path": "tools/sqlserver_environment/compose.yaml",
+      "bytes": 666,
+      "sha256": "46bbcf943e151dcc6063f4bbae60bb0d02f2672dfecf43e8ad987a489ceca20d"
+    },
+    {
+      "path": "tools/sqlserver_environment/README.md",
+      "bytes": 5027,
+      "sha256": "a6e13db1efe6ca59e54d192640d0b47636e44c0cf3ead3d2b681f3d787b171d9"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 568,
+      "sha256": "6146868eadb1778061c8805b22d5f1a8305d517919ad0b4e444e24a8cb251162"
+    },
+    {
+      "path": "uv.lock",
+      "bytes": 30550,
+      "sha256": "e6561aa379393d443af2957e434c520ab068f21e9473eedc3fcb63b355a224e8"
+    },
+    {
+      "path": "docs/sqlserver_environment_check_2026-09-26.md",
+      "bytes": 15349,
+      "sha256": "62a667ea1c3867c19b38aed39002b88fbf8dc28d6531cb2d52e52e0b3ab63c81"
+    }
+  ],
+  "scope": "Disposable fabricated SQL Server fixtures; no study execution; initial failed probe and operational limitations retained."
+}

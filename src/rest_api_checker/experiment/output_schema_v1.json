@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["c1", "c2", "c3"],
+  "additionalProperties": false,
+  "properties": {
+    "c1": {"$ref": "#/$defs/category"},
+    "c2": {"$ref": "#/$defs/category"},
+    "c3": {"$ref": "#/$defs/category"}
+  },
+  "$defs": {
+    "category": {
+      "type": "object",
+      "required": ["verdict", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "verdict": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE"]},
+        "reason": {"type": "string", "pattern": "\\S"}
+      }
+    }
+  }
+}

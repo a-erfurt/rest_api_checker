@@ -1,0 +1,123 @@
+{
+  "phase": "initialize",
+  "started_at": "2026-09-25T22:44:30.005125+00:00",
+  "python": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+  "host_architecture": "arm64",
+  "pyodbc": "5.3.0",
+  "endpoint": "127.0.0.1:14339",
+  "database": "rac_env_probe_20260926",
+  "tls": {
+    "Encrypt": "yes",
+    "TrustServerCertificate": "yes",
+    "scope": "this disposable localhost connection only"
+  },
+  "timestamp_transport": "Explicit ISO-8601 text conversion to/from DATETIMEOFFSET(7); compare all 7 fractional digits and original offset. No Python datetime microsecond truncation.",
+  "connection": "PASS",
+  "driver": {
+    "name": "libmsodbcsql.18.dylib",
+    "version": "18.07.0001",
+    "odbc_version": "03.52"
+  },
+  "engine": {
+    "version_string": "Microsoft SQL Server 2022 (RTM-CU27) (KB5104824) - 16.0.4295.3 (X64) \n\tAug 26 2026 11:02:22 \n\tCopyright (C) 2022 Microsoft Corporation\n\tDeveloper Edition (64-bit) on Linux (Ubuntu 22.04.5 LTS) <X64>",
+    "product_version": "16.0.4295.3",
+    "edition": "Developer Edition (64-bit)",
+    "cu": "CU27"
+  },
+  "connection_observation": [
+    "TCP",
+    "TRUE",
+    "SQL"
+  ],
+  "fixture_insert": "PASS",
+  "constraints": [
+    {
+      "check": "composite_fk_wrong_pair",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint \"fk_probe_pair\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_parent\". (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "unique_key",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', \"[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Violation of PRIMARY KEY constraint 'PK__probe_pa__3213E83F5A2AA758'. Cannot insert duplicate key in object 'dbo.probe_parent'. The duplicate key value is (1). (2627) (SQLExecDirectW)\")"
+    },
+    {
+      "check": "not_null_content",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', \"[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot insert the value NULL into column 'content', table 'rac_env_probe_20260926.dbo.probe_value'; column does not allow nulls. UPDATE fails. (515) (SQLExecDirectW)\")"
+    },
+    {
+      "check": "verdict_'pass'",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_'Pass'",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_'fail'",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_'not_applicable'",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_'PASS '",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_' PASS'",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_'PASS\\t'",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_'NOT_APPLICABLE '",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_''",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_'UNKNOWN'",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', '[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint \"ck_probe_verdict\". The conflict occurred in database \"rac_env_probe_20260926\", table \"dbo.probe_value\", column \\'verdict\\'. (547) (SQLExecDirectW)')"
+    },
+    {
+      "check": "verdict_None",
+      "result": "PASS",
+      "sqlstate": "23000",
+      "diagnostic": "('23000', \"[23000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot insert the value NULL into column 'verdict', table 'rac_env_probe_20260926.dbo.probe_value'; column does not allow nulls. UPDATE fails. (515) (SQLExecDirectW)\")"
+    }
+  ],
+  "commit_and_rollback": "PASS (new connection sees committed row; rolled-back insert/update absent)",
+  "result": "FAIL",
+  "error": "Timestamp/offset/100ns mismatch: '2026-09-26T07:29:15.1234567Z'",
+  "finished_at": "2026-09-25T22:44:30.543538+00:00"
+}

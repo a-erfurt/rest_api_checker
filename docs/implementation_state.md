@@ -1,8 +1,83 @@
 # Implementation State
 
-Last updated: 2026-09-22
+Last updated: 2026-09-26
 
 ## Current milestone
+
+Operation-scoped input renderer, strict final-output parser, Ollama client boundary,
+deterministic comparison scheduling and persistence orchestration implemented.
+See [stage design](experiment_stage.md) and
+[verification](experiment_verification_2026-09-26.md). Frozen format versions and
+artifact hashes are retained in `docs/experiment_evidence/` together with the
+non-dispatched 324-run schedule and released-input round-trip records.
+
+Exact P1/P2/P3 binding, reference-preserving closure, allowlist leakage prevention,
+all 27 parser-valid vectors, D07 requests, context/runtime blocking, byte-identical
+technical retries, recovery and SQL transaction boundaries are covered by focused
+tests. All provider results and runtime/token evidence in tests are FABRICATED.
+Final verification: **443 passed**, including **53 SQL Server integration tests**,
+zero failures/skips; Q01–Q26 remain green. Wheel packaging also passed.
+Only disposable SQL databases are used. No real model inference, study requests,
+comparison execution, sensitivity or Main Experiment has occurred.
+
+The approved research policies, prompt bytes, DEV manifest and Oracle semantics
+remain unchanged. No persistence schema or migration changes were needed. This
+stage made no research edits; research HEAD remains
+`050af6b214e167c737f09ee4c9a4d8dc3862981d`. An unrelated working-tree change to
+`01_sources/literature/literature.bib` appeared during the task and was left untouched.
+Actual runtime/model/template/context evidence, evaluator implementation and Gate-B
+acceptance remain outstanding; no study CLI or automatic batch dispatch exists.
+
+### Previous persistence milestone (historical)
+
+SQL Server schema/persistence implemented and verified on 2026-09-26 under the
+author's explicit authorization and acceptance of the qualified local emulation
+limitation. All 18 domain tables, 34 NO ACTION FKs, numbered checksum migrations,
+transactional repositories, released DEV/prompt import, recovery spool and
+disposable administration/backup helpers are present. The only physical design
+correction is VARCHAR(15) verdict storage with unchanged exact-token checks;
+SQL Server otherwise truncates a trailing blank at the old VARCHAR(14) boundary.
+Research `database_design_v1.md` §14 records the correction separately.
+
+Full verification: 300 tests passed, including 34 SQL Server integration tests,
+9 local persistence boundary tests, the existing 253-test scientific suite
+(including Q01–Q26) and 4 qualification converter tests. The released DEV importer
+does not execute the Oracle or construction code. DEV-01–DEV-12 and approved
+P1/P2/P3 round-trip exactly; re-import is idempotent. An application-schema backup
+copied outside the container was independently restored and all 19 tables matched.
+Only disposable databases and explicitly fabricated outcome fixtures were used.
+No persistent study database, model output or study run was created.
+
+See [`persistence.md`](persistence.md) and
+[`persistence_verification_2026-09-26.md`](persistence_verification_2026-09-26.md)
+for commands, evidence, passed/deferred acceptance coverage and remaining Gate B
+work. No Ollama call, model inference, comparison, sensitivity or final evaluation
+occurred. Stop at persistence; renderer/parser/orchestration remain separate work.
+The qualified container is running with its named volume and external backups.
+The historical exit-137 graceful-stop limitation remains documented; no new
+instability, corruption or restore failure was observed.
+
+### Previous environment milestone (historical)
+
+Bounded SQL Server environment qualification and existing prompt-approval record
+reconciliation completed; see
+[`sqlserver_environment_check_2026-09-26.md`](sqlserver_environment_check_2026-09-26.md).
+The seven requested local data/connection/restart/restore checks passed on the
+pinned SQL Server 2022 CU27 Developer image with native arm64 Python/ODBC.
+An initial timestamp text-conversion probe failure and its verified correction
+are retained. Exact Docker emulator settings remain unverified; final container
+stop reported exit 137 (not OOM), so graceful shutdown remains unqualified.
+This is limited compatibility evidence, not acceptance of the unsupported
+emulated deployment for study execution. The container is stopped; dedicated
+volume and external backup remain. No domain schema or persistence layer exists.
+
+Research O01 is resolved by recording the author's existing exact P1/P2/P3
+approval after matching all supplied byte lengths/hashes. Original approval time
+is unknown; the reconciliation recording date is 2026-09-26. Historical records,
+prompt bytes and D01–D11 remain unchanged. Gate B/final prompt freeze are incomplete.
+No study data import, Oracle/model execution or experiment occurred in this step.
+Only the four focused probe converter tests and the documented SQL fixture checks
+were run; the full Oracle-containing suite was intentionally not rerun.
 
 Development dataset v1 materialization complete: exactly DEV-01–DEV-12.
 Author approval recorded on 2026-09-22: DEV-01–DEV-12 manually reviewed (12/12)
@@ -93,13 +168,12 @@ See `docs/validator_spike.md` for validator qualification details.
 ## Not implemented
 
 - Final evaluation dataset generation/freeze.
-- Ollama runner.
-- Prompt rendering / structured LLM result parsing.
-- Prompt-development workflow.
+- Gate-B live runtime/model/template/context verification and acceptance.
+- Complete prompt-development execution/evaluation workflow.
 - Main experiment runner.
 - Evaluation metrics/report generation.
 - Result visualizations.
-- Database or web UI.
+- Web UI.
 
 These are intentionally absent until required.
 

@@ -1,9 +1,18 @@
-# REST API Reference Oracle
+# RestApiChecker research system
 
-Minimal technical milestone for **Evaluating LLM-Based Detection of Validation
-Response Contract Inconsistencies in REST APIs**. This deterministic component
+Experimental system for **Evaluating LLM-Based Detection of Validation
+Response Contract Inconsistencies in REST APIs**. Its deterministic Reference Oracle
 produces operational reference labels for later LLM evaluation. It is **not a
-competing baseline**, an experiment runner, or a general OpenAPI validator.
+competing baseline** or a general OpenAPI validator.
+
+The separately authorized SQL Server persistence stage is also implemented:
+[setup, migrations, import and recovery](docs/persistence.md),
+[verification and acceptance coverage](docs/persistence_verification_2026-09-26.md).
+It stores released evidence and fabricated integration fixtures; no LLM experiment
+has run. The bounded [renderer/parser/provider/orchestration stage](docs/experiment_stage.md)
+is now implemented, with a [non-dispatched 324-run schedule](docs/experiment_evidence/comparison_schedule_v1.json).
+See [verification and remaining Gate-B work](docs/experiment_verification_2026-09-26.md).
+Evaluation and study execution remain future stages. There is no study dispatch CLI.
 
 ## Reproduce
 
@@ -16,13 +25,29 @@ uv run --locked pytest -q
 uv run --locked pytest -v tests/test_oracle_qualification.py
 ```
 
-The lockfile pins all dependencies. Tests need no API service, model, research
-checkout, or network after installation. Materialization reads the separate pinned
+The lockfile pins all dependencies. The original scientific tests need no API
+service, model, research checkout, or network after installation. SQL integration
+tests are explicitly opt-in and require the qualified server and released source
+checkout; see the persistence guide. Materialization reads the separate pinned
 research checkout; its tests use temporary archives with test-only acquisition
 metadata. Both contract hashes are verified at
 session start, before fixture loading, and at session end. The committed copies
 are byte-identical to the research snapshots; tests never write to the research
 repository. Do not refresh them from a live service.
+
+The experiment-boundary tests also read the approved prompt artifacts and
+released DEV staging. They use fabricated provider responses and explicitly
+forbid real HTTP calls. Run all verification, including disposable SQL Server
+integration and the existing backup/restore test, with:
+
+```sh
+RAC_SQL_TEST_ENV=/private/tmp/rac-sqlserver-environment-20260926/credentials.env \
+RAC_SQL_TEST_BACKUP_DIR=/private/tmp/rac-sqlserver-persistence-20260926 \
+.venv/bin/python -m pytest tests tools/sqlserver_environment/test_probe.py -q
+```
+
+Without these environment variables, SQL/backup tests are skipped; that does not
+establish persistence acceptance. No command above sends an Ollama request.
 
 ## Public API
 
@@ -157,7 +182,8 @@ actual artifact and measured result when produced; mutation rejections also reta
 its control outcome and original fault intent. Rejected construction candidates
 are not admitted cases, even when their construction intent was a control.
 `OracleNotReady` and execution failures propagate without fabricated labels.
-Evidence is retained in memory; no persistence layer is introduced.
+The construction API retains evidence in memory. The separately implemented
+persistence importer archives already released artifacts without reconstruction.
 
 ## Development dataset v1
 
@@ -270,5 +296,18 @@ _write(output, 'release.json', _json(release))
 PY
 ```
 
-No final evaluation data, Ollama, prompts, database, UI, service source-code
-analysis, metrics or experiment execution is included.
+This materialization command does not create final evaluation data, prompts,
+database rows or experiment runs. Released-artifact SQL import is a separate
+command described in the persistence guide.
+
+## Disposable SQL Server environment check
+
+The separately authorized 2026-09-26 local compatibility probe is documented in
+[`docs/sqlserver_environment_check_2026-09-26.md`](docs/sqlserver_environment_check_2026-09-26.md).
+Its isolated Compose configuration, fabricated fixtures and safe cleanup steps are
+under [`tools/sqlserver_environment/`](tools/sqlserver_environment/README.md).
+The historical probe dependency group remains available; pyodbc is now also a
+runtime dependency of the persistence package. The probe itself creates only
+qualification fixtures. Deployment support, emulation configuration and graceful
+shutdown limitations remain explicit in the report. The later author-authorized
+schema/persistence stage is documented separately above.

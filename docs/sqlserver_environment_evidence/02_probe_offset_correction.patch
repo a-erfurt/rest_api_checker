@@ -1,0 +1,52 @@
+--- initial-probe.py
++++ tools/sqlserver_environment/probe.py
+@@ -15,0 +16 @@
++import struct
+@@ -41,0 +43,10 @@
++def decode_datetimeoffset(raw):
++    """Decode the SQL_SS_TIMESTAMPOFFSET struct without losing 100 ns precision."""
++    year, month, day, hour, minute, second, nanos, tz_hour, tz_minute = struct.unpack("<6hI2h", raw)
++    require(nanos % 100 == 0, "Timestamp is not representable at SQL's 100 ns precision")
++    offset = tz_hour * 60 + tz_minute
++    sign = "+" if offset >= 0 else "-"
++    return (f"{year:04}-{month:02}-{day:02}T{hour:02}:{minute:02}:{second:02}."
++            f"{nanos // 100:07}{sign}{abs(offset) // 60:02}:{abs(offset) % 60:02}")
++
++
+@@ -61,0 +73 @@
++    connection.add_output_converter(-155, decode_datetimeoffset)
+@@ -75 +87 @@
+-            v.text_value,v.config_value,CONVERT(varchar(40),v.captured_at,127),v.flag,v.verdict,
++            v.text_value,v.config_value,v.captured_at,v.flag,v.verdict,
+@@ -168,0 +181,18 @@
++def unique(settings, evidence):
++    """Exercise an independent UNIQUE key, not only primary-key uniqueness."""
++    with closing(connect(settings, DATABASE)) as cn:
++        cn.execute("CREATE TABLE #probe_unique (id int PRIMARY KEY, token varchar(16) NOT NULL UNIQUE)")
++        cn.execute("INSERT INTO #probe_unique VALUES (1,'same')")
++        cn.commit()
++        try:
++            cn.execute("INSERT INTO #probe_unique VALUES (2,'same')")
++        except pyodbc.IntegrityError as exc:
++            cn.rollback()
++            require(exc.args[0] == "23000" and "(2627)" in str(exc) and "UNIQUE KEY" in str(exc),
++                    "Unexpected unique-key diagnostic")
++            evidence["independent_unique_key"] = {"result": "PASS", "diagnostic": str(exc)}
++        else:
++            cn.rollback()
++            raise RuntimeError("Duplicate non-primary unique value accepted")
++
++
+@@ -172 +202,2 @@
+-        # A unique file is required by the documented external precheck; NOINIT never overwrites.
++        require(cn.execute("SELECT file_exists FROM sys.dm_os_file_exists(?)", BACKUP).fetchval() == 0,
++                "Refusing an existing backup file")
+@@ -199 +230 @@
+-    parser.add_argument("phase", choices=["initialize", "verify", "backup", "restore"])
++    parser.add_argument("phase", choices=["initialize", "verify", "unique", "backup", "restore"])
+@@ -209 +240 @@
+-        "timestamp_transport": "Explicit ISO-8601 text conversion to/from DATETIMEOFFSET(7); compare all 7 fractional digits and original offset. No Python datetime microsecond truncation."}
++        "timestamp_transport": "Explicit ISO-8601 input to DATETIMEOFFSET(7); native SQL_SS_TIMESTAMPOFFSET output converter preserves all 7 fractional digits and original offset. No UTC normalization or Python datetime microsecond truncation."}
+@@ -222 +253 @@
+-            {"initialize": initialize, "backup": backup, "restore": restore}[args.phase](settings, evidence)
++            {"initialize": initialize, "unique": unique, "backup": backup, "restore": restore}[args.phase](settings, evidence)

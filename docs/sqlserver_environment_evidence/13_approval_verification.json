@@ -1,0 +1,83 @@
+{
+  "result": "PASS",
+  "verified_at": "2026-09-25T22:52:25.702141+00:00",
+  "current_bindings": [
+    {
+      "path": "03_research_design/prompt_candidates_v1/p1_minimal_direct_v1.txt",
+      "sha256": "f451d8bdc89cb1f3d8a2b2dbc0c86fc490f3033d98a689a128e3f4069aad1cc6",
+      "bytes": 4325
+    },
+    {
+      "path": "03_research_design/prompt_candidates_v1/p2_structured_checklist_v1.txt",
+      "sha256": "50bfce7831530c7d63dd469ed82fb9acab755bedf4808ae5574775fc5505594f",
+      "bytes": 4996
+    },
+    {
+      "path": "03_research_design/prompt_candidates_v1/p3_explicit_contract_interpretation_v1.txt",
+      "sha256": "5561c7d953b7baf3bfcc72f7bfeeccec2c64f11b5b4989788e227270205a94fb",
+      "bytes": 5835
+    },
+    {
+      "path": "03_research_design/prompt_candidates_v1/common_semantic_core_v1.txt",
+      "sha256": "a46e5fa90bbb5df73c0791ced9773f1b26f95e3aefaf016a35bb141bb2bf1425",
+      "bytes": 3433
+    },
+    {
+      "path": "03_research_design/prompt_candidates_v1/common_output_contract_v1.txt",
+      "sha256": "8d4a90e722dcf96c2a5093a712408351be281aeabe2ea3c38d796786f3e5ed3f",
+      "bytes": 751
+    },
+    {
+      "path": "03_research_design/prompt_development_protocol_v1.md",
+      "sha256": "f1c8d7de8e1921a8b12f2bb46e948e488efb9a6369d7acdfc14d368864690c55",
+      "bytes": 67484
+    },
+    {
+      "path": "03_research_design/prompt_candidates_v1/semantic_equivalence_review_v1.md",
+      "sha256": "022715bc453d42e1d45d4bfcd48a7e9223373b95f9d73f59b8266efb58c2f530",
+      "bytes": 13480
+    },
+    {
+      "path": "03_research_design/prompt_candidates_v1/author_approval_reconciliation_2026-09-26.json",
+      "sha256": "c23016919655a89ab81e549db55f6d73bfd874b90543d1481b267aa2459e8698",
+      "bytes": 4331
+    }
+  ],
+  "historical_snapshots": [
+    {
+      "original_path": "03_research_design/prompt_candidates_v1/candidate_manifest_v1.json",
+      "archived_path": "03_research_design/prompt_candidates_v1/history/pre_reconciliation_2026-09-26/candidate_manifest_v1.json",
+      "sha256": "7e5fa8ccfd0abe764d9af007c30fcabb414ed4781137637b2b8f6b9e60420271",
+      "byte_length": 3635
+    },
+    {
+      "original_path": "03_research_design/prompt_development_protocol_v1.md",
+      "archived_path": "03_research_design/prompt_candidates_v1/history/pre_reconciliation_2026-09-26/prompt_development_protocol_v1.md",
+      "sha256": "62fd8e418bd0f5fc2b9c7de4322c189720a58b797978b6e597e939bcfcee8fbd",
+      "byte_length": 65730
+    },
+    {
+      "original_path": "03_research_design/prompt_candidates_v1/semantic_equivalence_review_v1.md",
+      "archived_path": "03_research_design/prompt_candidates_v1/history/pre_reconciliation_2026-09-26/semantic_equivalence_review_v1.md",
+      "sha256": "852d3fd4bb11d4f8c5d45f4ced682ca44cb5ddc049275235e90ac556a563a40f",
+      "byte_length": 12621
+    },
+    {
+      "original_path": "03_research_design/database_design_v1.md",
+      "archived_path": "03_research_design/prompt_candidates_v1/history/pre_reconciliation_2026-09-26/database_design_v1.md",
+      "sha256": "e3a6e566b333c791deef53bd83934c9337caa9dfe484e14c26b572b47f618be8",
+      "byte_length": 106912
+    }
+  ],
+  "unchanged_protocol_sections": [
+    1,
+    2,
+    3,
+    6,
+    7,
+    8,
+    9
+  ],
+  "gate_b_complete": false,
+  "original_approval_date": null
+}

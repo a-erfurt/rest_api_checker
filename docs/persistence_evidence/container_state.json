@@ -1,0 +1,1 @@
+{"state":{"Status":"running","Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":646,"ExitCode":0,"Error":"","StartedAt":"2026-09-25T23:49:20.56630701Z","FinishedAt":"2026-09-25T22:51:29.038932966Z"},"restart_count":0,"image":"mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090"}
