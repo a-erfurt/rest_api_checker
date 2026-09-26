@@ -38,6 +38,25 @@ uv run --locked rest-api-checker-web --env-file /path/to/private/credentials.env
 Open **http://127.0.0.1:8000**. The UI cannot execute experiments or create reports.
 It includes operational polling, Focus Mode and browser print/PDF styles.
 
+## Local operator shortcuts
+
+The optional `rac` launcher reuses the existing CLI and read-only web app:
+
+```sh
+uv run rac configure --env-file /path/to/existing/private/credentials.env
+uv run rac                 # arrows, Enter, numeric shortcuts; Ctrl-C exits
+uv run rac db start        # start/check the known container and existing schema
+uv run rac db stop         # stop only; preserve container, volumes and databases
+uv run rac web             # add --open to open the browser
+uv run rac preflight       # actual Gate-B status; never inference
+```
+
+Configuration lives in `~/.config/rest-api-checker/config.toml`; credential files
+remain external with mode **0600**. No normal startup initializes, migrates or
+imports data. `rest-api-checker` and `rest-api-checker-web` remain unchanged.
+See the [operator guide](docs/operator_convenience.md) for precedence, menus,
+diagnostics and verification limits.
+
 ## Reproduce
 
 Python **3.12.14**, uv **0.12.17** used for the initial qualification. From this
