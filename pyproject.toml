@@ -20,6 +20,7 @@ dependencies = [
 ]
 
 [project.scripts]
+rac = "rest_api_checker.operator:entrypoint"
 rest-api-checker = "rest_api_checker.cli:entrypoint"
 rest-api-checker-web = "rest_api_checker.web.app:main"
 

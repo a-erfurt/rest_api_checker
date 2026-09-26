@@ -4,6 +4,23 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+The bounded operator-convenience layer is implemented: `rac`, local non-secret
+defaults, known-container start/stop, existing web app launch, authoritative
+preflight and small POSIX menus. The original CLI/web entry points and scientific
+services are unchanged. See [operator guide](operator_convenience.md) and
+[verification](operator_verification_2026-09-26.md).
+
+Final suite: **637 passed**, zero failures/skips, including opt-in disposable SQL
+integration/backup-restore and SQL probe tests. Live checks found schema 2 ready,
+Gate B **6 PASS / 5 BLOCKED / 0 FAIL**, and HTTP 200 from the read-only web app.
+PTY checks covered arrows, Enter, numeric shortcuts, Back, Exit and Ctrl-C in
+plain and ANSI modes. Container mutations and browser opening were mock-tested.
+The prepared application DB retains 12 cases, 12 references, 3 prompts and zero
+experiments, runs, predictions or reports. No real inference or study execution;
+no frozen artifacts, research files or scientific semantics changed.
+
+### Previous read-only web milestone (historical)
+
 Read-only FastAPI/Jinja2 research UI implemented on the authoritative evaluator
 CLI baseline `aa4001de1e311011f1ea264cd68e3213e8889963`. Overview, Evaluation,
 SQL-paginated Runs and dedicated evidence/Data detail pages consume persisted
