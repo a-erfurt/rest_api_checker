@@ -1,0 +1,9 @@
+{
+  "logical_cpu_cores": "18",
+  "native_runner_version": "0.00.000.078 I srv  llama_server: initializing ...\nversion: 0.4.1-dev (build 1, commit 161755f29)\nbuilt with AppleClang 21.0.0.21000099 for Darwin arm64",
+  "physical_cpu_cores": "18",
+  "runtime_log_identity_lines": [
+    "time=2026-09-26T08:58:49.341+02:00 level=INFO source=routes.go:2065 msg=\"Listening on 127.0.0.1:11434 (version 0.34.4)\"",
+    "time=2026-09-26T08:58:49.874+02:00 level=INFO source=types.go:32 msg=\"inference compute\" id=0 filter_id=0 library=Metal compute=0.0 name=MTL0 description=\"Apple M5 Pro\" libdirs=\"\" driver=0.0 pci_id=\"\" type=iGPU total=\"51.8 GiB\" available=\"51.8 GiB\""
+  ]
+}

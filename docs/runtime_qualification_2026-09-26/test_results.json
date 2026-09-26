@@ -1,0 +1,48 @@
+{
+  "backup_restore_enabled": true,
+  "full": {
+    "errors": 0,
+    "failures": 0,
+    "original_junit_sha256": "87f7d7abb247e60bb48528b2f35681d632493b701153065de3fc1a4d758d2ff6",
+    "seconds": 137.684,
+    "skipped": 0,
+    "test_counts_by_class": {
+      "tests.experiment.test_boundaries": 124,
+      "tests.persistence.test_evaluation_cli": 8,
+      "tests.persistence.test_experiment": 19,
+      "tests.persistence.test_local": 9,
+      "tests.persistence.test_sqlserver": 34,
+      "tests.persistence.test_web_queries": 14,
+      "tests.test_cli": 10,
+      "tests.test_construction": 80,
+      "tests.test_development_dataset": 32,
+      "tests.test_evaluation": 17,
+      "tests.test_operator": 58,
+      "tests.test_oracle_boundaries": 73,
+      "tests.test_oracle_qualification": 27,
+      "tests.test_runtime_evidence": 13,
+      "tests.test_validator_spike": 41,
+      "tests.web.test_app": 74,
+      "tests.web.test_presentation": 13,
+      "tools.sqlserver_environment.test_probe.TimestampTests": 4
+    },
+    "tests": 650
+  },
+  "junit_disposition": "Generated XML replaced by counts/class summaries to omit parametrized synthetic credential strings from test names; no real credential was captured.",
+  "sql_enabled": true,
+  "targeted": {
+    "errors": 0,
+    "failures": 0,
+    "original_junit_sha256": "befb27c15dc8631be91b2c129ca66b2c31e1b9506d99d3b16fc2c8a758f35705",
+    "seconds": 1.005,
+    "skipped": 0,
+    "test_counts_by_class": {
+      "tests.experiment.test_boundaries": 124,
+      "tests.test_cli": 10,
+      "tests.test_operator": 58,
+      "tests.test_runtime_evidence": 13
+    },
+    "tests": 205
+  },
+  "verified_at": "2026-09-26T12:29:22.373551+02:00"
+}

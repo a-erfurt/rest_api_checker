@@ -1,0 +1,204 @@
+{
+  "application_timeout_seconds": 300,
+  "captured_at": "2026-09-26T12:16:05.347706+02:00",
+  "limitation": "No genuine Ollama crash/OOM induced or observed; their isolated/systematic attribution is not qualified.",
+  "results": [
+    {
+      "evidence_scope": "real_loopback_transport",
+      "holds": {
+        "ambiguous": "FAILURE_ATTRIBUTION_ambiguous",
+        "systematic": "FAILURE_ATTRIBUTION_systematic"
+      },
+      "name": "transport",
+      "outcomes": [
+        {
+          "attempt": 1,
+          "result": "technical_failure",
+          "retry_eligible": true
+        },
+        {
+          "attempt": 2,
+          "result": "technical_failure",
+          "retry_eligible": false
+        }
+      ],
+      "provider_code": "timeout",
+      "provider_kind": "TECHNICAL_FAILURE",
+      "transport": {
+        "complete": false,
+        "duration_ms": 7783,
+        "error_kind": "timeout",
+        "error_message": "[Errno 60] Operation timed out",
+        "headers": [],
+        "http_status": null
+      }
+    },
+    {
+      "evidence_scope": "isolated_synthetic_http_server",
+      "holds": {
+        "ambiguous": "FAILURE_ATTRIBUTION_ambiguous",
+        "systematic": "FAILURE_ATTRIBUTION_systematic"
+      },
+      "name": "timeout",
+      "outcomes": [
+        {
+          "attempt": 1,
+          "result": "technical_failure",
+          "retry_eligible": true
+        },
+        {
+          "attempt": 2,
+          "result": "technical_failure",
+          "retry_eligible": false
+        }
+      ],
+      "provider_code": "timeout",
+      "provider_kind": "TECHNICAL_FAILURE",
+      "transport": {
+        "complete": false,
+        "duration_ms": 51,
+        "error_kind": "timeout",
+        "error_message": "timed out",
+        "headers": [],
+        "http_status": null
+      }
+    },
+    {
+      "evidence_scope": "isolated_synthetic_http_server",
+      "holds": {
+        "ambiguous": "FAILURE_ATTRIBUTION_ambiguous",
+        "systematic": "FAILURE_ATTRIBUTION_systematic"
+      },
+      "name": "server",
+      "outcomes": [
+        {
+          "attempt": 1,
+          "result": "technical_failure",
+          "retry_eligible": true
+        },
+        {
+          "attempt": 2,
+          "result": "technical_failure",
+          "retry_eligible": false
+        }
+      ],
+      "provider_code": "HTTP_SERVER_FAILURE",
+      "provider_kind": "TECHNICAL_FAILURE",
+      "transport": {
+        "complete": true,
+        "duration_ms": 1,
+        "error_kind": null,
+        "error_message": null,
+        "headers": [
+          [
+            "Server",
+            "BaseHTTP/0.6 Python/3.12.14"
+          ],
+          [
+            "Date",
+            "Sat, 26 Sep 2026 10:16:03 GMT"
+          ],
+          [
+            "Content-Length",
+            "48"
+          ]
+        ],
+        "http_status": 500
+      }
+    },
+    {
+      "evidence_scope": "isolated_synthetic_http_server",
+      "holds": {},
+      "name": "parser",
+      "outcomes": [
+        {
+          "attempt": 1,
+          "result": "parser_failure",
+          "retry_eligible": false
+        },
+        {
+          "attempt": 2,
+          "result": "parser_failure",
+          "retry_eligible": false
+        }
+      ],
+      "provider_code": "COMPLETE_FINAL_CONTENT",
+      "provider_kind": "FINAL",
+      "transport": {
+        "complete": true,
+        "duration_ms": 1,
+        "error_kind": null,
+        "error_message": null,
+        "headers": [
+          [
+            "Server",
+            "BaseHTTP/0.6 Python/3.12.14"
+          ],
+          [
+            "Date",
+            "Sat, 26 Sep 2026 10:16:04 GMT"
+          ],
+          [
+            "Content-Length",
+            "59"
+          ]
+        ],
+        "http_status": 200
+      }
+    },
+    {
+      "evidence_scope": "isolated_synthetic_http_server",
+      "holds": {},
+      "name": "valid",
+      "outcomes": [
+        {
+          "attempt": 1,
+          "result": "valid",
+          "retry_eligible": false
+        },
+        {
+          "attempt": 2,
+          "result": "valid",
+          "retry_eligible": false
+        }
+      ],
+      "provider_code": "COMPLETE_FINAL_CONTENT",
+      "provider_kind": "FINAL",
+      "transport": {
+        "complete": true,
+        "duration_ms": 1,
+        "error_kind": null,
+        "error_message": null,
+        "headers": [
+          [
+            "Server",
+            "BaseHTTP/0.6 Python/3.12.14"
+          ],
+          [
+            "Date",
+            "Sat, 26 Sep 2026 10:16:04 GMT"
+          ],
+          [
+            "Content-Length",
+            "286"
+          ]
+        ],
+        "http_status": 200
+      }
+    },
+    {
+      "attribution": "systematic deliberately invalid configuration; no retry",
+      "evidence_scope": "actual_ollama_configuration_rejection_no_generation",
+      "http_status": 500,
+      "name": "invalid_option",
+      "provider_code": "HTTP_SERVER_FAILURE",
+      "provider_kind": "TECHNICAL_FAILURE",
+      "response": {
+        "error": "option \"top_k\" must be of type integer"
+      }
+    }
+  ],
+  "scope": "FABRICATED_RUNTIME_QUALIFICATION",
+  "sql_writes": 0,
+  "synthetic_timeout_seconds": 0.05
+}

@@ -321,7 +321,7 @@ def test_preflight_actual_backend_stays_blocked(config, capsys):
     result = json.loads(capsys.readouterr().out)
     assert result['status'] == 'BLOCKED'
     assert not result['inference_performed']
-    assert sum(c['status'] == 'PASS' for c in result['checks']) == 5
+    assert sum(c['status'] == 'PASS' for c in result['checks']) == 8
 
 
 def test_gate_summary_preserves_fail_and_blocked(console):

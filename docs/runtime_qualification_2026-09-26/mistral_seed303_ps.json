@@ -1,0 +1,42 @@
+{
+  "models": [
+    {
+      "context_length": 32768,
+      "details": {
+        "families": [
+          "mistral3"
+        ],
+        "family": "mistral3",
+        "format": "gguf",
+        "parameter_size": "24.0B",
+        "parent_model": "",
+        "quantization_level": "Q4_K_M"
+      },
+      "digest": "5a408ab55df5c1b5cf46533c368813b30bf9e4d8fc39263bf2a3338cfa3b895b",
+      "expires_at": "2026-09-26T12:23:58.225605+02:00",
+      "model": "mistral-small3.2:24b",
+      "name": "mistral-small3.2:24b",
+      "size": 19739191541,
+      "size_vram": 19739191541
+    },
+    {
+      "context_length": 32768,
+      "details": {
+        "families": [
+          "gemma3"
+        ],
+        "family": "gemma3",
+        "format": "gguf",
+        "parameter_size": "27.4B",
+        "parent_model": "",
+        "quantization_level": "Q4_K_M"
+      },
+      "digest": "a418f5838eaf7fe2cfe0a3046c8384b68ba43a4435542c942f9db00a5f342203",
+      "expires_at": "2026-09-26T12:23:36.913115+02:00",
+      "model": "gemma3:27b",
+      "name": "gemma3:27b",
+      "size": 18539547197,
+      "size_vram": 18539547197
+    }
+  ]
+}

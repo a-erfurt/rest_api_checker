@@ -1,0 +1,49 @@
+{
+  "captured_at": "2026-09-26T12:13:42.337189+02:00",
+  "classification": {
+    "code": "COMPLETE_FINAL_CONTENT",
+    "kind": "FINAL"
+  },
+  "content_bytes": 6,
+  "content_sha256": "3dfa3fb239f56c778a1e9b33eb31328349edd155a95806dac4378904e88527e5",
+  "envelope": {
+    "created_at": "2026-09-26T10:13:42.334297Z",
+    "done": true,
+    "done_reason": "stop",
+    "eval_count": 3,
+    "eval_duration": 127713000,
+    "load_duration": 4433997084,
+    "model": "gemma3:27b",
+    "prompt_eval_cached_count": 0,
+    "prompt_eval_count": 51,
+    "prompt_eval_duration": 490857000,
+    "total_duration": 5059055667
+  },
+  "request_sha256": "d0c364894f01926322e6c8be434fb269d6c901679a539329c2374322736de6ce",
+  "response_sha256": "2a1359465c3cf61e3c5f4cacae143ffee1d4edcb54c698f5061629721bd726a2",
+  "scope": "FABRICATED_RUNTIME_DIAGNOSTIC",
+  "thinking_bytes": 0,
+  "thinking_present": false,
+  "timeout_seconds": 300,
+  "transport": {
+    "complete": true,
+    "duration_ms": 5062,
+    "error_kind": null,
+    "error_message": null,
+    "headers": [
+      [
+        "Content-Type",
+        "application/json; charset=utf-8"
+      ],
+      [
+        "Date",
+        "Sat, 26 Sep 2026 10:13:42 GMT"
+      ],
+      [
+        "Content-Length",
+        "330"
+      ]
+    ],
+    "http_status": 200
+  }
+}

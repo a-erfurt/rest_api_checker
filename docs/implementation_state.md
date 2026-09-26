@@ -4,6 +4,24 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+Gate-B runtime qualification evidence captured on Ollama 0.34.4; see the
+[qualification report](runtime_qualification_2026-09-26/report.md). Preflight now
+validates source-bound model identities/Q4_K_M, native templates and effective
+D07 options, and exact native render/tokenize-only context measurements:
+**9 PASS / 2 BLOCKED / 0 FAIL** with SQL. Maximum input counts are 1426/1461/1481
+for Qwen/Gemma/Mistral; all 324 scheduled request identities fit with 512 output
+tokens. Nine fabricated diagnostic completions verified all three seeds; no study
+generation occurred. Genuine runtime crash/OOM attribution and Gate-B artifact
+acceptance remain blocked. The application role has no members; the current
+administrative connection is unsuitable for study execution.
+
+Frozen inputs and the research repository are unchanged. The application database
+still contains zero experiments, runs, attempts, predictions and reports. No
+prompt winner, sensitivity or main evaluation; no author acceptance. Runtime
+snapshot validation does not replace per-attempt live identity verification.
+
+### Previous operator-convenience milestone (historical)
+
 The bounded operator-convenience layer is implemented: `rac`, local non-secret
 defaults, known-container start/stop, existing web app launch, authoritative
 preflight and small POSIX menus. The original CLI/web entry points and scientific
@@ -238,7 +256,8 @@ See `docs/validator_spike.md` for validator qualification details.
 ## Not implemented
 
 - Final evaluation dataset generation/freeze.
-- Gate-B live runtime/model/template/context verification and acceptance.
+- Remaining Gate-B runtime-failure attribution, application-role/setup closure,
+  per-attempt live verification integration and final author acceptance.
 - Actual Gate-B-approved prompt-development execution and sensitivity workflow.
 - Main experiment runner.
 - Reference-correction and sensitivity report workflows.

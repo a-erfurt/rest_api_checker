@@ -1,0 +1,26 @@
+{
+  "messages": [
+    {
+      "content": "DIAGNOSTIC RUNTIME QUALIFICATION. Fabricated non-study content. Reply with the word READY only.",
+      "role": "system"
+    },
+    {
+      "content": "Fabricated diagnostic: purple teapot 7301.",
+      "role": "user"
+    }
+  ],
+  "model": "mistral-small3.2:24b",
+  "options": {
+    "draft_num_predict": 0,
+    "min_p": 0.0,
+    "num_ctx": 32768,
+    "num_predict": 512,
+    "repeat_last_n": 64,
+    "repeat_penalty": 1.0,
+    "seed": 202,
+    "temperature": 0.2,
+    "top_k": 40,
+    "top_p": 0.9
+  },
+  "stream": false
+}
