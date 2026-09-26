@@ -5,6 +5,12 @@ Response Contract Inconsistencies in REST APIs**. This deterministic component
 produces operational reference labels for later LLM evaluation. It is **not a
 competing baseline**, an experiment runner, or a general OpenAPI validator.
 
+The separately authorized SQL Server persistence stage is also implemented:
+[setup, migrations, import and recovery](docs/persistence.md),
+[verification and acceptance coverage](docs/persistence_verification_2026-09-26.md).
+It stores released evidence and fabricated integration fixtures; no LLM experiment
+has run. Renderer, parser, provider dispatch and evaluation remain future stages.
+
 ## Reproduce
 
 Python **3.12.14**, uv **0.12.17** used for the initial qualification. From this
@@ -16,8 +22,10 @@ uv run --locked pytest -q
 uv run --locked pytest -v tests/test_oracle_qualification.py
 ```
 
-The lockfile pins all dependencies. Tests need no API service, model, research
-checkout, or network after installation. Materialization reads the separate pinned
+The lockfile pins all dependencies. The original scientific tests need no API
+service, model, research checkout, or network after installation. SQL integration
+tests are explicitly opt-in and require the qualified server and released source
+checkout; see the persistence guide. Materialization reads the separate pinned
 research checkout; its tests use temporary archives with test-only acquisition
 metadata. Both contract hashes are verified at
 session start, before fixture loading, and at session end. The committed copies
@@ -157,7 +165,8 @@ actual artifact and measured result when produced; mutation rejections also reta
 its control outcome and original fault intent. Rejected construction candidates
 are not admitted cases, even when their construction intent was a control.
 `OracleNotReady` and execution failures propagate without fabricated labels.
-Evidence is retained in memory; no persistence layer is introduced.
+The construction API retains evidence in memory. The separately implemented
+persistence importer archives already released artifacts without reconstruction.
 
 ## Development dataset v1
 
@@ -270,8 +279,9 @@ _write(output, 'release.json', _json(release))
 PY
 ```
 
-No final evaluation data, Ollama, prompts, database, UI, service source-code
-analysis, metrics or experiment execution is included.
+This materialization command does not create final evaluation data, prompts,
+database rows or experiment runs. Released-artifact SQL import is a separate
+command described in the persistence guide.
 
 ## Disposable SQL Server environment check
 
@@ -279,7 +289,8 @@ The separately authorized 2026-09-26 local compatibility probe is documented in
 [`docs/sqlserver_environment_check_2026-09-26.md`](docs/sqlserver_environment_check_2026-09-26.md).
 Its isolated Compose configuration, fabricated fixtures and safe cleanup steps are
 under [`tools/sqlserver_environment/`](tools/sqlserver_environment/README.md).
-The optional `sqlserver-probe` dependency group pins pyodbc; it is not part of the
-Oracle's runtime dependencies. No application schema/persistence layer or study
-execution was added. Deployment support, emulation configuration and graceful
-shutdown limitations remain explicit in the report.
+The historical probe dependency group remains available; pyodbc is now also a
+runtime dependency of the persistence package. The probe itself creates only
+qualification fixtures. Deployment support, emulation configuration and graceful
+shutdown limitations remain explicit in the report. The later author-authorized
+schema/persistence stage is documented separately above.

@@ -1,0 +1,245 @@
+{
+  "result": "PASS",
+  "database": "rac_test_bd41778eeb1b4c8380826f300f78f642",
+  "version": {
+    "version": 2,
+    "ledger": [
+      [
+        1,
+        "001_application_schema.sql",
+        "188a3df7dff73c93db132c27c4d7415ba2721181337e31c69587439af63c8ff6"
+      ],
+      [
+        2,
+        "002_application_permissions.sql",
+        "26603e3ab54f721ea0354c360486a15114017ea0002bcae17fc47b195daf590b"
+      ]
+    ]
+  },
+  "counts": {
+    "apis": 2,
+    "api_contracts": 2,
+    "api_operations": 2,
+    "case_families": 3,
+    "responses": 12,
+    "test_cases": 12,
+    "reference_results": 12,
+    "datasets": 1,
+    "dataset_cases": 12,
+    "prompts": 3,
+    "models": 0,
+    "experiments": 0,
+    "experiment_runs": 0,
+    "run_attempts": 0,
+    "predictions": 0,
+    "evaluation_reports": 0
+  },
+  "ordered_cases": [
+    [
+      "DEV-01",
+      1,
+      "edx",
+      "EDX-P02",
+      "natural_observation",
+      null,
+      200,
+      "application/json; charset=utf-8",
+      "c9b5c8363abd3f59000db18a34419280f2f78382f4208f761f6ac7e294a533fe",
+      1,
+      "PASS",
+      "PASS",
+      "FAIL"
+    ],
+    [
+      "DEV-02",
+      2,
+      "edx",
+      "EDX-P02",
+      "synthetic_conformant_control",
+      "DEV-01",
+      200,
+      "application/json",
+      "7a97b9b4d758a3929b8a2be53fbe189c9ba9378d6fbb8190d37f7cc14f5cf5d3",
+      1,
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    [
+      "DEV-03",
+      3,
+      "edx",
+      "EDX-P02",
+      "synthetic_inconsistency",
+      "DEV-02",
+      500,
+      "application/json",
+      "7a97b9b4d758a3929b8a2be53fbe189c9ba9378d6fbb8190d37f7cc14f5cf5d3",
+      1,
+      "FAIL",
+      "NOT_APPLICABLE",
+      "NOT_APPLICABLE"
+    ],
+    [
+      "DEV-04",
+      4,
+      "edx",
+      "EDX-P02",
+      "synthetic_inconsistency",
+      "DEV-02",
+      200,
+      "application/xml",
+      "7a97b9b4d758a3929b8a2be53fbe189c9ba9378d6fbb8190d37f7cc14f5cf5d3",
+      1,
+      "PASS",
+      "FAIL",
+      "NOT_APPLICABLE"
+    ],
+    [
+      "DEV-05",
+      5,
+      "edx",
+      "EDX-P02",
+      "synthetic_inconsistency",
+      "DEV-02",
+      200,
+      "application/json",
+      "f2737f5c8e664362e8792eae565ec6e0937113710e96769d6888a542502e967e",
+      1,
+      "PASS",
+      "PASS",
+      "FAIL"
+    ],
+    [
+      "DEV-06",
+      6,
+      "edx",
+      "EDX-P02",
+      "synthetic_inconsistency",
+      "DEV-02",
+      200,
+      "application/json",
+      "2ea25ba75c6a13459a3eb5f0b398be77948d1a0102beda3d4ebb0bbc9c60abe5",
+      1,
+      "PASS",
+      "PASS",
+      "FAIL"
+    ],
+    [
+      "DEV-07",
+      7,
+      "htts",
+      "HTTS-H01",
+      "natural_observation",
+      null,
+      200,
+      "application/json",
+      "262d14caaa49f8bebe026dc18c2728b449829ac5fad7558e31559d2b9d4e53c0",
+      1,
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    [
+      "DEV-08",
+      8,
+      "htts",
+      "HTTS-H01",
+      "synthetic_conformant_control",
+      "DEV-07",
+      200,
+      "application/json",
+      "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      1,
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    [
+      "DEV-09",
+      9,
+      "htts",
+      "HTTS-H05",
+      "natural_observation",
+      null,
+      422,
+      "application/json",
+      "0d378bd7c5ef2524874df312597cd193ae8fb85da9791c71734cbb097d82223a",
+      1,
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    [
+      "DEV-10",
+      10,
+      "htts",
+      "HTTS-H05",
+      "synthetic_inconsistency",
+      "DEV-09",
+      422,
+      "application/json",
+      "84a1a4a63aeb0bb5bca6c0e41a20362008273f4732f2bfe516a731776c4e1153",
+      1,
+      "PASS",
+      "PASS",
+      "FAIL"
+    ],
+    [
+      "DEV-11",
+      11,
+      "htts",
+      "HTTS-H01",
+      "synthetic_inconsistency",
+      "DEV-07",
+      200,
+      "text/plain",
+      "262d14caaa49f8bebe026dc18c2728b449829ac5fad7558e31559d2b9d4e53c0",
+      1,
+      "PASS",
+      "FAIL",
+      "NOT_APPLICABLE"
+    ],
+    [
+      "DEV-12",
+      12,
+      "htts",
+      "HTTS-H01",
+      "synthetic_inconsistency",
+      "DEV-07",
+      200,
+      "application/json",
+      "be302461cda285db3ed2d45fb767b23e08ca8808b35a638009937df22b332d73",
+      1,
+      "PASS",
+      "PASS",
+      "FAIL"
+    ]
+  ],
+  "prompts": [
+    [
+      "P1",
+      4325,
+      "f451d8bdc89cb1f3d8a2b2dbc0c86fc490f3033d98a689a128e3f4069aad1cc6"
+    ],
+    [
+      "P2",
+      4996,
+      "50bfce7831530c7d63dd469ed82fb9acab755bedf4808ae5574775fc5505594f"
+    ],
+    [
+      "P3",
+      5835,
+      "5561c7d953b7baf3bfcc72f7bfeeccec2c64f11b5b4989788e227270205a94fb"
+    ]
+  ],
+  "engine": [
+    "16.0.4295.3",
+    "Developer Edition (64-bit)",
+    "CU27"
+  ],
+  "identical_dev_reimport": true,
+  "identical_prompt_reimport": true,
+  "study_runs": 0,
+  "provider_calls": 0
+}

@@ -4,6 +4,35 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+SQL Server schema/persistence implemented and verified on 2026-09-26 under the
+author's explicit authorization and acceptance of the qualified local emulation
+limitation. All 18 domain tables, 34 NO ACTION FKs, numbered checksum migrations,
+transactional repositories, released DEV/prompt import, recovery spool and
+disposable administration/backup helpers are present. The only physical design
+correction is VARCHAR(15) verdict storage with unchanged exact-token checks;
+SQL Server otherwise truncates a trailing blank at the old VARCHAR(14) boundary.
+Research `database_design_v1.md` §14 records the correction separately.
+
+Full verification: 300 tests passed, including 34 SQL Server integration tests,
+9 local persistence boundary tests, the existing 253-test scientific suite
+(including Q01–Q26) and 4 qualification converter tests. The released DEV importer
+does not execute the Oracle or construction code. DEV-01–DEV-12 and approved
+P1/P2/P3 round-trip exactly; re-import is idempotent. An application-schema backup
+copied outside the container was independently restored and all 19 tables matched.
+Only disposable databases and explicitly fabricated outcome fixtures were used.
+No persistent study database, model output or study run was created.
+
+See [`persistence.md`](persistence.md) and
+[`persistence_verification_2026-09-26.md`](persistence_verification_2026-09-26.md)
+for commands, evidence, passed/deferred acceptance coverage and remaining Gate B
+work. No Ollama call, model inference, comparison, sensitivity or final evaluation
+occurred. Stop at persistence; renderer/parser/orchestration remain separate work.
+The qualified container is running with its named volume and external backups.
+The historical exit-137 graceful-stop limitation remains documented; no new
+instability, corruption or restore failure was observed.
+
+### Previous environment milestone (historical)
+
 Bounded SQL Server environment qualification and existing prompt-approval record
 reconciliation completed; see
 [`sqlserver_environment_check_2026-09-26.md`](sqlserver_environment_check_2026-09-26.md).
@@ -119,7 +148,7 @@ See `docs/validator_spike.md` for validator qualification details.
 - Main experiment runner.
 - Evaluation metrics/report generation.
 - Result visualizations.
-- Application-domain database schema, persistence layer or web UI.
+- Web UI.
 
 These are intentionally absent until required.
 
