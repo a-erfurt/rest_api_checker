@@ -1,0 +1,41 @@
+{% macro status(value) -%}
+<span class="status {% if value in ['FAIL','parser_failure','technical_failure'] %}status-failure{% endif %}">{{ value|status }}</span>
+{%- endmacro %}
+
+{% macro metric(label, value) -%}
+<div class="metric"><dt>{{ label }}</dt><dd>{{ value|ratio if value is mapping else (value if value is defined and value is not none else 'Not available') }}</dd></div>
+{%- endmacro %}
+
+{% macro viewer(title, content) -%}
+<section class="content-viewer"><h3>{{ title }}</h3>
+{% if content is none %}<p class="empty-inline">Missing / unavailable persisted evidence.</p>{% else %}
+<pre class="content-preview">{{ content[:500] }}{% if content|length > 500 %}…{% endif %}</pre>
+{% if content|length > 500 %}<details class="full-content"><summary>Show full <span class="muted">· {{ content|length }} characters</span></summary><pre tabindex="0">{{ content }}</pre></details>{% endif %}
+{% endif %}</section>
+{%- endmacro %}
+
+{% macro technical(values) -%}
+<details class="technical"><summary>Technical Details</summary><dl class="key-values">
+{% for key,value in values.items() %}<dt>{{ key|replace('_',' ') }}</dt><dd><code>{{ value if value is not none else 'Not available' }}</code>{% if value is not none %}<button class="copy-button" type="button" data-copy="{{ value }}" aria-label="Copy {{ key }}">Copy</button>{% endif %}</dd>{% endfor %}
+</dl></details>
+{%- endmacro %}
+
+{% macro experiment_selector(experiments, selected_experiment) -%}
+<form method="get" class="experiment-selector secondary-controls"><label for="experiment">Experiment</label><select name="experiment" id="experiment">
+{% for e in experiments %}<option value="{{ e.id }}" {% if e.id == selected_experiment %}selected{% endif %}>{{ e.name }} · {{ e.state|default('') }}</option>{% else %}<option>No experiments yet</option>{% endfor %}
+</select><button type="submit" {% if not experiments %}disabled{% endif %}>View</button></form>
+{%- endmacro %}
+
+{% macro pagination(result, query_url) -%}
+<nav class="pagination secondary-controls" aria-label="Pagination"><span>{{ result.total }} records · Page {{ result.page }} of {{ result.pages if result.pages else 1 }}</span><div>
+{% if result.page > 1 %}<a href="{{ query_url(page=result.page-1) }}">← Previous</a>{% endif %}
+{% if result.page < result.pages %}<a href="{{ query_url(page=result.page+1) }}">Next →</a>{% endif %}
+</div></nav>
+{%- endmacro %}
+
+{% macro run_table(items, compact=false) -%}
+<div class="table-scroll"><table class="runs-table"><thead><tr><th>Case</th><th>Model</th><th>Prompt</th>{% if not compact %}<th>Repetition</th>{% endif %}<th>Status</th>{% if not compact %}<th class="optional-column">Attempt</th><th class="optional-column number">Duration</th>{% endif %}</tr></thead><tbody>
+{% for r in items %}<tr><td><a href="/runs/{{ r.id }}">{{ r.case }}</a>{% if not compact %}<small class="medium-metadata">Attempt {{ r.attempt if r.attempt else '–' }}{% if r.duration_ms is not none %} · {{ r.duration_ms }} ms{% endif %}</small>{% endif %}</td><td><span title="{{ r.model }}">{{ r.model|model_name }}</span></td><td>{{ r.prompt }}</td>{% if not compact %}<td>{{ r.repetition }}</td>{% endif %}<td>{{ status(r.result) }}</td>{% if not compact %}<td class="optional-column">{{ r.attempt if r.attempt else '–' }}</td><td class="optional-column number">{{ r.duration_ms ~ ' ms' if r.duration_ms is not none else 'Not available' }}</td>{% endif %}</tr>
+{% else %}<tr><td colspan="7" class="empty-cell">No runs match this view.</td></tr>{% endfor %}
+</tbody></table></div>
+{%- endmacro %}

@@ -4,6 +4,59 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+Read-only FastAPI/Jinja2 research UI implemented on the authoritative evaluator
+CLI baseline `aa4001de1e311011f1ea264cd68e3213e8889963`. Overview, Evaluation,
+SQL-paginated Runs and dedicated evidence/Data detail pages consume persisted
+records and reports. No evaluator formula, selection rule, database schema or
+experiment protocol changed. See [web guide](web_ui.md) and
+[verification](web_ui_verification_2026-09-26.md).
+
+The web query layer issues SELECT statements only, rolls back request-owned
+connections and never calls execution, model inference, preflight execution or
+report creation. Incomplete experiments expose operational counts only; absent
+reports/selection/readiness stay unavailable. Local HTMX polls every 3 seconds;
+Chart.js displays stored metric values. Focus Mode, safe evidence viewers,
+responsive tables and print styles are included.
+
+Final verification: **579 passed**, including **71 SQL Server integration tests**,
+zero failures/errors/skips. The focused web suite also passed (**87 tests**)
+after the launcher environment-default review. Offline sdist/wheel packaging
+and console help passed. Chrome visual review used fabricated records at 1120,
+1440 and 2560-pixel widths, including Focus Mode and print preview.
+
+**No real study inference, comparison, sensitivity or main evaluation was
+executed. Frozen scientific inputs and the research repository were untouched.**
+The current UI supports the existing comparison report format. Future sensitivity
+or final-evaluation report formats require backend-defined presentation support.
+Live model/Gate-B readiness cannot be inferred from the current persisted schema.
+
+### Previous evaluation/CLI milestone (historical)
+
+Comparison evaluator, immutable analysis snapshots/reports and the argparse/Rich
+thesis CLI are implemented. See [CLI/evaluation design](evaluation_cli.md) and
+[verification](evaluation_verification_2026-09-26.md). New experiment setups bind
+exact relational source/reference/model/configuration values; old setups are not
+rewritten. No database schema, frozen prompt, dataset or scientific policy changed.
+
+The CLI supports database/dataset inventory, experiment/run/attempt inspection,
+schedule/progress, comparison reports/JSON export, truthful offline Gate-B checks
+and isolated fabricated execution. Cooperative interruption and persisted resume
+retain pending/ambiguous runs. Actual runtime verification and attribution still
+block real CLI execution. No web UI was added.
+
+**The real 324 comparison runs have NOT started. No study prompt winner exists.
+No sensitivity variant exists. Demo data is FABRICATED / TEST DATA.** Research
+remains read-only; unrelated literature working-tree files are untouched.
+
+Final verification: **478 passed**, including **61 SQL Server integration tests**,
+zero failures/errors/skips; Q01–Q26 and backup/restore remain green. Both plain and
+animated fabricated demos completed 324 logical runs with 326 attempts (322 valid,
+1 parser failure, 1 terminal technical failure). All disposable resources were
+removed. Offline package build and console-entry-point verification passed.
+SQL-schema preflight: 6 verified PASS checks, 5 truthful Gate-B BLOCKED checks.
+
+### Previous renderer/parser/orchestration milestone (historical)
+
 Operation-scoped input renderer, strict final-output parser, Ollama client boundary,
 deterministic comparison scheduling and persistence orchestration implemented.
 See [stage design](experiment_stage.md) and
@@ -169,11 +222,10 @@ See `docs/validator_spike.md` for validator qualification details.
 
 - Final evaluation dataset generation/freeze.
 - Gate-B live runtime/model/template/context verification and acceptance.
-- Complete prompt-development execution/evaluation workflow.
+- Actual Gate-B-approved prompt-development execution and sensitivity workflow.
 - Main experiment runner.
-- Evaluation metrics/report generation.
-- Result visualizations.
-- Web UI.
+- Reference-correction and sensitivity report workflows.
+- Presentation of future sensitivity/final-evaluation report formats.
 
 These are intentionally absent until required.
 

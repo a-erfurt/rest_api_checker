@@ -1,0 +1,31 @@
+{
+  "branch": "feature/evaluation-cli",
+  "databases_remaining": [
+    "rac_env_probe_20260926",
+    "rac_env_probe_restore_20260926"
+  ],
+  "dev_manifest_sha256": "8cac438a328c67a550ba883cbf9953a4867dc17ad8b5ed1fdf0f2bb55b0bb974",
+  "evaluator_sha256": "5b231ae95ae018f2d5fb895606436143e819d1638ee65e9ffa846bb7992fae8d",
+  "prompt_hashes": {
+    "P1": "f451d8bdc89cb1f3d8a2b2dbc0c86fc490f3033d98a689a128e3f4069aad1cc6",
+    "P2": "50bfce7831530c7d63dd469ed82fb9acab755bedf4808ae5574775fc5505594f",
+    "P3": "5561c7d953b7baf3bfcc72f7bfeeccec2c64f11b5b4989788e227270205a94fb"
+  },
+  "real_inference_performed": false,
+  "real_study_database_exists": false,
+  "research_head": "050af6b214e167c737f09ee4c9a4d8dc3862981d",
+  "research_status": "M 01_sources/literature/literature.bib\n?? 01_sources/literature/thesis_citation_plan.md",
+  "sensitivity_variant_exists": false,
+  "study_comparison_started": false,
+  "study_prompt_winner": null,
+  "technical_baseline": "fd78654",
+  "test_totals": {
+    "errors": 0,
+    "failures": 0,
+    "seconds": "125.917",
+    "skipped": 0,
+    "sqlserver": 61,
+    "tests": 478
+  },
+  "wheel_build": "PASS"
+}

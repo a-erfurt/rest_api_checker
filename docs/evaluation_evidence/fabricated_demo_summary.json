@@ -1,0 +1,344 @@
+{
+  "disposable_cleanup_completed": true,
+  "evaluator_sha256": "5b231ae95ae018f2d5fb895606436143e819d1638ee65e9ffa846bb7992fae8d",
+  "exported_demo_directory": "/private/tmp/rac-evaluation-live-20260926",
+  "fabricated_ranking": [
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "fabricated_selection_decided_by": "Length",
+  "input_sha256": "43e6b55e3843fa041c3fd3a4e5fd04e255f9efc9dc02462900ecb899e58c5c60",
+  "label": "FABRICATED / TEST DATA",
+  "live_ansi_verified": true,
+  "live_transcript_sha256": "168fc722835f84c289bda1bb069b908c6fad5c48cbdc6cd806762fac80f247c9",
+  "logical_runs": 324,
+  "metrics": {
+    "P1": {
+      "FullCase": {
+        "denominator": 108,
+        "numerator": 36,
+        "value": "1/3"
+      },
+      "Length": 4325,
+      "Order": 0,
+      "Reliability": {
+        "denominator": 108,
+        "numerator": 108,
+        "value": "1/1"
+      },
+      "Robust": {
+        "denominator": 36,
+        "numerator": 12,
+        "value": "1/3"
+      },
+      "Score": {
+        "denominator": 324,
+        "numerator": 216,
+        "value": "2/3"
+      },
+      "StableCorrect": {
+        "denominator": 108,
+        "numerator": 72,
+        "value": "2/3"
+      },
+      "cells": {
+        "gemma3:27b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        },
+        "mistral-small3.2:24b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        },
+        "qwen3.6:27b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        }
+      }
+    },
+    "P2": {
+      "FullCase": {
+        "denominator": 108,
+        "numerator": 36,
+        "value": "1/3"
+      },
+      "Length": 4996,
+      "Order": 1,
+      "Reliability": {
+        "denominator": 108,
+        "numerator": 108,
+        "value": "1/1"
+      },
+      "Robust": {
+        "denominator": 36,
+        "numerator": 12,
+        "value": "1/3"
+      },
+      "Score": {
+        "denominator": 324,
+        "numerator": 216,
+        "value": "2/3"
+      },
+      "StableCorrect": {
+        "denominator": 108,
+        "numerator": 72,
+        "value": "2/3"
+      },
+      "cells": {
+        "gemma3:27b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        },
+        "mistral-small3.2:24b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        },
+        "qwen3.6:27b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        }
+      }
+    },
+    "P3": {
+      "FullCase": {
+        "denominator": 108,
+        "numerator": 35,
+        "value": "35/108"
+      },
+      "Length": 5835,
+      "Order": 2,
+      "Reliability": {
+        "denominator": 108,
+        "numerator": 106,
+        "value": "53/54"
+      },
+      "Robust": {
+        "denominator": 36,
+        "numerator": 11,
+        "value": "11/36"
+      },
+      "Score": {
+        "denominator": 324,
+        "numerator": 212,
+        "value": "53/81"
+      },
+      "StableCorrect": {
+        "denominator": 108,
+        "numerator": 68,
+        "value": "17/27"
+      },
+      "cells": {
+        "gemma3:27b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        },
+        "mistral-small3.2:24b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 33,
+            "value": "11/12"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 27,
+            "value": "3/4"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 12,
+            "value": "1/3"
+          }
+        },
+        "qwen3.6:27b": {
+          "c1": {
+            "denominator": 36,
+            "numerator": 31,
+            "value": "31/36"
+          },
+          "c2": {
+            "denominator": 36,
+            "numerator": 26,
+            "value": "13/18"
+          },
+          "c3": {
+            "denominator": 36,
+            "numerator": 11,
+            "value": "11/36"
+          }
+        }
+      }
+    }
+  },
+  "outcomes": {
+    "parser_failure": 1,
+    "technical_failure": 1,
+    "valid": 322
+  },
+  "pending": 0,
+  "physical_attempts": 326,
+  "plain_ansi_absent": true,
+  "plain_transcript_sha256": "bf6cd656b5be054368fe725bfc3f273c366cbaa1b4363ae066c6e9a0531f735d",
+  "real_inference": false,
+  "report_sha256": "d3c4c4085123ae199f8866a62ea3313c7b01e77dbc0fce27062ce69041cad087",
+  "study_prompt_winner": null,
+  "tie_break_trace": [
+    {
+      "criterion": "Score",
+      "remaining": [
+        "P1",
+        "P2"
+      ],
+      "values": {
+        "P1": "2/3",
+        "P2": "2/3",
+        "P3": "53/81"
+      }
+    },
+    {
+      "criterion": "Robust",
+      "remaining": [
+        "P1",
+        "P2"
+      ],
+      "values": {
+        "P1": "1/3",
+        "P2": "1/3"
+      }
+    },
+    {
+      "criterion": "StableCorrect",
+      "remaining": [
+        "P1",
+        "P2"
+      ],
+      "values": {
+        "P1": "2/3",
+        "P2": "2/3"
+      }
+    },
+    {
+      "criterion": "Reliability",
+      "remaining": [
+        "P1",
+        "P2"
+      ],
+      "values": {
+        "P1": "1",
+        "P2": "1"
+      }
+    },
+    {
+      "criterion": "FullCase",
+      "remaining": [
+        "P1",
+        "P2"
+      ],
+      "values": {
+        "P1": "1/3",
+        "P2": "1/3"
+      }
+    },
+    {
+      "criterion": "Length",
+      "remaining": [
+        "P1"
+      ],
+      "values": {
+        "P1": "4325",
+        "P2": "4996"
+      }
+    }
+  ]
+}

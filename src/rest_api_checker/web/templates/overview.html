@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import experiment_selector %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">RESEARCH WORKSPACE</p><h1>Overview</h1><p class="lede">Experiment progress and the latest persisted evidence.</p></div><span class="read-only-label secondary-controls">Read only</span></div>
+{{ experiment_selector(experiments, selected_experiment) }}
+{% include 'overview_fragment.html' %}
+<section class="system-context secondary-context"><div class="section-heading"><h2>System &amp; Gate B</h2><span class="muted">Readiness evidence</span></div><dl class="system-row"><div><dt>Database</dt><dd>✓ Connected · schema {{ schema_version if schema_version is not none else 'unavailable' }}</dd></div><div><dt>Current dataset</dt><dd>{{ experiment.dataset_name if experiment else 'Not selected' }}</dd></div><div><dt>Models / Gate B</dt><dd>Not verified by this view</dd></div></dl><p class="note">No persisted preflight report is available in the current schema. Use the CLI preflight for the existing checks; this page makes no readiness claim.</p></section>
+<section class="secondary-context"><div class="section-heading"><h2>Research phases</h2></div><ol class="phase-timeline">
+{% for kind,label,description in [('comparison','Prompt Development','Development data only'),('sensitivity','Sensitivity','Selected-prompt wording check'),('evaluation','Main Evaluation','Final evaluation dataset')] %}
+<li{% if experiment and experiment.kind == kind %} class="current-phase"{% endif %}><h3>{{ label }}</h3><p>{{ description }}</p>{% set phase = experiments|selectattr('kind','equalto',kind)|list %}<small>{% if phase %}{{ phase|length }} persisted experiment{{ 's' if phase|length != 1 }}{% else %}No persisted experiment{% endif %}</small></li>
+{% endfor %}</ol></section>
+{% if history %}<section class="secondary-context"><div class="section-heading"><h2>Recent experiments</h2></div><div class="table-scroll"><table><thead><tr><th>Experiment</th><th>Phase</th><th>Recorded state</th><th class="number">Completed / Planned</th></tr></thead><tbody>{% for e in history %}<tr><td><a href="/?experiment={{ e.id }}">{{ e.name }}</a></td><td>{{ {'comparison':'Prompt Comparison','sensitivity':'Sensitivity','evaluation':'Main Evaluation'}.get(e.kind,e.kind) }}</td><td>{{ e.state }}</td><td class="number">{{ e.completed }} / {{ e.planned }}</td></tr>{% endfor %}</tbody></table></div></section>{% endif %}
+{% endblock %}

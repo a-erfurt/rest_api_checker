@@ -402,6 +402,10 @@ class Repository:
             self.case(**{k:v for k,v in case.items() if k!='id'})
             self.reference(ref['case_id'],ref['version'],ref['source_file_id'],ref['source_pointer'],ref['notes'])
             require(100 <= self._row('responses',case['response_id'])['status_code'] <= 599, 'Ineligible response status')
+        from .inspection import bindings
+        bound = bindings(self, dataset_id, schedule)
+        require('bindings' not in setup or setup['bindings'] == bound, 'Supplied setup bindings drift')
+        setup = {**setup, 'bindings': bound}
         setup_file = self.archive('experiment-setup.json',json_bytes(setup))
         experiment_id = self._insert('experiments',name=name,kind=kind,dataset_id=dataset_id,
             setup_file_id=setup_file,schedule_seed=schedule_seed,started_at=None,finished_at=None,notes=notes)
@@ -556,7 +560,7 @@ class Repository:
 
     @atomic
     def report(self, *, experiment_id, input_file_id, file_id, code_version, baseline_report_id=None):
-        """Archive already computed report metadata; evaluation/metric validation is later."""
+        """Low-level metadata insert; comparison publication uses evaluation.create_report."""
         require(self._row('experiments',experiment_id)['finished_at'] is not None, 'Unfinished experiment')
         inputs = json.loads(self.file(input_file_id))
         report = json.loads(self.file(file_id))

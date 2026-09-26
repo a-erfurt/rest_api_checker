@@ -7,7 +7,8 @@ including the implementation correction in §14. Scientific decisions, D01–D11
 Oracle semantics, dataset split, prompts and sampling settings remain unchanged.
 **No LLM experiment has run.** The separate
 [experiment stage](experiment_stage.md) supplies renderer, parser, provider
-boundary and bounded orchestration. Evaluator and UI remain absent. Synthetic test outcomes are
+boundary and bounded orchestration. The subsequent [evaluation/CLI stage](evaluation_cli.md)
+adds comparison reports and inspection; UI remains absent. Synthetic test outcomes are
 explicitly fabricated persistence fixtures, not model results.
 
 ## Schema and migrations
@@ -218,10 +219,12 @@ parses an answer or calls a provider. Files are retained after import. Late evid
 advances only diagnostics, never the original response or verdict.
 
 `report` stores metadata for a caller-produced completed analysis and validates
-basic source/reference relationships. Report formulas, full analysis-input set
-reconciliation, sensitivity pairing and approved correction authority checks are
-not implemented here. New reference/report rows preserve the old memberships,
-outcomes and reports. This metadata API is not a completed evaluator.
+basic source/reference relationships. Use `evaluation.create_report` for the
+comparison profile: it reconciles the complete planned input and archives its
+immutable snapshot before computing approved metrics. Sensitivity pairing and
+approved correction workflows remain deferred. New reference/report rows preserve
+the old memberships, outcomes and reports. The low-level metadata API alone is
+not a completed evaluator.
 
 ## Backup and restore
 

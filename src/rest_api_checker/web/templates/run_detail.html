@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import status, viewer, technical %}
+{% block content %}
+{% set r = detail.run %}
+<a class="back-link secondary-controls" href="/runs?experiment={{ r.experiment_id }}">← Runs</a>
+<div class="page-heading"><div><p class="eyebrow">RUN EVIDENCE</p><h1>{{ r.case }}</h1><p class="lede">{{ r.model|model_name }} <span class="separator">/</span> {{ r.prompt }} <span class="separator">/</span> Repetition {{ r.repetition }}</p></div><div>{{ status(r.result) }}</div></div>
+<dl class="metadata-row"><div><dt>Duration</dt><dd>{{ r.duration_ms ~ ' ms' if r.duration_ms is not none else 'Not available' }}</dd></div><div><dt>Attempt</dt><dd>{{ r.attempt if r.attempt else 'Not started' }}</dd></div><div><dt>Seed</dt><dd>{{ r.seed }}</dd></div></dl>
+<section><h2>Reference vs Prediction</h2><div class="table-scroll"><table class="comparison-matrix"><thead><tr><th></th><th>C1 <small>Response Status</small></th><th>C2 <small>Media Type</small></th><th>C3 <small>Body Schema</small></th></tr></thead><tbody>
+<tr><th>Reference</th>{% for c in ['c1','c2','c3'] %}<td>{{ status(detail.reference[c]) if detail.reference and detail.reference[c] else 'Not available' }}</td>{% endfor %}</tr>
+<tr><th>Prediction</th>{% for c in ['c1','c2','c3'] %}<td{% if detail.prediction and detail.reference and detail.prediction[c] != detail.reference[c] %} class="mismatch"{% endif %}>{{ status(detail.prediction[c]) if detail.prediction else 'Not available' }}</td>{% endfor %}</tr>
+<tr><th>Match</th>{% for c in ['c1','c2','c3'] %}<td>{% if detail.prediction and detail.reference %}{{ '✓ Match' if detail.prediction[c] == detail.reference[c] else '✕ Mismatch' }}{% else %}– Not available{% endif %}</td>{% endfor %}</tr>
+</tbody></table></div>{% if not detail.prediction %}<p class="note">{% if r.result %}{{ status(r.result) }} — no semantic prediction exists.{% else %}Unfinished run. No prediction is available yet.{% endif %}</p>{% endif %}</section>
+<nav class="tabs secondary-controls" aria-label="Run evidence">{% for key in tabs %}<a href="?tab={{ key }}" {% if tab == key %}aria-current="page"{% endif %}>{{ {'reasons':'Reasons','response':'Response','openapi':'OpenAPI','raw':'Raw Output','attempts':'Attempts'}[key] }}</a>{% endfor %}</nav>
+{% if tab == 'reasons' %}<h2>Model-provided reasons</h2><p class="note">Preserved model text; these explanations are not reference judgments.</p>{% if detail.prediction %}{% for c in ['c1','c2','c3'] %}{{ viewer(c|upper,detail.prediction[c ~ '_reason']) }}{% endfor %}{% else %}<p class="empty-inline">No model-provided reasons are available.</p>{% endif %}
+{% elif tab == 'response' and r.response %}<h2>Observed response</h2><dl class="key-values"><dt>Response status</dt><dd>{{ r.response.status_code }}</dd><dt>Raw Content-Type</dt><dd><code>{{ r.response.content_type if r.response.content_type is not none else 'Not available' }}</code></dd><dt>Observed at</dt><dd>{{ r.response.observed_at if r.response.observed_at is not none else 'Not available' }}</dd></dl>
+{% elif tab == 'openapi' and r.contract %}<h2>Persisted contract evidence</h2><dl class="key-values"><dt>OpenAPI version</dt><dd>{{ r.contract.openapi_version }}</dd><dt>Operation</dt><dd>{{ r.contract.http_method|upper }} {{ r.contract.path_template }}</dd></dl><p class="note">Original stored contract and, where captured, the exact request context. No contract interpretation is reconstructed by this view.</p>
+{% elif tab == 'attempts' %}<h2>Physical attempts</h2><div class="table-scroll"><table><thead><tr><th>Attempt</th><th>Status</th><th>Duration</th><th>HTTP</th><th>Diagnostic</th></tr></thead><tbody>{% for a in detail.attempts %}<tr><td>{{ a.attempt }}</td><td>{{ status(a.result) }}</td><td>{{ a.duration_ms ~ ' ms' if a.duration_ms is not none else 'Not available' }}</td><td>{{ a.http_status if a.http_status is not none else 'Not available' }}</td><td>{{ a.error_kind or a.done_reason or 'Not available' }}</td></tr>{% else %}<tr><td colspan="5">No physical attempts recorded.</td></tr>{% endfor %}</tbody></table></div>
+{% endif %}
+{% if tab == 'raw' and not detail.evidence %}<p class="empty-inline">No persisted provider output is available.</p>{% endif %}
+{% for evidence in detail.evidence %}{{ viewer(evidence.title,evidence.content) }}{% endfor %}
+{{ technical({'run_id':r.id,'experiment_id':r.experiment_id,'model':r.model,'prompt':r.prompt,'request_file_id':r.request_file_id|default(none),'started_at':r.started_at,'finished_at':r.finished_at}) }}
+{% endblock %}
