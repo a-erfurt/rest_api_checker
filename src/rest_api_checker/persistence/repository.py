@@ -282,6 +282,101 @@ class Repository:
         require(row['think'] is (False if model_name=='qwen3.6:27b' else None), 'False/omitted think mismatch')
 
     @atomic
+    def verify_comparison_bindings(self, dataset_id, memberships, prompts, models, configs):
+        """Validate schedule adapters against immutable relational/source identities."""
+        from .importer import PROMPT_HASHES
+        for code, row_id in memberships.items():
+            row = self._row('dataset_cases', row_id)
+            require(row['dataset_id']==dataset_id and row['case_code']==code,
+                    'Schedule membership identity mismatch')
+        for name, row_id in prompts.items():
+            row = self._row('prompts', row_id)
+            require(row['name']==name and sha256(self.file(row['file_id'])).hexdigest()==PROMPT_HASHES[name],
+                    'Schedule prompt identity mismatch')
+        for name, row_id in models.items():
+            require(self._row('models', row_id)['name']==name, 'Schedule model identity mismatch')
+            self.require_d07(configs[name], name)
+
+    @atomic
+    def execution_inputs(self, run_id):
+        """Read one immutable run binding, committing the read before any network I/O.
+
+        Evidence is an explicit projection; reference/family/case records are
+        never handed to the renderer. Sidecar/setup remain separate.
+        """
+        from ..experiment.renderer import Evidence
+        run = self._row('experiment_runs', run_id)
+        experiment = self._row('experiments', run['experiment_id'])
+        setup_raw = self.file(experiment['setup_file_id'])
+        setup = json.loads(setup_raw)
+        require({k:run[k] for k in ('dataset_case_id','model_id','prompt_id','run_config_id',
+                                    'repetition','seed','run_order')} in setup['schedule'],
+                'Run differs from frozen schedule')
+        membership = self._row('dataset_cases',run['dataset_case_id'])
+        case = self._row('test_cases',membership['case_id'])
+        operation = self._row('api_operations',case['operation_id'])
+        contract = self._row('api_contracts',operation['contract_id'])
+        response = self._row('responses',case['response_id'])
+        prompt = self._row('prompts',run['prompt_id'])
+        model = self._row('models',run['model_id'])
+        self.require_d07(run['run_config_id'],model['name'])
+        self.verify_closure(setup['files'])
+        return dict(run=run, setup=setup, setup_sha256=sha256(setup_raw).hexdigest(),
+            evidence=Evidence(self.file(contract['file_id']),operation['http_method'],
+                operation['path_template'],response['status_code'],response['content_type'],
+                self.file(response['body_file_id'])),
+            contract_identity=f'files:{contract["file_id"]}', body_identity=f'files:{response["body_file_id"]}',
+            prompt_name=prompt['name'],prompt=self.file(prompt['file_id']),model=model)
+
+    @contextmanager
+    def dispatch_owner(self):
+        """Single session-owned database claim; never a transaction spanning HTTP.
+
+        A disconnected owner cannot authorize takeover of an existing reserved
+        slot. reserve() still refuses it and requires explicit reconciliation.
+        """
+        require(self._depth==0, 'Dispatch cannot run inside a caller transaction')
+        result = self.cn.execute("""DECLARE @r INT;
+            EXEC @r=sys.sp_getapplock @Resource='rest_api_checker:dispatch',
+              @LockMode='Exclusive',@LockOwner='Session',@LockTimeout=0;
+            SELECT @r;""").fetchval()
+        self.cn.commit()
+        require(result>=0, 'Another orchestrator owns dispatch')
+        try:
+            yield
+        finally:
+            self.cn.execute("""EXEC sys.sp_releaseapplock @Resource='rest_api_checker:dispatch',
+                            @LockOwner='Session';""")
+            self.cn.commit()
+
+    @atomic
+    def attempt_state(self, attempt_id):
+        return self._row('run_attempts', attempt_id)
+
+    @contextmanager
+    def provider_io(self, attempt_id):
+        """Expose one start callback and suspend ODBC manual transactions for I/O.
+
+        The SQL Server ODBC manual-commit mode can retain an initialized server
+        transaction after SQLCommit. Explicit autocommit during the network-only
+        window also makes the absence of a server transaction externally testable.
+        The session dispatch claim survives; no application writes occur here.
+        """
+        require(self._depth==0 and not self.cn.autocommit, 'Invalid provider I/O boundary')
+        started = False
+        def observe(at):
+            nonlocal started
+            require(not started, 'Provider start already observed')
+            self.observe_start(attempt_id, at)
+            self.cn.autocommit = True
+            started = True
+        try:
+            yield observe
+            require(started, 'Provider did not observe dispatch start')
+        finally:
+            self.cn.autocommit = False
+
+    @atomic
     def plan_experiment(self, *, name, kind, dataset_id, schedule_seed, setup, schedule, notes=None):
         """Persist a caller-supplied frozen schedule, not generate one or authorize dispatch.
 

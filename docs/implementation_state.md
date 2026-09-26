@@ -4,6 +4,32 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+Operation-scoped input renderer, strict final-output parser, Ollama client boundary,
+deterministic comparison scheduling and persistence orchestration implemented.
+See [stage design](experiment_stage.md) and
+[verification](experiment_verification_2026-09-26.md). Frozen format versions and
+artifact hashes are retained in `docs/experiment_evidence/` together with the
+non-dispatched 324-run schedule and released-input round-trip records.
+
+Exact P1/P2/P3 binding, reference-preserving closure, allowlist leakage prevention,
+all 27 parser-valid vectors, D07 requests, context/runtime blocking, byte-identical
+technical retries, recovery and SQL transaction boundaries are covered by focused
+tests. All provider results and runtime/token evidence in tests are FABRICATED.
+Final verification: **443 passed**, including **53 SQL Server integration tests**,
+zero failures/skips; Q01–Q26 remain green. Wheel packaging also passed.
+Only disposable SQL databases are used. No real model inference, study requests,
+comparison execution, sensitivity or Main Experiment has occurred.
+
+The approved research policies, prompt bytes, DEV manifest and Oracle semantics
+remain unchanged. No persistence schema or migration changes were needed. This
+stage made no research edits; research HEAD remains
+`050af6b214e167c737f09ee4c9a4d8dc3862981d`. An unrelated working-tree change to
+`01_sources/literature/literature.bib` appeared during the task and was left untouched.
+Actual runtime/model/template/context evidence, evaluator implementation and Gate-B
+acceptance remain outstanding; no study CLI or automatic batch dispatch exists.
+
+### Previous persistence milestone (historical)
+
 SQL Server schema/persistence implemented and verified on 2026-09-26 under the
 author's explicit authorization and acceptance of the qualified local emulation
 limitation. All 18 domain tables, 34 NO ACTION FKs, numbered checksum migrations,
@@ -142,9 +168,8 @@ See `docs/validator_spike.md` for validator qualification details.
 ## Not implemented
 
 - Final evaluation dataset generation/freeze.
-- Ollama runner.
-- Prompt rendering / structured LLM result parsing.
-- Prompt-development workflow.
+- Gate-B live runtime/model/template/context verification and acceptance.
+- Complete prompt-development execution/evaluation workflow.
 - Main experiment runner.
 - Evaluation metrics/report generation.
 - Result visualizations.

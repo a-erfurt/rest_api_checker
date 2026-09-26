@@ -5,8 +5,9 @@ including its documented emulation limitation. Authority:
 [`database_design_v1.md`](../../bachelor_rest_api_checker/03_research_design/database_design_v1.md),
 including the implementation correction in §14. Scientific decisions, D01–D11,
 Oracle semantics, dataset split, prompts and sampling settings remain unchanged.
-**No LLM experiment has run.** This package contains no provider dispatch,
-renderer, model-output parser, evaluator or UI. Synthetic test outcomes are
+**No LLM experiment has run.** The separate
+[experiment stage](experiment_stage.md) supplies renderer, parser, provider
+boundary and bounded orchestration. Evaluator and UI remain absent. Synthetic test outcomes are
 explicitly fabricated persistence fixtures, not model results.
 
 ## Schema and migrations
@@ -182,7 +183,7 @@ paths or overwrites a prior export.
 `plan_experiment` persists the supplied complete schedule and its snapshot in one
 transaction. It verifies memberships, explicit complete references, source
 projections and supplied closure. It does not generate a schedule or certify
-Gate B. Full setup/model/template/renderer preflight remains future work; final
+Gate B. Full setup/model/template preflight remains future work; final
 evaluation admission is explicitly blocked until that stage exists.
 
 `reserve` locks a logical run, fixes request bytes and commits a slot. An existing
@@ -190,10 +191,11 @@ slot is a reconciliation condition, not permission to send again. Reservation
 only sets prepared_at; `observe_start` requires a genuinely observed start.
 Attempt 2 requires recorded qualifying first-attempt technical failure and exact
 request reuse. There is no attempt 3. A nonqualifying or ambiguous first failure
-leaves the run unresolved. Provider classification and dispatch remain absent.
+leaves the run unresolved. The experiment package now supplies classification and
+bounded dispatch; real dispatch remains blocked by missing Gate-B evidence.
 
-`finalize` takes an explicitly adjudicated outcome and parsed prediction from a
-future parser. It binds diagnostics to the frozen parser/request/run/attempt,
+`finalize` takes an explicitly adjudicated outcome and parsed prediction from the
+strict experiment parser. It binds diagnostics to the frozen parser/request/run/attempt,
 archives exact response bytes (including NULL versus empty), and settles the
 attempt/prediction/run atomically. Legal but wrong vectors remain valid stored
 predictions. Parser/technical failures have no prediction. A first technical

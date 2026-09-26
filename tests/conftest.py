@@ -5,6 +5,16 @@ from pathlib import Path
 
 import pytest
 
+
+@pytest.fixture(autouse=True)
+def forbid_real_ollama_http(monkeypatch):
+    """All inference HTTP is forbidden in this test suite; SQL uses ODBC."""
+    import http.client
+    def forbidden(*args, **kwargs):
+        pytest.fail('Real HTTP/inference is forbidden; inject a fabricated connection')
+    monkeypatch.setattr(http.client.HTTPConnection, 'connect', forbidden)
+    monkeypatch.setattr(http.client.HTTPSConnection, 'connect', forbidden)
+
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = json.loads((ROOT / 'tests/contracts/provenance.json').read_text())
 

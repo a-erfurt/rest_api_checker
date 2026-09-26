@@ -1,15 +1,18 @@
-# REST API Reference Oracle
+# RestApiChecker research system
 
-Minimal technical milestone for **Evaluating LLM-Based Detection of Validation
-Response Contract Inconsistencies in REST APIs**. This deterministic component
+Experimental system for **Evaluating LLM-Based Detection of Validation
+Response Contract Inconsistencies in REST APIs**. Its deterministic Reference Oracle
 produces operational reference labels for later LLM evaluation. It is **not a
-competing baseline**, an experiment runner, or a general OpenAPI validator.
+competing baseline** or a general OpenAPI validator.
 
 The separately authorized SQL Server persistence stage is also implemented:
 [setup, migrations, import and recovery](docs/persistence.md),
 [verification and acceptance coverage](docs/persistence_verification_2026-09-26.md).
 It stores released evidence and fabricated integration fixtures; no LLM experiment
-has run. Renderer, parser, provider dispatch and evaluation remain future stages.
+has run. The bounded [renderer/parser/provider/orchestration stage](docs/experiment_stage.md)
+is now implemented, with a [non-dispatched 324-run schedule](docs/experiment_evidence/comparison_schedule_v1.json).
+See [verification and remaining Gate-B work](docs/experiment_verification_2026-09-26.md).
+Evaluation and study execution remain future stages. There is no study dispatch CLI.
 
 ## Reproduce
 
@@ -31,6 +34,20 @@ metadata. Both contract hashes are verified at
 session start, before fixture loading, and at session end. The committed copies
 are byte-identical to the research snapshots; tests never write to the research
 repository. Do not refresh them from a live service.
+
+The experiment-boundary tests also read the approved prompt artifacts and
+released DEV staging. They use fabricated provider responses and explicitly
+forbid real HTTP calls. Run all verification, including disposable SQL Server
+integration and the existing backup/restore test, with:
+
+```sh
+RAC_SQL_TEST_ENV=/private/tmp/rac-sqlserver-environment-20260926/credentials.env \
+RAC_SQL_TEST_BACKUP_DIR=/private/tmp/rac-sqlserver-persistence-20260926 \
+.venv/bin/python -m pytest tests tools/sqlserver_environment/test_probe.py -q
+```
+
+Without these environment variables, SQL/backup tests are skipped; that does not
+establish persistence acceptance. No command above sends an Ollama request.
 
 ## Public API
 

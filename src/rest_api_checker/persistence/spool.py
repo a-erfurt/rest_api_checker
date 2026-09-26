@@ -93,6 +93,8 @@ def reconcile(repo, path, *, outcome=None):
         cursor = attempt['diagnostics_file_id']
         while cursor is not None:
             item = json.loads(repo.file(cursor))
+            if item.get('spool_sha256')==sha256(raw).hexdigest():
+                return False
             if item.get('format')!='diagnostic-successor-v1':
                 break
             if item['evidence'].get('spool_sha256')==sha256(raw).hexdigest():
