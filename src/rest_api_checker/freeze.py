@@ -9,6 +9,8 @@ from pathlib import Path
 import platform
 import subprocess
 import urllib.request
+import fnmatch
+import re
 
 from . import evaluation, runtime_evidence, gate_b_closure
 from .experiment import parser, renderer, request, schedule
@@ -75,6 +77,77 @@ def check_sources(candidate, root, research):
                 and '..' not in Path(relative).parts, 'Unsafe freeze source')
         path=(root if base=='implementation' else research)/relative
         require(digest(path.read_bytes())==sha, 'Freeze source drift: '+key)
+
+
+def verify_historical(candidate, root, research):
+    """Validate evidence at its bound commit; NEVER authorize current execution.
+
+    Implementation bytes and inventory come from Git, not the current checkout.
+    Research inputs must still match their exact bound bytes.
+    """
+    commit = candidate['implementation_commit']
+    require(type(commit) is str and re.fullmatch('[0-9a-f]{40}',commit), 'Invalid historical commit')
+    try:
+        require(git(root, 'rev-parse', commit+'^{commit}') == commit, 'Invalid historical commit')
+    except subprocess.CalledProcessError as exc:
+        raise ValueError('Missing historical implementation commit') from exc
+    def blob(relative):
+        require(not Path(relative).is_absolute() and '..' not in Path(relative).parts,
+                'Unsafe historical source')
+        return subprocess.check_output(['git','-C',str(root),'show',commit+':'+relative])
+    old = runtime_evidence.DIRECTORY
+    bundle = json.loads(blob(old+'/bundle.json'))
+    keys = set(bundle['sources'])
+    keys.update('implementation:'+old+'/'+n for n in ('bundle.json', *bundle['files']))
+    paths = git(root,'ls-tree','-r','--name-only',commit).splitlines()
+    patterns = ('src/*.py','src/*.json','src/*.sql','tools/gate_b_closure/*.py')
+    keys.update('implementation:'+p for p in paths if any(fnmatch.fnmatchcase(p,pat) for pat in patterns))
+    keys.update('implementation:'+n for n in ('pyproject.toml','uv.lock'))
+    closure = gate_b_closure.DIRECTORY
+    keys.update('implementation:'+closure+'/'+n for n in
+                ('bundle.json', *json.loads(blob(closure+'/bundle.json'))['files']))
+    require(set(candidate['sources']) == keys, 'Incomplete historical source closure')
+    for key, sha in candidate['sources'].items():
+        base, relative = key.split(':',1)
+        require(base in ('research','implementation') and not Path(relative).is_absolute()
+                and '..' not in Path(relative).parts, 'Unsafe historical source')
+        if base == 'research':
+            raw = (research/relative).read_bytes()
+        elif relative.startswith('artifacts/development_dataset_v1/'):
+            # Released dataset bytes are intentionally generated/ignored, with
+            # their hashes already bound by the historical runtime bundle.
+            require(bundle['sources'].get(key)==sha, 'Unbound generated evidence')
+            raw = (root/relative).read_bytes()
+        else:
+            raw = blob(relative)
+        require(digest(raw) == sha, 'Historical source drift: '+key)
+        if base=='implementation' and not relative.startswith(('src/','tests/','tools/')):
+            require(digest((root/relative).read_bytes())==sha,'Historical evidence byte drift: '+key)
+    require(candidate['format']=='gate-b-freeze-candidate-v1'
+            and candidate['phase']=='prompt_comparison_development' and candidate['status']=='NOT AUTHOR-ACCEPTED'
+            and candidate['instruction']=='DO NOT EXECUTE' and candidate['gate_b_complete'] is False
+            and candidate['prompts']==PROMPT_HASHES and candidate['dataset_manifest_sha256']==DEV_HASH,
+            'Historical scientific identity drift')
+    require(candidate['expected_runs']==324 and candidate['schedule_sha256']==digest(schedule.dry_run_bytes())
+            and candidate['portable_schedule']==json.loads(schedule.dry_run_bytes())['slots'],
+            'Historical schedule drift')
+    require(candidate['configuration']==json.loads(encode(dict(options=request.OPTIONS,stream=False,timeout_seconds=request.TIMEOUT,
+        seeds={str(k):v for k,v in request.SEEDS.items()},thinking={m:False if m==request.MODELS[0] else 'OMIT' for m in request.MODELS}))),
+        'Historical configuration drift')
+    for key,name in (('models','identities.json'),('runtime','host.json'),('native_runner','runtime_build.json')):
+        require(candidate[key]==json.loads(blob(old+'/'+name)),'Historical runtime binding drift: '+key)
+    context=blob(old+'/context.json');measured=json.loads(context)['rows']
+    proofs={str(r['run_order']):dict(request_sha256=r['request_sha256'],model_digest=r['model_digest'],
+        template_sha256=r['template_sha256'],measurement_sha256=digest(context),input_tokens=r['input_tokens']) for r in measured}
+    require(candidate['context_evidence_sha256']==digest(context) and candidate['context_proofs']==proofs,
+            'Historical context proof drift')
+    bound=candidate['bindings'];members={r['case_code']:r['id'] for r in bound['dataset_cases']}
+    prompts={r['name']:r['id'] for r in bound['prompts']};models={r['name']:r['id'] for r in bound['models']}
+    configs={m:next(r['run_config_id'] for r in candidate['schedule'] if r['model_id']==i) for m,i in models.items()}
+    expected=[dict(dataset_case_id=members[s.case],prompt_id=prompts[s.prompt],model_id=models[s.model],
+        run_config_id=configs[s.model],repetition=s.repetition,seed=s.seed,run_order=s.run_order) for s in schedule.comparison_schedule()]
+    require(candidate['schedule']==expected,'Historical SQL/portable schedule drift')
+    return True
 
 
 def build(repo, root, research, registrations):

@@ -9,7 +9,7 @@ from .persistence.database import require
 DIRECTORY = 'docs/gate_b_closure_2026-09-26'
 
 
-def inspect(root, research):
+def inspect(root, research, *, implementation_commit=None):
     folder=root/DIRECTORY
     if not (folder/'bundle.json').exists():
         return {}
@@ -26,8 +26,8 @@ def inspect(root, research):
         namespace,relative=key.split(':',1)
         require(namespace in ('implementation','research') and not Path(relative).is_absolute()
                 and '..' not in Path(relative).parts,'Unsafe closure source')
-        base=root if namespace=='implementation' else research
-        require(digest((base/relative).read_bytes())==sha,'Technical closure source drift: '+key)
+        raw = runtime_evidence.source_bytes(root,relative,implementation_commit) if namespace=='implementation' else (research/relative).read_bytes()
+        require(digest(raw)==sha,'Technical closure source drift: '+key)
     def read(name):
         require(name in bundle['files'] and Path(name).name==name,'Unbound closure evidence')
         raw=(folder/name).read_bytes()
@@ -37,7 +37,7 @@ def inspect(root, research):
         require(Path(name).name==name and digest((folder/name).read_bytes())==sha,'Closure evidence drift: '+name)
     # The prior capture remains immutable. Its entire native-runtime/source closure
     # must still pass, including the measured request/seed/template/token evidence.
-    runtime=runtime_evidence.inspect(root,research)
+    runtime=runtime_evidence.inspect(root,research,implementation_commit=implementation_commit)
     require(all(runtime[n]['status']=='PASS' for n in
         ('Full model identities','Template and effective options','Context fit')),'Prior runtime evidence invalid')
     failure=json.loads((root/runtime_evidence.DIRECTORY/'failures.json').read_bytes())

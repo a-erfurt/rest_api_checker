@@ -77,7 +77,8 @@ def outcome_for(receipt, *, run_id, attempt_id, request_sha256, spool_sha256,
 
 
 def execute_attempt(repo, run_id, *, attempt, client, spool_directory, context_proof,
-                    verify_runtime, review_failure=lambda receipt, result: 'ambiguous'):
+                    verify_runtime, review_failure=lambda receipt, result: 'ambiguous',
+                    prepare_request=prepare):
     """Future dispatch boundary; tests inject fabricated clients and evidence only.
 
     verify_runtime(request, proof) must establish the frozen manifest/template and
@@ -85,7 +86,7 @@ def execute_attempt(repo, run_id, *, attempt, client, spool_directory, context_p
     retries. No default implementation pretends this Gate-B evidence exists.
     """
     with repo.dispatch_owner():
-        inputs, request = prepare(repo, run_id)
+        inputs, request = prepare_request(repo, run_id)
         context_proof.verify(request)
         # A caller must bind the measured template evidence to its frozen setup.
         proofs = inputs['setup'].get('context_proofs', {})

@@ -13,6 +13,15 @@ from . import runtime_evidence, gate_b_closure
 
 def check(root, research, repo=None, experiment_id=None):
     checks, loaded = [], {}
+    from . import freeze
+    historical = {}
+    if (root/freeze.CANDIDATE).exists():
+        try:
+            candidate = json.loads((root/freeze.CANDIDATE).read_bytes())
+            freeze.verify_historical(candidate,root,research)
+            historical = dict(implementation_commit=candidate['implementation_commit'])
+        except (ValueError,OSError,KeyError,TypeError):
+            pass  # The candidate check below reports invalid history explicitly.
     def run(name, fn):
         try:
             detail = fn()
@@ -80,21 +89,21 @@ def check(root, research, repo=None, experiment_id=None):
     else:
         checks.append(dict(check='Database schema',status='BLOCKED',detail='No database supplied; not verified'))
     try:
-        runtime = runtime_evidence.inspect(root, research)
+        runtime = runtime_evidence.inspect(root, research, **historical)
     except (ValueError, OSError, KeyError, TypeError, StopIteration) as exc:
         runtime = {name: dict(status='FAIL', detail='Runtime evidence invalid: '+str(exc))
                    for name in ('Full model identities', 'Template and effective options',
                                 'Context fit', 'Failure attribution')}
     try:
-        runtime.update(gate_b_closure.inspect(root, research))
+        runtime.update(gate_b_closure.inspect(root, research, **historical))
     except (ValueError, OSError, KeyError, TypeError, StopIteration) as exc:
         runtime['Failure attribution'] = dict(status='FAIL', detail='Technical closure invalid: '+str(exc))
     acceptance_detail = 'Complete setup/source closure, application-role deployment and author freeze acceptance pending'
-    from . import freeze
     if (root/freeze.CANDIDATE).exists():
         try:
-            freeze.verify_candidate(json.loads((root/freeze.CANDIDATE).read_bytes()), root, research, repo)
-            acceptance_detail = 'Complete source-bound candidate verified; NOT AUTHOR-ACCEPTED / DO NOT EXECUTE. Failure-limitation decision and hash-bound author acceptance pending.'
+            candidate = json.loads((root/freeze.CANDIDATE).read_bytes())
+            freeze.verify_historical(candidate, root, research)
+            acceptance_detail = 'Historical source closure verified at its bound commit. This offline check grants no current execution permission; separate exact-hash acceptance and live execution verification are required.'
         except (ValueError, OSError, KeyError, TypeError, StopIteration) as exc:
             runtime['Gate-B artifact acceptance'] = dict(status='FAIL', detail='Freeze candidate invalid: '+str(exc))
     for name, detail in (

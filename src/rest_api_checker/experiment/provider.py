@@ -25,17 +25,19 @@ class Receipt:
 
 class OllamaClient:
     """One new connection/request per call. A total deadline bounds reads as well."""
-    def __init__(self, endpoint='http://127.0.0.1:11434/api/chat', *, connection_factory=None):
+    def __init__(self, endpoint='http://127.0.0.1:11434/api/chat', *, connection_factory=None,
+                 request_validator=validate_request):
         target = urlsplit(endpoint)
         check(target.scheme in ('http', 'https') and target.path == '/api/chat'
               and target.hostname and not target.query and not target.fragment
               and target.username is None and target.password is None, 'INVALID_OLLAMA_ENDPOINT')
         self.target = target
+        self.request_validator = request_validator
         self.factory = connection_factory or (http.client.HTTPSConnection if target.scheme == 'https'
                                                else http.client.HTTPConnection)
 
     def send(self, request, *, on_start):
-        validate_request(request)
+        self.request_validator(request)
         connection = self.factory(self.target.hostname, self.target.port, timeout=TIMEOUT)
         started_at = utc_now()
         # Commit the observed dispatch boundary before entering HTTP. If it fails,

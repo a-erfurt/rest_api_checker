@@ -4,6 +4,29 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+P2 sensitivity execution support and the separate Section 9/D11 diagnostic
+evaluator are implemented. See [the technical mapping and operator boundary](sensitivity_execution_d11.md).
+The final candidate is generated after the implementation commit under
+`artifacts/sensitivity_freeze_candidate_v2/`, retaining v1 unchanged. It requires
+a separate exact-hash author acceptance before any real SQL experiment or
+provider dispatch. No sensitivity experiment, prediction, acceptance, real
+generation or main evaluation is created by this implementation step.
+
+Full verification: **740 passed, zero failures/errors/skips**, including
+disposable SQL, application-principal, backup/restore and Q01–Q26 checks.
+See `sensitivity_verification_2026-09-26.json`. All real domain-table snapshots
+and 782 protected file hashes match the recorded before-state.
+
+The accepted comparison remains historical evidence. Historical source closure
+is verified at its original bound Git commit; current execution still requires
+exact current implementation/source/runtime bindings. SQL construction tests
+use disposable application-principal databases, preserving completed Experiment 1.
+Renderer, parser, prompt bytes, D07, seeds and the preliminary 108-slot schedule
+remain unchanged. Native context measurements can be reused only after exact
+request-byte and live runtime identity verification.
+
+### Previous sensitivity preparation milestone (historical)
+
 Candidate-only sensitivity preparation is available in `tools/sensitivity_freeze/prepare.py`.
 It reconstructs 108 approved P2_SENSITIVITY_V1 requests against the accepted
 comparison, measures native render/tokenizer context without completion calls,

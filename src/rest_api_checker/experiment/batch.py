@@ -6,7 +6,7 @@ import threading
 
 from ..persistence.database import require, utc_now
 from ..persistence.inspection import bindings, rows, status
-from .orchestration import execute_attempt, Paused
+from .orchestration import execute_attempt, Paused, prepare
 from .request import ContextProof
 
 
@@ -16,7 +16,7 @@ class StopRequest:
 
 
 def run(repo, experiment_id, *, client, spool_directory, verify_runtime,
-        review_failure, notify=lambda event: None, stop=None):
+        review_failure, notify=lambda event: None, stop=None, prepare_request=prepare):
     """Retries remain attempts of one run; reserved ambiguous slots never dispatch.
 
     SIGINT requests a cooperative stop after the active attempt has been durably
@@ -63,7 +63,8 @@ def run(repo, experiment_id, *, client, spool_directory, verify_runtime,
                     notify(dict(event='current',current=current))
                     execute_attempt(repo,run_id,attempt=attempt,client=client,spool_directory=spool_directory,
                         context_proof=ContextProof(**setup['context_proofs'][str(scheduled['run_order'])]),
-                        verify_runtime=verify_runtime,review_failure=review_failure)
+                        verify_runtime=verify_runtime,review_failure=review_failure,
+                        prepare_request=prepare_request)
                     state = status(repo,experiment_id)
                     repo.cn.commit()
                     notify(dict(event='progress',state=state))

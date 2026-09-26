@@ -6,6 +6,7 @@ callback must still reverify live runtime identity; author acceptance is separat
 import json
 from pathlib import Path
 import struct
+import subprocess
 
 from .experiment.encoding import digest, encode
 from .experiment.request import MODELS, OPTIONS, SEEDS, TIMEOUT
@@ -14,7 +15,14 @@ from .persistence.database import require
 DIRECTORY = 'docs/runtime_qualification_2026-09-26'
 
 
-def inspect(root, research):
+def source_bytes(root, relative, implementation_commit=None):
+    """Optional historical code lookup; captured evidence stays on disk."""
+    if implementation_commit is not None and relative.startswith(('src/','tests/','tools/')):
+        return subprocess.check_output(['git','-C',str(root),'show',implementation_commit+':'+relative])
+    return (root/relative).read_bytes()
+
+
+def inspect(root, research, *, implementation_commit=None):
     folder = root / DIRECTORY
     if not (folder/'bundle.json').exists():
         return {}
@@ -33,8 +41,8 @@ def inspect(root, research):
         base, relative = name.split(':', 1)
         require(base in ('implementation','research') and not Path(relative).is_absolute()
                 and '..' not in Path(relative).parts, 'Unsafe source binding')
-        path = (root if base == 'implementation' else research)/relative
-        require(digest(path.read_bytes()) == sha, 'Runtime source drift: '+name)
+        raw = source_bytes(root,relative,implementation_commit) if base=='implementation' else (research/relative).read_bytes()
+        require(digest(raw) == sha, 'Runtime source drift: '+name)
     def read(name):
         require(name in bundle['files'], 'Unbound runtime evidence: '+name)
         return json.loads((folder/name).read_bytes())

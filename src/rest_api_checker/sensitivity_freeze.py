@@ -113,7 +113,7 @@ def prepare(repo, root, research):
     freeze.require_acceptance(old_raw,json.loads(acceptance_raw))
     require(digest(old_raw)==setup['author_candidate_sha256']
             and digest(acceptance_raw)==setup['author_acceptance_sha256'], 'Baseline acceptance drift')
-    freeze.check_sources(old,root,research)
+    freeze.verify_historical(old,root,research)
     require(bindings(repo,1,old['schedule'])==old['bindings'], 'Baseline bindings drift')
     repo.verify_closure(setup['files'])
     reports = rows(repo,'evaluation_reports',experiment_id=1)

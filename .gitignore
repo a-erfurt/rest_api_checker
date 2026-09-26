@@ -22,3 +22,4 @@ artifacts/gate_b_freeze_candidate_v1/
 
 # Non-executable sensitivity candidate, generated after its preparation commit.
 artifacts/sensitivity_freeze_candidate_v1/
+artifacts/sensitivity_freeze_candidate_v2/

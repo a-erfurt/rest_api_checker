@@ -109,7 +109,9 @@ def closure_copy(tmp_path):
         source=(ROOT if namespace=='implementation' else RESEARCH)/relative
         target=(tmp_path if namespace=='implementation' else research)/relative
         target.parent.mkdir(parents=True,exist_ok=True)
-        target.symlink_to(source)
+        commit=json.loads((ROOT/freeze.CANDIDATE).read_bytes())['implementation_commit']
+        target.write_bytes(gate_b_closure.runtime_evidence.source_bytes(ROOT,relative,commit)
+                          if namespace=='implementation' else source.read_bytes())
     return tmp_path,research,folder,bundle
 
 
@@ -123,7 +125,7 @@ def test_closure_evidence_drift_never_passes(closure_copy):
 @pytest.mark.parametrize('mutation', ['author','crash','skipped','missing_group'])
 def test_resealed_overclaim_or_incomplete_tests_rejected(closure_copy,monkeypatch,mutation):
     root,research,folder,bundle=closure_copy
-    monkeypatch.setattr(gate_b_closure.runtime_evidence,'inspect',lambda *a:{name:{'status':'PASS'} for name in
+    monkeypatch.setattr(gate_b_closure.runtime_evidence,'inspect',lambda *a,**kw:{name:{'status':'PASS'} for name in
         ('Full model identities','Template and effective options','Context fit')})
     old=root/gate_b_closure.runtime_evidence.DIRECTORY; old.mkdir(parents=True,exist_ok=True)
     shutil.copyfile(ROOT/gate_b_closure.runtime_evidence.DIRECTORY/'failures.json',old/'failures.json')

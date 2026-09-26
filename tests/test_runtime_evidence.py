@@ -5,11 +5,12 @@ import shutil
 
 import pytest
 
-from rest_api_checker import preflight, runtime_evidence, gate_b_closure
+from rest_api_checker import preflight, runtime_evidence, gate_b_closure, freeze
 from rest_api_checker.experiment.encoding import digest
 
 ROOT = Path(__file__).resolve().parents[1]
 RESEARCH = ROOT.parent/'bachelor_rest_api_checker'
+HISTORICAL_COMMIT = json.loads((ROOT/freeze.CANDIDATE).read_bytes())['implementation_commit']
 
 
 @pytest.fixture
@@ -23,7 +24,8 @@ def capture(tmp_path):
         source=(ROOT if base=='implementation' else RESEARCH)/relative
         target=(root if base=='implementation' else research)/relative
         target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(source,target)
+        target.write_bytes(runtime_evidence.source_bytes(ROOT,relative,HISTORICAL_COMMIT)
+                          if base=='implementation' else source.read_bytes())
     return root,research,folder,bundle
 
 
@@ -46,8 +48,8 @@ def test_captured_readiness_preserves_limitations_and_author_gate():
     assert result['status']=='BLOCKED' and result['inference_performed'] is False
     for name in ('Full model identities','Template and effective options','Context fit'):
         assert checks[name]=='PASS'
-    assert runtime_evidence.inspect(ROOT,RESEARCH)['Failure attribution']['status']=='BLOCKED'
-    closure=gate_b_closure.inspect(ROOT,RESEARCH)
+    assert runtime_evidence.inspect(ROOT,RESEARCH,implementation_commit=HISTORICAL_COMMIT)['Failure attribution']['status']=='BLOCKED'
+    closure=gate_b_closure.inspect(ROOT,RESEARCH,implementation_commit=HISTORICAL_COMMIT)
     assert checks['Failure attribution']==closure.get('Failure attribution',{'status':'BLOCKED'})['status']
     assert checks['Gate-B artifact acceptance']=='BLOCKED'
 
