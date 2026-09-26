@@ -1,0 +1,13 @@
+{
+  "db_writes": 0,
+  "failure_descriptions_verified": 221,
+  "frozen_evaluator_reproduced": true,
+  "model_calls": 0,
+  "parser_outcomes_verified": 324,
+  "ranking": [
+    "P2",
+    "P3",
+    "P1"
+  ],
+  "raw_envelopes_verified": 324
+}

@@ -1,0 +1,5482 @@
+{
+  "case": [
+    {
+      "case": "DEV-01",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 27,
+      "parser_failure": 22,
+      "technical_failure": 0,
+      "valid": 5
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 27,
+      "parser_failure": 19,
+      "technical_failure": 0,
+      "valid": 8
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 27,
+      "parser_failure": 18,
+      "technical_failure": 0,
+      "valid": 9
+    }
+  ],
+  "family_id": [
+    {
+      "denominator": 162,
+      "family_id": 1,
+      "parser_failure": 112,
+      "technical_failure": 0,
+      "valid": 50
+    },
+    {
+      "denominator": 108,
+      "family_id": 2,
+      "parser_failure": 72,
+      "technical_failure": 0,
+      "valid": 36
+    },
+    {
+      "denominator": 54,
+      "family_id": 3,
+      "parser_failure": 37,
+      "technical_failure": 0,
+      "valid": 17
+    }
+  ],
+  "model": [
+    {
+      "denominator": 108,
+      "model": "gemma3:27b",
+      "parser_failure": 108,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 108,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 108,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 108,
+      "model": "qwen3.6:27b",
+      "parser_failure": 5,
+      "technical_failure": 0,
+      "valid": 103
+    }
+  ],
+  "model/case": [
+    {
+      "case": "DEV-01",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 9,
+      "model": "gemma3:27b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 9,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 9,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 4,
+      "technical_failure": 0,
+      "valid": 5
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "technical_failure": 0,
+      "valid": 8
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 9,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "technical_failure": 0,
+      "valid": 9
+    }
+  ],
+  "model/prompt": [
+    {
+      "denominator": 36,
+      "model": "gemma3:27b",
+      "parser_failure": 36,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "gemma3:27b",
+      "parser_failure": 36,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "gemma3:27b",
+      "parser_failure": 36,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 36,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 36,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 36,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "qwen3.6:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 33
+    },
+    {
+      "denominator": 36,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 36
+    },
+    {
+      "denominator": 36,
+      "model": "qwen3.6:27b",
+      "parser_failure": 2,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 34
+    }
+  ],
+  "model/prompt/case": [
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "gemma3:27b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 3,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 2,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 2
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 2,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 3,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    }
+  ],
+  "model/prompt/case/repetition": [
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "gemma3:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 1,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 1
+    }
+  ],
+  "model/prompt/repetition": [
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "gemma3:27b",
+      "parser_failure": 12,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 12,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 11
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 2,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 10
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 11
+    },
+    {
+      "denominator": 12,
+      "model": "qwen3.6:27b",
+      "parser_failure": 1,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 11
+    }
+  ],
+  "model/repetition": [
+    {
+      "denominator": 36,
+      "model": "gemma3:27b",
+      "parser_failure": 36,
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "gemma3:27b",
+      "parser_failure": 36,
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "gemma3:27b",
+      "parser_failure": 36,
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 36,
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 36,
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "mistral-small3.2:24b",
+      "parser_failure": 36,
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 0
+    },
+    {
+      "denominator": 36,
+      "model": "qwen3.6:27b",
+      "parser_failure": 0,
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 36
+    },
+    {
+      "denominator": 36,
+      "model": "qwen3.6:27b",
+      "parser_failure": 2,
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 34
+    },
+    {
+      "denominator": 36,
+      "model": "qwen3.6:27b",
+      "parser_failure": 3,
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 33
+    }
+  ],
+  "operation": [
+    {
+      "denominator": 162,
+      "operation": "/edx/validation/body",
+      "parser_failure": 112,
+      "technical_failure": 0,
+      "valid": 50
+    },
+    {
+      "denominator": 162,
+      "operation": "/resistance/validation/file",
+      "parser_failure": 109,
+      "technical_failure": 0,
+      "valid": 53
+    }
+  ],
+  "origin": [
+    {
+      "denominator": 81,
+      "origin": "natural_observation",
+      "parser_failure": 54,
+      "technical_failure": 0,
+      "valid": 27
+    },
+    {
+      "denominator": 54,
+      "origin": "synthetic_conformant_control",
+      "parser_failure": 40,
+      "technical_failure": 0,
+      "valid": 14
+    },
+    {
+      "denominator": 189,
+      "origin": "synthetic_inconsistency",
+      "parser_failure": 127,
+      "technical_failure": 0,
+      "valid": 62
+    }
+  ],
+  "prompt": [
+    {
+      "denominator": 108,
+      "parser_failure": 75,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 33
+    },
+    {
+      "denominator": 108,
+      "parser_failure": 72,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 36
+    },
+    {
+      "denominator": 108,
+      "parser_failure": 74,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 34
+    }
+  ],
+  "prompt/case": [
+    {
+      "case": "DEV-01",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 9,
+      "parser_failure": 8,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 9,
+      "parser_failure": 7,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 2
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P1",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P2",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-01",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-02",
+      "denominator": 9,
+      "parser_failure": 8,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 1
+    },
+    {
+      "case": "DEV-03",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-04",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-05",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-06",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-07",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-08",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-09",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-10",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-11",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    },
+    {
+      "case": "DEV-12",
+      "denominator": 9,
+      "parser_failure": 6,
+      "prompt": "P3",
+      "technical_failure": 0,
+      "valid": 3
+    }
+  ],
+  "prompt/repetition": [
+    {
+      "denominator": 36,
+      "parser_failure": 24,
+      "prompt": "P1",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 25,
+      "prompt": "P1",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 11
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 26,
+      "prompt": "P1",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 10
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 24,
+      "prompt": "P2",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 24,
+      "prompt": "P2",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 24,
+      "prompt": "P2",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 24,
+      "prompt": "P3",
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 12
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 25,
+      "prompt": "P3",
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 11
+    },
+    {
+      "denominator": 36,
+      "parser_failure": 25,
+      "prompt": "P3",
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 11
+    }
+  ],
+  "repetition": [
+    {
+      "denominator": 108,
+      "parser_failure": 72,
+      "repetition": 1,
+      "technical_failure": 0,
+      "valid": 36
+    },
+    {
+      "denominator": 108,
+      "parser_failure": 74,
+      "repetition": 2,
+      "technical_failure": 0,
+      "valid": 34
+    },
+    {
+      "denominator": 108,
+      "parser_failure": 75,
+      "repetition": 3,
+      "technical_failure": 0,
+      "valid": 33
+    }
+  ]
+}

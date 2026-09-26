@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-26",
+  "evaluation_command": ".venv/bin/rac evaluate comparison 1 --json",
+  "evaluation_exit_code": 0,
+  "evaluation_invocations": 1,
+  "tests": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_evaluation.py",
+      "passed": 17,
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -p no:cacheprovider tests/experiment/test_boundaries.py",
+      "passed": 124,
+      "exit_code": 0
+    }
+  ],
+  "initial_test_path_error": "tests/experiment/test_parser.py did not exist; no tests ran in first combined invocation; corrected suites then passed",
+  "model_calls": 0,
+  "new_sensitivity_runs": 0,
+  "new_main_evaluation_runs": 0
+}
