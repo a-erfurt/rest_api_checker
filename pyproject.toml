@@ -13,7 +13,11 @@ dependencies = [
   "jsonschema==4.26.0",
   "referencing==0.37.0",
   "pyodbc==5.3.0",
+  "rich>=14.1,<15",
 ]
+
+[project.scripts]
+rest-api-checker = "rest_api_checker.cli:entrypoint"
 
 [dependency-groups]
 dev = ["pytest==9.1.1"]

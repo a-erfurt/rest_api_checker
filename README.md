@@ -12,7 +12,21 @@ It stores released evidence and fabricated integration fixtures; no LLM experime
 has run. The bounded [renderer/parser/provider/orchestration stage](docs/experiment_stage.md)
 is now implemented, with a [non-dispatched 324-run schedule](docs/experiment_evidence/comparison_schedule_v1.json).
 See [verification and remaining Gate-B work](docs/experiment_verification_2026-09-26.md).
-Evaluation and study execution remain future stages. There is no study dispatch CLI.
+The [comparison evaluator and thesis CLI](docs/evaluation_cli.md) now provide
+immutable SQL-backed reports, inspection, offline preflight and fabricated
+execution demonstrations. The real 324 comparison runs have **NOT started**;
+no study prompt winner or sensitivity variant exists. Demo data is **FABRICATED**.
+Real CLI dispatch remains blocked by Gate-B evidence and acceptance.
+
+```sh
+uv sync --locked
+rest-api-checker --help
+rest-api-checker preflight --plain
+rest-api-checker --env-file /private/tmp/rac-sqlserver-environment-20260926/credentials.env experiment demo
+```
+
+The demo owns a marked disposable SQL Server database. It never calls Ollama.
+See the [command tree, JSON, progress and resume guide](docs/evaluation_cli.md).
 
 ## Reproduce
 

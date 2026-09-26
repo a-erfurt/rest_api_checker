@@ -1,0 +1,75 @@
+FABRICATED / TEST DATA — preparing disposable SQL Server resources
+0/324 logical runs (0%); elapsed 0s; valid=0 parser=0 technical=0 pending=324
+Current: qwen3.6:27b · P3 · DEV-08 · repetition 1/3 · attempt 1/2
+Technical failure — retrying identical request (attempt 2/2)
+Technical failure — retrying identical request (attempt 2/2)
+36/324 logical runs (11%); elapsed 5s; valid=34 parser=1 technical=1 pending=288
+72/324 logical runs (22%); elapsed 10s; valid=70 parser=1 technical=1
+pending=252
+108/324 logical runs (33%); elapsed 15s; valid=106 parser=1 technical=1
+pending=216
+Current: gemma3:27b · P3 · DEV-11 · repetition 2/3 · attempt 1/2
+144/324 logical runs (44%); elapsed 21s; valid=142 parser=1 technical=1
+pending=180
+180/324 logical runs (56%); elapsed 26s; valid=178 parser=1 technical=1
+pending=144
+216/324 logical runs (67%); elapsed 31s; valid=214 parser=1 technical=1
+pending=108
+Current: mistral-small3.2:24b · P1 · DEV-07 · repetition 2/3 · attempt 1/2
+252/324 logical runs (78%); elapsed 36s; valid=250 parser=1 technical=1
+pending=72
+288/324 logical runs (89%); elapsed 41s; valid=286 parser=1 technical=1
+pending=36
+324/324 logical runs (100%); elapsed 46s; valid=322 parser=1 technical=1
+pending=0
+324/324 logical runs (100%); elapsed 46s; valid=322 parser=1 technical=1
+pending=0
+FABRICATED / TEST DATA — no study prompt winner
+                  Prompt comparison
+ Prompt  Score    Robust  Stable  Reliable  Full case
+ P1      216/324  12/36   72/108  108/108   36/108
+ P2      216/324  12/36   72/108  108/108   36/108
+ P3      212/324  11/36   68/108  106/108   35/108
+Selected prompt (fabricated demo only): P1
+Selection decided by: Length
+  Score: P1=2/3, P2=2/3, P3=53/81 → P1, P2
+  Robust: P1=1/3, P2=1/3 → P1, P2
+  StableCorrect: P1=2/3, P2=2/3 → P1, P2
+  Reliability: P1=1, P2=1 → P1, P2
+  FullCase: P1=1/3, P2=1/3 → P1, P2
+  Length: P1=4325, P2=4996 → P1
+           P1 · model × category
+ Model                 C1     C2     C3
+ qwen3.6:27b           33/36  27/36  12/36
+ gemma3:27b            33/36  27/36  12/36
+ mistral-small3.2:24b  33/36  27/36  12/36
+             P1 · terminal outcomes
+ Model                 Valid  Parser  Technical
+ qwen3.6:27b           36     0       0
+ gemma3:27b            36     0       0
+ mistral-small3.2:24b  36     0       0
+           P2 · model × category
+ Model                 C1     C2     C3
+ qwen3.6:27b           33/36  27/36  12/36
+ gemma3:27b            33/36  27/36  12/36
+ mistral-small3.2:24b  33/36  27/36  12/36
+             P2 · terminal outcomes
+ Model                 Valid  Parser  Technical
+ qwen3.6:27b           36     0       0
+ gemma3:27b            36     0       0
+ mistral-small3.2:24b  36     0       0
+           P3 · model × category
+ Model                 C1     C2     C3
+ qwen3.6:27b           31/36  26/36  11/36
+ gemma3:27b            33/36  27/36  12/36
+ mistral-small3.2:24b  33/36  27/36  12/36
+             P3 · terminal outcomes
+ Model                 Valid  Parser  Technical
+ qwen3.6:27b           34     1       1
+ gemma3:27b            36     0       0
+ mistral-small3.2:24b  36     0       0
+                    Execution summary
+ Status     Completed  Pending  Valid  Parser  Technical
+ COMPLETED  324/324    0        322    1       1
+FABRICATED / TEST DATA. No study prompt winner.
+Disposable database and spool removed.

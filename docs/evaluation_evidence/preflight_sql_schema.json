@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "check": "Development dataset hash and release",
+      "detail": "12 released cases; 8cac438a328c67a550ba883cbf9953a4867dc17ad8b5ed1fdf0f2bb55b0bb974",
+      "status": "PASS"
+    },
+    {
+      "check": "P1/P2/P3 hashes",
+      "detail": "P1/P2/P3 exact approved bytes and source bindings",
+      "status": "PASS"
+    },
+    {
+      "check": "Renderer closure / leakage boundary",
+      "detail": "12 exact input hashes, complete closure, byte round-trip and allowlist rejection verified",
+      "status": "PASS"
+    },
+    {
+      "check": "Parser version and acceptance",
+      "detail": "strict-output-v1; d8d7fa7a853e0a09b73067f78304ae833b90e2405645b7818139b904ffc33783; 27 legal vectors and rejection probes",
+      "status": "PASS"
+    },
+    {
+      "check": "Schedule: 324 logical runs",
+      "detail": "324 logical runs; 108 per prompt; non-dispatched schedule only",
+      "status": "PASS"
+    },
+    {
+      "check": "Database schema",
+      "detail": "version 2; migration checksums verified",
+      "status": "PASS"
+    },
+    {
+      "check": "Full model identities",
+      "detail": "Actual full manifests, Q4_K_M and runtime/hardware evidence not verified",
+      "status": "BLOCKED"
+    },
+    {
+      "check": "Template and effective options",
+      "detail": "Native templates, defaults, D07 support and thinking policy require measured evidence",
+      "status": "BLOCKED"
+    },
+    {
+      "check": "Context fit",
+      "detail": "Actual tokenizer/template-aware measurements for every complete request are absent",
+      "status": "BLOCKED"
+    },
+    {
+      "check": "Failure attribution",
+      "detail": "Real runtime-specific isolated/systematic failure evidence remains unverified",
+      "status": "BLOCKED"
+    },
+    {
+      "check": "Gate-B artifact acceptance",
+      "detail": "Complete setup/source closure, application-role deployment and author freeze acceptance pending",
+      "status": "BLOCKED"
+    }
+  ],
+  "database_scope": "Fresh marked disposable SQL database; no experiment or provider call",
+  "gate": "B",
+  "inference_performed": false,
+  "status": "BLOCKED"
+}

@@ -4,6 +4,31 @@ Last updated: 2026-09-26
 
 ## Current milestone
 
+Comparison evaluator, immutable analysis snapshots/reports and the argparse/Rich
+thesis CLI are implemented. See [CLI/evaluation design](evaluation_cli.md) and
+[verification](evaluation_verification_2026-09-26.md). New experiment setups bind
+exact relational source/reference/model/configuration values; old setups are not
+rewritten. No database schema, frozen prompt, dataset or scientific policy changed.
+
+The CLI supports database/dataset inventory, experiment/run/attempt inspection,
+schedule/progress, comparison reports/JSON export, truthful offline Gate-B checks
+and isolated fabricated execution. Cooperative interruption and persisted resume
+retain pending/ambiguous runs. Actual runtime verification and attribution still
+block real CLI execution. No web UI was added.
+
+**The real 324 comparison runs have NOT started. No study prompt winner exists.
+No sensitivity variant exists. Demo data is FABRICATED / TEST DATA.** Research
+remains read-only; unrelated literature working-tree files are untouched.
+
+Final verification: **478 passed**, including **61 SQL Server integration tests**,
+zero failures/errors/skips; Q01–Q26 and backup/restore remain green. Both plain and
+animated fabricated demos completed 324 logical runs with 326 attempts (322 valid,
+1 parser failure, 1 terminal technical failure). All disposable resources were
+removed. Offline package build and console-entry-point verification passed.
+SQL-schema preflight: 6 verified PASS checks, 5 truthful Gate-B BLOCKED checks.
+
+### Previous renderer/parser/orchestration milestone (historical)
+
 Operation-scoped input renderer, strict final-output parser, Ollama client boundary,
 deterministic comparison scheduling and persistence orchestration implemented.
 See [stage design](experiment_stage.md) and
@@ -169,9 +194,9 @@ See `docs/validator_spike.md` for validator qualification details.
 
 - Final evaluation dataset generation/freeze.
 - Gate-B live runtime/model/template/context verification and acceptance.
-- Complete prompt-development execution/evaluation workflow.
+- Actual Gate-B-approved prompt-development execution and sensitivity workflow.
 - Main experiment runner.
-- Evaluation metrics/report generation.
+- Reference-correction and sensitivity report workflows.
 - Result visualizations.
 - Web UI.
 
