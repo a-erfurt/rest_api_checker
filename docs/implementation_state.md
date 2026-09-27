@@ -1,3 +1,26 @@
+## 2026-09-27: Main evaluation freeze preparation
+
+The exact final evaluation release has a dedicated transactional SQL adapter in
+`main_freeze.py`: immutable raw source archival, lossless metadata projection,
+seven unscored ancestry records, fourteen accepted references and membership
+positions, and idempotent planning of 126 logical runs. No schema migration,
+parser, renderer, prompt, provider or retry semantics changed.
+
+`main_execution.py` requires a separate author decision bound to the complete
+Main freeze root and experiment ID. Frozen SQL retains the closed provider gate;
+only the accepted execution path can enable an in-memory dispatch view. The Main
+metrics specification (Option B, vector correctness /14 per model/repetition)
+lives in the research freeze; no Main report/evaluator is run during preparation.
+
+Validation: **795 passed, zero failures/skips**, including disposable SQL,
+application-principal and backup/restore tests. See
+[verification](main_evaluation_verification_2026-09-27.json).
+
+See [Main freeze adapter](main_evaluation_freeze.md). Research source files and
+existing comparison/sensitivity outcomes remain immutable. The historical
+Sensitivity test fixture now binds its synthetic current research commit, and a
+wrong-commit rejection remains tested; accepted historical artifacts are unchanged.
+
 ## 2026-09-27: pre-reference final candidate materializer
 
 Added a standalone, offline adapter for the exact 14 author-confirmed candidate

@@ -24,7 +24,8 @@ def candidate_fixture(directory):
     c=json.loads((source/'candidate.json').read_bytes())
     shutil.copytree(source,directory)
     c.update(format=sc.FORMAT,status='NOT ACCEPTED',execution_blockers=['EXACT_CANDIDATE_REVIEW_PENDING'],
-        implementation_commit=freeze.git(ROOT,'rev-parse','HEAD'),sources=sc.sources(ROOT,RESEARCH),
+        implementation_commit=freeze.git(ROOT,'rev-parse','HEAD'),
+        research_commit=freeze.git(RESEARCH,'rev-parse','HEAD'),sources=sc.sources(ROOT,RESEARCH),
         parent_prompt_sha256=sf.PARENT_SHA,evaluator=dict(version=se.VERSION,sha256=se.artifact_hash()))
     context=json.loads((directory/'context.json').read_bytes())
     c['context_proofs']={str(r['run_order']):asdict(request.ContextProof(r['request_sha256'],r['model_digest'],
@@ -83,6 +84,7 @@ def test_final_offline_verification_and_historical_separation(candidate):
 
 @pytest.mark.parametrize('change',[
     lambda c:c.update(implementation_commit='0'*40),
+    lambda c:c.update(research_commit='0'*40),
     lambda c:c['sources'].clear(),
     lambda c:c['configuration']['options'].update(num_predict=1024),
     lambda c:c['models'][0].update(digest='sha256:'+'a'*64),
