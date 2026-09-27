@@ -1,3 +1,13 @@
+## 2026-09-27: pre-reference final candidate materializer
+
+Added a standalone, offline adapter for the exact 14 author-confirmed candidate
+recipes and seven accepted base bindings. It performs byte-preserving edits,
+source/exclusion/group checks and emits no reference labels or dataset membership.
+48 focused mechanical tests pass; Oracle-containing suites were not executed.
+See [final_evaluation_candidates.md](final_evaluation_candidates.md). Actual
+candidate artifact verification belongs to the separate research release record.
+No Oracle, runtime, prompt, model, persistence or scientific recipe changed.
+
 # Implementation State
 
 Last updated: 2026-09-27
