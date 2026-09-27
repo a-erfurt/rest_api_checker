@@ -1,8 +1,23 @@
 # Implementation State
 
-Last updated: 2026-09-26
+Last updated: 2026-09-27
 
 ## Current milestone
+
+Base-only serialization for the author-confirmed final construction plan is
+available in `tools/final_evaluation_bases/prepare.py`. It pins the plan pair,
+serializes only its six contract-derived bases, preserves explicit dependencies,
+and emits no final candidates or reference fields. Research inputs are read-only;
+output is prepared in a new staging directory for separately authorized research
+artifact publication. See [base preparation](final_evaluation_bases.md).
+
+Only the focused mechanical tests are executed in this step. The user's explicit
+Oracle/network prohibition takes precedence over the usual full-suite rule;
+Q01–Q26 and the full suite are not rerun. Existing Oracle/construction code and
+scientific semantics are unchanged. No final case, reference review, dataset
+freeze, experiment, database operation or push is authorized here.
+
+### Previous sensitivity execution support milestone (historical)
 
 P2 sensitivity execution support and the separate Section 9/D11 diagnostic
 evaluator are implemented. See [the technical mapping and operator boundary](sensitivity_execution_d11.md).
