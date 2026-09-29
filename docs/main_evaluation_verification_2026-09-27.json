@@ -1,0 +1,12 @@
+{
+  "failed": 0,
+  "focused_main_tests": 6,
+  "full_test_output_sha256": "26e3dfb0ca76bacfc93f1b2655c0c9b1ee86e4ab40e69ad4b933a7a2e70213bb",
+  "parser_renderer_provider_unchanged": true,
+  "provider_scope": "Fabricated provider outcomes; zero real inference",
+  "scientific_ground_truth_recomputed": false,
+  "skipped": 0,
+  "sql_scope": "Disposable test databases only; application permission and backup/restore tests enabled",
+  "status": "PASS",
+  "tests_passed": 795
+}

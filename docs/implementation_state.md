@@ -1,8 +1,56 @@
+## 2026-09-27: Main evaluation freeze preparation
+
+The exact final evaluation release has a dedicated transactional SQL adapter in
+`main_freeze.py`: immutable raw source archival, lossless metadata projection,
+seven unscored ancestry records, fourteen accepted references and membership
+positions, and idempotent planning of 126 logical runs. No schema migration,
+parser, renderer, prompt, provider or retry semantics changed.
+
+`main_execution.py` requires a separate author decision bound to the complete
+Main freeze root and experiment ID. Frozen SQL retains the closed provider gate;
+only the accepted execution path can enable an in-memory dispatch view. The Main
+metrics specification (Option B, vector correctness /14 per model/repetition)
+lives in the research freeze; no Main report/evaluator is run during preparation.
+
+Validation: **795 passed, zero failures/skips**, including disposable SQL,
+application-principal and backup/restore tests. See
+[verification](main_evaluation_verification_2026-09-27.json).
+
+See [Main freeze adapter](main_evaluation_freeze.md). Research source files and
+existing comparison/sensitivity outcomes remain immutable. The historical
+Sensitivity test fixture now binds its synthetic current research commit, and a
+wrong-commit rejection remains tested; accepted historical artifacts are unchanged.
+
+## 2026-09-27: pre-reference final candidate materializer
+
+Added a standalone, offline adapter for the exact 14 author-confirmed candidate
+recipes and seven accepted base bindings. It performs byte-preserving edits,
+source/exclusion/group checks and emits no reference labels or dataset membership.
+48 focused mechanical tests pass; Oracle-containing suites were not executed.
+See [final_evaluation_candidates.md](final_evaluation_candidates.md). Actual
+candidate artifact verification belongs to the separate research release record.
+No Oracle, runtime, prompt, model, persistence or scientific recipe changed.
+
 # Implementation State
 
-Last updated: 2026-09-26
+Last updated: 2026-09-27
 
 ## Current milestone
+
+Base-only serialization for the author-confirmed final construction plan is
+available in `tools/final_evaluation_bases/prepare.py`. It pins the plan pair,
+serializes only its six contract-derived bases, preserves explicit dependencies,
+and emits no final candidates or reference fields. Research inputs are read-only;
+output is prepared in a new staging directory for separately authorized research
+artifact publication. See [base preparation](final_evaluation_bases.md).
+
+Only the focused mechanical tests are executed in this step. The user's explicit
+Oracle/network prohibition takes precedence over the usual full-suite rule;
+Q01–Q26 and the full suite are not rerun. Existing Oracle/construction code and
+scientific semantics are unchanged. No final case, reference review, dataset
+freeze, experiment, database operation or push is authorized here.
+
+### Previous sensitivity execution support milestone (historical)
 
 P2 sensitivity execution support and the separate Section 9/D11 diagnostic
 evaluator are implemented. See [the technical mapping and operator boundary](sensitivity_execution_d11.md).
