@@ -81,6 +81,17 @@ def arguments():
     node = groups.add_parser('preflight')
     options(node,True)
     node.add_argument('--experiment-id',type=int)
+    service = group('service')
+    node = leaf(service,'capture')
+    node.add_argument('--base-url',required=True,help='Explicit HTTP(S) service origin')
+    node.add_argument('--execution-origin',choices=('remote','local_original','controlled_variant'),required=True)
+    node.add_argument('--target-id',required=True,help='Exact deployment/source identity supplied by the operator')
+    node.add_argument('--contract-id',type=int,required=True,help='Stored OpenAPI contract ID')
+    node.add_argument('--path',choices=('/edx/validation/body','/resistance/csv/validation/body',
+                                        '/resistance/txt/validation/body','/resistance/validation/file'),required=True)
+    node.add_argument('--input',type=Path,required=True)
+    node.add_argument('--case-id',required=True)
+    node.add_argument('--filename',help='Optional EDX filename header or Resistance multipart filename')
     return p
 
 
@@ -178,6 +189,13 @@ def dispatch(args,console):
                 return import_development(Repository(cn),args.staging,args.release,args.research),0
             return import_prompts(Repository(cn),args.research),0
         repo = Repository(cn)
+        if args.group=='service':
+            from .service_capture import ServiceTarget, check_operation, execute, materialize, prepare
+            check_operation(repo,args.contract_id,args.path,args.case_id)
+            target = ServiceTarget(args.base_url,args.execution_origin,args.target_id)
+            request = prepare(target,args.path,str(args.input.resolve()),args.input.read_bytes(),
+                              filename=args.filename)
+            return materialize(repo,execute(request),args.contract_id,args.case_id),0
         if args.group=='preflight':
             return preflight.check(args.root,args.research,repo,args.experiment_id),3
         if args.group=='dataset':
