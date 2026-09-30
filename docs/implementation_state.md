@@ -1,3 +1,35 @@
+## 2026-10-01: evaluation v2 service response capture
+
+One explicit-target CLI command now archives an input, the sent HTTP request
+body and metadata, received response bytes and headers, and creates an
+unlabelled response case bound to an existing OpenAPI contract operation.
+EDX raw-body and Resistance raw-body/multipart validation paths are supported.
+The existing `files`, `responses`, and `test_cases` tables suffice; there is no
+schema migration or v1 experiment change. See [service capture](service_capture_v2.md).
+
+The SQL round trip and two CLI captures were verified using a separate disposable
+SQL Server instance on port 14341; the scientific database was not targeted,
+and temporary databases, container and credentials were removed. EDX reproduced
+EDX-PO-0001 locally with HTTP 200, `application/json; charset=utf-8`, and 118
+body bytes identical to the archive. A Resistance temporary copy whose 15 tracked
+files matched the source returned HTTP 200, `application/json`, and 80 body bytes
+through multipart capture. Both captures passed 17 evidence checks; both
+original service clones remained unchanged. Local results do not establish
+current remote/deployment parity.
+
+Execution alone inserted no SQL rows; materialization created two unlabelled
+cases in the disposable database, without reference results, dataset membership,
+predictions or evaluation reports. Reference assessment remains separate, with
+OpenAPI as the only API-specific contract authority. Capture is at application
+level, not raw network/wire level; target and execution origin are explicit.
+
+Final verification: 781 passed, 24 skipped, zero failures/errors. The 23 separately
+configured application-login checks and one backup/export check remain outside
+the executed scope. Focused diff review and `git diff --check` passed; 1,026
+checked historical evidence files remained byte-identical. No `edx_fail` or
+`resistance_fail` variant, v2 LLM output-interface or Thickness work is implemented
+in this branch.
+
 ## 2026-09-27: Main evaluation freeze preparation
 
 The exact final evaluation release has a dedicated transactional SQL adapter in
