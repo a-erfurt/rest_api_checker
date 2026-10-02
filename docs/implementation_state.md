@@ -1,3 +1,22 @@
+## 2026-10-01: evaluation v2 output-interface candidate
+
+A separate v2 request DTO, builder and boundary validator support explicit
+`prompt_only`, `format_json` and `json_schema` modes with the unchanged P2,
+generation settings and strict parser. The dedicated transport schema permits
+all 27 verdict vectors and supplies no semantic dependency or expected answer.
+Version/mode, exact request bytes and hashes are bound in separate sidecars.
+No database migration or historical v1 implementation/evidence change is needed.
+
+An offline command prepares 18 requests for two explicitly selected released
+DEV cases, three models and three modes, at 512 output tokens. No model call,
+SQL planning, final v2 evaluation or interface selection has been executed by
+this step. Live pilot execution remains separate. See
+[output-interface v2](output_interface_v2.md).
+
+Verification: 258 focused request/parser/interface tests passed; the ordinary
+suite passed 842 tests with 97 SQL integration tests skipped because
+`RAC_SQL_TEST_ENV` was not configured. No final test failure or model call occurred.
+
 ## 2026-10-01: evaluation v2 service response capture
 
 One explicit-target CLI command now archives an input, the sent HTTP request
