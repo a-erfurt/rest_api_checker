@@ -1,3 +1,24 @@
+## 2026-10-02: bounded evaluation v2 interface pilot dispatch
+
+The separate file-based `interface_pilot_v2_live` command dispatches the exact
+18-request preparation for two explicit, released DEV cases, three Ollama models
+and three interface modes, once each. It reuses the Ollama transport, strict
+parser, live runtime binding verifier and exact-request context proof checks.
+It retains raw responses and operational counts without SQL or semantic scoring.
+Single-use preparation claims prevent redispatch; provider failures stop the
+pilot and parser failures do not trigger retries or interface fallback.
+
+No live pilot, Main-v2 execution, service capture, scientific selection or
+historical evidence change is part of this implementation. Author-selected DEV
+cases and verified runtime/context evidence remain required. See
+[output-interface v2](output_interface_v2.md).
+
+Verification: 41 new pilot tests and 347 relevant request/provider/parser/runtime
+and Oracle tests passed. The ordinary suite passed 883 tests, with 97 SQL
+integration tests skipped because `RAC_SQL_TEST_ENV` was not configured; zero
+final failures/errors. All 854 local historical artifact files and 1,468
+snapshotted research files remained byte-identical. No live model call occurred.
+
 ## 2026-10-01: evaluation v2 output-interface candidate
 
 A separate v2 request DTO, builder and boundary validator support explicit
