@@ -1,3 +1,32 @@
+## 2026-10-02: completed development pilot and Main-v2 interface decision
+
+The bounded pilot was executed with DEV-02 and DEV-10, three models, all three
+output-interface modes, repetition 1 and seed 101. All 18/18 provider calls
+completed with exactly one attempt per position; 14 outputs were parser-valid,
+four had preserved Markdown fences, and no technical failure or length stop
+occurred. Parser-valid counts (prompt_only / format_json / json_schema) were
+Qwen 2/2 / 2/2 / 2/2, Gemma 0/2 / 2/2 / 2/2, and Mistral 0/2 / 2/2 / 2/2.
+Thus prompt_only reproduced the Gemma/Mistral fence problem; both structured
+modes achieved 6/6 parser-valid outputs.
+
+The author selected `format_json` (Ollama format="json") for Main v2 as the less
+structurally restrictive successful interface. This output-interface decision
+does not establish semantic superiority or final model performance. The strict
+parser, P2, generation settings and 512-token output budget remain unchanged.
+The separately qualified v2 pilot runtime is Ollama 0.35.0/macOS 27.0.1;
+historical v1 used 0.34.4/27.0. Model digests and native template hashes match
+historical identities, with separate runtime binary/native metadata bindings.
+LM Studio is not part of Main v2 at this stage. No final Main-v2 evaluation has
+been run.
+
+Evidence and the author decision are archived under
+`../bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2/`.
+All source copies were verified byte-for-byte and by size/SHA-256. Generated
+technical pilot metadata was archived before removal; historical qualification
+was not changed. The implementation remains the pilot-tested commit `dc17b6d`;
+this finalization changes documentation only and performs no new model calls.
+See [output-interface v2](output_interface_v2.md) for counts, bindings and links.
+
 ## 2026-10-02: bounded evaluation v2 interface pilot dispatch
 
 The separate file-based `interface_pilot_v2_live` command dispatches the exact

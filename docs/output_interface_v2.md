@@ -1,10 +1,12 @@
 # Evaluation-v2 output interface
 
-This is an additive generation-interface candidate for a small development
-pilot. Historical v1 used P2's JSON instruction without Ollama `format`.
+This additive generation interface was executed in a bounded development pilot
+on 2026-10-02. The author selected `format_json` for Main v2. Historical v1
+used P2's JSON instruction without Ollama `format`.
 Its request bytes, freezes, parser, archived outputs and official results remain
 unchanged. There is no retroactive output repair and no final v2 evaluation has
-been run. Interface reliability and semantic accuracy have not yet been measured.
+been run. The pilot measured format compliance; it does not establish final
+semantic performance or semantic superiority of an interface.
 
 `experiment.request_v2.build_request_v2` requires an explicit `OutputInterfaceV2`
 configuration and returns a separate `RequestV2`. It uses the exact approved P2
@@ -18,7 +20,9 @@ and the existing evidence allowlist. It never routes through v1 freeze identity.
 
 Ollama documents both forms of `format` in its [chat API](https://docs.ollama.com/api/chat)
 and [structured-output guide](https://docs.ollama.com/capabilities/structured-outputs).
-Actual support and enforcement on the installed runtime/models remain pilot questions.
+The completed pilot on qualified Ollama 0.35.0 observed parser-valid output
+for both structured modes in all six model/case positions per mode; this bounded
+observation is not a general enforcement guarantee.
 Prompt messages, thinking policy, seeds, timeout and all generation options are
 identical across modes; only `format` differs. Options remain temperature 0.2,
 top_p 0.9, top_k 40, min_p 0.0, repeat_penalty 1.0, repeat_last_n 64,
@@ -148,5 +152,55 @@ to have failed or to be eligible for redispatch.
 and parser-failure counts, unsettled calls and stop/length reasons per model/mode.
 It performs no semantic evaluation or model ranking and selects no interface
 winner; parsed predictions remain available for a separate author decision.
-There is no SQL, reference assessment or dataset mutation. The live pilot has
-**not** been run by this implementation; final **Main-v2 has not been executed**.
+There is no SQL, reference assessment or dataset mutation in the runner. The
+bounded live pilot was subsequently executed as recorded below; final
+**Main-v2 has not been executed**.
+
+
+## Completed pilot and Main-v2 decision (2026-10-02)
+
+FACT: DEV-02 and DEV-10 × three models × three modes × repetition 1 produced
+18/18 completed provider calls, exactly one attempt per position, seed 101.
+There were 14 parser-valid outputs, four preserved Markdown-fence failures,
+zero technical failures and zero length stops.
+
+| Model | prompt_only | format_json | json_schema |
+| --- | ---: | ---: | ---: |
+| qwen3.6:27b | 2/2 | 2/2 | 2/2 |
+| gemma3:27b | 0/2 | 2/2 | 2/2 |
+| mistral-small3.2:24b | 0/2 | 2/2 | 2/2 |
+| Total parser-valid outputs | 2/6 | 6/6 | 6/6 |
+
+`prompt_only` reproduced the Gemma/Mistral fence problem. Both `format_json`
+and `json_schema` achieved 6/6 parser-valid outputs. DESIGN DECISION: the author
+selected Ollama `format="json"` / `format_json` for Main v2 because it resolved
+the observed machine-readable output problem while being less structurally
+restrictive than `json_schema`. This does not demonstrate semantic superiority
+or universal optimality. The unchanged strict parser remains the validation
+boundary; P2, generation settings and the **512-token** budget remain unchanged.
+LM Studio is not part of Main v2 at this stage.
+
+The qualified v2 pilot runtime is Ollama **0.35.0** on macOS **27.0.1**.
+Historical v1 used Ollama 0.34.4 on macOS 27.0. The three model digests and native
+template hashes match their historical qualified identities; runtime binaries
+and native metadata are separately bound. No cross-version byte-identical
+inference behavior is claimed. All 18 exact context proofs passed; the maximum
+requirement was 1326 + 512 = 1838 tokens against num_ctx=32768. Future execution
+still requires current identity checks and its own exact-request context proofs.
+
+LIMITATION: two exposed DEV cases and one execution per position do not estimate
+final model performance. Format compliance, semantic vector correctness, binary
+decision correctness and reason correctness remain separate. No final Main-v2
+evaluation has been run.
+
+The research archive is
+`../bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2/`:
+[decision record](../../bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2/interface_selection.md),
+[original report](../../bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2/report.md),
+[operational summary](../../bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2/execution/summary.json),
+and [archive manifest](../../bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2/archive_manifest.json).
+Pilot-tested implementation commit: `dc17b6d3a8c72ed3bcd8b375f8d2f02fc3c092d8`.
+Generated v2 native metadata is retained in the research archive's
+`runtime_namespace/`; the archived binding's relative lookup namespace can be
+restored byte-identically for future offline checks. Historical technical
+qualification snapshots remain unchanged.
