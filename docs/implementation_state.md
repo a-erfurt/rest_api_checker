@@ -1,3 +1,72 @@
+## 2026-10-02: completed development pilot and Main-v2 interface decision
+
+The bounded pilot was executed with DEV-02 and DEV-10, three models, all three
+output-interface modes, repetition 1 and seed 101. All 18/18 provider calls
+completed with exactly one attempt per position; 14 outputs were parser-valid,
+four had preserved Markdown fences, and no technical failure or length stop
+occurred. Parser-valid counts (prompt_only / format_json / json_schema) were
+Qwen 2/2 / 2/2 / 2/2, Gemma 0/2 / 2/2 / 2/2, and Mistral 0/2 / 2/2 / 2/2.
+Thus prompt_only reproduced the Gemma/Mistral fence problem; both structured
+modes achieved 6/6 parser-valid outputs.
+
+The author selected `format_json` (Ollama format="json") for Main v2 as the less
+structurally restrictive successful interface. This output-interface decision
+does not establish semantic superiority or final model performance. The strict
+parser, P2, generation settings and 512-token output budget remain unchanged.
+The separately qualified v2 pilot runtime is Ollama 0.35.0/macOS 27.0.1;
+historical v1 used 0.34.4/27.0. Model digests and native template hashes match
+historical identities, with separate runtime binary/native metadata bindings.
+LM Studio is not part of Main v2 at this stage. No final Main-v2 evaluation has
+been run.
+
+Evidence and the author decision are archived under
+`../bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2/`.
+All source copies were verified byte-for-byte and by size/SHA-256. Generated
+technical pilot metadata was archived before removal; historical qualification
+was not changed. The implementation remains the pilot-tested commit `dc17b6d`;
+this finalization changes documentation only and performs no new model calls.
+See [output-interface v2](output_interface_v2.md) for counts, bindings and links.
+
+## 2026-10-02: bounded evaluation v2 interface pilot dispatch
+
+The separate file-based `interface_pilot_v2_live` command dispatches the exact
+18-request preparation for two explicit, released DEV cases, three Ollama models
+and three interface modes, once each. It reuses the Ollama transport, strict
+parser, live runtime binding verifier and exact-request context proof checks.
+It retains raw responses and operational counts without SQL or semantic scoring.
+Single-use preparation claims prevent redispatch; provider failures stop the
+pilot and parser failures do not trigger retries or interface fallback.
+
+No live pilot, Main-v2 execution, service capture, scientific selection or
+historical evidence change is part of this implementation. Author-selected DEV
+cases and verified runtime/context evidence remain required. See
+[output-interface v2](output_interface_v2.md).
+
+Verification: 41 new pilot tests and 347 relevant request/provider/parser/runtime
+and Oracle tests passed. The ordinary suite passed 883 tests, with 97 SQL
+integration tests skipped because `RAC_SQL_TEST_ENV` was not configured; zero
+final failures/errors. All 854 local historical artifact files and 1,468
+snapshotted research files remained byte-identical. No live model call occurred.
+
+## 2026-10-01: evaluation v2 output-interface candidate
+
+A separate v2 request DTO, builder and boundary validator support explicit
+`prompt_only`, `format_json` and `json_schema` modes with the unchanged P2,
+generation settings and strict parser. The dedicated transport schema permits
+all 27 verdict vectors and supplies no semantic dependency or expected answer.
+Version/mode, exact request bytes and hashes are bound in separate sidecars.
+No database migration or historical v1 implementation/evidence change is needed.
+
+An offline command prepares 18 requests for two explicitly selected released
+DEV cases, three models and three modes, at 512 output tokens. No model call,
+SQL planning, final v2 evaluation or interface selection has been executed by
+this step. Live pilot execution remains separate. See
+[output-interface v2](output_interface_v2.md).
+
+Verification: 258 focused request/parser/interface tests passed; the ordinary
+suite passed 842 tests with 97 SQL integration tests skipped because
+`RAC_SQL_TEST_ENV` was not configured. No final test failure or model call occurred.
+
 ## 2026-10-01: evaluation v2 service response capture
 
 One explicit-target CLI command now archives an input, the sent HTTP request

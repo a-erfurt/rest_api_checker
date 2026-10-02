@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "required": ["c1", "c2", "c3"],
+  "additionalProperties": false,
+  "properties": {
+    "c1": {
+      "type": "object",
+      "required": ["verdict", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "verdict": {"type": "string", "enum": ["PASS", "FAIL", "NOT_APPLICABLE"]},
+        "reason": {"type": "string"}
+      }
+    },
+    "c2": {
+      "type": "object",
+      "required": ["verdict", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "verdict": {"type": "string", "enum": ["PASS", "FAIL", "NOT_APPLICABLE"]},
+        "reason": {"type": "string"}
+      }
+    },
+    "c3": {
+      "type": "object",
+      "required": ["verdict", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "verdict": {"type": "string", "enum": ["PASS", "FAIL", "NOT_APPLICABLE"]},
+        "reason": {"type": "string"}
+      }
+    }
+  }
+}
