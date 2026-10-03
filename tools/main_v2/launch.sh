@@ -42,6 +42,7 @@ import json, sys
 from rest_api_checker.experiment.request import MODELS, SEEDS, OPTIONS
 from rest_api_checker.persistence.importer import PROMPT_HASHES
 p = json.load(open(sys.argv[1]))['plan']
+assert p['execution_authorized'] is True, 'Main execution is not authorized.'
 assert p['problematic'] == 0 and p['planned'] == p['cases'] * len(MODELS) * len(SEEDS)
 assert [m['name'] for m in p['models']] == list(MODELS) and p['seeds'] == list(SEEDS.values())
 assert p['repetitions'] == len(SEEDS) and p['output_mode'] == 'format_json'

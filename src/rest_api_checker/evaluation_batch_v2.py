@@ -19,6 +19,7 @@ from .experiment.request import ContextProof, MODELS, OPTIONS, SEEDS
 from .persistence.database import require, utc_now
 from .persistence.importer import PROMPT_HASHES
 from .persistence.inspection import bindings, rows, status
+from .main_v2_authorization import require_execution
 
 
 @dataclass
@@ -128,6 +129,7 @@ def inspect_plan(repo, dataset_id, experiment_id, *, database):
         missing_unattempted=state['pending']-len(problematic), counts=state['counts'],
         output_mode=interface.mode, prompt='P2', prompt_sha256=PROMPT_HASHES['P2'],
         setup_sha256=digest(setup_raw), runtime=setup['runtime'], token_limit=OPTIONS['num_predict'],
+        execution_authorized=setup.get('execution_authorized') is True,
         model_breakdown=[], repetition_breakdown=[])
     for field, values, key in [('model', MODELS, 'model_breakdown'), ('repetition', SEEDS, 'repetition_breakdown')]:
         for value in values:
@@ -141,8 +143,10 @@ def inspect_plan(repo, dataset_id, experiment_id, *, database):
 def preflight(repo, dataset_id, experiment_id, *, database, root, live_check=freeze.verify_live):
     plan = inspect_plan(repo, dataset_id, experiment_id, database=database)
     setup = plan.setup
-    require(setup.get('execution_authorized') is True and setup.get('gate_b_complete') is True,
-            'Separate v2 release/runtime authorization is required in the materialized setup')
+    require(setup.get('plan_authorized') is True and setup.get('gate_b_complete') is True,
+            'Separate v2 plan/runtime authorization is required in the materialized setup')
+    if setup.get('execution_authorized') is True:
+        require_execution(repo, plan)
     require(plan.summary['dataset']['purpose'] == 'evaluation', 'Main requires an evaluation dataset')
     require(setup['request_builder_sha256'] == request_v2.artifact_hash(), 'V2 request builder drift')
     identities = setup['models']
@@ -193,6 +197,7 @@ def prepare_spool(path):
 
 def execute(repo, plan, *, root, spool, resume, notify, client=None, live_check=freeze.verify_live, stop=None):
     """One shared scientific executor; conservative attribution never grants retry."""
+    require_execution(repo, plan)
     require_continuation(plan, resume)
     started, clock = utc_now(), time.monotonic()
     finished_now, scheduled_now, current = [], [], None
@@ -206,6 +211,7 @@ def execute(repo, plan, *, root, spool, resume, notify, client=None, live_check=
             finished_now.append(current)
         notify(value)
     def frozen_prepare(repository, run_id):
+        require_execution(repository, plan)
         inputs, req = prepare(repository, run_id)
         require(inputs['setup_sha256'] == plan.summary['setup_sha256'], 'Setup changed after preflight')
         require(req == plan.requests[run_id], 'Request changed after preflight')

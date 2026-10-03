@@ -24,7 +24,7 @@ def no_network(monkeypatch):
     monkeypatch.setattr(socket.socket, 'connect', forbidden)
 
 
-@pytest.mark.parametrize('n', [1, 4])
+@pytest.mark.parametrize('n', [1, 4, 82])
 def test_dynamic_schedule_and_exact_authorities(tmp_path, n):
     final, prepared, directory, native_calls = prepared_context(tmp_path, n)
     plan, files, raw = main.load_prepared(final, prepared)
@@ -190,7 +190,7 @@ def test_launch_wrapper_uses_one_guarded_command(tmp_path, problematic, resume):
         cases=1, models=[dict(name=n) for n in request.MODELS], repetitions=len(request.SEEDS), seeds=list(request.SEEDS.values()),
         planned=9, prompt='P2', prompt_sha256=PROMPT_HASHES['P2'], output_mode='format_json',
         token_limit=request.OPTIONS['num_predict'], runtime={'ollama': {'version': 'FABRICATED'}}, setup_sha256='0'*64,
-        problematic=problematic)
+        problematic=problematic, execution_authorized=True)
     receipt = tmp_path/'fabricated-dry-run.json'
     receipt.write_bytes(encode(dict(plan=plan)))
     cli = fake/'.venv/bin/rest-api-checker'

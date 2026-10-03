@@ -1,9 +1,27 @@
 # Main-v2 technical handoff
 
 This is an operator procedure, **not an execution or scientific approval**.
-No real dataset, experiment or native Main context measurement was created during
-implementation. Human decisions are inputs. The current candidate remains pending.
+Human decisions are inputs. The final 2.0 dataset is already frozen: SQL dataset 3,
+82 ordered cases, three models and three repetitions, 738 planned logical runs.
 Research, v1 evidence, service sources and the Thesis are read only.
+
+The additive runtime/authorization patch leaves the frozen dataset and original
+prepared package intact. `prepare --runtime-qualification PATH` selects an exact
+qualification directory with mandatory `--runtime-manifest-sha256` and
+`--runtime-receipt-sha256`; it never discovers a latest runtime. Omitting selection
+retains the historical frozen runtime. Subsequent commands use the explicit
+selection recorded in the new prepared manifest and verify it again.
+
+The status `PASS_FOR_BOUNDED_INTERFACE_PILOT` is retained literally. The existing
+Main preparation already consumed that status. The archived
+`output_interface_pilot_v2/interface_selection.md`, "FACT: runtime boundary",
+requires new exact-request contexts and current identity checks for later use.
+The new loader checks the complete qualification manifest, receipt, runtime,
+model digests, templates, expected blob identities and recorded blob verification,
+native parity and 18 qualified DEV proofs. Those DEV proofs do not satisfy Main
+coverage. No qualification status is promoted and no inference consent is inferred.
+The existing `freeze.verify_live` still checks actual version, binaries, host and
+native model metadata before Main context measurement and batch preflight.
 
 ## Architecture and release gates
 
@@ -49,14 +67,16 @@ render/tokenize-only step using the qualified v2 procedure. It restores only the
 archived v2 metadata namespace without overwriting existing bytes, verifies current
 runtime identity with `freeze.verify_live`, and retains exact render/tokenizer
 requests, replies and per-run measurements. It requests `_debug_render_only=true`
-and `truncate=false`, never a completion. No such live step was run in this task.
+and `truncate=false`, never a completion. Native evidence is stored separately
+from the immutable qualification; see the current verification record.
 Runtime drift requires separate qualification; do not edit historical bindings.
 
 `materialize` consumes the final release, deterministic requests, complete measured
 context package and a separate human plan authorization. The authorization binds
 the database, dataset ID, release root, request plan and context manifest. Only
-then are the existing setup gates set true. This authorizes the persisted plan;
-launch still requires the separate deliberate Main command. No approval is inferred
+then is `plan_authorized` set true and `execution_authorized` set **false**.
+This authorizes persistence only. Status and a real dry-run work in this state;
+dispatch and even direct attempt reservation refuse it. No approval is inferred
 from a successful technical check. The command archives all evidence, binds P2,
 D07, output interface, runtime/models, context proofs and source closure, then
 persists one experiment and the complete schedule. It checks reconstructed SQL
@@ -74,6 +94,8 @@ native metadata remain bound in the immutable setup rather than replacing v1 row
 ## Exact post-review commands
 
 Run from a reviewed, tested checkout containing both the CLI and materializer.
+For the already frozen dataset, skip section A; never refreeze or reimport to
+change membership. Use the existing `dataset-import.json` (dataset ID 3).
 Use the existing application credentials for the later authorized scientific
 import and run. The test credentials used in implementation are disposable and
 are not an operator credential. The database must already have the verified schema.
@@ -125,13 +147,20 @@ That decision is human input; no command in this handoff grants it.
 DATASET_ID=$("$RAC_PY" -c 'import json,sys; print(json.load(open(sys.argv[1]))["dataset_id"])' "$HANDOFF/dataset-import.json")
 ```
 
-### B. Exact requests, native context, authorized experiment
+### B. Exact requests, native context, plan-only authorization
 
 Offline request preparation:
 
 ```sh
+PREP="$HANDOFF/technical-preparation-ollama-0.35.1-20261003"
+QUAL="$HANDOFF/evaluation_v2_main_runtime_ollama_0.35.1_20261003"
+DATASET_ID=3
+mkdir -p "$PREP"
 "$RAC_PY" -m rest_api_checker.main_v2 prepare \
-  --release "$HANDOFF/final-dataset" --output "$HANDOFF/prepared"
+  --release "$HANDOFF/final-dataset" --output "$PREP/prepared" \
+  --runtime-qualification "$QUAL" \
+  --runtime-manifest-sha256 a3431bc7ac6cfdf54e04458dc0354469490ca70f9e7bb60955e7080d074b6ee8 \
+  --runtime-receipt-sha256 3bd209477cc26a3b7a30f8881ca4fc2155ab5f3adfb696a0997470cb026f6074
 ```
 
 The following is a later live **native render/tokenize-only** action, after
@@ -143,25 +172,28 @@ silently retries. Do not run it while the prohibition on real model access remai
 
 ```sh
 "$RAC_PY" -m rest_api_checker.main_v2_context \
-  --release "$HANDOFF/final-dataset" --prepared "$HANDOFF/prepared" \
-  --output "$HANDOFF/context" --root "$T" --confirm-native-render-tokenize-only
+  --release "$HANDOFF/final-dataset" --prepared "$PREP/prepared" \
+  --output "$PREP/context" --root "$T" --confirm-native-render-tokenize-only
 "$RAC_PY" -m rest_api_checker.main_v2 plan-template \
-  --release "$HANDOFF/final-dataset" --prepared "$HANDOFF/prepared" \
-  --context "$HANDOFF/context" --dataset-id "$DATASET_ID" --database "$RAC_DB" \
-  --output "$HANDOFF/plan-authorization.json"
+  --release "$HANDOFF/final-dataset" --prepared "$PREP/prepared" \
+  --context "$PREP/context" --dataset-id "$DATASET_ID" --database "$RAC_DB" \
+  --output "$PREP/plan-authorization.json"
 ```
 
 The named author must inspect the bound plan/context/runtime, supply `author` and
 offset-qualified `accepted_at`, and change the pending decision to
-`AUTHORIZE_MAIN_V2_PLAN`. This is distinct from approving case references. Then:
+`AUTHORIZE_MAIN_V2_PLAN`. Leave every binding and the explicit zero-inference
+scope unchanged. This decision authorizes zero attempts and predictions.
+Do not run these preparation commands again if their immutable outputs already
+exist; inspect the retained receipts. After the human supplies plan approval:
 
 ```sh
 "$RAC_PY" -m rest_api_checker.main_v2 materialize \
-  --release "$HANDOFF/final-dataset" --prepared "$HANDOFF/prepared" \
-  --context "$HANDOFF/context" --authorization "$HANDOFF/plan-authorization.json" \
+  --release "$HANDOFF/final-dataset" --prepared "$PREP/prepared" \
+  --context "$PREP/context" --authorization "$PREP/plan-authorization.json" \
   --dataset-id "$DATASET_ID" --env-file "$RAC_ENV" --database "$RAC_DB" \
-  --output "$HANDOFF/experiment.json"
-EXPERIMENT_ID=$("$RAC_PY" -c 'import json,sys; print(json.load(open(sys.argv[1]))["experiment_id"])' "$HANDOFF/experiment.json")
+  --output "$PREP/experiment.json"
+EXPERIMENT_ID=$("$RAC_PY" -c 'import json,sys; print(json.load(open(sys.argv[1]))["experiment_id"])' "$PREP/experiment.json")
 ```
 
 ### C. Status and real dry-run
@@ -178,10 +210,52 @@ model identities, three repetitions/seeds 101/202/303, `N × 9` planned runs, fr
 P2 hash, `format_json`, `num_predict=512`, qualified Ollama v2 runtime/setup and
 **zero problematic runs**. A dry-run performs SQL and Ollama metadata checks,
 not generation; it writes zero predictions. It does not itself approve execution.
-The JSON form retains complete hashes: replace `--plain` with `--json` and redirect
+Expect `Execution authorization: NOT GRANTED`. The JSON form retains complete
+hashes: replace `--plain` with `--json` and redirect
 to a new receipt file. The wrapper below checks these fields explicitly.
 
-### D. Main launch — only after explicit Main authorization
+### D. Separate execution authorization — later human decision only
+
+After reviewing the real dry-run, generate a pending decision over its exact
+persisted setup. The command runs full metadata-only preflight and writes no SQL:
+
+```sh
+"$RAC_PY" -m rest_api_checker.main_v2 execution-template \
+  --env-file "$RAC_ENV" --database "$RAC_DB" --dataset-id "$DATASET_ID" \
+  --experiment-id "$EXPERIMENT_ID" --root "$T" \
+  --output "$PREP/execution-authorization.json"
+```
+
+The human compares `plan_setup_sha256` with the inspected dry-run's
+`plan.setup_sha256`, verifies the database, dataset and experiment IDs, and then
+supplies `author`, offset-qualified `accepted_at`, and
+`decision=AUTHORIZE_MAIN_V2_EXECUTION`. No command fills those fields. Only later:
+
+The existing application role intentionally cannot update `setup_file_id`.
+This one metadata administration command therefore requires a separately supplied
+database-owner credential file (`RAC_AUTH_ENV` below), with permission to archive
+files and update that column. Use the normal application credential for all
+other commands. No permission grant or schema migration is performed by the patch;
+no owner credential is created or inferred. The command checks this permission
+before proceeding and never requests model output.
+
+```sh
+"$RAC_PY" -m rest_api_checker.main_v2 authorize-execution \
+  --env-file "$RAC_AUTH_ENV" --database "$RAC_DB" --dataset-id "$DATASET_ID" \
+  --experiment-id "$EXPERIMENT_ID" --root "$T" \
+  --authorization "$PREP/execution-authorization.json" \
+  --output "$PREP/execution-authorization-receipt.json"
+```
+
+This archives the exact human decision and creates a new setup referencing the
+original plan bytes; it changes only the execution gate. No schema migration is
+needed. The experiment points to the derived setup. Dispatch verifies that all
+other setup content equals the approved original, checks relational bindings and
+run ordering, and rechecks before each attempt. Pending decisions, bare booleans,
+changed plans and approval for another database/experiment fail closed. The
+original plan remains archived. Authorization itself makes zero model calls.
+
+### E. Main launch — only after section D is explicitly completed
 
 Direct foreground command (do not also start the wrapper):
 
