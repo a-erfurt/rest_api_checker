@@ -74,9 +74,10 @@ def tty_plan(console, value):
         dataset_line.append(f" (ID {dataset['id']})", style='dim')
     fields = [('Cases', value['cases']), ('Models', len(value['models'])),
         ('Repetitions', value['repetitions']), ('Seeds', ', '.join(map(str, value['seeds']))),
-        ('Planned executions', value_text(value['planned'], 'bold')), ('Output mode', value['output_mode']),
-        ('Runtime', value['runtime']['ollama']['version']), ('Prompt', value['prompt']),
-        ('Token limit', value['token_limit'])]
+        ('Planned executions', value_text(value['planned'], 'bold')), ('Output mode', value['output_mode'])]
+    if not demo:
+        fields.extend([('Runtime', value['runtime']['ollama']['version']), ('Prompt', value['prompt'])])
+    fields.append(('Token limit', value['token_limit']))
     if not demo:
         fields.extend((label, value[key]) for label, key in (
             ('Database', 'database'), ('Experiment', 'experiment_id'), ('Already complete', 'previously_complete'),
@@ -84,7 +85,21 @@ def tty_plan(console, value):
             if value.get(key) is not None)
     contents = [heading, Text(''), dataset_line, field_grid(fields), Text(''),
         Text.assemble('Models: ', value_text(' · '.join(m['name'] for m in value['models'])))]
-    if not demo:
+    if demo:
+        # Presentation identities only; no runtime qualification or scientific hashes.
+        metadata = Table.grid(padding=(0, 1))
+        metadata.add_column(no_wrap=True)
+        metadata.add_column(overflow='fold')
+        for label, text in (
+            ('Runtime', value_text('Ollama '+value['runtime']['ollama']['version'])),
+            ('Prompt', Text.assemble(value['prompt']+' · ', value_text(value['prompt_sha256'], 'dim'))),
+            ('Setup', value_text(value['setup_sha256'], 'dim'))):
+            metadata.add_row(label, text)
+        contents = [heading, Text(''),
+            Text.assemble('Dataset     ', value_text(dataset['name'], 'bold'), ' · ', value_text(dataset['id'], 'dim')),
+            Text.assemble('Experiment  ', value_text(value['experiment_id'], 'dim')),
+            field_grid(fields), metadata, Text(''), contents[-1]]
+    else:
         contents.append(value_text('Identities (prefix): '+ ' · '.join(
             f"{m['name']} {short_hash(m['digest'])}" for m in value['models']), 'dim'))
         if value.get('problematic_run_ids'):
@@ -272,6 +287,7 @@ def tty_summary(console, result):
          f"{result['average_execution_seconds']:.2f} s" if result.get('average_execution_seconds') is not None else 'N/A')])
     contents = [field_grid(fields)]
     if demo:
+        contents.append(value_text(f"Dataset {value['dataset']['id']} · Experiment {value['experiment_id']}", 'dim'))
         contents.append(value_text('SIMULATED · NO MODEL CALLS · NO PREDICTION WRITES', 'dim'))
     else:
         contents.append(value_text(f"{value['dataset']['name']} / {value['dataset']['version']} · "

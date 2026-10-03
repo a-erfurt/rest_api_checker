@@ -139,12 +139,16 @@ def test_compact_demo_plan_and_final_summary(monkeypatch, width):
     before = deepcopy(plan.summary)
     view.plan(console, plan.summary)
     text = stream.getvalue()
-    assert len(text.splitlines()) <= 17
+    assert len(text.splitlines()) <= 22
     assert max(map(len, text.splitlines())) <= min(width, 120)
     for field in ('Dataset', 'Cases', 'Models', 'Repetitions', 'Seeds', 'Planned executions',
-                  'Output mode', 'Runtime', 'Prompt', 'Token limit'):
+                  'Output mode', 'Runtime', 'Prompt', 'Setup', 'Experiment', 'Token limit'):
         assert field in text
-    for noise in ('Database', 'Experiment', 'None', 'SHA-256', 'Problematic', 'NOT QUALIFIED'):
+    for identity in ('SYNTHETIC DEMO · demo-dataset-v2-001', 'demo-main-v2-001',
+                     'Ollama 0.35.0 · SIMULATED / NOT CONTACTED', 'DEMO-PROMPT-HASH', 'DEMO-SETUP-HASH'):
+        assert identity in text
+    assert 'format_json' in text and 'SIMULATED' in text
+    for noise in ('Database', 'None', 'SHA-256', 'Problematic', 'NOT QUALIFIED', v2.PROMPT_HASHES['P2'][:16]):
         assert noise not in text
     assert 'qwen3.6:27b · gemma3:27b · mistral-small3.2:24b' in text
     assert text.count('NO MODEL CALLS') == text.count('NO PREDICTION WRITES') == 1
@@ -153,11 +157,12 @@ def test_compact_demo_plan_and_final_summary(monkeypatch, width):
     result_before = deepcopy(result)
     view.summary(console, result)
     text = stream.getvalue()
-    assert len(text.splitlines()) <= 10
+    assert len(text.splitlines()) <= 11
     for field in ('Status', 'Simulated steps', 'Parser-valid', 'Parser failures', 'Technical failures',
                   'Real model calls', 'Prediction writes', 'Elapsed', 'Average simulated step'):
         assert field in text
-    assert not any(field in text for field in ('Dataset', 'Models', 'Repetitions', 'SHA-256', 'Executed now', 'Completed total'))
+    assert 'Dataset demo-dataset-v2-001 · Experiment demo-main-v2-001' in text
+    assert not any(field in text for field in ('Models', 'Repetitions', 'SHA-256', 'Executed now', 'Completed total'))
     assert text.count('NO MODEL CALLS') == 1 and text.count('NO PREDICTION WRITES') == 1
     assert max(map(len, text.splitlines())) <= min(width, 120)
     assert plan.summary == before and result == result_before
@@ -180,6 +185,32 @@ def test_real_plan_keeps_meaningful_identity_and_continuation_fields(monkeypatch
                   'aaaaaaaaaaaaaaaa', 'bbbbbbbbbbbbbbbb', 'TEST PASS'):
         assert field in text
     assert value == before
+
+
+@pytest.mark.parametrize(('tty', 'width', 'digest'), [
+    (False, 80, '84bb7469403b53fac6f39445c1d60033583853a19cfc6911d3f254b8395c6105'),
+    (True, 80, '31a781ec7543672e5ce38ad92dc6b4524e17a45e7949d52871dcb9ffcda96067'),
+    (True, 120, '9ba9873579a0514ddab6fd5e9d94495c17e8bfc8324ca32342b33a5fc2a6c366'),
+    (True, 200, '9ba9873579a0514ddab6fd5e9d94495c17e8bfc8324ca32342b33a5fc2a6c366'),
+])
+def test_real_presentation_matches_pre_demo_identity_change(monkeypatch, tty, width, digest):
+    """Golden output captured from c3d0f0f; fixed test identities, no real execution."""
+    monkeypatch.delenv('NO_COLOR', raising=False)
+    plan = v2.demo_plan()
+    plan.summary.update(mode='Evaluation v2 Main', dataset=dict(id=7, name='TEST DATASET', version='v2'),
+        database='TEST DATABASE', experiment_id=42, output_mode='format_json',
+        runtime={'ollama': {'version': '0.35.0'}}, prompt='P2', prompt_sha256='c'*64,
+        setup_sha256='a'*64, preflight='TEST PASS')
+    for model in plan.summary['models']:
+        model['digest'] = 'b'*64
+    result = v2.simulate(plan, notify=lambda e: None, delay=0)
+    result.update(simulated=False, elapsed_seconds=13.5, average_execution_seconds=0.5)
+    before = deepcopy(result)
+    console = Console(file=io.StringIO(), force_terminal=tty, color_system=None, width=width)
+    view.plan(console, plan.summary)
+    view.summary(console, result)
+    assert sha256(console.file.getvalue().encode()).hexdigest() == digest
+    assert result == before
 
 
 def test_failure_styles_distinct_and_presentation_does_not_mutate_counts(monkeypatch):
@@ -212,10 +243,13 @@ def test_bold_current_values_and_dim_secondary_metadata(monkeypatch):
 
 @pytest.mark.parametrize('plain', [False, True])
 def test_non_tty_text_matches_previous_presentation_bytes(monkeypatch, plain):
-    """Recorded from commit 9264f49 at 80 columns with fixed presentation times."""
+    """Frozen historical input from 9264f49, independent of current demo metadata."""
     console = terminal.console(file=io.StringIO(), plain=plain)
     console.width = 80
     plan = v2.demo_plan()
+    plan.summary.update(dataset=dict(id=None, name='SYNTHETIC DEMO', version='presentation-only'),
+        experiment_id=None, output_mode='SIMULATED (no request)', runtime={'ollama': {'version': 'NOT CONTACTED'}},
+        prompt='P2 label only', prompt_sha256=v2.PROMPT_HASHES['P2'], setup_sha256=None)
     result = v2.simulate(plan, notify=lambda e: None, delay=0)
     result.update(elapsed_seconds=13.5, average_execution_seconds=0.5)
     view.plan(console, plan.summary)

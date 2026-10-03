@@ -254,12 +254,12 @@ def demo_plan():
                 runs.append(dict(id=run_id, result=None))
     state = dict(planned=len(runs), completed=0, pending=len(runs),
                  counts=dict(valid=0, parser_failure=0, technical_failure=0), runs=runs)
-    summary = dict(mode='DEMO / SIMULATION', dataset=dict(id=None, name='SYNTHETIC DEMO', version='presentation-only'),
-        database='NONE', experiment_id=None, cases=3, models=[dict(name=m, digest='NOT QUALIFIED / SIMULATION') for m in MODELS],
+    summary = dict(mode='DEMO / SIMULATION', dataset=dict(id='demo-dataset-v2-001', name='SYNTHETIC DEMO', version='presentation-only'),
+        database='NONE', experiment_id='demo-main-v2-001', cases=3, models=[dict(name=m, digest='NOT QUALIFIED / SIMULATION') for m in MODELS],
         repetitions=len(SEEDS), seeds=list(SEEDS.values()), planned=len(runs), previously_complete=0,
-        remaining=len(runs), problematic=0, to_execute=len(runs), output_mode='SIMULATED (no request)',
-        runtime={'ollama': {'version': 'NOT CONTACTED'}}, prompt='P2 label only', prompt_sha256=PROMPT_HASHES['P2'],
-        token_limit=OPTIONS['num_predict'], setup_sha256=None)
+        remaining=len(runs), problematic=0, to_execute=len(runs), output_mode='format_json · SIMULATED',
+        runtime={'ollama': {'version': '0.35.0 · SIMULATED / NOT CONTACTED'}}, prompt='P2', prompt_sha256='DEMO-PROMPT-HASH',
+        token_limit=OPTIONS['num_predict'], setup_sha256='DEMO-SETUP-HASH')
     return Plan(summary, state, {}, {}, labels)
 
 

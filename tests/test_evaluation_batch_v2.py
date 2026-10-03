@@ -290,6 +290,13 @@ def test_demo_no_connections_or_executor_and_shared_display(monkeypatch, capsys)
     value = json.loads(capsys.readouterr().out)
     assert value['simulated'] and value['model_calls'] == value['prediction_writes'] == 0
     assert value['simulated_steps'] == 27 and value['counts_now']['parser_failure'] == 3
+    plan = value['plan']
+    assert plan['dataset'] == dict(id='demo-dataset-v2-001', name='SYNTHETIC DEMO', version='presentation-only')
+    assert plan['experiment_id'] == 'demo-main-v2-001'
+    assert plan['runtime'] == {'ollama': {'version': '0.35.0 · SIMULATED / NOT CONTACTED'}}
+    assert plan['output_mode'] == 'format_json · SIMULATED'
+    assert plan['prompt'] == 'P2' and plan['prompt_sha256'] == 'DEMO-PROMPT-HASH'
+    assert plan['setup_sha256'] == 'DEMO-SETUP-HASH'
     assert cli.main(['experiment','demo-batch','--delay','0','--plain']) == 0
     text = capsys.readouterr().out
     assert 'DEMO / SIMULATION' in text and 'NO PREDICTION WRITES' in text
