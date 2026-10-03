@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import shlex
 import shutil
+import subprocess
 import sys
 import tempfile
 
@@ -71,6 +72,17 @@ def arguments():
     node.add_argument('--keep',action='store_true',help='Retain marked demo database and spool for inspection/resume')
     node.add_argument('--delay',type=float,default=0.01,help='Fabricated provider delay per attempt, seconds')
     node.add_argument('--export',type=Path,help='New directory for fabricated input/report JSON; never overwrite')
+    for name in ('run-batch','batch-status'):
+        node = leaf(ex,name,'experiment_id')
+        node.add_argument('--dataset-id',type=int,required=True,help='Exact materialized dataset ID; never latest')
+        if name == 'run-batch':
+            node.add_argument('--spool',type=Path,help='Durable attempt spool directory (required for execution)')
+            node.add_argument('--resume',action='store_true',help='Skip completed runs in this exact persisted experiment')
+            execution = node.add_mutually_exclusive_group()
+            execution.add_argument('--dry-run',action='store_true',help='Complete real preflight; no model calls or prediction writes')
+            execution.add_argument('--yes',action='store_true',help='Confirm execution without interactive input')
+    node = leaf(ex,'demo-batch')
+    node.add_argument('--delay',type=float,default=0.5,help='Simulation delay per step, 0–2 seconds; no SQL or model access')
     ev = group('evaluate')
     leaf(ev,'comparison','experiment_id'); leaf(ev,'list'); leaf(ev,'show','report_id')
     node = leaf(ev,'export','report_id')
@@ -157,8 +169,46 @@ def _demo(args,settings,console):
             print(f'FABRICATED resources retained: database={name}; spool={spool}',file=sys.stderr)
 
 
+def _batch_v2(repo, args, console):
+    from . import evaluation_batch_v2 as v2, batch_terminal
+    if args.command == 'batch-status':
+        plan = v2.inspect_plan(repo, args.dataset_id, args.experiment_id, database=args.database)
+        return dict(plan=plan.summary, status='INSPECTED (runtime not contacted)'), 0
+    plan = v2.preflight(repo, args.dataset_id, args.experiment_id, database=args.database, root=args.root)
+    if not args.json:
+        batch_terminal.plan(console, plan.summary)
+    if args.dry_run:
+        return dict(plan=plan.summary, status='DRY RUN — no model calls or prediction writes',
+                    model_calls=0, prediction_writes=0, executed_now=0, exit_code=0), 0
+    require(args.spool is not None, '--spool is required for execution')
+    v2.require_continuation(plan, args.resume)
+    if plan.summary['to_execute'] and not args.yes:
+        require(not args.json and sys.stdin.isatty(), 'Non-interactive execution requires --yes (or use --dry-run)')
+        console.print(f"Start {plan.summary['to_execute']} prediction executions? [y/N] ", end='')
+        if input().strip().lower() not in ('y','yes'):
+            return dict(plan=plan.summary, status='CANCELLED', executed_now=0, exit_code=0), 0
+    commit = v2.repository_commit(args.root)
+    # Recheck after confirmation while holding the existing session dispatch lock.
+    with repo.dispatch_owner():
+        fresh = v2.preflight(repo, args.dataset_id, args.experiment_id, database=args.database, root=args.root)
+        require(fresh.summary == plan.summary, 'Plan changed after confirmation; inspect and start again')
+        v2.prepare_spool(args.spool)
+        with batch_terminal.Display(console, plan.summary, enabled=not args.json) as display:
+            result = v2.execute(repo, fresh, root=args.root, spool=args.spool, resume=args.resume, notify=display.event)
+    result['repository_commit'] = commit
+    return result, result['exit_code']
+
+
 def dispatch(args,console):
     args.research = args.research or args.root.parent/'bachelor_rest_api_checker'
+    if args.group == 'experiment' and args.command == 'demo-batch':
+        from . import evaluation_batch_v2 as v2, batch_terminal
+        plan = v2.demo_plan()
+        if not args.json:
+            batch_terminal.plan(console, plan.summary)
+        with batch_terminal.Display(console, plan.summary, enabled=not args.json) as display:
+            result = v2.simulate(plan, notify=display.event, delay=args.delay)
+        return result, result['exit_code']
     if args.group=='preflight' and not args.env_file:
         return preflight.check(args.root,args.research),3
     require(args.env_file is not None,'--env-file is required for SQL commands')
@@ -189,6 +239,13 @@ def dispatch(args,console):
                 return import_development(Repository(cn),args.staging,args.release,args.research),0
             return import_prompts(Repository(cn),args.research),0
         repo = Repository(cn)
+        if args.group == 'experiment' and args.command in ('run-batch','batch-status'):
+            try:
+                return _batch_v2(repo, args, console)
+            except (TypeError, IndexError, AttributeError) as exc:
+                raise ValueError('Malformed materialized v2 setup; inspect its request/runtime/reference bindings') from exc
+            except subprocess.SubprocessError as exc:
+                raise ValueError('V2 runtime or repository identity check failed') from exc
         if args.group=='service':
             from .service_capture import ServiceTarget, check_operation, execute, materialize, prepare
             check_operation(repo,args.contract_id,args.path,args.case_id)
@@ -246,7 +303,17 @@ def dispatch(args,console):
 
 
 def present(console,args,value):
-    if args.group=='preflight':
+    if args.group == 'experiment' and args.command in ('run-batch','batch-status','demo-batch'):
+        from . import batch_terminal
+        if args.command == 'batch-status':
+            batch_terminal.plan(console, value['plan'])
+            for key in ('model_breakdown','repetition_breakdown'):
+                records = value['plan'][key]
+                console.print(terminal.table(key, ('Identity','Planned','Valid','Parser','Technical','Missing'),
+                    [[r[k] for k in ('identity','planned','valid','parser_failure','technical_failure','missing')] for r in records]))
+        else:
+            batch_terminal.summary(console, value)
+    elif args.group=='preflight':
         for c in value['checks']:
             style = {'PASS':'green','FAIL':'red','BLOCKED':'yellow'}[c['status']]
             console.print(terminal.clean(f'[{c["status"]}] {c["check"]}: {c["detail"]}'),style=style)

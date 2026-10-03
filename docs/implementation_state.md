@@ -1,3 +1,31 @@
+## 2026-10-03: bounded Evaluation-v2 CLI orchestration
+
+The existing argparse CLI now offers `experiment run-batch`, `batch-status`, and
+the database-free `demo-batch`. The v2 adapter performs full read-only preflight,
+uses the existing sequential attempt executor, preserves canonical terminal runs
+on explicit resume, and blocks reserved/ambiguous attempts without granting retries.
+Rich/plain progress and JSON operational receipts share one presentation path
+with the clearly labelled simulation. No new dependency or SQL migration is added.
+
+Real execution remains conditional on a separately materialized and authorized
+Main-v2 dataset **and experiment setup**, including exact requests, context proofs
+and runtime/model bindings. The historical v1 materializer is unchanged and does
+not produce that setup. See [the CLI guide and materialization contract](evaluation_batch_v2.md).
+This step neither materializes final data nor executes Main-v2 or any real model.
+
+Verification: baseline **883 passed / 97 skipped / 0 failed**; final ordinary suite
+**928 passed / 99 skipped / 0 failed**. There are 45 new non-SQL tests and two new
+opt-in disposable SQL tests. SQL tests were skipped because `RAC_SQL_TEST_ENV` is
+not configured; no live SQL integration acceptance is claimed. The existing golden
+request/output-interface/parser/Oracle tests remain green, and all 134 snapshotted
+protected source/qualification/contract files retain their SHA-256 hashes.
+
+The actual CLI simulation was checked in plain and live terminal modes (27 steps;
+default approximately 13.5 seconds). A full dry-run CLI smoke used an isolated
+fabricated repository and runtime metadata verifier: exit 0, zero model calls,
+zero prediction writes, identical before/after repository snapshots. Real database
+connectivity and the final qualified runtime were not probed by that smoke.
+
 ## 2026-10-02: completed development pilot and Main-v2 interface decision
 
 The bounded pilot was executed with DEV-02 and DEV-10, three models, all three
