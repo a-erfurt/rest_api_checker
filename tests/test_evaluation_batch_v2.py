@@ -70,6 +70,8 @@ def prepared(monkeypatch, tmp_path):
     monkeypatch.setattr(v2, 'rows', read)
     monkeypatch.setattr(inspection, 'rows', read)
     monkeypatch.setattr(batch, 'rows', read)
+    from rest_api_checker import main_v2_authorization
+    monkeypatch.setattr(main_v2_authorization, 'rows', read)
     add('datasets', id=1, name='FABRICATED ELIGIBILITY FIXTURE', version='test-only', purpose='evaluation')
     add('dataset_cases', id=1, dataset_id=1, case_id=1, reference_id=1, case_code='TEST-CASE', position=1)
     add('reference_results', id=1, case_id=1, source_file_id=3, source_pointer='')
@@ -97,7 +99,7 @@ def prepared(monkeypatch, tmp_path):
         parser_sha256=parser.artifact_hash(), renderer_sha256=renderer.artifact_hash(),
         request_builder_sha256=request_v2.artifact_hash(), models=identities,
         runtime={'ollama':{'version':'TEST QUALIFICATION'}}, output_interface={'mode':'format_json'},
-        gate_b_complete=True, execution_authorized=True)
+        gate_b_complete=True, plan_authorized=True, execution_authorized=False)
     setup['bindings'] = inspection.bindings(repo, 1, schedule)
     add('experiments', id=1, dataset_id=1, setup_file_id=9, schedule_seed=17, kind='evaluation', finished_at=None)
     repo.files[9] = encode(setup)
@@ -110,7 +112,20 @@ def prepared(monkeypatch, tmp_path):
             template_sha256=digest(b'test-template'), measurement_sha256='f'*64, input_tokens=100)
     setup.update(request_inventory=inventory, context_proofs=proofs)
     repo.files[9] = encode(setup)
+    fabricated_authorization(repo)
     return repo, tmp_path
+
+
+def fabricated_authorization(repo):
+    from rest_api_checker.main_v2_authorization import execution_binding
+    setup = json.loads(repo.files[9])
+    setup.pop('execution_authorization', None)
+    setup['execution_authorized'] = False
+    repo.files[10] = encode(setup)
+    repo.files[11] = encode(dict(decision='AUTHORIZE_MAIN_V2_EXECUTION', author='FABRICATED TEST ONLY',
+        accepted_at='2026-10-03T12:00:00+02:00', **execution_binding(repo.files[10], 1, 1, 'TEST ONLY')))
+    repo.files[9] = encode({**setup, 'execution_authorized': True, 'execution_authorization': dict(
+        plan_file_id=10, plan_sha256=digest(repo.files[10]), authorization_file_id=11, authorization_sha256=digest(repo.files[11]))})
 
 
 def preflight(prepared, **kwargs):
@@ -160,7 +175,7 @@ def test_preflight_failures_before_runtime_or_executor(prepared, failure):
     elif failure == 'config': repo.tables['experiment_runs'][1]['run_config_id'] = 99
     elif failure == 'request': change_setup(repo, lambda s: s['request_inventory'][0].update(sha256='0'*64))
     elif failure == 'context': change_setup(repo, lambda s: s['context_proofs']['1'].update(input_tokens=999999))
-    elif failure == 'authorization': change_setup(repo, lambda s: s.update(execution_authorized=False))
+    elif failure == 'authorization': change_setup(repo, lambda s: s.update(plan_authorized=False))
     else: repo.tables['experiments'][2] = {**repo.tables['experiments'][1], 'id':2}
     with pytest.raises((ValueError, KeyError)):
         preflight(prepared, live_check=lambda *a: pytest.fail('Runtime must not be checked'))
@@ -259,6 +274,7 @@ def test_status_no_runtime_and_breakdown(prepared):
 
 def test_cli_dry_run_no_executor_or_prediction_write(prepared, monkeypatch, capsys):
     repo, root = prepared
+    repo.files[9] = repo.files[10]  # Pristine plan, no execution authorization.
     original = v2.preflight
     monkeypatch.setattr(v2, 'preflight', lambda *a, **k: original(*a, **k, live_check=lambda *a: True))
     monkeypatch.setattr(v2, 'execute', lambda *a, **k: pytest.fail('Dry-run execution'))
@@ -269,6 +285,7 @@ def test_cli_dry_run_no_executor_or_prediction_write(prepared, monkeypatch, caps
     out = capsys.readouterr().out
     assert code == 0 and value['model_calls'] == value['prediction_writes'] == 0
     assert all(t in out for t in ('Evaluation v2 Main','format_json','101, 202, 303','TEST QUALIFICATION','DRY RUN'))
+    assert 'Execution authorization' in out and 'NOT GRANTED' in out
     assert (repo.tables, repo.files) == before
 
 
@@ -432,5 +449,6 @@ def test_plan_size_is_not_fixed_to_one_dataset(prepared):
         setup['context_proofs'][str(n+9)] = setup['context_proofs'][str(n)]
     setup['bindings'] = inspection.bindings(repo, 1, setup['schedule'])
     repo.files[9] = encode(setup)
+    fabricated_authorization(repo)
     plan = preflight(prepared, live_check=lambda *a: True)
     assert plan.summary['cases'] == 2 and plan.summary['planned'] == 18

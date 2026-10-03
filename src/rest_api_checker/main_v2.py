@@ -18,7 +18,7 @@ RESEARCH = ROOT.parent/'bachelor_rest_api_checker'
 ORDER_VERSION = 'dataset-position-model-repetition-v1'
 
 
-def authorities(final):
+def authorities(final, runtime_selection=None):
     """Resolve the release's existing authorities; no second generation config."""
     plan = json.loads(final['files']['candidate/runtime_plan.json'])
     source_bindings = json.loads(final['files']['candidate/source_bindings.json'])['files']
@@ -66,6 +66,11 @@ def authorities(final):
         show = json.loads(files['native/'+model['show']])
         require(digest(show['template'].encode()) == model['template_sha256'], 'Native template drift')
         require(digest(files['native/'+model['manifest']]) == model['digest'], 'Model manifest drift')
+    if runtime_selection is not None:
+        from .main_v2_runtime import load
+        runtime, selected_sources = load(runtime_selection, {**runtime, '_raw': runtime_raw}, code_identities())
+        files = {k: v for k, v in files.items() if not k.startswith('native/')}
+        files.update(selected_sources)
     return plan, runtime, interface, files
 
 
@@ -102,9 +107,9 @@ def projection(final):
     return dict(format='main-v2-sql-projection-v1', dataset_root=final['sha256'], cases=result)
 
 
-def request_files(final):
+def request_files(final, runtime_selection=None):
     verify_final(final)
-    _, runtime, interface, sources = authorities(final)
+    _, runtime, interface, sources = authorities(final, runtime_selection)
     payload = {'authority/'+n: b for n, b in sources.items()}
     slots = []
     for record in projection(final)['cases']:
@@ -130,12 +135,13 @@ def request_files(final):
         cases=len(final['manifest']['cases']), planned=len(slots), schedule_version=ORDER_VERSION,
         # SQL requires an integer seed. Order is lexicographic, with no shuffle or PRNG.
         schedule_seed=0, models=list(request.MODELS), repetitions={str(k): v for k, v in request.SEEDS.items()}, generation_options=request.OPTIONS,
-        output_interface=interface.binding(), prompt_sha256=PROMPT_HASHES['P2'], **code_identities(), slots=slots)
+        output_interface=interface.binding(), prompt_sha256=PROMPT_HASHES['P2'], **code_identities(), slots=slots,
+        **({'runtime_selection': runtime_selection} if runtime_selection is not None else {}))
 
 
 def load_prepared(final, prepared):
     plan, files, raw = release.checked_package(prepared, 'plan.json')
-    expected = request_files(final)
+    expected = request_files(final, plan.get('runtime_selection'))
     require(raw == expected['plan.json'] and all(files[n] == b for n, b in expected.items()
             if n not in ('plan.json', 'plan.sha256')), 'Prepared request/configuration identity drift')
     return plan, files, raw
@@ -189,8 +195,19 @@ def import_dataset(repo, final):
 
 
 def authorize_binding(final, plan_raw, context_raw, dataset_id, database):
-    return dict(dataset_root=final['sha256'], prepared_plan_sha256=digest(plan_raw),
-                context_manifest_sha256=digest(context_raw), dataset_id=dataset_id, database=database)
+    plan = json.loads(plan_raw)
+    runtime_hash = next(f['sha256'] for f in plan['files'] if f['path'] == 'authority/runtime')
+    return dict(dataset_root=final['sha256'], release_freeze_sha256=digest(final['freeze_raw']),
+        prepared_plan_sha256=digest(plan_raw), context_manifest_sha256=digest(context_raw),
+        dataset_id=dataset_id, database=database, ordered_case_ids=final['manifest']['ordered_case_ids'],
+        request_identities=[s['request_identity_sha256'] for s in plan['slots']],
+        runtime_binding_sha256=runtime_hash, runtime_selection=plan.get('runtime_selection'),
+        models=plan['models'], seeds=list(plan['repetitions'].values()), prompt_sha256=plan['prompt_sha256'],
+        output_interface=plan['output_interface'], generation_options=plan['generation_options'],
+        planned=plan['planned'], schedule_version=plan['schedule_version'],
+        run_order_sha256=digest(encode(plan['slots'])),
+        authorizes=['persist_frozen_experiment_plan'],
+        does_not_authorize=['model_dispatch', 'inference', 'attempts', 'predictions'], execution_authorized=False)
 
 
 def materialize(repo, final, prepared, context, authorization, *, dataset_id, database):
@@ -199,7 +216,9 @@ def materialize(repo, final, prepared, context, authorization, *, dataset_id, da
     plan, files, plan_raw = load_prepared(final, prepared)
     proofs, context_files, context_raw = verify_context(plan, files, plan_raw, context)
     auth_raw = Path(authorization).read_bytes()
-    release.accepted(json.loads(auth_raw), 'AUTHORIZE_MAIN_V2_PLAN',
+    approval = json.loads(auth_raw)
+    require(type(approval.get('accepted_at')) is str, 'Dated human plan authorization required')
+    release.accepted(approval, 'AUTHORIZE_MAIN_V2_PLAN',
                      authorize_binding(final, plan_raw, context_raw, dataset_id, database))
     with repo.transaction():
         require(repo.cn.execute('SELECT DB_NAME()').fetchval() == database, 'Authorized database/connection mismatch')
@@ -248,12 +267,12 @@ def materialize(repo, final, prepared, context, authorization, *, dataset_id, da
             runtime_binding_sha256=digest(files['authority/runtime']),
             generation_identity_sha256=digest(files['authority/generation_authority']), prompt_sha256=plan['prompt_sha256'],
             prepared_plan_sha256=digest(plan_raw), context_manifest_sha256=digest(context_raw),
-            authorization_sha256=digest(auth_raw), execution_authorized=True, gate_b_complete=True)
+            authorization_sha256=digest(auth_raw), plan_authorized=True, execution_authorized=False, gate_b_complete=True)
         setup_raw = json_bytes(setup)
         setup_id = repo.archive('main-evaluation-setup-v2.json', setup_raw)
         experiment = repo._insert('experiments', name='MAIN_EVALUATION_V2', kind='evaluation', dataset_id=dataset_id,
             setup_file_id=setup_id, schedule_seed=plan['schedule_seed'], started_at=None, finished_at=None,
-            notes='Human-bound Main-v2 plan; explicit CLI execution required; no automatic retry.')
+            notes='Human-bound Main-v2 plan only; separate hash-bound execution authorization required.')
         runs = [repo._insert('experiment_runs', experiment_id=experiment, dataset_id=dataset_id, **s) for s in schedule]
         # Check through the actual runner before the transaction can commit.
         from . import evaluation_batch_v2 as batch
@@ -266,7 +285,8 @@ def materialize(repo, final, prepared, context, authorization, *, dataset_id, da
                 and inspected.summary['problematic'] == 0, 'Incomplete Main schedule')
         return dict(dataset_id=dataset_id, experiment_id=experiment, cases=plan['cases'], models=len(models),
             repetitions=len(request.SEEDS), seeds=list(request.SEEDS.values()), planned_runs=len(runs),
-            setup_sha256=digest(setup_raw), attempts=0, predictions=0, model_calls=0, automatic_retries=0)
+            setup_sha256=digest(setup_raw), execution_authorized=False,
+            attempts=0, predictions=0, model_calls=0, automatic_retries=0)
 
 
 def write_json(path, value):
@@ -292,6 +312,10 @@ def main(argv=None):
         p = sub.add_parser(action)
         p.add_argument('--release', type=Path, required=True)
         p.add_argument('--output', type=Path, required=True)
+        if action == 'prepare':
+            p.add_argument('--runtime-qualification', type=Path)
+            p.add_argument('--runtime-manifest-sha256')
+            p.add_argument('--runtime-receipt-sha256')
         if action in ('import-dataset', 'materialize'):
             p.add_argument('--env-file', type=Path, required=True)
             p.add_argument('--database', required=True)
@@ -303,10 +327,30 @@ def main(argv=None):
                 p.add_argument('--database', required=True)
             else:
                 p.add_argument('--authorization', type=Path, required=True)
+    for action in ('execution-template', 'authorize-execution'):
+        p = sub.add_parser(action)
+        p.add_argument('--env-file', type=Path, required=True)
+        p.add_argument('--database', required=True)
+        p.add_argument('--dataset-id', type=int, required=True)
+        p.add_argument('--experiment-id', type=int, required=True)
+        p.add_argument('--root', type=Path, default=ROOT)
+        p.add_argument('--output', type=Path, required=True)
+        if action == 'authorize-execution':
+            p.add_argument('--authorization', type=Path, required=True)
     args = cli.parse_args(argv)
     require(not args.output.resolve().is_relative_to(args.research.resolve()), 'Research repository is read only')
     require(not args.output.exists(), 'New output path required')
-    if args.command == 'integrity':
+    if args.command in ('execution-template', 'authorize-execution'):
+        from .main_v2_authorization import execution_template, authorize_execution
+        with closing(connect(read_settings(args.env_file), args.database)) as cn:
+            repo = Repository(cn)
+            if args.command == 'execution-template':
+                result = execution_template(repo, args.dataset_id, args.experiment_id, database=args.database, root=args.root)
+            else:
+                result = authorize_execution(repo, args.dataset_id, args.experiment_id, args.authorization,
+                                             database=args.database, root=args.root)
+            write_json(args.output, result)
+    elif args.command == 'integrity':
         write_json(args.output, release.check_integrity(args.archive, args.review_dir))
     elif args.command == 'freeze-template':
         _, files, raw = release.checked_package(args.archive, 'archive_manifest.json')
@@ -320,7 +364,11 @@ def main(argv=None):
     else:
         final = release.load_release(args.release)
         if args.command == 'prepare':
-            release.publish(args.output, request_files(final), research=args.research)
+            from .main_v2_runtime import selection
+            selected = None
+            if any((args.runtime_qualification, args.runtime_manifest_sha256, args.runtime_receipt_sha256)):
+                selected = selection(args.runtime_qualification, args.runtime_manifest_sha256, args.runtime_receipt_sha256)
+            release.publish(args.output, request_files(final, selected), research=args.research)
         elif args.command == 'plan-template':
             from .main_v2_context import verify_context
             plan, files, raw = load_prepared(final, args.prepared)

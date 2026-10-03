@@ -1,0 +1,202 @@
+{
+  "authorization": {
+    "application_permissions_changed": false,
+    "attempts": 0,
+    "execution_authorized": false,
+    "experiment_id": null,
+    "experiment_materialized": false,
+    "future_execution_gate": "execution-template -> human AUTHORIZE_MAIN_V2_EXECUTION -> authorize-execution with explicit owner credential",
+    "human_plan_authorization_required": true,
+    "owner_credential_provisioned": false,
+    "plan_decision": "PENDING",
+    "plan_template": "/Users/aerfurt/.local/state/rest-api-checker/main-v2/technical-preparation-ollama-0.35.1-20261003/plan-authorization.json",
+    "predictions": 0,
+    "real_batch_status": "NOT_RUN_NO_EXPERIMENT",
+    "real_dry_run": "NOT_RUN_NO_EXPERIMENT",
+    "schema_migration": false,
+    "scientific_sql_writes": 0,
+    "template_sha256": "a4a5123b3e1c12cecf710f6355d6b341fa9dd69b13e22327d58995246a9fadb8"
+  },
+  "context": {
+    "completion_calls": 0,
+    "context_window": 32768,
+    "manifest_sha256": "0b75d810f39418447d095233cc279a3e6ad251d30baab6ea194a4d4b54e3fe36",
+    "max_input_tokens": 1411,
+    "max_total_tokens": 1923,
+    "missing": 0,
+    "output_budget": 512,
+    "overflow": 0,
+    "proofs": 738,
+    "render_only_calls": 738,
+    "tokenize_calls": 738
+  },
+  "dataset": {
+    "api_counts": {
+      "EDX": 52,
+      "Resistance": 30
+    },
+    "cases": 82,
+    "dataset_id": 3,
+    "final_release_sha256": "3e477b77adc7d6494d5fb4b967dd849bb4ec7113f1091aa24ca5b1189a38c8a3",
+    "freeze_authorization_sha256": "e67d78618e0a290549e3a6ebe90e19c5897f510513c4e31e938245a1428f913b",
+    "integrity_sha256": "851190fc7a813703b570a35c32232af674316b259ab92235ffe7ec0874518250",
+    "sql_after": {
+      "attempts": 0,
+      "cases": 82,
+      "dataset_bindings_sha256": "51deac84d41a46d8a86b5eb6f537f8770fed58917d2d918b42d44c9045823b82",
+      "dataset_id": 3,
+      "dataset_release_sha256": "3e477b77adc7d6494d5fb4b967dd849bb4ec7113f1091aa24ca5b1189a38c8a3",
+      "execution_authorized": false,
+      "experiments": 0,
+      "predictions": 0,
+      "runs": 0
+    },
+    "sql_before": {
+      "attempts": 0,
+      "cases": 82,
+      "dataset_bindings_sha256": "51deac84d41a46d8a86b5eb6f537f8770fed58917d2d918b42d44c9045823b82",
+      "dataset_id": 3,
+      "dataset_release_sha256": "3e477b77adc7d6494d5fb4b967dd849bb4ec7113f1091aa24ca5b1189a38c8a3",
+      "execution_authorized": false,
+      "experiments": 0,
+      "predictions": 0,
+      "runs": 0
+    },
+    "vectors": {
+      "FAIL/NOT_APPLICABLE/NOT_APPLICABLE": 14,
+      "PASS/FAIL/NOT_APPLICABLE": 29,
+      "PASS/PASS/FAIL": 10,
+      "PASS/PASS/PASS": 29
+    },
+    "version": "2.0"
+  },
+  "evidence_treatment": {
+    "canonical_requalification": "/Users/aerfurt/.local/state/rest-api-checker/main-v2/evaluation_v2_main_runtime_ollama_0.35.1_20261003",
+    "native_namespace_copies_byte_identical": [
+      6,
+      7
+    ],
+    "original_0350_canonical": "/Users/aerfurt/University/Bachelor/bachelor_rest_api_checker/08_evaluation_v2/output_interface_pilot_v2",
+    "staged": false
+  },
+  "format": "main-v2-runtime-authorization-patch-verification-v1",
+  "initial": {
+    "branch": "fix/main-v2-runtime-and-authorization",
+    "head": "ad057e2ee4c8a5f70fa6eb70ac373b7371e36b73",
+    "untracked_native_namespaces": [
+      "evaluation_v2_20261002_122718_71ffc4d9",
+      "evaluation_v2_main_runtime_ollama_0.35.1_20261003"
+    ]
+  },
+  "no_merge": true,
+  "no_push": true,
+  "preparation": {
+    "exact_request_provenance_pairs_unchanged": 738,
+    "generation_options": {
+      "draft_num_predict": 0,
+      "min_p": 0.0,
+      "num_ctx": 32768,
+      "num_predict": 512,
+      "repeat_last_n": 64,
+      "repeat_penalty": 1.0,
+      "temperature": 0.2,
+      "top_k": 40,
+      "top_p": 0.9
+    },
+    "logical_order_unchanged": true,
+    "models": [
+      "qwen3.6:27b",
+      "gemma3:27b",
+      "mistral-small3.2:24b"
+    ],
+    "original_plan_sha256": "91936c167a181c04f05309146a6c681ffda2edb8deb744f147f46280329a5f98",
+    "output_interface": {
+      "mode": "format_json",
+      "transport_schema_sha256": null,
+      "version": "output-interface-v2"
+    },
+    "prepared_plan_sha256": "cd92b95a95bfa246d673d47c4c662aa0e1c90d57f66acdb6ecc499442653b589",
+    "prompt_sha256": "50bfce7831530c7d63dd469ed82fb9acab755bedf4808ae5574775fc5505594f",
+    "repetitions": {
+      "1": 101,
+      "2": 202,
+      "3": 303
+    },
+    "root": "/Users/aerfurt/.local/state/rest-api-checker/main-v2/technical-preparation-ollama-0.35.1-20261003",
+    "scientific_implementation": {
+      "parser_sha256": "d8d7fa7a853e0a09b73067f78304ae833b90e2405645b7818139b904ffc33783",
+      "renderer_sha256": "794e4de26c75e57719be3dbed20513ea38b17c8573e19f450a568cf1ea8abc65",
+      "request_builder_sha256": "da082f1d16e261652e4cde8a085dda40ab529549c0a0d29484eb05491ac3567d"
+    }
+  },
+  "preservation": {
+    "all_other_original_files_unchanged": true,
+    "historical_0350_unchanged": true,
+    "intentional_changes": [
+      "docs/implementation_state.md",
+      "docs/main_v2_handoff.md",
+      "src/rest_api_checker/batch_terminal.py",
+      "src/rest_api_checker/cli.py",
+      "src/rest_api_checker/evaluation_batch_v2.py",
+      "src/rest_api_checker/main_v2.py",
+      "src/rest_api_checker/persistence/repository.py",
+      "tests/persistence/test_evaluation_batch_v2.py",
+      "tests/persistence/test_main_v2.py",
+      "tests/test_evaluation_batch_v2.py",
+      "tests/test_main_v2.py",
+      "tools/main_v2/launch.sh"
+    ],
+    "original_files_checked": 7252,
+    "original_prepared_unchanged": true,
+    "qualification_0351_unchanged": true,
+    "research_read_only": true,
+    "unchanged": 7240,
+    "v1_request_parser_renderer_output_schema_bytes_unchanged": true
+  },
+  "qualification": {
+    "identity": "evaluation_v2_main_runtime_ollama_0.35.1_20261003",
+    "installed_model_blobs_reverified": true,
+    "manifest_sha256": "a3431bc7ac6cfdf54e04458dc0354469490ca70f9e7bb60955e7080d074b6ee8",
+    "receipt_sha256": "3bd209477cc26a3b7a30f8881ca4fc2155ab5f3adfb696a0997470cb026f6074",
+    "runtime_binding_sha256": "5b8b09919e8c66c0ed4ce903ab7d7c21295807ec65559d2dbcca97f38ab2da41",
+    "scope": "Existing Main technical-preparation mechanism plus separate exact Main contexts; no inference consent",
+    "status": "PASS_FOR_BOUNDED_INTERFACE_PILOT",
+    "status_promoted": false
+  },
+  "recorded_at": "2026-10-03T12:36:43.604549+00:00",
+  "tests": {
+    "baseline": {
+      "failed": 0,
+      "passed": 77,
+      "skipped": 5
+    },
+    "baseline_sql": {
+      "failed": 0,
+      "passed": 5,
+      "skipped": 0
+    },
+    "disposable_sql": "rac-main-v2-patch-20261003-sqlserver-1 / localhost:14342",
+    "final_sql_permissions": {
+      "failed": 0,
+      "passed": 6,
+      "skipped": 0
+    },
+    "focused": {
+      "failed": 0,
+      "passed": 117,
+      "skipped": 0
+    },
+    "full": {
+      "failed": 0,
+      "passed": 1101,
+      "skipped": 24
+    },
+    "intermediate_failures": "Six presentation snapshots; resolved without changing golden hashes",
+    "presentation_runtime_authorization": {
+      "failed": 0,
+      "passed": 106,
+      "skipped": 0
+    },
+    "skips": "23 separately configured application-login checks; 1 backup/export check"
+  }
+}

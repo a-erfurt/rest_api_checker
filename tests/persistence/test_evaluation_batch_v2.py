@@ -55,7 +55,7 @@ def materialize_fixture(repo, root):
         parser_sha256=parser.artifact_hash(), renderer_sha256=renderer.artifact_hash(),
         request_builder_sha256=request_v2.artifact_hash(), output_interface={'mode':'format_json'},
         models=identities, runtime={'ollama':{'version':'FABRICATED'}}, context_proofs=proofs,
-        request_inventory=inventory, gate_b_complete=True, execution_authorized=True,
+        request_inventory=inventory, gate_b_complete=True, plan_authorized=True, execution_authorized=False,
         bindings=bindings(repo, dataset, schedule))
     with repo.transaction():
         setup_id = repo.archive('FABRICATED-v2-setup.json', encode(setup))
@@ -63,6 +63,13 @@ def materialize_fixture(repo, root):
             setup_file_id=setup_id, schedule_seed=17, started_at=None, finished_at=None, notes='FABRICATED; disposable SQL only')
         for slot in schedule:
             repo._insert('experiment_runs', experiment_id=experiment, dataset_id=dataset, **slot)
+    from rest_api_checker.main_v2_authorization import execution_template, authorize_execution
+    database = repo.cn.execute('SELECT DB_NAME()').fetchval()
+    approval = execution_template(repo, dataset, experiment, database=database, root=root, live_check=lambda *a: True)
+    approval.update(decision='AUTHORIZE_MAIN_V2_EXECUTION', author='FABRICATED TEST ONLY', accepted_at='2026-10-03T12:00:00+02:00')
+    path = root/'FABRICATED-authorization.json'
+    path.write_bytes(encode(approval))
+    authorize_execution(repo, dataset, experiment, path, database=database, root=root, live_check=lambda *a: True)
     return dataset, experiment
 
 

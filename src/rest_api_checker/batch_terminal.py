@@ -77,6 +77,10 @@ def tty_plan(console, value):
         ('Planned executions', value_text(value['planned'], 'bold')), ('Output mode', value['output_mode'])]
     if not demo:
         fields.extend([('Runtime', value['runtime']['ollama']['version']), ('Prompt', value['prompt'])])
+        if 'execution_authorized' in value:
+            fields.append(('Execution authorization', 'GRANTED' if value['execution_authorized'] else 'NOT GRANTED'))
+        if 'runtime_identity' in value['runtime']:
+            fields.append(('Qualified runtime', value['runtime']['runtime_identity']))
     fields.append(('Token limit', value['token_limit']))
     if not demo:
         fields.extend((label, value[key]) for label, key in (
@@ -147,6 +151,9 @@ def plan(console, value):
         ('Problematic run IDs', ', '.join(map(str, value.get('problematic_run_ids', []))) or 'None'),
         ('To execute', value['to_execute']), ('Output mode', value['output_mode']),
         ('Runtime / Ollama', value['runtime']['ollama']['version']),
+        *([('Qualified runtime', value['runtime']['runtime_identity'])] if 'runtime_identity' in value['runtime'] else []),
+        *([('Execution authorization', 'GRANTED' if value['execution_authorized'] else 'NOT GRANTED')]
+          if 'execution_authorized' in value else []),
         ('Prompt', value['prompt']), ('Prompt SHA-256 prefix', short_hash(value['prompt_sha256'])),
         ('Setup SHA-256 prefix', short_hash(value['setup_sha256'])), ('Token limit', value['token_limit']),
         ('Preflight', value.get('preflight', 'Not performed (inspection/simulation)'))])

@@ -1,3 +1,41 @@
+## 2026-10-03: Main-v2 additive runtime binding and separate authorization
+
+The bounded patch on `fix/main-v2-runtime-and-authorization` adds explicit,
+hash-pinned runtime qualification selection without rewriting the final dataset,
+historical runtime or original prepared package. It retains the existing bounded
+qualification status; exact Main context measurement and the later human gates
+remain separate. Plan materialization now persists `execution_authorized=false`.
+Read-only status and full metadata preflight/dry-run work before execution consent.
+Dispatch and direct SQL attempt reservation reject missing consent. A later named,
+dated execution artifact must bind the exact inspected setup, dataset, experiment
+and database; a derived immutable setup retains the original plan bytes and rejects
+identity drift. No schema or application-permission change was made. The later
+setup-pointer update needs an explicit owner credential; all regular operations
+use the application role.
+
+Verification: baseline **77 passed / 5 skipped / 0 failed**, then all five baseline
+SQL tests passed on the separate disposable server at localhost:14342. Focused
+patch tests passed **117/0/0**, presentation/runtime/authorization checks **106/0/0**,
+and final SQL permission checks **6/0/0**, including real application-role
+materialization. The final full suite passed **1101/24/0**. The skips are 23 separate
+provisioned-login checks and one backup/export check; they are not passes. Six
+intermediate presentation snapshot failures were fixed by preserving the historical
+display when new authorization metadata is absent; no golden hash was rewritten.
+
+Authorized no-inference preparation created 738/738 final native context proofs
+against Ollama 0.35.1 in the new external handoff directory
+`~/.local/state/rest-api-checker/main-v2/technical-preparation-ollama-0.35.1-20261003/`.
+Maximum input: **1411 tokens**; with the unchanged 512-token output budget:
+**1923 / 32768**, zero overflow. All 738 original request/provenance pairs and run
+ordering remain exact. The pending plan-only template binds dataset 3 and the full
+prepared/context/runtime identities; author and acceptance fields remain empty.
+Scientific SQL was checked read-only before/after: identical 82-case bindings,
+zero Main-v2 experiments, runs, attempts and predictions. No experiment was
+materialized, no real batch-status/dry-run is claimed, and execution remains
+unauthorized. Both pre-existing native namespace directories remain unchanged and
+untracked. See [verification](main_v2_runtime_authorization_verification.json) and
+[the exact human handoff](main_v2_handoff.md). No merge or push was performed.
+
 ## 2026-10-03: Main-v2 technical handoff
 
 The additive `main_v2_release`, `main_v2` and `main_v2_context` modules implement

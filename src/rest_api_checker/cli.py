@@ -180,6 +180,7 @@ def _batch_v2(repo, args, console):
     if args.dry_run:
         return dict(plan=plan.summary, status='DRY RUN — no model calls or prediction writes',
                     model_calls=0, prediction_writes=0, executed_now=0, exit_code=0), 0
+    v2.require_execution(repo, plan)
     require(args.spool is not None, '--spool is required for execution')
     v2.require_continuation(plan, args.resume)
     if plan.summary['to_execute'] and not args.yes:

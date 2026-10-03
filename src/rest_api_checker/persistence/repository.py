@@ -425,6 +425,11 @@ class Repository:
         require(attempt in (1,2), 'Only two attempt slots exist')
         lock(self.cn, f'run:{run_id}')
         run = self._row('experiment_runs',run_id)
+        experiment = self._row('experiments', run['experiment_id'])
+        setup = json.loads(self.file(experiment['setup_file_id']))
+        if setup.get('format') == 'main-evaluation-setup-v2':
+            from ..main_v2_authorization import verify
+            verify(self, experiment, setup, database=self.cn.execute('SELECT DB_NAME()').fetchval())
         require(run['result'] is None, 'Completed outcome is immutable')
         membership = self._row('dataset_cases',run['dataset_case_id'])
         require(membership['reference_id'] is not None, 'Incomplete reference cannot be reserved')
