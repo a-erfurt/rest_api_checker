@@ -4,12 +4,17 @@ import os
 import time
 
 from rich.console import Group
+from rich.constrain import Constrain
 from rich.live import Live
+from rich.measure import Measurement
 from rich.panel import Panel
 from rich.progress import Progress, BarColumn, TextColumn
+from rich.table import Table
 from rich.text import Text
 
 from . import terminal
+
+MAX_WIDTH = 120
 
 
 def duration(seconds):
@@ -29,14 +34,92 @@ def decorated(console):
 
 def section(console, title, *contents):
     content = Group(*contents)
-    return Panel(content, title=Text(title, style=terminal.ACCENT), border_style='dim', padding=(0, 1)) if decorated(console) else content
+    return Panel(content, title=Text(title, style=terminal.ACCENT), border_style='dim',
+                 padding=(0, 2), width=min(console.width, MAX_WIDTH)) if decorated(console) else content
 
 
 def demo_notice():
     return Text('DEMO / SIMULATION\nNO MODEL CALLS · NO PREDICTION WRITES', style='yellow')
 
 
+def value_text(value, style=''):
+    return Text(terminal.clean(value), style=style, overflow='fold')
+
+
+def field_grid(fields):
+    """Two label/value pairs per row, shared by every compact TTY section."""
+    table = Table.grid(expand=True, padding=(0, 1))
+    for _ in range(2):
+        table.add_column(no_wrap=True)
+        table.add_column(ratio=1, overflow='fold')
+    for i in range(0, len(fields), 2):
+        cells = []
+        for label, value in fields[i:i+2]:
+            cells.extend([value_text(label), value if isinstance(value, Text) else value_text(value)])
+        table.add_row(*(cells + [Text('')]*(4-len(cells))))
+    return table
+
+
+def failure_text(value, *, technical=False):
+    return value_text(value, ('bold red' if technical else 'bold yellow') if value else 'dim')
+
+
+def tty_plan(console, value):
+    demo = value['mode'] == 'DEMO / SIMULATION'
+    dataset = value['dataset']
+    heading = demo_notice() if demo else value_text(value['mode'], 'bold')
+    dataset_line = Text.assemble('Dataset  ', value_text(dataset['name'], 'bold'),
+                                 value_text(' / '+dataset['version'], 'dim'))
+    if dataset['id'] is not None:
+        dataset_line.append(f" (ID {dataset['id']})", style='dim')
+    fields = [('Cases', value['cases']), ('Models', len(value['models'])),
+        ('Repetitions', value['repetitions']), ('Seeds', ', '.join(map(str, value['seeds']))),
+        ('Planned executions', value_text(value['planned'], 'bold')), ('Output mode', value['output_mode']),
+        ('Runtime', value['runtime']['ollama']['version']), ('Prompt', value['prompt']),
+        ('Token limit', value['token_limit'])]
+    if not demo:
+        fields.extend((label, value[key]) for label, key in (
+            ('Database', 'database'), ('Experiment', 'experiment_id'), ('Already complete', 'previously_complete'),
+            ('Remaining', 'remaining'), ('Problematic', 'problematic'), ('To execute', 'to_execute'))
+            if value.get(key) is not None)
+    contents = [heading, Text(''), dataset_line, field_grid(fields), Text(''),
+        Text.assemble('Models: ', value_text(' · '.join(m['name'] for m in value['models'])))]
+    if not demo:
+        contents.append(value_text('Identities (prefix): '+ ' · '.join(
+            f"{m['name']} {short_hash(m['digest'])}" for m in value['models']), 'dim'))
+        if value.get('problematic_run_ids'):
+            contents.append(value_text('Problematic run IDs: '+', '.join(map(str, value['problematic_run_ids'])), 'bold yellow'))
+        hashes = [f'{label}: {short_hash(value[key])}' for label, key in
+                  [('P2 SHA-256', 'prompt_sha256'), ('Setup SHA-256', 'setup_sha256')] if value.get(key)]
+        contents.append(value_text(' · '.join(hashes), 'dim'))
+        contents.append(value_text('Preflight: '+value.get('preflight', 'Not performed (inspection only)'), 'dim'))
+    console.print(section(console, 'Evaluation / execution plan', *contents))
+    console.print()
+
+
+class BlockBar:
+    """One-row, width-aware full blocks; no pulse or background animation."""
+    def __init__(self, fraction):
+        self.fraction = fraction
+
+    def __rich_measure__(self, console, options):
+        return Measurement(1, options.max_width)
+
+    def __rich_console__(self, console, options):
+        width = options.max_width
+        complete = min(width, max(0, int(width*self.fraction)))
+        yield Text.assemble(('█'*complete, terminal.ACCENT), ('░'*(width-complete), 'dim'))
+
+
+class BlockBarColumn(BarColumn):
+    def render(self, task):
+        return BlockBar(task.completed/task.total if task.total else 0)
+
+
 def plan(console, value):
+    if decorated(console):
+        tty_plan(console, value)
+        return
     heading = demo_notice() if value['mode'] == 'DEMO / SIMULATION' else Text(terminal.clean(value['mode']), style=terminal.ACCENT)
     dataset = value['dataset']
     fields = terminal.table('Execution plan', ('Field', 'Resolved value'), [
@@ -65,9 +148,9 @@ class Display:
         self.current, self.state = {}, None
         self.message = 'Preparing'
         self.live_enabled = enabled and decorated(console)
-        self.progress = Progress(TextColumn('Overall'), BarColumn(bar_width=None, complete_style=terminal.ACCENT,
-            finished_style=terminal.ACCENT), TextColumn('{task.completed:.0f} / {task.total:.0f}'),
-            TextColumn('{task.percentage:>5.1f}%'), auto_refresh=False, expand=True)
+        self.progress = Progress(TextColumn('Overall'), BlockBarColumn(bar_width=None),
+            TextColumn('{task.completed:.0f} / {task.total:.0f}', style='bold'),
+            TextColumn('{task.percentage:>5.1f}%', style='bold'), auto_refresh=False, expand=True)
         self.task = self.progress.add_task('Executions', total=summary['planned'], completed=summary['previously_complete'])
         self.live = Live(self, console=console, refresh_per_second=2, transient=False) if self.live_enabled else nullcontext()
 
@@ -99,18 +182,22 @@ class Display:
         s = self.state or dict(completed=self.summary['previously_complete'], counts={})
         self.progress.update(self.task, completed=s['completed'])
         c = self.current
-        heading = demo_notice() if self.summary['mode'] == 'DEMO / SIMULATION' else Text(terminal.clean(self.summary['mode']), style=terminal.ACCENT)
-        current = terminal.table('', ('Case ID', 'API', 'Model'),
-            [[c.get('case', '—'), c.get('api', '—'), c.get('model', '—')]])
         state_label = {'current': 'Running', 'progress': 'Execution settled', 'start': 'Ready'}.get(self.message, self.message)
-        details = terminal.table('', ('Repetition', 'Seed', 'Operational state'),
-            [[c.get('repetition', '—'), c.get('seed', '—'), state_label]])
-        counters = terminal.table('', ('Parser-valid', 'Parser failures', 'Technical failures', 'Remaining'),
-            [[s['counts'].get('valid', 0), s['counts'].get('parser_failure', 0),
-              s['counts'].get('technical_failure', 0), self.summary['planned']-s['completed']]])
-        yield Group(heading, self.progress, Text(terminal.clean(self.lines()[4])),
-            section(console, 'Current execution', current, details),
-            section(console, 'Result counters', counters))
+        if self.summary['mode'] == 'DEMO / SIMULATION' and state_label != 'SIMULATED':
+            state_label = 'SIMULATED · '+state_label
+        current = field_grid([
+            ('Case', value_text(c.get('case', '—'), 'bold')), ('API', c.get('api', '—')),
+            ('Model', value_text(c.get('model', '—'), 'bold')),
+            ('Repetition', value_text(f"{c.get('repetition', '—')} / {self.summary['repetitions']}", 'bold')),
+            ('Seed', value_text(c.get('seed', '—'), 'bold')), ('State', value_text(state_label, 'bold'))])
+        counters = field_grid([
+            ('✓ Parser-valid', s['counts'].get('valid', 0)),
+            ('! Parser failures', failure_text(s['counts'].get('parser_failure', 0))),
+            ('✕ Technical failures', failure_text(s['counts'].get('technical_failure', 0), technical=True)),
+            ('Remaining', self.summary['planned']-s['completed'])])
+        yield Constrain(Group(self.progress, value_text('◷ '+self.lines()[4], 'dim'), Text(''),
+            section(console, '▶ Current execution', current), Text(''),
+            section(console, 'Result counters', counters)), MAX_WIDTH)
 
     def event(self, value):
         if 'state' in value:
@@ -129,6 +216,9 @@ class Display:
 
 
 def summary(console, result):
+    if decorated(console):
+        tty_summary(console, result)
+        return
     value = result['plan']
     title = 'DEMO / SIMULATION — simulated operational events' if result.get('simulated') else 'Evaluation v2 Main — execution summary'
     counts = result.get('counts_now')
@@ -156,3 +246,41 @@ def summary(console, result):
         console.print(terminal.clean(result['message']))
     if result.get('exit_code') and not result.get('simulated'):
         console.print('Inspect experiment batch-status and inspect attempts; reconcile ambiguous attempts before --resume.')
+
+
+def tty_summary(console, result):
+    value = result['plan']
+    demo = result.get('simulated')
+    counts = result.get('counts_now')
+    fields = [('Status', value_text(result['status'], 'bold'))]
+    if demo:
+        fields.append(('Simulated steps', value_text(result['simulated_steps'], 'bold')))
+    else:
+        fields.extend([('Planned', value['planned']), ('Executed now', result.get('executed_now', 0)),
+            ('Completed total', result.get('completed', value['previously_complete'])),
+            ('Previously complete', value['previously_complete'])])
+    fields.extend([
+        ('✓ Parser-valid', counts['valid'] if counts is not None else 'N/A'),
+        ('! Parser failures', failure_text(counts['parser_failure']) if counts is not None else 'N/A'),
+        ('✕ Technical failures', failure_text(counts['technical_failure'], technical=True) if counts is not None else 'N/A')])
+    if demo:
+        fields.extend([('Real model calls', result['model_calls']), ('Prediction writes', result['prediction_writes'])])
+    else:
+        fields.append(('Unsettled problems', failure_text(result.get('technical_problems', 0), technical=True)))
+    fields.extend([('◷ Elapsed', duration(result.get('elapsed_seconds'))),
+        ('Average simulated step' if demo else 'Average execution',
+         f"{result['average_execution_seconds']:.2f} s" if result.get('average_execution_seconds') is not None else 'N/A')])
+    contents = [field_grid(fields)]
+    if demo:
+        contents.append(value_text('SIMULATED · NO MODEL CALLS · NO PREDICTION WRITES', 'dim'))
+    else:
+        contents.append(value_text(f"{value['dataset']['name']} / {value['dataset']['version']} · "
+            f"{value['output_mode']} · Ollama {value['runtime']['ollama']['version']}", 'dim'))
+        contents.append(value_text(f"P2 SHA-256: {short_hash(value['prompt_sha256'])} · "
+            f"Setup SHA-256: {short_hash(value['setup_sha256'])}", 'dim'))
+    if result.get('message'):
+        contents.append(value_text(result['message']))
+    if result.get('exit_code') and not demo:
+        contents.append(value_text('Inspect batch-status and attempts; reconcile ambiguous attempts before --resume.', 'dim'))
+    console.print()
+    console.print(section(console, 'Final summary', *contents))
