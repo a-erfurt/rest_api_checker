@@ -292,8 +292,8 @@ def test_demo_no_connections_or_executor_and_shared_display(monkeypatch, capsys)
     assert value['simulated_steps'] == 27 and value['counts_now']['parser_failure'] == 3
     assert cli.main(['experiment','demo-batch','--delay','0','--plain']) == 0
     text = capsys.readouterr().out
-    assert 'DEMO / SIMULATION' in text and 'NO PREDICTIONS WILL BE SAVED' in text
-    assert 'SIMULATED steps 27' in text and 'ETA (estimate)' in text
+    assert 'DEMO / SIMULATION' in text and 'NO PREDICTION WRITES' in text
+    assert 'Simulated steps' in text and 'Real executions' in text and 'ETA (estimate)' in text
 
 
 def test_simulation_order_and_interrupt():
