@@ -28,6 +28,13 @@ rest-api-checker --env-file /private/tmp/rac-sqlserver-environment-20260926/cred
 The demo owns a marked disposable SQL Server database. It never calls Ollama.
 See the [command tree, JSON, progress and resume guide](docs/evaluation_cli.md).
 
+The separate [Evaluation-v2 batch CLI](docs/evaluation_batch_v2.md) adds complete
+preflight/dry-run, sequential execution of an explicitly materialized v2 plan,
+conservative resume and read-only status. A database-free presentation simulation
+is available with `rest-api-checker experiment demo-batch`. Real use requires the
+separately authorized Main-v2 dataset **and experiment setup**; the existing v1
+materializer does not produce this setup.
+
 The [read-only research web UI](docs/web_ui.md) presents Overview, Evaluation,
 Runs and Data using persisted records and immutable reports. Start it locally:
 
