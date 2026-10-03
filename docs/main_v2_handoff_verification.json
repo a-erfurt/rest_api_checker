@@ -1,0 +1,219 @@
+{
+  "boundaries": {
+    "merges": 0,
+    "pushes": 0,
+    "real_final_dataset_imports": 0,
+    "real_llm_calls": 0,
+    "real_main_dry_runs": 0,
+    "real_main_experiments_materialized": 0,
+    "real_main_runs": 0,
+    "real_native_context_measurements": 0,
+    "research_edits": 0,
+    "scientific_cases_approved": 0,
+    "service_code_edits": 0,
+    "thesis_edits": 0
+  },
+  "candidate_integrity_after_implementation": {
+    "DEV_exact_contexts": 0,
+    "LLM_service_SQL_calls": 0,
+    "archive_manifest_verified": true,
+    "candidate_evidence_context_oracle_checks": 82,
+    "comparison_links_verified": 60,
+    "final_Main_outputs_in_candidate": 0,
+    "freeze_executed": false,
+    "holds": [],
+    "human_review_gate_checked": false,
+    "manual_review_pending_template_rows": 82,
+    "pilot_exact_contexts": 0,
+    "ready_for_freeze": false,
+    "source_bindings_verified": 3311,
+    "status": "PASS"
+  },
+  "cli_branch": "feat/evaluation-v2-cli-runner",
+  "cli_head": "e711ab0ccae3e16c3f846396be8e2e6db1b5154d",
+  "date": "2026-10-03",
+  "format": "main-v2-technical-handoff-verification-v1",
+  "implementation_branch": "feat/main-v2-materializer",
+  "implementation_sha256": {
+    "src/rest_api_checker/main_v2.py": "621da5c9e7dd61a85c22e48dd163ecdeebf5bec0617b979927be81ac491c14f7",
+    "src/rest_api_checker/main_v2_context.py": "404206cdcded940d07707fccf3122bf6a7646b3411a361c133f200af1591fe7d",
+    "src/rest_api_checker/main_v2_release.py": "62aa484898515578aaba4c55efb5e62949e9d2efb94c359995a0856c2275c866",
+    "tests/persistence/main_v2_helpers.py": "3c946205c11cb97f62ad383ac68a421e656bf1db3cac86a93dfed62cf316cf44",
+    "tests/persistence/test_main_v2.py": "9f2a5f9fff587257be2bbe856af46c87bf56bab3406a378ec04f8973895d4297",
+    "tests/test_main_v2.py": "ffa720de92fe567878fd89987a01f5eff14d1e64f7acac0ab8c4d7ea7f2258c4",
+    "tools/main_v2/launch.sh": "f871d7e3127e3d4e0d6e4f6259308d71c38e202faac01a292faab0393df6cd2d"
+  },
+  "local_main": "71baeeed45b0855a70392b21e8015a5a25343517",
+  "preservation": {
+    "baseline_manifest_sha256": "e0a0dce6a5f8f18ce9166772d2e4077c86bfe5c44f237d363af3ad2c7c0127c8",
+    "candidate_bound_cli_guide_unchanged": true,
+    "checked": 9262,
+    "external_roots": [
+      "/Users/aerfurt/University/Bachelor/bachelor_rest_api_checker",
+      "/Users/aerfurt/University/Bachelor/thesistemplate",
+      "/Users/aerfurt/University/Bachelor/local_services/resistance_regression_v2/c2_regressive",
+      "/Users/aerfurt/University/Bachelor/local_services/resistance-service",
+      "/Users/aerfurt/University/Bachelor/local_services/webutilslib",
+      "/Users/aerfurt/University/Bachelor/local_services/infproject"
+    ],
+    "intentional_documentation_changes": [
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/README.md",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/docs/implementation_state.md"
+    ],
+    "protected_original_source_sha256": {
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/__init__.py": "5e1206c8c2442dadeef4cad16321dc250891671ddfe2c6a49265070c0a288c6e",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/__main__.py": "0dd072ac4488f65bf8c5864ce7a52efa1498fe3fe980353e07f148507de7c735",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/accepted_comparison.py": "c2abaf67a25c2de233c763d62603fd24d352a5572e2e69b00265247485f90a8f",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/batch_terminal.py": "a761e3e5de46f567d024eed5d40647b91e193bf61570d7894e4b63e48c09ed5b",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/cli.py": "aa433c0bda1bc147341cde162ee83967bfbf824202e0a3c10c53de99c4bcaa1d",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/construction.py": "143befa3f5a96de1211e91998629a2ec9821079f7af64d96e1ffe9e13513ce56",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/demo.py": "b0c145452c8497834b187e91eaabc01929e5fb242197965f306463ea2d65b0af",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/development_dataset.py": "2cf2e2f68c299cd8e85cb3547ab827c72fad10ace0b8445c16a122015821e5fd",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/development_dataset_v1.json": "a55cb69616d6c6396062f411008f9dce8cc81b1b43b070abd63bfaab497f8f81",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/evaluation.py": "8201ca340f0e21ebb4300986b4a4048569fdd9c834b5da7c25b7daf4aebfb034",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/evaluation_batch_v2.py": "b439a01fb685bf94d6283b0fd6a5922294f9fcfada2feeec3c58b5333b5610a9",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/__init__.py": "90df54efa2d7153c938b3f1a3bf71b69f468a281e9807076a57c113dedf8860a",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/batch.py": "9d0bfa025ae380714101790d81ad2cc9b23c938b4ac9c4964a85a6be772a8408",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/encoding.py": "c4b084deaf4aa6b2ce6283a812af8f20a081469480dd185ecbfa6964cae5f319",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/orchestration.py": "8c12b830859dc4425823e58cb9e414c6902d0ad9a0cc05cc3c02aa22bc2b4a26",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/output_schema_v1.json": "c7871017429821315d9e4ac873042cd196b9abebe4d99e00dbef451ea019d397",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/output_transport_schema_v2.json": "cddaccb50047cc0312f551cca0ecfcc176178966e769bbe2fabd0bd1ecf26873",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/parser.py": "82eb5e5b09e9dfc4eb5c55b9c9a46398a22ab39f32f4ea582af99ff031ab4358",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/provider.py": "6b0d536e211c8ac72960864949a3b3ac208f6c48d13ced9759e38d3ada73064a",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/renderer.py": "f9e5bdb3ba00b2d93fd348524d96ff584038a1855f9bf035e3f94c3a702fe07d",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/request.py": "6943f14463b101c687c81f846cad1f83a55f0f7d0db660df7e5d5e8c717901f8",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/request_v2.py": "210cd91de4757ca12693a53de373d85a34d6b888fd33e2d48d2971f3d18f1bd7",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/experiment/schedule.py": "09b75d81784b8506e809bcdc3e07a6e6cdd193897b50d4f3e88618169e4d6c3b",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/freeze.py": "9f1d6fb52c2bfd52ed4d77da53f0c507d9d3e617eb8337de4092d05393719852",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/gate_b_closure.py": "13644f6df4ce00c53b24e3695d8431cfa065359ab4c0fb4ea170f9b918b62e1d",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/interface_pilot_v2.py": "2a7931aec7e4d6d21ef60e30e55ce85ce06a14e10690ac89f62445b88e09aba2",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/interface_pilot_v2_live.py": "51fbbb9af1b06e2a007d7ea703760614c059752b72203440e1bfdfb171f02e92",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/main_execution.py": "fee299b24d77ddc15b179da8e182203073176536a24e15dfeca23cae24c44865",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/main_freeze.py": "120b07e81989476d5cbbb7d930d0d9b9118f50e436ea33ec5704f7f253ec854c",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/media_type.py": "94b35cd39cfbae46616fe1f2a6b198f674f77d8447261dba3e7e5426242561b4",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/models.py": "0d9219850cf0de0cf2b969c4cac24c8e5ae6d9c25624551ae9bc25441a948dfa",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/operator.py": "98b6e17c9b1095c5de8c6d3693a9ec85549ea79d31f0d5fa8ff4a1c1c991e20e",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/operator_config.py": "088b50c9d9cc8b8acf2c9419f6a743b4d57b04308a47156868e867841d337275",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/operator_menu.py": "9d8185ea75aa6945775f6738d4c7d9aa00404ef3d25c13d6df2ef6f7bf6cc677",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/oracle.py": "c2bd7d3bcab4d041149471f8d69f7e7c50cff5fb3da92f855af29c14bb043a86",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/__init__.py": "39b71f0d45bc568ac57106f67415583d495d6dc30bf24d79ad3f5aa05b3b0877",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/__main__.py": "2b3a32ac61d056ef5e22d3d522793abcb83a02635854d9345bfc862a7f6f9c42",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/admin.py": "50f8f9318faf0816bcb0fd2aabd2bbbccf151d6d3cfc90c099ae926bbae03fc8",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/archive.py": "97cd7750af44fe6ce7a36c019daa43d0dd7a559ea5ae55f591c12eb8f723f403",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/database.py": "798b999c1a22e62466667405427060db110a14de01730d4b0676ef794fb28c73",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/importer.py": "dc6b174e39de93428da32ea28ba5cf5235503310bda426d56cdf6fda0181a9a2",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/inspection.py": "c884962e20aac6a6215a92eb6480c02757d74fac10ae010ed7702dd02d4c8d9e",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/migrate.py": "f2dd46b9e85e3b353fc729f43d30cd99c09d2a771109b9a5d88fd07bca594f4a",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/migrations/001_application_schema.sql": "188a3df7dff73c93db132c27c4d7415ba2721181337e31c69587439af63c8ff6",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/migrations/002_application_permissions.sql": "26603e3ab54f721ea0354c360486a15114017ea0002bcae17fc47b195daf590b",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/repository.py": "cdab5421b994590361639503db091c3a47f802fafd1599811fad672adf7d9f39",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/persistence/spool.py": "2320fc8d89d0b1664146e460e4669d66b417841c9ea586a25ede726af2d28c90",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/preflight.py": "b6d9b7916f891bd3f03a94a669be5674f250a87129a28d28a67db4137f4239c7",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/runtime_evidence.py": "62341989a21f683d6ebb8c751de4385a421b2aa162f2cd878bfd5e8fcc68cde6",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/schema_validation.py": "72ac0a510c61b4279b4b4a4512dd64e94dc2f3e4f3b00c054f9db5ed69760181",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/sensitivity_analysis.py": "ded99732bc254d6e7df7cde9ff25c40c251578f32576d0886d23bf57863e5678",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/sensitivity_candidate.py": "2ec8413209f6d86241f4e9cf76c155ebbc09242239a9fca9d4052cf5a7a4f870",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/sensitivity_evaluation.py": "2b2729f9382f017d5ea6684e1edc85a220b3872e403f2450e369d9fa98ddf243",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/sensitivity_execution.py": "5bf3c4a56b8f114661446fa19b36dbfea80edc60f5948abb6d44823c9d76801a",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/sensitivity_freeze.py": "0a08ed7a533d2d8d8f1c9c8462d9f3fc1044d2988815bf5a3e06df2b334d3f05",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/service_capture.py": "bc109faa480b4673c5ca6812018654d373e11b5c26a6a26eccd38d0f8e7c1eb5",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/terminal.py": "d44529cd005b649f2e57ca53d533956789d9adf99341f372c980a28c97890e8b",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/__init__.py": "47c156cd7c28a3e3803500bb20038d8896d50128060c45798f3d40ce95fd4d1c",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/app.py": "c19f0ed16c59e4fd3deeb90e587a9e5dd9cbeebc2a161abae12427ec9a57de01",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/presentation.py": "a235dda9cd1c24ed55a36b20df41d7e1ad586f1d0424ff59ec2770bb9c4f6f85",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/queries.py": "3caa9014d5f7c95cd4d6b6251b1754145b673b53f3b2c1deec0165b4e2ca0d7b",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/static/app.css": "c5d200be0fcbc5bde317efc67c135a585c9359a1b0561ca37a0b4562422b6eb2",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/static/app.js": "abe21b07397f5b2e88e80091cbaeadf654b33b27b5954be5b250f4eb3d14d17a",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/static/vendor/CHARTJS-LICENSE.md": "41a84aa2caba645f966a18d9c2056b73e6d3a81d80bc0046bc0011a2634d4cce",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/static/vendor/HTMX-LICENSE": "d3d2456f76414f2456104660ebd65aff1c04cd7966b942bdabd63f3cdb316a38",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/static/vendor/README.md": "a84634cad637bba061f9223ff9a7bfc12ae9d0dd84e85aa3052ee15f627c4245",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/static/vendor/chart-4.4.8.umd.js": "e4cf4d144b222634f2e64ff707cd57b953f8de4b65b231cd5ac6bde114648e4d",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/static/vendor/htmx-2.0.4.min.js": "e209dda5c8235479f3166defc7750e1dbcd5a5c1808b7792fc2e6733768fb447",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/base.html": "fd213c11e49c5473bcb06c74ef4050be83f8ab4c563a4ff107eb5e365c791e27",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/data.html": "e6c938fd250d07baf5299bb42d961df328baf90b6789f9e5f19a022a89059708",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/data_detail.html": "5b2030203c5b1ab044a9959ac6c75cbf958dcb63fcbd3ae285a7d6d98228b651",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/error.html": "db6e811ddc69a6b8c4d871e2a5330f0c339a71b151e0c6d346b52e2afe008709",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/evaluation.html": "a8c84a69480297199b2a428da4f1683c3b8289c29ac9392a173742bd8630ecfb",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/macros.html": "b4cd8e35be0fbef7de0e3751d5c4dc4b0dd601cff28e73e80053e4ad803af752",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/overview.html": "87cf2f997ff61662b5eedd6ac52d44a9fbdc9ef6574c6d93b7b97ce722be645b",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/overview_fragment.html": "17b43ad58bf812a1f0b89487e6ccec326e84a757a1a3b9d7df53c27c37ce6f6c",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/run_detail.html": "07a26415c769ce46078ddd06c3218a6f18f542d13482739f924ff153ab10ba03",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/src/rest_api_checker/web/templates/runs.html": "0f5ad9afb0ad37ab397e798ea0840bfb95478183415e053da4a5a11d8dfd4788"
+    },
+    "unchanged": 9260
+  },
+  "remaining_gates": [
+    "Complete human case/family/dataset review",
+    "Versioned candidate revision if review changes membership/references",
+    "Human freeze decision and final import",
+    "Exact native Main context evidence and current runtime verification",
+    "Human plan authorization and materialization",
+    "Real persisted-plan dry-run with zero problematic runs",
+    "Explicit Main execution authorization"
+  ],
+  "sql": {
+    "container": "rac-main-v2-handoff-test",
+    "container_removed": true,
+    "existing_server_port_14339_untouched": true,
+    "fixture_owned_database_prefix": "rac_test_",
+    "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+    "port": 14341,
+    "remaining_user_databases": [],
+    "scientific_database_accessed": false,
+    "temporary_credentials_removed": true
+  },
+  "tests": {
+    "cli_broad_without_sql": {
+      "failed": 0,
+      "passed": 956,
+      "skipped": 99
+    },
+    "cli_focused_without_sql": {
+      "failed": 0,
+      "passed": 73,
+      "skipped": 2
+    },
+    "logs": {
+      "cli-broad-sql.log": "........................................................................ [  6%]\n........................................................................ [ 13%]\n........................................................................ [ 20%]\n........................................................................ [ 27%]\n...........ssssssssssss.............................sssssssssss......... [ 34%]\n........................................s............................... [ 40%]\n........................................................................ [ 47%]\n........................................................................ [ 54%]\n........................................................................ [ 61%]\n........................................................................ [ 68%]\n........................................................................ [ 75%]\n........................................................................ [ 81%]\n........................................................................ [ 88%]\n........................................................................ [ 95%]\n...............................................                          [100%]\n=========================== short test summary info ============================\nSKIPPED [1] tests/persistence/test_application_security.py:39: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [8] tests/persistence/test_application_security.py:71: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:88: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:99: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:122: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_freeze.py:58: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [10] tests/persistence/test_freeze.py:69: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_sqlserver.py:521: Set RAC_SQL_TEST_BACKUP_DIR to retain a backup outside the container\n1031 passed, 24 skipped in 287.19s (0:04:47)\n",
+      "commit-suite.log": "........................................................................ [  6%]\n........................................................................ [ 13%]\n........................................................................ [ 19%]\n........................................................................ [ 26%]\n...........ssssssssssss.............................sssssssssss......... [ 33%]\n...........................................s............................ [ 39%]\n........................................................................ [ 46%]\n........................................................................ [ 52%]\n........................................................................ [ 59%]\n........................................................................ [ 66%]\n........................................................................ [ 72%]\n........................................................................ [ 79%]\n........................................................................ [ 85%]\n........................................................................ [ 92%]\n........................................................................ [ 99%]\n..........                                                               [100%]\n=========================== short test summary info ============================\nSKIPPED [1] tests/persistence/test_application_security.py:39: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [8] tests/persistence/test_application_security.py:71: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:88: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:99: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:122: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_freeze.py:58: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [10] tests/persistence/test_freeze.py:69: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_sqlserver.py:521: Set RAC_SQL_TEST_BACKUP_DIR to retain a backup outside the container\n1066 passed, 24 skipped in 289.65s (0:04:49)\n",
+      "final-focused-verified.log": ".....................................                                    [100%]\n37 passed in 19.36s\n",
+      "persistence-baseline.log": "ssssssssssss.............................sssssssssss.................... [ 61%]\n.............................s...............                            [100%]\n=========================== short test summary info ============================\nSKIPPED [1] tests/persistence/test_application_security.py:39: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [8] tests/persistence/test_application_security.py:71: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:88: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:99: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_application_security.py:122: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_freeze.py:58: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [10] tests/persistence/test_freeze.py:69: Set RAC_SQL_APPLICATION_ENV to qualify the provisioned application login\nSKIPPED [1] tests/persistence/test_sqlserver.py:521: Set RAC_SQL_TEST_BACKUP_DIR to retain a backup outside the container\n93 passed, 24 skipped in 237.74s (0:03:57)\n"
+    },
+    "new_handoff_tests": {
+      "offline_and_wrapper": 32,
+      "sql": 3
+    },
+    "skipped_reason": "23 separately configured application-login checks and one backup/export check",
+    "suites": {
+      "cli-broad-sql.log": {
+        "errors": 0,
+        "failed": 0,
+        "passed": 1031,
+        "skipped": 24
+      },
+      "commit-suite.log": {
+        "errors": 0,
+        "failed": 0,
+        "passed": 1066,
+        "skipped": 24
+      },
+      "final-focused-verified.log": {
+        "errors": 0,
+        "failed": 0,
+        "passed": 37,
+        "skipped": 0
+      },
+      "persistence-baseline.log": {
+        "errors": 0,
+        "failed": 0,
+        "passed": 93,
+        "skipped": 24
+      }
+    },
+    "two_v2_sql_roundtrips": {
+      "failed": 0,
+      "passed": 2,
+      "skipped": 0
+    }
+  }
+}

@@ -33,7 +33,10 @@ preflight/dry-run, sequential execution of an explicitly materialized v2 plan,
 conservative resume and read-only status. A database-free presentation simulation
 is available with `rest-api-checker experiment demo-batch`. Real use requires the
 separately authorized Main-v2 dataset **and experiment setup**; the existing v1
-materializer does not produce this setup.
+materializer does not produce this setup. The separate
+[Main-v2 handoff](docs/main_v2_handoff.md) provides review-bound freeze, final
+dataset import, exact request/native-context preparation, experiment materialization
+and post-review operator commands. It never grants human approval or starts Main.
 
 The [read-only research web UI](docs/web_ui.md) presents Overview, Evaluation,
 Runs and Data using persisted records and immutable reports. Start it locally:

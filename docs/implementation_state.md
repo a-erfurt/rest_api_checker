@@ -1,3 +1,44 @@
+## 2026-10-03: Main-v2 technical handoff
+
+The additive `main_v2_release`, `main_v2` and `main_v2_context` modules implement
+the post-review handoff through the existing SQL repository and batch adapter.
+External complete human reviews, a passing versioned candidate integrity receipt
+and an explicit hash-bound human freeze decision produce a new immutable final
+package outside the research repository. Pending, changed or incomplete decisions
+block. Identical dataset import is idempotent; experiment materialization is
+atomic and duplicate-protected. Counts derive from final membership, existing
+models and repetitions; there is no fixed candidate size.
+
+Exact requests use the existing P2, D07, v2 builder and selected `format_json`.
+Native render/tokenize preparation is a separate, explicitly invoked operation;
+the offline materializer consumes its measured proofs and a human plan
+authorization, and creates zero attempts, predictions or model calls. No native
+Main measurement, real final import, Main run or scientific approval was performed
+in this implementation task. Current runtime verification and execution remain
+post-review gates. See [the complete operator procedure](main_v2_handoff.md),
+including the temporary `caffeinate` wrapper, durable spooling and local merge
+commands. Historical v1 materializers and inference/Oracle semantics are unchanged.
+
+The existing CLI head `e711ab0` was clean. Its focused tests passed **73/2/0**
+(passed/skipped/failed) before SQL configuration, and its two new SQL tests then
+passed **2/0/0** on a new disposable SQL Server at localhost:14341. Existing
+persistence tests passed **93/24/0**, and the broad existing suite with SQL enabled
+passed **1031/24/0**. The 24 skips are 23 separately configured application-login
+checks and one backup/export check; they are not claimed as executed.
+
+Final verification: **1066 passed / 24 skipped / 0 failed** with disposable SQL
+enabled, including 35 new handoff tests (32 offline/wrapper and three SQL).
+The focused handoff plus existing v2 SQL roundtrips passed **37/0/0**. Native
+transport/runtime verification was fabricated in tests; no live Main context or
+real dry-run is claimed. macOS Bash 3.2 wrapper checks cover launch, explicit
+resume and refusal on a problematic dry-run without invoking real `caffeinate`.
+All 9,262 pre-existing file hashes were compared: only the two intended
+technical documentation files changed. All original scientific source/evidence,
+checked service repositories, research and Thesis files remained identical.
+The candidate also pins `docs/evaluation_batch_v2.md`; that historical guide is
+byte-identical. Current handoff instructions are a separate document.
+The verification record is [main_v2_handoff_verification.json](main_v2_handoff_verification.json).
+
 ## 2026-10-03: bounded Evaluation-v2 CLI orchestration
 
 The existing argparse CLI now offers `experiment run-batch`, `batch-status`, and
