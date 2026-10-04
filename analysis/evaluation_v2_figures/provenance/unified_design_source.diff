@@ -1,0 +1,245 @@
+--- cell-3-before
++++ cell-3-after
+@@ -20 +20 @@
+-                     "grid.color": "#BDBDBD"})
++                     "grid.color": "#EEEEEE"})
+@@ -22,6 +22,6 @@
+-RUB_INFO_RED = "#E8613D"
+-RUB_INFO_GREEN = "#18A748"
+-RUB_INFO_GRAY = "#899597"
+-RQ1_COLORS = [RUB_BLUE, RUB_INFO_RED, RUB_INFO_GRAY]
+-RQ2_COLORS = [RUB_BLUE, RUB_INFO_RED, RUB_INFO_GREEN]
+-RQ3_COLORS = [RUB_BLUE, RUB_INFO_RED, RUB_INFO_GREEN, RUB_INFO_GRAY]
++RUB_RED = "#E8613D"
++RUB_GREEN = "#18A748"
++RUB_GRAY = "#899597"
++RQ1_COLORS = [RUB_BLUE, RUB_RED, RUB_GRAY]
++RQ2_COLORS = [RUB_BLUE, RUB_RED, RUB_GREEN]
++RQ3_COLORS = [RUB_BLUE, RUB_RED, RUB_GREEN, RUB_GRAY]
+@@ -107,0 +108 @@
++        validate_column_layout(figure)
+@@ -125,0 +127,80 @@
++
++# Fixed layout and fixed legend anchors keep all figures and both languages aligned.
++FIGURE_SIZE = (FIGURE_WIDTH, 3.8)
++AXES_BOUNDS = [0.15, 0.16, 0.82, 0.65]
++BAR_WIDTH = 0.54
++
++def column_figure():
++    figure = plt.figure(figsize=FIGURE_SIZE)
++    axes = figure.add_axes(AXES_BOUNDS)
++    axes.set_axisbelow(True)
++    axes.grid(axis="y", color="#EEEEEE", linewidth=0.6)
++    axes.grid(axis="x", visible=False)
++    axes.spines[["top", "right"]].set_visible(False)
++    axes.spines[["left", "bottom"]].set_color("#899597")
++    axes.spines[["left", "bottom"]].set_linewidth(0.6)
++    axes.tick_params(axis="both", length=0, pad=7)
++    axes.yaxis.set_label_coords(-0.145, 0.5)
++    return figure, axes
++
++def horizontal_legend(figure, colors, german, english):
++    # Fixed-size swatches and text anchors avoid language-dependent legend reflow.
++    translated = []
++    for index, (color, de, en) in enumerate(zip(colors, german, english)):
++        x = 0.13 + index * 0.86 / len(colors)
++        figure.add_artist(matplotlib.patches.Rectangle(
++            (x, 0.905), 0.022, 0.025, transform=figure.transFigure,
++            facecolor=color, edgecolor="none", linewidth=0))
++        artist = figure.text(x + 0.031, 0.9175, de, fontsize=8,
++                             ha="left", va="center")
++        translated.append((artist, en))
++    return translated
++
++def stack_columns(axes, data, columns, colors):
++    bottom = pd.Series(0, index=data.index)
++    limit = float(data[columns].sum(axis=1).max())
++    for column, color in zip(columns, colors):
++        axes.bar(range(3), data[column], bottom=bottom, width=BAR_WIDTH,
++                 color=color, edgecolor="none", linewidth=0)
++        for x, value in enumerate(data[column]):
++            if value >= 0.06 * limit:
++                axes.text(x, bottom.iloc[x] + value / 2, str(int(value)),
++                          ha="center", va="center", fontsize=10,
++                          color="white" if color == RUB_BLUE else "#17232B")
++            elif value > 0:
++                # Tiny adjacent segments use opposite sides with short leaders.
++                direction = -1 if column == "variable" else 1
++                start = x + direction * BAR_WIDTH / 2
++                y = bottom.iloc[x] + value / 2
++                axes.annotate(str(int(value)), xy=(start, y),
++                              xytext=(direction * 10, 0), textcoords="offset points",
++                              ha="left" if direction > 0 else "right", va="center",
++                              fontsize=10, color="#17232B",
++                              arrowprops={"arrowstyle": "-", "color": "#899597",
++                                          "linewidth": 0.6, "shrinkA": 2, "shrinkB": 0})
++        bottom = bottom + data[column]
++
++
++def validate_column_layout(figure):
++    """Presentation assertions only; keep numerical controls unchanged."""
++    axes = figure.axes[0]
++    assert tuple(figure.get_size_inches()) == FIGURE_SIZE
++    assert not axes.get_title()
++    assert not axes.spines["top"].get_visible() and not axes.spines["right"].get_visible()
++    assert axes.get_axisbelow()
++    assert all(not line.get_visible() for line in axes.get_xgridlines())
++    assert all(line.get_color() == "#EEEEEE" for line in axes.get_ygridlines())
++    for container in axes.containers:
++        assert container.orientation == "vertical"
++        for bar in container:
++            assert bar.get_hatch() is None and bar.get_linewidth() == 0
++            assert bar.get_edgecolor()[-1] == 0 and bar.get_facecolor()[-1] == 1
++    renderer = figure.canvas.get_renderer()
++    artists = (list(axes.texts) + list(figure.texts) + [axes.yaxis.label] +
++               axes.get_xticklabels() + axes.get_yticklabels())
++    boxes = [(text.get_text(), text.get_window_extent(renderer)) for text in artists
++             if text.get_visible() and text.get_text()]
++    for text, box in boxes:
++        assert figure.bbox.contains(box.x0, box.y0) and figure.bbox.contains(box.x1, box.y1), text
++    for (text, box), (other, other_box) in itertools.combinations(boxes, 2):
++        assert not box.overlaps(other_box), (text, other)
+--- cell-9-before
++++ cell-9-after
+@@ -66,35 +66,9 @@
+-fig1 = plt.figure(figsize=(FIGURE_WIDTH, 3.8))
+-ax1 = fig1.add_axes([0.14, 0.16, 0.83, 0.59])
+-translations = []
+-segments = [("exact_correct", "Vektor korrekt", ""),
+-            ("valid_incorrect", "Vektor falsch", "//"),
+-            ("parser_failure", "Parserfehler", "xx")]
+-left = pd.Series(0, index=rq1_data.index)
+-for index, (column, label, hatch) in enumerate(segments):
+-    ax1.barh(range(3), rq1_data[column], left=left, height=0.48,
+-             color=RQ1_COLORS[index], label=label, hatch=hatch, edgecolor="white", linewidth=0.6)
+-    for y, value in enumerate(rq1_data[column]):
+-        if value >= 12:
+-            german = (f"{int(value)} ({percent(rq1_data.iloc[y]['exact_planned'])})"
+-                      if column == "exact_correct" else str(int(value)))
+-            text = ax1.text(left.iloc[y] + value / 2, y, german, ha="center", va="center", fontsize=10,
+-                            bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.9, "pad": 1.4})
+-            if column == "exact_correct":
+-                translations.append((text, f"{int(value)} ({100 * float(rq1_data.iloc[y]['exact_planned']):.1f}%)"))
+-        elif value > 0:
+-            # Fixed leader geometry is independent of translated text extents.
+-            ax1.annotate("", xy=(left.iloc[y] + value / 2, y), xytext=(195, y + 0.48),
+-                         arrowprops={"arrowstyle": "-", "color": "black", "linewidth": 0.8})
+-            text = ax1.text(195, y + 0.48, f"{int(value)} Parserfehler",
+-                            ha="right", va="center", fontsize=9)
+-            translations.append((text, f"{int(value)} parser failures"))
+-    left = left + rq1_data[column]
+-ax1.set(yticks=range(3), yticklabels=rq1_data["model_label"], xlim=(0, int(rq1_data["planned"].max())),
+-        ylim=(2.72, -0.67), xlabel="Geplante Bewertungen (n = 246 je Modell)")
+-translations.append((ax1.xaxis.label, "Planned evaluations (n = 246 per model)"))
+-ax1.set_xticks([0, 50, 100, 150, 200, int(rq1_data["planned"].max())])
+-ax1.set_axisbelow(True)
+-ax1.grid(axis="x", alpha=0.2)
+-legend1 = fig1.legend(*ax1.get_legend_handles_labels(), loc="upper left",
+-                     bbox_to_anchor=(0.13, 0.99), frameon=False)
+-translations.extend(zip(legend1.get_texts(), ["Correct vector", "Incorrect vector", "Parser failure"]))
++fig1, ax1 = column_figure()
++stack_columns(ax1, rq1_data, ["exact_correct", "valid_incorrect", "parser_failure"], RQ1_COLORS)
++ax1.set(xticks=range(3), xticklabels=rq1_data["model_label"],
++        xlim=(-0.6, 2.6), ylim=(0, 246), ylabel="Geplante Bewertungen")
++ax1.set_yticks([0, 50, 100, 150, 200, 246])
++translations = horizontal_legend(
++    fig1, RQ1_COLORS, ["Korrekter Vektor", "Gültiger falscher Vektor", "Parserfehler"],
++    ["Correct vector", "Incorrect valid vector", "Parser failure"])
++translations.append((ax1.yaxis.label, "Planned evaluations"))
+@@ -104 +78 @@
+-plt.close(fig1)
+\ No newline at end of cell
++plt.close(fig1)
+--- cell-11-before
++++ cell-11-after
+@@ -92,3 +92 @@
+-fig2 = plt.figure(figsize=(FIGURE_WIDTH, 3.9))
+-ax2 = fig2.add_axes([0.14, 0.19, 0.83, 0.66])
+-width = 0.24
++fig2, ax2 = column_figure()
+@@ -97,3 +95,3 @@
+-    positions = [x + (index - 1) * 0.27 for x in range(3)]
+-    bars = ax2.bar(positions, rows["accuracy_percent"], width=width, color=RQ2_COLORS[index],
+-                  hatch=["", "//", "xx"][index], label=MODEL_NAMES[model], edgecolor="white", linewidth=0.6)
++    positions = [x * 1.2 + (index - 1) * 0.36 for x in range(3)]
++    bars = ax2.bar(positions, rows["accuracy_percent"], width=0.30,
++                  color=RQ2_COLORS[index], edgecolor="none", linewidth=0)
+@@ -101,7 +99,7 @@
+-        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() - 3 - index * 8,
+-                 fraction(row.applicable_correct, row.applicable_planned),
+-                 ha="center", va="top", rotation=0, fontsize=9,
+-                 bbox={"facecolor": "white", "alpha": 0.93, "edgecolor": "none", "pad": 1.5})
+-ax2.set(ylim=(0, 100), xlim=(-0.6, 2.6), xticks=range(3),
+-        xticklabels=["C1\nStatus", "C2\nMedientyp", "C3\nSchema"],
+-        ylabel="Korrektheit bei anwendbaren Prüfungen")
++        ax2.annotate(fraction(row.applicable_correct, row.applicable_planned),
++                     xy=(bar.get_x() + bar.get_width() / 2, bar.get_height()),
++                     xytext=(0, 14 if index == 1 else 4), textcoords="offset points",
++                     ha="center", va="bottom", rotation=0, fontsize=8)
++ax2.set(ylim=(0, 115), xlim=(-0.6, 3.0), xticks=[0, 1.2, 2.4],
++        xticklabels=["C1", "C2", "C3"], ylabel="Korrektheit anwendbarer Prüfungen")
++ax2.set_yticks([0, 20, 40, 60, 80, 100])
+@@ -109,6 +107,4 @@
+-ax2.set_axisbelow(True)
+-ax2.grid(axis="y", alpha=0.2)
+-fig2.legend(*ax2.get_legend_handles_labels(), loc="upper center", bbox_to_anchor=(0.55, 0.99), ncol=3, frameon=False)
+-export_language_figures("rq2_applicable_category_accuracy", fig2, rq2_data,
+-                        [(ax2.yaxis.label, "Accuracy on applicable checks")],
+-                        english_xticklabels=["C1\nStatus", "C2\nMedia type", "C3\nSchema"])
++translations = horizontal_legend(
++    fig2, RQ2_COLORS, ["Qwen", "Gemma", "Mistral"], ["Qwen", "Gemma", "Mistral"])
++translations.append((ax2.yaxis.label, "Accuracy on applicable checks"))
++export_language_figures("rq2_applicable_category_accuracy", fig2, rq2_data, translations)
+@@ -117 +113 @@
+-plt.close(fig2)
+\ No newline at end of cell
++plt.close(fig2)
+--- cell-13-before
++++ cell-13-after
+@@ -69,33 +69,9 @@
+-fig3 = plt.figure(figsize=(FIGURE_WIDTH, 3.6))
+-ax3 = fig3.add_axes([0.14, 0.17, 0.83, 0.60])
+-translations = []
+-left = pd.Series(0, index=rq3_data.index)
+-segments = [("all_three_correct", "3/3 korrekt", ""),
+-            ("stable_wrong", "Stabil falsch", "//"),
+-            ("variable", "Variabel", "xx"),
+-            ("incomplete", "Unvollständig", "..")]
+-for index, (column, label, hatch) in enumerate(segments):
+-    ax3.barh(range(3), rq3_data[column], left=left, height=0.5,
+-             color=RQ3_COLORS[index], label=label, hatch=hatch, edgecolor="white", linewidth=0.6)
+-    for y, value in enumerate(rq3_data[column]):
+-        if value >= 6:
+-            ax3.text(left.iloc[y] + value/2, y, str(int(value)), ha="center", va="center",
+-                     bbox={"facecolor": "white", "alpha": 0.9, "edgecolor": "none", "pad": 1.4})
+-        elif value > 0:
+-            text = f"{int(value)} variabel" if column == "variable" else f"{int(value)} unvollständig"
+-            xpos = 54 if column == "variable" else 81.5
+-            ax3.annotate("", xy=(left.iloc[y] + value/2, y), xytext=(xpos, y + 0.53),
+-                         arrowprops={"arrowstyle": "-", "color": "black", "linewidth": 0.8})
+-            artist = ax3.text(xpos, y + 0.53, text, ha="right", va="center", fontsize=9)
+-            translations.append((artist, f"{int(value)} variable" if column == "variable"
+-                                  else f"{int(value)} incomplete"))
+-    left = left + rq3_data[column]
+-ax3.set(yticks=range(3), yticklabels=rq3_data["model_label"], xlim=(0, int(rq3_data["cases"].max())),
+-        ylim=(2.78, -0.55), xlabel="Fälle (n = 82 je Modell)")
+-ax3.set_xticks([0, 20, 40, 60, int(rq3_data["cases"].max())])
+-ax3.set_axisbelow(True)
+-ax3.grid(axis="x", alpha=0.2)
+-legend3 = fig3.legend(*ax3.get_legend_handles_labels(), loc="upper left", bbox_to_anchor=(0.13, 1.0),
+-                     frameon=False, fontsize=8.5)
+-translations.append((ax3.xaxis.label, "Cases (n = 82 per model)"))
+-translations.extend(zip(legend3.get_texts(), ["3/3 correct", "Stably incorrect", "Variable", "Incomplete"]))
++fig3, ax3 = column_figure()
++stack_columns(ax3, rq3_data, ["all_three_correct", "stable_wrong", "variable", "incomplete"], RQ3_COLORS)
++ax3.set(xticks=range(3), xticklabels=rq3_data["model_label"],
++        xlim=(-0.6, 2.6), ylim=(0, 82), ylabel="Fälle")
++ax3.set_yticks([0, 20, 40, 60, 82])
++translations = horizontal_legend(
++    fig3, RQ3_COLORS, ["3/3 korrekt", "Stabil falsch", "Variabel", "Unvollständig"],
++    ["3/3 correct", "Stable wrong", "Variable", "Incomplete"])
++translations.append((ax3.yaxis.label, "Cases"))
+@@ -105 +81 @@
+-plt.close(fig3)
+\ No newline at end of cell
++plt.close(fig3)

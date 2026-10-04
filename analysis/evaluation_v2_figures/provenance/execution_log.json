@@ -1,0 +1,258 @@
+[
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.525,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "1789fa25aa1bfa670216f4560b5e8bb53d11b51229dfa36652898d03cdab45cb",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.558,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "f960eda4e0c2a944797d6be5bc87d1a34a90884ffc33bfe5c0fdd97cb0d428e3",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.415,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "a912856e377cf16c9e3c88a9c26826546e3ef35d053e5e7bc74ca798d67f2b7a",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.5,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "343e455042d1fce1ef981102084989aeab072d87727ef2ba0ec4273a53c7d292",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.422,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "a49af0a2718322b773d2e4c5e1bcda66ee62feef37bda32262b070cf49d88184",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "5e1122b2c208db3ea060e6507b5c234752c1ca24c21d7c7683997254794213a5",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.41,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "a49af0a2718322b773d2e4c5e1bcda66ee62feef37bda32262b070cf49d88184",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "8014e4e0382b1e10e2a4b541f1535c6acd6ac2c6c93a39dd9aca3b5a7895679b",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.672,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "ab826749ef59daa423921632f783a177e0de8b39f5f38bcb2d8f4e441d579f72",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "a8a360a02bf14fb8044e2d365611e0fa25da9aa73f6031dedabb2268fc2aeeb9",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.336,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "ab826749ef59daa423921632f783a177e0de8b39f5f38bcb2d8f4e441d579f72",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "dda6fbfeece8de87b9e944ade0dad643ef5fa7f84a19744fcfd96da9ed93b4c5",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.59,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "e03386043ce615e942d9edd1d0910d66f276eea254d565e6bf543ff8dd08a018",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "1a07ff0b3c334d6bb97cfc9717a36e532b368fbe0463918272330a95156fa20e",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.583,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "e03386043ce615e942d9edd1d0910d66f276eea254d565e6bf543ff8dd08a018",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "da59be01ca454bc7ae405e5670304d482c39a4731015ddc0f50cafd24b77b1ff",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.496,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "4fcc78d1e06ef4823e3adad9111ce4c9d4d619db79151416d09cedb007cd9e3a",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "fd5be35a3af5675dd7b7abcac44031876d928be7f197e5a1437a701cd10332c9",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.527,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "64a6a9723be4855e39a3a5538c2bf50c0a3a029d8e025d0d49784c3d7dcaa6e7",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "c53db13f0d981a9fd4a6aea04b1334747eecc43e03c9672ee4cd3028045b4a3b",
+    "status": "PASS"
+  },
+  {
+    "code_cells": 8,
+    "elapsed_seconds": 2.572,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fingerprint": "64a6a9723be4855e39a3a5538c2bf50c0a3a029d8e025d0d49784c3d7dcaa6e7",
+    "fresh_kernel": true,
+    "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+    "method": "nbclient; notebook source code executes inside the isolated kernel",
+    "notebook_sha256_after_save": "87dca96ebfd78a6344d2170f09d1a47d222778a6addf40a84180e1367a78f5df",
+    "status": "PASS"
+  }
+]

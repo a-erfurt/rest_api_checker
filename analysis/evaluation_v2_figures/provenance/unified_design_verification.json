@@ -1,0 +1,181 @@
+{
+  "bound_counts": {
+    "cases": 82,
+    "parser_failure": 4,
+    "runs": 738,
+    "technical_failure": 0,
+    "valid": 734
+  },
+  "byte_identical_exports_between_final_runs": 50,
+  "changed_exports": [
+    "figures/rq2_applicable_category_accuracy_en.pdf",
+    "figures/rq2_applicable_category_accuracy_en.png",
+    "figures/rq1_vector_outcomes_de.png",
+    "figures/rq1_vector_outcomes_de.pdf",
+    "figures/rq3_stability_correctness_de.png",
+    "figures/rq3_stability_correctness_de.pdf",
+    "figures/rq3_stability_correctness_en.png",
+    "figures/rq3_stability_correctness_en.pdf",
+    "figures/rq1_vector_outcomes_en.png",
+    "figures/rq1_vector_outcomes_en.pdf",
+    "figures/rq2_applicable_category_accuracy_de.pdf",
+    "figures/rq2_applicable_category_accuracy_de.png"
+  ],
+  "changed_source_cell_indices": [
+    3,
+    9,
+    11,
+    13
+  ],
+  "check_count": 19133,
+  "checks_byte_identical_to_before": true,
+  "checks_sha256": "022ef80148839ae43122344a1e0d90bbbf3b89905ff6e2a20f7d02ed578c77c0",
+  "development_runs": {
+    "completed_preliminary_design_runs": 1,
+    "excluded_from_final_reproduction": true,
+    "failed_layout_runs": 2,
+    "reason": "New layout assertions detected overlap between the RQ2 y-axis label and the 100% tick; second attempt repeated because IDE cell IDs changed. Shared margins fixed before final two successful runs."
+  },
+  "final_figure_hashes": {
+    "rq1_vector_outcomes_de.pdf": "a6dc8fb9120300a6f545e3bf7343ec9b8620abfa54624964bfed5426837532e7",
+    "rq1_vector_outcomes_de.png": "20b1b45fd951085a9bc7bcccad71af93748b0c046f77b71acd40aba56ec1c18b",
+    "rq1_vector_outcomes_en.pdf": "198409bd3105d887a5b98249cbeed8f73cb6ea84f1a0d01347477ada1e207c50",
+    "rq1_vector_outcomes_en.png": "af2262d29987ecd54552377a8041da501ac1c0aefe5b9ad0961d992f4e9ce23c",
+    "rq2_applicable_category_accuracy_de.pdf": "51eda344974e6829c79f92464519966b222680776cddbb9de61d667f62ff9d48",
+    "rq2_applicable_category_accuracy_de.png": "d1afe8958406b97f2508afdc9d3b5c53f216917f795cd1b4ddc92155eb003500",
+    "rq2_applicable_category_accuracy_en.pdf": "f511afc2079adb125e4782fc83a4185f6a9dbf182931de914b9a543346fe4238",
+    "rq2_applicable_category_accuracy_en.png": "c2f4ba3f74e3f8234cce56e3c24a77d9fac09bb4a158d4313f83ddb9b522ebb2",
+    "rq3_stability_correctness_de.pdf": "563e0a81fdadc6cf0aac615eecfb92ab40dcf415bff3366ff075c8ea06d9ee53",
+    "rq3_stability_correctness_de.png": "24b02383b261ede742b95383e17e554de1aefd2a276144fb53716a984118d059",
+    "rq3_stability_correctness_en.pdf": "e3a9c275a78e152751a1c66a09ba62bcc9da816c8f1e524b5254bc773d3724c8",
+    "rq3_stability_correctness_en.png": "4f67a7db9ab42491bf7f584b440944baac9b5266732ef0437fdd27994ef68488"
+  },
+  "format": "evaluation-v2-unified-column-design-v1",
+  "fresh_kernel_runs": [
+    {
+      "code_cells": 8,
+      "elapsed_seconds": 2.527,
+      "execution_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "fingerprint": "64a6a9723be4855e39a3a5538c2bf50c0a3a029d8e025d0d49784c3d7dcaa6e7",
+      "fresh_kernel": true,
+      "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+      "method": "nbclient; notebook source code executes inside the isolated kernel",
+      "notebook_sha256_after_save": "c53db13f0d981a9fd4a6aea04b1334747eecc43e03c9672ee4cd3028045b4a3b",
+      "status": "PASS"
+    },
+    {
+      "code_cells": 8,
+      "elapsed_seconds": 2.572,
+      "execution_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "fingerprint": "64a6a9723be4855e39a3a5538c2bf50c0a3a029d8e025d0d49784c3d7dcaa6e7",
+      "fresh_kernel": true,
+      "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+      "method": "nbclient; notebook source code executes inside the isolated kernel",
+      "notebook_sha256_after_save": "87dca96ebfd78a6344d2170f09d1a47d222778a6addf40a84180e1367a78f5df",
+      "status": "PASS"
+    }
+  ],
+  "historical_evidence": "Unsuffixed figures and previous palette/bilingual review receipts are unchanged historical artifacts.",
+  "notebook_outputs_match_png_exports": true,
+  "notebook_sha256": "87dca96ebfd78a6344d2170f09d1a47d222778a6addf40a84180e1367a78f5df",
+  "numerical_and_table_displays_identical_before_run1_run2": true,
+  "png_dimensions": [
+    1653,
+    1140
+  ],
+  "preserved_file_hashes": {
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/analysis_support.py": "7ca5e28bc80d8a273e1c03867ca9cd2e76b846bf7242154991577e955108b8ca",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/figures/rq1_vector_outcomes.pdf": "3e80020c1cd0c80e4d181b1a53f5073feb07bd4419bee4086b1fff0bb40d409e",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/figures/rq1_vector_outcomes.png": "fe9511684d2d5f29cbc0570104338c15eebf7b2aec669e21ca45eecc175afe56",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/figures/rq2_applicable_category_accuracy.pdf": "3d6a8cbf12d6f5083c00e2747760093d60e3e0ce459df0f21a4156365cf636a9",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/figures/rq2_applicable_category_accuracy.png": "12c6b4f5b66cdff37d335ce3d4ad98877586c5f8dabb27bae89d3327405a8408",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/figures/rq3_stability_correctness.pdf": "32948d95b49926f7c8820d9902a8def43f8fb76854fd526f14dd52b9a54d3705",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/figures/rq3_stability_correctness.png": "09871282cc9163cfac55c5eba93c502fe4cbc5470716384e2dd21357b5b3b6f8",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/provenance/execute_notebook.py": "0af2e83788546b434ac3b1236486d0d7917a2229f388507d428582b78b86fb82",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/provenance/figure_data/rq1_vector_outcomes.csv": "85a124fa52cb3cf58dae71b7140661cc64ee41c1456c31d4b888f7e78cbe0423",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/provenance/figure_data/rq2_applicable_category_accuracy.csv": "1a57b234cb110bf6b02df549ef80c4e0f5b61d05b66afa83c3039a68461db55e",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/provenance/figure_data/rq3_stability_correctness.csv": "e368d7ce9c8fbe3ba8b747fc78dfdcbcbb179bedff8431dd2b9e1cd4fab4fbae",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/provenance/inputs/EVALUATION_V2_Ergebnisse_10003.zip": "3401909642d1b33560ca2096faf4c137e2091786ef60de4c9f62be7caee7a62a",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/provenance/inputs/experiment_10003_offline_analysis.zip": "7c3951a964ec4a01c9c723e18ae3b52df329cbeb64b80b59df4985c09bebc78c",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/rq3_repetitions.csv": "17693cfedd2094aa54595baabbdddd00fd7c70d7437b6692a3af8b568efdbe6b",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_binary.csv": "fdbe588b795a1ede8037ada5797ef7c787e65299c889cdd36849d77f4fbed97a",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_binary.tex": "a45f210a8c6737866f7b1f83d8f8a6a81930d5cd928f4a25059528cb985e096e",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_binary_conditional.csv": "48ef3ca1e9b12050585236979320b905d871b7687f1b11e4c4f707805f48da50",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_binary_conditional.tex": "b81a40233256458d74b12bc61246010b9a2c4845e666be063ad5001f06259d14",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_dataset.csv": "d52d781294c022e1ab14e51895d5a8cacf0a5924517cef2c34774d477cbc52ef",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_dataset.tex": "00e21e092d0febc9294cf6451e3502c8b4267cb1b87342cd58a1f873e8acdce3",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_dimensions.csv": "9abc383e7def9a7b4dc4e39235391d25919ce597df647d5ae2f2648d5b9323d6",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_dimensions.tex": "095722a3b04542a6bc025f00415adaef859f83d4aca235fa8423a500fc425b79",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_pairs.csv": "2db1feb1e02dfaa9aa67532c92e298d701354d914630691ac25a77410b567ec3",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_pairs.tex": "60206aa18a85dfec46d455e74ad81d227bdef8896530cb5219672c75b6ffac19",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_repetitions_gemma.csv": "f0e6d8f636e66fc9e7eb2f942390d65fe8a76cae3bdb903073e478bc38d194d2",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_repetitions_gemma.tex": "57deff60fc02e8027ef235383a4e2d584331bdd01debe6441d56246078863f84",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_repetitions_mistral.csv": "9f79bd7590ace48d5ceb3d1bac5d9ff924160be26c9c7897a34ea577ab0c0ca4",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_repetitions_mistral.tex": "6e06857b31a76ddfd05f1d57bfaf23ab9017763c0f920faed7cbcb15be308ce3",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_repetitions_qwen.csv": "84b66ee7f6cd121fdb0393dfcc343da322c07c4d8439a9a84a78a502a7c19138",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_repetitions_qwen.tex": "9341f468fe60922eebd10be7b90fd1aa6aa1a591031dfd136bfc7e99ec0f9003",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq1.csv": "2736e4c0c51b401c5f48830a1ab63fa1e32046ad68e9b93b81305ceaa75793e3",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq1.tex": "5f75ef4ab32f656651e7e04105d51d63aebb1421480f27af8da5fc5ad399d1cc",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq1_full.csv": "2736e4c0c51b401c5f48830a1ab63fa1e32046ad68e9b93b81305ceaa75793e3",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq1_full.tex": "72a2594cfeab921728dad14e23521318a8b6f57afad7e866e760d4d5cd52cfab",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq3.csv": "f782bd6be3a4f27526c26899215cd40dabea9f4d965eba860c6fcb56417c71d3",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq3.tex": "2d4600f251e2547b831720cf6cb9261dbdc2490f33e0a54106cfe4988ab087bf",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq3_full.csv": "f782bd6be3a4f27526c26899215cd40dabea9f4d965eba860c6fcb56417c71d3",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_rq3_full.tex": "758d03dd485469e07bd9e9476e87e17bbbfa3994edadc6cd6eed2757cec8680a",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_setup.csv": "5fb9d84a14ceac7f0dbd12fce8e44de5c11637ee156eeb1d8425daea7570f364",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_setup.tex": "3d5369f58950f026ae2576e7f3cee512837369c3a3ffe24ebe5110aece2a947b",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_subgroups.csv": "b25dd32d2ff347fa2b2840cb9c20d24ca2ba7dc0f83d4b3e3323d54d51ac4f6a",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/tables/tab_v2_subgroups.tex": "9b54981e23462fa6ef47f3da933f3e6fbefb8d37d6f2e9fb8fa3fa5ce513e9b5",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/pyproject.toml": "4a8ca28fc65f802dc08c82e0efd89daf40f8aa969e1708a40e86af2baa7e35cd",
+    "/Users/aerfurt/University/Bachelor/rest_api_checker/uv.lock": "9211b776fce240b0d1dbce7cf36a5b1c1355753c2b1bf2fad9723476f4f26a2c"
+  },
+  "reproduction_fingerprint": "64a6a9723be4855e39a3a5538c2bf50c0a3a029d8e025d0d49784c3d7dcaa6e7",
+  "same_de_en_geometry": true,
+  "scope": "Presentation-only redesign of the six suffixed language figures.",
+  "shared_axes_bounds": [
+    0.15,
+    0.16,
+    0.82,
+    0.65
+  ],
+  "shared_figure_inches": [
+    5.511811816798119,
+    3.8
+  ],
+  "source_scope_verified": "All data, table, evaluation and numerical-control source remains unchanged; only plot sections, shared styling and presentation assertions changed.",
+  "status": "PASS",
+  "test_scope": "Full offline notebook controls and presentation checks; product and Oracle implementation unchanged. No product test suite rerun.",
+  "unchanged_table_and_drawing_exports": 32,
+  "visual_review": {
+    "method": "Inspected all six 300 dpi PNGs and all six PDFs independently rendered with Ghostscript at 150 dpi.",
+    "no_overlap_or_clipping": true,
+    "pdf_render_hashes": {
+      "rq1_vector_outcomes_de.png": "9b2e90a0ba0a6a97c6660a1d19ef229d5714946255798b71d5433ad4cb5e30dc",
+      "rq1_vector_outcomes_en.png": "b663bbc5480b3dd895d5df8c2aca62b247cf105c3bbb2feb0e20803240e252a0",
+      "rq2_applicable_category_accuracy_de.png": "1488c3d434f35639a60666b9a73e1d184f15a7e99f596dee5f9fc25f1fe68eb4",
+      "rq2_applicable_category_accuracy_en.png": "6afab8789f9be9066fb8faed2b21539d284d0de364d721016fe2abfb894c26a9",
+      "rq3_stability_correctness_de.png": "4fa69e8e84c0d26bec970ae798d474a55b8dcfa98614920576a50004516841d3",
+      "rq3_stability_correctness_en.png": "bc6be9c0dde310fd04a5f30f4a1f0ccc74b287c5b2faa3db88fb45e62abdc021"
+    },
+    "presentation_assertions": "Vertical bars, no hatches, no edges, full opacity, horizontal grid behind bars, shared size, absent top/right spines, absent titles, and all text boxes within canvas without overlap.",
+    "status": "PASS"
+  }
+}
