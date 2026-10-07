@@ -1,0 +1,6 @@
+pandas==2.2.3
+matplotlib>=3.10,<3.11
+ipykernel==7.4.0
+nbformat>=5.10,<6
+nbclient>=0.10,<0.11
+jupyter-client==8.10.0

@@ -1,0 +1,4 @@
+model,all_three_correct,stable_wrong,variable,incomplete,cases,model_label
+qwen3.6:27b,82,0,0,0,82,Qwen
+gemma3:27b,56,26,0,0,82,Gemma
+mistral-small3.2:24b,53,25,2,2,82,Mistral

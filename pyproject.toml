@@ -17,6 +17,7 @@ dependencies = [
   "fastapi>=0.115,<0.130",
   "jinja2>=3.1.6,<4",
   "uvicorn>=0.34,<1",
+  "ipykernel>=7.4.0",
 ]
 
 [project.scripts]

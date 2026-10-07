@@ -1,0 +1,4 @@
+model,binary_available,planned,binary_coverage,tp,tn,fp,fn,incoherent,parser_failure,technical_failure
+qwen3.6:27b,246,246,1.0,159,87,0,0,0,0,0
+gemma3:27b,246,246,1.0,87,81,6,72,0,0,0
+mistral-small3.2:24b,200,246,0.8130081300813008,84,80,7,29,42,4,0

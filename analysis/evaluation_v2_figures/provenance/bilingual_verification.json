@@ -1,0 +1,321 @@
+{
+  "all_38_previous_export_hashes": {
+    "figures/rq1_vector_outcomes.pdf": "3e80020c1cd0c80e4d181b1a53f5073feb07bd4419bee4086b1fff0bb40d409e",
+    "figures/rq1_vector_outcomes.png": "fe9511684d2d5f29cbc0570104338c15eebf7b2aec669e21ca45eecc175afe56",
+    "figures/rq2_applicable_category_accuracy.pdf": "3d6a8cbf12d6f5083c00e2747760093d60e3e0ce459df0f21a4156365cf636a9",
+    "figures/rq2_applicable_category_accuracy.png": "12c6b4f5b66cdff37d335ce3d4ad98877586c5f8dabb27bae89d3327405a8408",
+    "figures/rq3_stability_correctness.pdf": "32948d95b49926f7c8820d9902a8def43f8fb76854fd526f14dd52b9a54d3705",
+    "figures/rq3_stability_correctness.png": "09871282cc9163cfac55c5eba93c502fe4cbc5470716384e2dd21357b5b3b6f8",
+    "provenance/figure_data/rq1_vector_outcomes.csv": "85a124fa52cb3cf58dae71b7140661cc64ee41c1456c31d4b888f7e78cbe0423",
+    "provenance/figure_data/rq2_applicable_category_accuracy.csv": "1a57b234cb110bf6b02df549ef80c4e0f5b61d05b66afa83c3039a68461db55e",
+    "provenance/figure_data/rq3_stability_correctness.csv": "e368d7ce9c8fbe3ba8b747fc78dfdcbcbb179bedff8431dd2b9e1cd4fab4fbae",
+    "tables/rq3_repetitions.csv": "17693cfedd2094aa54595baabbdddd00fd7c70d7437b6692a3af8b568efdbe6b",
+    "tables/tab_v2_binary.csv": "fdbe588b795a1ede8037ada5797ef7c787e65299c889cdd36849d77f4fbed97a",
+    "tables/tab_v2_binary.tex": "a45f210a8c6737866f7b1f83d8f8a6a81930d5cd928f4a25059528cb985e096e",
+    "tables/tab_v2_binary_conditional.csv": "48ef3ca1e9b12050585236979320b905d871b7687f1b11e4c4f707805f48da50",
+    "tables/tab_v2_binary_conditional.tex": "b81a40233256458d74b12bc61246010b9a2c4845e666be063ad5001f06259d14",
+    "tables/tab_v2_dataset.csv": "d52d781294c022e1ab14e51895d5a8cacf0a5924517cef2c34774d477cbc52ef",
+    "tables/tab_v2_dataset.tex": "00e21e092d0febc9294cf6451e3502c8b4267cb1b87342cd58a1f873e8acdce3",
+    "tables/tab_v2_dimensions.csv": "9abc383e7def9a7b4dc4e39235391d25919ce597df647d5ae2f2648d5b9323d6",
+    "tables/tab_v2_dimensions.tex": "095722a3b04542a6bc025f00415adaef859f83d4aca235fa8423a500fc425b79",
+    "tables/tab_v2_pairs.csv": "2db1feb1e02dfaa9aa67532c92e298d701354d914630691ac25a77410b567ec3",
+    "tables/tab_v2_pairs.tex": "60206aa18a85dfec46d455e74ad81d227bdef8896530cb5219672c75b6ffac19",
+    "tables/tab_v2_repetitions_gemma.csv": "f0e6d8f636e66fc9e7eb2f942390d65fe8a76cae3bdb903073e478bc38d194d2",
+    "tables/tab_v2_repetitions_gemma.tex": "57deff60fc02e8027ef235383a4e2d584331bdd01debe6441d56246078863f84",
+    "tables/tab_v2_repetitions_mistral.csv": "9f79bd7590ace48d5ceb3d1bac5d9ff924160be26c9c7897a34ea577ab0c0ca4",
+    "tables/tab_v2_repetitions_mistral.tex": "6e06857b31a76ddfd05f1d57bfaf23ab9017763c0f920faed7cbcb15be308ce3",
+    "tables/tab_v2_repetitions_qwen.csv": "84b66ee7f6cd121fdb0393dfcc343da322c07c4d8439a9a84a78a502a7c19138",
+    "tables/tab_v2_repetitions_qwen.tex": "9341f468fe60922eebd10be7b90fd1aa6aa1a591031dfd136bfc7e99ec0f9003",
+    "tables/tab_v2_rq1.csv": "2736e4c0c51b401c5f48830a1ab63fa1e32046ad68e9b93b81305ceaa75793e3",
+    "tables/tab_v2_rq1.tex": "5f75ef4ab32f656651e7e04105d51d63aebb1421480f27af8da5fc5ad399d1cc",
+    "tables/tab_v2_rq1_full.csv": "2736e4c0c51b401c5f48830a1ab63fa1e32046ad68e9b93b81305ceaa75793e3",
+    "tables/tab_v2_rq1_full.tex": "72a2594cfeab921728dad14e23521318a8b6f57afad7e866e760d4d5cd52cfab",
+    "tables/tab_v2_rq3.csv": "f782bd6be3a4f27526c26899215cd40dabea9f4d965eba860c6fcb56417c71d3",
+    "tables/tab_v2_rq3.tex": "2d4600f251e2547b831720cf6cb9261dbdc2490f33e0a54106cfe4988ab087bf",
+    "tables/tab_v2_rq3_full.csv": "f782bd6be3a4f27526c26899215cd40dabea9f4d965eba860c6fcb56417c71d3",
+    "tables/tab_v2_rq3_full.tex": "758d03dd485469e07bd9e9476e87e17bbbfa3994edadc6cd6eed2757cec8680a",
+    "tables/tab_v2_setup.csv": "5fb9d84a14ceac7f0dbd12fce8e44de5c11637ee156eeb1d8425daea7570f364",
+    "tables/tab_v2_setup.tex": "3d5369f58950f026ae2576e7f3cee512837369c3a3ffe24ebe5110aece2a947b",
+    "tables/tab_v2_subgroups.csv": "b25dd32d2ff347fa2b2840cb9c20d24ca2ba7dc0f83d4b3e3323d54d51ac4f6a",
+    "tables/tab_v2_subgroups.tex": "9b54981e23462fa6ef47f3da933f3e6fbefb8d37d6f2e9fb8fa3fa5ce513e9b5"
+  },
+  "all_38_previous_exports_byte_identical": true,
+  "all_nine_rq2_fractions_horizontal": true,
+  "both_fresh_runs_byte_identical": true,
+  "check_count": 19133,
+  "displayed_tables_identical": true,
+  "final_fingerprint": "e03386043ce615e942d9edd1d0910d66f276eea254d565e6bf543ff8dd08a018",
+  "format": "evaluation-v2-bilingual-figure-verification-v1",
+  "fresh_kernel_runs": [
+    {
+      "code_cells": 8,
+      "elapsed_seconds": 2.59,
+      "execution_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "fingerprint": "e03386043ce615e942d9edd1d0910d66f276eea254d565e6bf543ff8dd08a018",
+      "fresh_kernel": true,
+      "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+      "method": "nbclient; notebook source code executes inside the isolated kernel",
+      "notebook_sha256_after_save": "1a07ff0b3c334d6bb97cfc9717a36e532b368fbe0463918272330a95156fa20e",
+      "status": "PASS"
+    },
+    {
+      "code_cells": 8,
+      "elapsed_seconds": 2.583,
+      "execution_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "fingerprint": "e03386043ce615e942d9edd1d0910d66f276eea254d565e6bf543ff8dd08a018",
+      "fresh_kernel": true,
+      "interpreter": "/Users/aerfurt/University/Bachelor/rest_api_checker/analysis/evaluation_v2_figures/.venv/bin/python",
+      "method": "nbclient; notebook source code executes inside the isolated kernel",
+      "notebook_sha256_after_save": "da59be01ca454bc7ae405e5670304d482c39a4731015ddc0f50cafd24b77b1ff",
+      "status": "PASS"
+    }
+  ],
+  "geometry_evidence_byte_identical_between_runs": true,
+  "geometry_evidence_sha256": "834a5b40e856987b61cece9d425c1887df169775cbaeb53175b2a86b0bb2c567",
+  "initial_incomplete_qa_run": {
+    "counted_as_successful_reproduction": false,
+    "error_type": "TypeError",
+    "final_complete_runs": 2,
+    "fix": "Convert NumPy scalar values to native JSON scalars in geometry evidence; no data or diagram change.",
+    "message": "Object of type int64 is not JSON serializable",
+    "stage": "Saving geometry evidence after all six language figures were generated and their geometry equality was asserted.",
+    "status": "FAILED"
+  },
+  "language_pairs": {
+    "rq1_vector_outcomes": {
+      "data_sha256": "85a124fa52cb3cf58dae71b7140661cc64ee41c1456c31d4b888f7e78cbe0423",
+      "files": {
+        "rq1_vector_outcomes_de.pdf": "edcd40275c60f83b91d5b1379663a94bb194f2bc89b68b4292a5971a6c842684",
+        "rq1_vector_outcomes_de.png": "be0f47e4ca9e42025907f1f5a1fe9071121fe7d2a04eea591d113eea39be6f49",
+        "rq1_vector_outcomes_en.pdf": "32e27805565d364d5eae550259fe7ab30524ba6f3c53e4ff5ff0758fca2dc872",
+        "rq1_vector_outcomes_en.png": "d0422eaf548afe600d47ef4de5d926266f0071cc210a42a197cf038e8a9e7c36"
+      },
+      "geometry_sha256": "4ca6154f7cdbed890a52481684f5cfd10a4fabe1adc0b0823d50f9377d261a21",
+      "non_text_geometry_and_styles_identical": true,
+      "only_text_contents_change_between_languages": true,
+      "pdf_media_box": " 0 0 396.8504508095 273.6 ",
+      "png_size_pixels": [
+        1653,
+        1140
+      ],
+      "same_figure_and_data_objects": true,
+      "text_changes": [
+        {
+          "de": "246 (100,0 %)",
+          "en": "246 (100.0%)"
+        },
+        {
+          "de": "168 (68,3 %)",
+          "en": "168 (68.3%)"
+        },
+        {
+          "de": "164 (66,7 %)",
+          "en": "164 (66.7%)"
+        },
+        {
+          "de": "4 Parserfehler",
+          "en": "4 parser failures"
+        },
+        {
+          "de": "Geplante Bewertungen (n = 246 je Modell)",
+          "en": "Planned evaluations (n = 246 per model)"
+        },
+        {
+          "de": "Vektor korrekt",
+          "en": "Correct vector"
+        },
+        {
+          "de": "Vektor falsch",
+          "en": "Incorrect vector"
+        },
+        {
+          "de": "Parserfehler",
+          "en": "Parser failure"
+        }
+      ],
+      "visual_review": {
+        "all_requested_labels_present": true,
+        "hatches_and_rub_colors_retained": true,
+        "no_clipping_or_text_overlap": true,
+        "opened_300dpi_pngs_and_150dpi_pdf_renders": true,
+        "pdf_render_hashes": {
+          "de": "0a4b668cc2a42fc99951ceaa83ef675732c6d3eb7e465c4fe0663914a4600ae2",
+          "en": "ef07df07cc78756d3aec8047dd8db56d6d46636206e5b8389f5d7fbaa3dfa4e4"
+        },
+        "status": "PASS"
+      }
+    },
+    "rq2_applicable_category_accuracy": {
+      "data_sha256": "1a57b234cb110bf6b02df549ef80c4e0f5b61d05b66afa83c3039a68461db55e",
+      "files": {
+        "rq2_applicable_category_accuracy_de.pdf": "43713d6ce1fd8758d0b36607703c7aa5f218714c84834624d9450bd1d97ca025",
+        "rq2_applicable_category_accuracy_de.png": "8699ba70e30c4fc01e22ce4752942ba08c489ce26cb1f27ac1a757efdfb3dd22",
+        "rq2_applicable_category_accuracy_en.pdf": "5d74fba363a99550efa137c2c4a84da5b166ee14f30f176f4d488232b67de976",
+        "rq2_applicable_category_accuracy_en.png": "cc79f7f2a26080a05710196cbb60361b7eee6fe8fa889bbf75aa44bd5cde3bd8"
+      },
+      "geometry_sha256": "f9fdd81b6b997d6c8e29c4330579e1f1eb12bb79d94b13985444b852280b9d6e",
+      "non_text_geometry_and_styles_identical": true,
+      "only_text_contents_change_between_languages": true,
+      "pdf_media_box": " 0 0 396.8504508095 280.8 ",
+      "png_size_pixels": [
+        1653,
+        1170
+      ],
+      "same_figure_and_data_objects": true,
+      "text_changes": [
+        {
+          "de": "C2\nMedientyp",
+          "en": "C2\nMedia type"
+        },
+        {
+          "de": "C2\nMedientyp",
+          "en": "C2\nMedia type"
+        },
+        {
+          "de": "Korrektheit bei anwendbaren Prüfungen",
+          "en": "Accuracy on applicable checks"
+        }
+      ],
+      "visual_review": {
+        "all_requested_labels_present": true,
+        "hatches_and_rub_colors_retained": true,
+        "no_clipping_or_text_overlap": true,
+        "opened_300dpi_pngs_and_150dpi_pdf_renders": true,
+        "pdf_render_hashes": {
+          "de": "6bed90756ca6600204587eddf4481d97f019cd84e78fb734e2409825e4c1f71e",
+          "en": "7b0783545d785a8acadb467fb9fbc46f97d573c8537ab4bee9cf1dd93055865e"
+        },
+        "status": "PASS"
+      }
+    },
+    "rq3_stability_correctness": {
+      "data_sha256": "e368d7ce9c8fbe3ba8b747fc78dfdcbcbb179bedff8431dd2b9e1cd4fab4fbae",
+      "files": {
+        "rq3_stability_correctness_de.pdf": "f5e9e1d2381bb74052af730be9acac41b6eff902a59e6ff016c14176e8a9a8f2",
+        "rq3_stability_correctness_de.png": "6c767f9d80c724b11e61808f081282450f7d4c046bd1c0ef3cf652fc7f37ebbd",
+        "rq3_stability_correctness_en.pdf": "3f6da997cbbfbc65c34446e03a6e4be792714201003a926777978c76ae9efb6b",
+        "rq3_stability_correctness_en.png": "5e04a3c062afd8a13a9bc9c16df335c4e205b7ea70f9e05fa61ebbcd2241e8e8"
+      },
+      "geometry_sha256": "c086d17e6aacde920233be355b6b52c83997bb6a33ac0ea33470edacddc1ca34",
+      "non_text_geometry_and_styles_identical": true,
+      "only_text_contents_change_between_languages": true,
+      "pdf_media_box": " 0 0 396.8504508095 259.2 ",
+      "png_size_pixels": [
+        1653,
+        1080
+      ],
+      "same_figure_and_data_objects": true,
+      "text_changes": [
+        {
+          "de": "2 variabel",
+          "en": "2 variable"
+        },
+        {
+          "de": "2 unvollständig",
+          "en": "2 incomplete"
+        },
+        {
+          "de": "Fälle (n = 82 je Modell)",
+          "en": "Cases (n = 82 per model)"
+        },
+        {
+          "de": "3/3 korrekt",
+          "en": "3/3 correct"
+        },
+        {
+          "de": "Stabil falsch",
+          "en": "Stably incorrect"
+        },
+        {
+          "de": "Variabel",
+          "en": "Variable"
+        },
+        {
+          "de": "Unvollständig",
+          "en": "Incomplete"
+        }
+      ],
+      "visual_review": {
+        "all_requested_labels_present": true,
+        "hatches_and_rub_colors_retained": true,
+        "no_clipping_or_text_overlap": true,
+        "opened_300dpi_pngs_and_150dpi_pdf_renders": true,
+        "pdf_render_hashes": {
+          "de": "dc2952767e8fd5bf94003e2d2db786400f37f56b3a2b20819745e9bfc1e96bf8",
+          "en": "f62e78981ea41748fcfd6d8e2e18695ab87a9e21a1c1faa9a78b4aaee065c713"
+        },
+        "status": "PASS"
+      }
+    }
+  },
+  "new_language_exports": [
+    "figures/rq1_vector_outcomes_de.pdf",
+    "figures/rq1_vector_outcomes_de.png",
+    "figures/rq1_vector_outcomes_en.pdf",
+    "figures/rq1_vector_outcomes_en.png",
+    "figures/rq2_applicable_category_accuracy_de.pdf",
+    "figures/rq2_applicable_category_accuracy_de.png",
+    "figures/rq2_applicable_category_accuracy_en.pdf",
+    "figures/rq2_applicable_category_accuracy_en.png",
+    "figures/rq3_stability_correctness_de.pdf",
+    "figures/rq3_stability_correctness_de.png",
+    "figures/rq3_stability_correctness_en.pdf",
+    "figures/rq3_stability_correctness_en.png"
+  ],
+  "no_rq1_kn_above_bars": true,
+  "notebook_sha256": "da59be01ca454bc7ae405e5670304d482c39a4731015ddc0f50cafd24b77b1ff",
+  "numeric_controls_byte_identical": true,
+  "numerical_check_expressions_identical": true,
+  "protected_files": {
+    "analysis_venv_file_count": 12449,
+    "before_snapshot_sha256": "00f1eba5269048ebc2ef97f692259bb062c463964e1924446cb4a7e91a9cff57",
+    "count": 22952,
+    "hash_map_sha256_after": "e7f019008f43f90d86cf4f7bad2f03063d058dad047cdecc04bc7fa42d1476e6",
+    "hash_map_sha256_before": "e7f019008f43f90d86cf4f7bad2f03063d058dad047cdecc04bc7fa42d1476e6",
+    "project_venv_file_count": 9021,
+    "pyproject_toml": {
+      "after": "4a8ca28fc65f802dc08c82e0efd89daf40f8aa969e1708a40e86af2baa7e35cd",
+      "before": "4a8ca28fc65f802dc08c82e0efd89daf40f8aa969e1708a40e86af2baa7e35cd",
+      "pre_existing_local_changes_preserved": true
+    },
+    "status": "PASS",
+    "unchanged_helper_sha256": "7ca5e28bc80d8a273e1c03867ca9cd2e76b846bf7242154991577e955108b8ca",
+    "unchanged_runner_sha256": "0af2e83788546b434ac3b1236486d0d7917a2229f388507d428582b78b86fb82",
+    "uv_lock": {
+      "after": "9211b776fce240b0d1dbce7cf36a5b1c1355753c2b1bf2fad9723476f4f26a2c",
+      "before": "9211b776fce240b0d1dbce7cf36a5b1c1355753c2b1bf2fad9723476f4f26a2c",
+      "pre_existing_local_changes_preserved": true
+    },
+    "volatile_ide_files_observed": [
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/.idea/csv-editor.xml",
+      "/Users/aerfurt/University/Bachelor/rest_api_checker/.idea/workspace.xml"
+    ],
+    "volatile_ide_scope": "IDE editor bookkeeping excluded from protected-content hashing; no IDE/Jupyter server configuration action performed."
+  },
+  "required_texts_verified": true,
+  "review_rejections": {
+    "optional_additional_leader_line_shifts": "Rejected by automatic approval review as outside text-only translation scope; changes were not applied. The common DE/EN leader coordinates were retained."
+  },
+  "saved_notebook_has_all_six_previews": true,
+  "scope": "Visible-text presentation update and bilingual exports only; frozen experiment data, metrics and tables unchanged.",
+  "status": "PASS",
+  "verified_at_utc": "2026-10-04T19:33:43.300742+00:00"
+}

@@ -1,0 +1,427 @@
+{
+  "base_commit": "ee2bdd26b7057a90707e21de55fb996b79d6a64d",
+  "baseline_failures_reproduced": [
+    "tests.test_cli::test_json_preflight_truthful",
+    "tests.test_gate_b_closure::test_closure_evidence_drift_never_passes",
+    "tests.test_operator::test_preflight_actual_backend_stays_blocked",
+    "tests.test_runtime_evidence::test_captured_readiness_preserves_limitations_and_author_gate",
+    "tests.test_sensitivity_execution::test_final_offline_verification_and_historical_separation"
+  ],
+  "branch": "chore/unify-rq-figures",
+  "commit_created": false,
+  "date": "2026-10-07",
+  "dry_runs": [
+    {
+      "exit_code": 0,
+      "model_calls": 0,
+      "plan": {
+        "case": "DEV-02",
+        "case_id": 2,
+        "context": "Measured after confirmation; exact native render/tokenize, no guessed tokens",
+        "dataset": "development_dataset",
+        "dataset_id": 1,
+        "destination": "NEW LIVE-DEMO experiment; development references reused unchanged",
+        "model_ids": [
+          1
+        ],
+        "models": [
+          "qwen3.6:27b"
+        ],
+        "operation": "POST /edx/validation/body",
+        "options": {
+          "draft_num_predict": 0,
+          "min_p": 0.0,
+          "num_ctx": 32768,
+          "num_predict": 512,
+          "repeat_last_n": 64,
+          "repeat_penalty": 1.0,
+          "temperature": 0.2,
+          "top_k": 40,
+          "top_p": 0.9
+        },
+        "output_mode": "format_json",
+        "planned": 1,
+        "prompt": "P2",
+        "prompt_id": 2,
+        "reference": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "repetitions": 1,
+        "run_config_ids": [
+          1
+        ],
+        "runtime": "evaluation_v2_main_runtime_ollama_0.35.1_20261003",
+        "runtime_binding": "/Users/aerfurt/University/Bachelor/rest_api_checker/docs/runtime_qualification_2026-09-26/evaluation_v2_main_runtime_ollama_0.35.1_20261003/runtime-binding.json",
+        "runtime_binding_sha256": "5b8b09919e8c66c0ed4ce903ab7d7c21295807ec65559d2dbcca97f38ab2da41",
+        "scientific_evaluation": false,
+        "seeds": [
+          101
+        ],
+        "service": "edx",
+        "timeout_seconds": 300
+      },
+      "runtime_contacted": false,
+      "spool": "/Users/aerfurt/.local/state/rest-api-checker/live-demo/a6b2155a80854c1392cdd4f7d971d26a",
+      "status": "DRY RUN",
+      "ui_url": "http://127.0.0.1:8000",
+      "writes": 0
+    },
+    {
+      "exit_code": 0,
+      "model_calls": 0,
+      "plan": {
+        "case": "DEV-07",
+        "case_id": 7,
+        "context": "Measured after confirmation; exact native render/tokenize, no guessed tokens",
+        "dataset": "development_dataset",
+        "dataset_id": 1,
+        "destination": "NEW LIVE-DEMO experiment; development references reused unchanged",
+        "model_ids": [
+          3
+        ],
+        "models": [
+          "mistral-small3.2:24b"
+        ],
+        "operation": "POST /resistance/validation/file",
+        "options": {
+          "draft_num_predict": 0,
+          "min_p": 0.0,
+          "num_ctx": 32768,
+          "num_predict": 512,
+          "repeat_last_n": 64,
+          "repeat_penalty": 1.0,
+          "temperature": 0.2,
+          "top_k": 40,
+          "top_p": 0.9
+        },
+        "output_mode": "format_json",
+        "planned": 1,
+        "prompt": "P2",
+        "prompt_id": 2,
+        "reference": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "repetitions": 1,
+        "run_config_ids": [
+          2
+        ],
+        "runtime": "evaluation_v2_main_runtime_ollama_0.35.1_20261003",
+        "runtime_binding": "/Users/aerfurt/University/Bachelor/rest_api_checker/docs/runtime_qualification_2026-09-26/evaluation_v2_main_runtime_ollama_0.35.1_20261003/runtime-binding.json",
+        "runtime_binding_sha256": "5b8b09919e8c66c0ed4ce903ab7d7c21295807ec65559d2dbcca97f38ab2da41",
+        "scientific_evaluation": false,
+        "seeds": [
+          101
+        ],
+        "service": "htts",
+        "timeout_seconds": 300
+      },
+      "runtime_contacted": false,
+      "spool": "/Users/aerfurt/.local/state/rest-api-checker/live-demo/00099022120649da98cdbd37357ac63f",
+      "status": "DRY RUN",
+      "ui_url": "http://127.0.0.1:8000",
+      "writes": 0
+    },
+    {
+      "exit_code": 0,
+      "model_calls": 0,
+      "plan": {
+        "case": "DEV-03",
+        "case_id": 3,
+        "context": "Measured after confirmation; exact native render/tokenize, no guessed tokens",
+        "dataset": "development_dataset",
+        "dataset_id": 1,
+        "destination": "NEW LIVE-DEMO experiment; development references reused unchanged",
+        "model_ids": [
+          1,
+          2,
+          3
+        ],
+        "models": [
+          "qwen3.6:27b",
+          "gemma3:27b",
+          "mistral-small3.2:24b"
+        ],
+        "operation": "POST /edx/validation/body",
+        "options": {
+          "draft_num_predict": 0,
+          "min_p": 0.0,
+          "num_ctx": 32768,
+          "num_predict": 512,
+          "repeat_last_n": 64,
+          "repeat_penalty": 1.0,
+          "temperature": 0.2,
+          "top_k": 40,
+          "top_p": 0.9
+        },
+        "output_mode": "format_json",
+        "planned": 9,
+        "prompt": "P2",
+        "prompt_id": 2,
+        "reference": [
+          "FAIL",
+          "NOT_APPLICABLE",
+          "NOT_APPLICABLE"
+        ],
+        "repetitions": 3,
+        "run_config_ids": [
+          1,
+          2,
+          2
+        ],
+        "runtime": "evaluation_v2_main_runtime_ollama_0.35.1_20261003",
+        "runtime_binding": "/Users/aerfurt/University/Bachelor/rest_api_checker/docs/runtime_qualification_2026-09-26/evaluation_v2_main_runtime_ollama_0.35.1_20261003/runtime-binding.json",
+        "runtime_binding_sha256": "5b8b09919e8c66c0ed4ce903ab7d7c21295807ec65559d2dbcca97f38ab2da41",
+        "scientific_evaluation": false,
+        "seeds": [
+          101,
+          202,
+          303
+        ],
+        "service": "edx",
+        "timeout_seconds": 300
+      },
+      "runtime_contacted": false,
+      "spool": "/Users/aerfurt/.local/state/rest-api-checker/live-demo/b0a17e4fe91c49f7ac0ded05018139ff",
+      "status": "DRY RUN",
+      "ui_url": "http://127.0.0.1:8000",
+      "writes": 0
+    }
+  ],
+  "format": "live-demo-cli-verification-v1",
+  "interactive_dry_run": {
+    "command": "rac --plain demo run --dry-run",
+    "model_calls": 0,
+    "selection": {
+      "case": "DEV-02",
+      "model": "qwen3.6:27b",
+      "operation": "/edx/validation/body",
+      "repetitions": 1,
+      "service": "edx"
+    },
+    "status": "PASS",
+    "writes": 0
+  },
+  "native_measurements": 0,
+  "preservation": {
+    "database": {
+      "all_table_counts_equal": true,
+      "archive_integrity_mismatches": 0,
+      "counts": {
+        "dataset_cases": 108,
+        "datasets": 3,
+        "experiment_runs": 1296,
+        "experiments": 4,
+        "files": 10259,
+        "predictions": 913,
+        "run_attempts": 1296
+      },
+      "protected": {
+        "all_archive_identities": {
+          "count": 10259,
+          "sha256": "d6561615b06e19cff8867a6de1c0d48af415b2020df54b87c522ad5436ac6d65"
+        },
+        "dataset_cases": {
+          "count": 82,
+          "sha256": "df7350f0d3da6acfe656890c71ab50828476550477a36f37d0af6ccecc6e19d6"
+        },
+        "datasets": {
+          "count": 1,
+          "sha256": "650b331e14ded12bf0ddc3e93a0e5c08b39f36bd58e85b4af9f3ecd6186fe2bd"
+        },
+        "experiment_runs": {
+          "count": 738,
+          "sha256": "337dcc7642a4fd789ba80daa9decdebe5ab18d806be3692511529026e4561a4d"
+        },
+        "experiments": {
+          "count": 1,
+          "sha256": "d919cce94af0f20f4b9d1c4e44dee2b0523bf9cf2d2571a74419f2f1f663615f"
+        },
+        "predictions": {
+          "count": 734,
+          "sha256": "b9347d19b2ba64a784588d588943ce4815fdeebb1a5ffea785632aa6eb9fdf90"
+        },
+        "run_attempts": {
+          "count": 738,
+          "sha256": "f69e0649171471ef75a6a1d65e793b76c875eee3fa2ddff29a1e12ba571089be"
+        }
+      },
+      "protected_equal": true
+    },
+    "files": {
+      "/Users/aerfurt/University/Bachelor/rest_api_checker": {
+        "changes": [
+          {
+            "after_sha256": "7357266ca2853f5d98aeb602804f4b8d7e604e39db8331a52109cd45ed1beba0",
+            "before_sha256": "60a5c204efb143ab32ed7fbd80d6616d5f3bc9362b55482ab09ae9660b2964af",
+            "path": "docs/implementation_state.md"
+          },
+          {
+            "after_sha256": "2ca51b97116177207c0915895de16b1007c651e5cbd19569e74d9505fa0a7587",
+            "before_sha256": "c42c7c0d9dbcd5b98679103215789467551472d79e391cad125b77619683b91a",
+            "path": "src/rest_api_checker/cli.py"
+          },
+          {
+            "after_sha256": "6b7deb74726cd201a8a1d9bc576ae8cb77381b63ec974f96d7cf0d2913216652",
+            "before_sha256": "d44529cd005b649f2e57ca53d533956789d9adf99341f372c980a28c97890e8b",
+            "path": "src/rest_api_checker/terminal.py"
+          }
+        ],
+        "checked_existing_files": 13905
+      },
+      "/Users/aerfurt/University/Bachelor/thesistemplate": {
+        "changes": [],
+        "checked_existing_files": 137
+      },
+      "/Users/aerfurt/University/Bachelor/thesistemplate_en": {
+        "changes": [],
+        "checked_existing_files": 406
+      }
+    }
+  },
+  "push_performed": false,
+  "read_smoke": [
+    {
+      "command": [
+        "rac",
+        "--json",
+        "db",
+        "status"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "rac",
+        "--json",
+        "dataset",
+        "list"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "rac",
+        "--json",
+        "dataset",
+        "inventory"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "rac",
+        "--json",
+        "experiment",
+        "progress",
+        "10003"
+      ],
+      "exit_code": 0
+    },
+    {
+      "attempts": 1,
+      "command": [
+        "rac",
+        "--json",
+        "inspect",
+        "run",
+        "10433"
+      ],
+      "exit_code": 0,
+      "raw_present": false,
+      "result": "valid",
+      "run_id": 10433
+    },
+    {
+      "attempts": 1,
+      "command": [
+        "rac",
+        "--json",
+        "inspect",
+        "attempts",
+        "10433",
+        "--verbose"
+      ],
+      "exit_code": 0,
+      "raw_present": true,
+      "result": "valid",
+      "run_id": 10433
+    },
+    {
+      "command": [
+        "rac",
+        "--json",
+        "evaluate",
+        "list"
+      ],
+      "existing_reports": [
+        {
+          "experiment_id": 1,
+          "id": 1
+        },
+        {
+          "experiment_id": 2,
+          "id": 2
+        },
+        {
+          "experiment_id": 3,
+          "id": 3
+        }
+      ],
+      "exit_code": 0
+    },
+    {
+      "contains_run_id": true,
+      "status_code": 200,
+      "ui_path": "/runs/10433"
+    },
+    {
+      "contains_run_id": true,
+      "status_code": 200,
+      "ui_path": "/runs/10433?tab=raw"
+    },
+    {
+      "contains_run_id": true,
+      "status_code": 200,
+      "ui_path": "/runs/10433?tab=attempts"
+    }
+  ],
+  "real_generation_calls": 0,
+  "runtime": {
+    "current_ollama": {
+      "version": "0.40.0"
+    },
+    "error": "Ollama version drift",
+    "error_type": "IntegrityViolation",
+    "expected_ollama": {
+      "version": "0.35.1"
+    },
+    "scope": "metadata only; no load, tokenize or generation",
+    "verified": false
+  },
+  "scientific_db_writes": 0,
+  "source_sha256": {
+    "src/rest_api_checker/cli.py": "2ca51b97116177207c0915895de16b1007c651e5cbd19569e74d9505fa0a7587",
+    "src/rest_api_checker/live_demo.py": "b1bd52bc75971c5212f5dbc5520688c661b0f48baae9889cf30bc02de6534035",
+    "src/rest_api_checker/live_demo_cli.py": "d088e0487264a3777001e2e4307f635d2e4325f15f292a3e2a9caab5e60dd01f",
+    "src/rest_api_checker/live_demo_inspection.py": "5e753393c6c988657da75819848f839c588320bad946c41cbf10465f2354ddea",
+    "src/rest_api_checker/terminal.py": "6b7deb74726cd201a8a1d9bc576ae8cb77381b63ec974f96d7cf0d2913216652",
+    "tests/persistence/test_live_demo.py": "3fb9432573fdafa9da6c90e055c98a60a350a96108946da0b8b502932e9cd375",
+    "tests/test_live_demo.py": "ba7b1876756ea0ab686966492ea5fa4e8783ca8ccc8efb20086e580f09aea533",
+    "tests/test_live_demo_cli.py": "dbda6f6710d21b31fe6b630b32a0a3f93604ccdc0964e712d781ed21fe871d1f",
+    "tests/test_live_demo_inspection.py": "6eeecdd9c63b8a60bf3c110a93225269475ba5c2576934013ddf43cd5d5b74bf"
+  },
+  "sql_tests": "Explicitly omitted by user; no dedicated test credential file",
+  "tests": {
+    "failed": 5,
+    "new_offline_passed": 81,
+    "new_sql_skipped": 2,
+    "passed": 1098,
+    "seconds": 42.021,
+    "skipped": 105,
+    "total": 1208
+  }
+}

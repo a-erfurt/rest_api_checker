@@ -1,0 +1,4 @@
+model,cases,complete_valid_triples,triple_coverage,identical_triples,identical_given_complete,all_three_correct,all_three_correct_rate,stable_wrong,variable,two_plus_one,three_different,incomplete,complete_binary_triples,identical_binary_triples
+qwen3.6:27b,82,82,1.0,82,1.0,82,1.0,0,0,0,0,0,82,82
+gemma3:27b,82,82,1.0,82,1.0,56,0.6829268292682927,26,0,0,0,0,82,82
+mistral-small3.2:24b,82,80,0.975609756097561,78,0.975,53,0.6463414634146342,25,2,2,0,2,66,64

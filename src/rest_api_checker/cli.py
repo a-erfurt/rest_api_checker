@@ -17,7 +17,8 @@ from .experiment.orchestration import reconcile_attempt
 from .persistence.admin import (create_test_database, destroy_test_database, create_database,
                                 backup_database, restore_test_database)
 from .persistence.database import connect, read_settings, require
-from .persistence.inspection import portable, rows, run_detail, status
+from .persistence.inspection import portable, rows, status
+from .live_demo_inspection import run_detail
 from .persistence.migrate import apply, inspect, verify
 from .persistence.repository import Repository
 
@@ -83,6 +84,9 @@ def arguments():
             execution.add_argument('--yes',action='store_true',help='Confirm execution without interactive input')
     node = leaf(ex,'demo-batch')
     node.add_argument('--delay',type=float,default=0.5,help='Simulation delay per step, 0–2 seconds; no SQL or model access')
+    live = group('demo')
+    from .live_demo_cli import add_arguments
+    add_arguments(leaf(live, 'run'))
     ev = group('evaluate')
     leaf(ev,'comparison','experiment_id'); leaf(ev,'list'); leaf(ev,'show','report_id')
     node = leaf(ev,'export','report_id')
@@ -240,6 +244,14 @@ def dispatch(args,console):
                 return import_development(Repository(cn),args.staging,args.release,args.research),0
             return import_prompts(Repository(cn),args.research),0
         repo = Repository(cn)
+        if args.group == 'demo':
+            from .live_demo_cli import run as run_live_demo
+            try:
+                return run_live_demo(repo, args, console)
+            except (TypeError, IndexError, AttributeError) as exc:
+                raise ValueError('Malformed demo source or runtime metadata; inspect the selected binding and dataset inventory') from exc
+            except subprocess.SubprocessError as exc:
+                raise ValueError('Demo runtime verification failed; inspect the selected qualified runtime and local runtime installation') from exc
         if args.group == 'experiment' and args.command in ('run-batch','batch-status'):
             try:
                 return _batch_v2(repo, args, console)
@@ -304,7 +316,10 @@ def dispatch(args,console):
 
 
 def present(console,args,value):
-    if args.group == 'experiment' and args.command in ('run-batch','batch-status','demo-batch'):
+    if args.group == 'demo':
+        from .live_demo_cli import present as present_live_demo
+        present_live_demo(console, value, verbose=args.verbose)
+    elif args.group == 'experiment' and args.command in ('run-batch','batch-status','demo-batch'):
         from . import batch_terminal
         if args.command == 'batch-status':
             batch_terminal.plan(console, value['plan'])

@@ -1,0 +1,82 @@
+{
+  "desktop_pycharm_ui_inspected": false,
+  "figure_checks": [
+    "No clipping or overlapping labels",
+    "Correct model order and legend association",
+    "Small parser and incomplete/variable segments retain their true width and have explicit leader lines",
+    "Unshortened axes and visible counts/denominators",
+    "Readable labels at the configured thesis width"
+  ],
+  "figures": {
+    "rq1_vector_outcomes": {
+      "creation_and_modification_dates_omitted": true,
+      "embedded_fonts": true,
+      "pages": 1,
+      "pdf_render_sha256": "7435d398e1f1473f155450c28b5cf6e313a24627e0c96c93e73863d991af9dbe",
+      "pdf_sha256": "c33e5dbad1155303f2408d7fa00ce5ddf3fe5c09fdf8999cd5ad6bb4fca0bfe3",
+      "png_sha256": "eba82aff0f0b4f8d4d656557960a5f551c04e4edd7bb96d125505a7a67907001",
+      "raster_image_objects": 0,
+      "visually_opened_png_and_pdf_render": true
+    },
+    "rq2_applicable_category_accuracy": {
+      "creation_and_modification_dates_omitted": true,
+      "embedded_fonts": true,
+      "pages": 1,
+      "pdf_render_sha256": "625e79e8ec4849961b3c286584691bfa6c64c5a1b5533d2ba72caf8e44af50dd",
+      "pdf_sha256": "d635fca33608830f3f7d2cc44ad0ab37887553ab4b9a680781461a94cd6e4f09",
+      "png_sha256": "4ade9c8a40f899c96f8ce2694a3137590204b07d7ebaf5003609768af62b66d7",
+      "raster_image_objects": 0,
+      "visually_opened_png_and_pdf_render": true
+    },
+    "rq3_stability_correctness": {
+      "creation_and_modification_dates_omitted": true,
+      "embedded_fonts": true,
+      "pages": 1,
+      "pdf_render_sha256": "f037f1deb80e6b153e7de6b5c2abbe56c4ac4e4566e048ca1c7f6d62090e1172",
+      "pdf_sha256": "af1f084d80bb787d3a7fb3b548c321ebe6be9f69b3377eae970807ea2f9c3138",
+      "png_sha256": "5dd9ecf82c8ff932a0adcba68dabbe6bebf4f932586e00f61cfe5f5199b85f7c",
+      "raster_image_objects": 0,
+      "visually_opened_png_and_pdf_render": true
+    }
+  },
+  "latex_tables": {
+    "contact_sheet_pages_reviewed": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "final_contact_sheet_sha256": "17d6aef94aa9977eeae6764b73897d91a3563e6daddf1e698c1c96243fa6e3ac",
+    "focused_pages_reviewed": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      13
+    ],
+    "latex_warnings": 0,
+    "overfull_boxes": 0,
+    "pages": 13,
+    "qa_pdf_sha256": "aabbf0b7523254510c21ebecc1bf558506347361b4605be301f870d27952cebc",
+    "text_width_tex_pt": 398.33864,
+    "underfull_assessment": "Loose spacing in two note paragraphs; no clipping or missing content observed.",
+    "underfull_note_paragraphs": 2
+  },
+  "method": "Opened each 300 dpi figure PNG and each 150 dpi PDF raster preview; inspected final 13-page LaTeX QA contact sheet and focused table pages.",
+  "reviewed_at_utc": "2026-10-03T22:57:34.604140+00:00",
+  "scope": "Presentation and archived-result controls only; no new scientific evaluation.",
+  "status": "PASS"
+}

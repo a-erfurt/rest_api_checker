@@ -1,3 +1,21 @@
+## 2026-10-07: isolated live-demo CLI
+
+`rac demo run` now discovers eligible development services/operations/cases from
+SQL, selects existing approved models and D07 settings, retains P2/format_json,
+and confirms one or several runs before creating a new LIVE-DEMO experiment.
+The shared runner/parser preserve raw evidence, references and failure semantics.
+Dataset 3, evaluation cases and Experiment 10003 are excluded; no schema change.
+Read-only previews and result/UI reads were verified against current SQL. The
+metadata-only readiness check currently blocks real execution: Ollama 0.40.0 is
+running while the available qualified binding requires 0.35.1. No real model run
+or native context measurement was performed. Runtime requalification is separate.
+
+Final tests: **1098 passed / 105 skipped / 5 existing baseline failures**;
+**81 new offline tests pass**. The user explicitly omitted the two optional SQL
+integration tests without dedicated test credentials. Protected files/final data
+are unchanged; no branch switch, commit or push. See the [demo guide](live_demo.md),
+[audit](../LIVE_DEMO_CLI_REVIEW.md) and [verification](live_demo_verification.json).
+
 ## 2026-10-03: Main-v2 additive runtime binding and separate authorization
 
 The bounded patch on `fix/main-v2-runtime-and-authorization` adds explicit,

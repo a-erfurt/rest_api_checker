@@ -1,0 +1,22 @@
+% Generated from hash-bound Experiment 10003 results.
+% Requires booktabs.
+\begin{table}[htbp]
+\centering\small
+\caption{Vektorkorrektheit nach Referenzgruppe und API.}
+\label{tab_v2_subgroups}
+\begin{tabular}{llrrrr}
+\toprule
+Block & Gruppe & Fälle & Qwen & Gemma & Mistral \\
+\midrule
+Referenz & PPP & 29 & 87/87 & 81/87 & 80/87 \\
+Referenz & PPF & 10 & 30/30 & 0/30 & 1/30 \\
+Referenz & PFN & 29 & 87/87 & 87/87 & 83/87 \\
+Referenz & FNN & 14 & 42/42 & 0/42 & 0/42 \\
+\midrule
+API & EDX & 52 & 156/156 & 84/156 & 84/156 \\
+API & Resistance & 30 & 90/90 & 84/90 & 80/90 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\noindent
+\begin{minipage}{\linewidth}\footnotesize Modellspalten: vollständig richtige Vektoren / geplante Bewertungen. Referenz- und API-Blöcke sind separate Gruppierungen desselben Datensatzes.\end{minipage}
+\end{table}

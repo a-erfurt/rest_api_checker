@@ -1,0 +1,4 @@
+model,planned,exact_correct,valid_incorrect,parser_failure,model_label,exact_planned
+qwen3.6:27b,246,246,0,0,Qwen,1.0
+gemma3:27b,246,168,78,0,Gemma,0.6829268292682927
+mistral-small3.2:24b,246,164,78,4,Mistral,0.6666666666666666

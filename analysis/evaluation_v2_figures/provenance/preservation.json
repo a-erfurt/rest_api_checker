@@ -1,0 +1,17 @@
+{
+  "added": [],
+  "authorized_write_area": "analysis/evaluation_v2_figures/",
+  "baseline": "protected_environment_before.json",
+  "changed": [],
+  "database_model_and_api_access": "None used for this task.",
+  "git_status": "?? analysis/\n?? docs/runtime_qualification_2026-09-26/evaluation_v2_20261002_122718_71ffc4d9/\n?? docs/runtime_qualification_2026-09-26/evaluation_v2_main_runtime_ollama_0.35.1_20261003/\n",
+  "original_source_archive_sha256": {
+    "/Users/aerfurt/.codex/.chatgpt-projects/g-p-6ab1079fe2dc81919177a4d25e18d8bd/experiment_10003_offline_analysis.zip": "7c3951a964ec4a01c9c723e18ae3b52df329cbeb64b80b59df4985c09bebc78c",
+    "/Users/aerfurt/Downloads/EVALUATION_V2_Ergebnisse_10003.zip": "3401909642d1b33560ca2096faf4c137e2091786ef60de4c9f62be7caee7a62a"
+  },
+  "protected_file_count": 2099,
+  "removed": [],
+  "scope": "After explicit approval of isolated installation; prior IDE dependency side effect was reverted before this baseline.",
+  "status": "PASS",
+  "tracked_diff_empty": true
+}

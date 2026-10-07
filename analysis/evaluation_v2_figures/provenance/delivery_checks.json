@@ -1,0 +1,30 @@
+{
+  "byte_identical_exports": 38,
+  "checks_passed": 19133,
+  "drawing_csvs": 3,
+  "embedded_figure_previews": 3,
+  "executed_code_cells": 8,
+  "execution_counts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "experiment_id": 10003,
+  "failed_pre_execution_process_cleanup": "Terminated only the identified failed notebook-start process 87084; no completed execution or scientific data was altered.",
+  "figure_pdfs": 3,
+  "figure_pngs": 3,
+  "notebook_schema_and_saved_hash": "PASS",
+  "preservation": "preservation.json",
+  "required_table_labels": "PASS",
+  "same_fingerprint_fresh_kernel_passes": 2,
+  "source_cell_helper_and_runner_hashes": "PASS",
+  "status": "PASS",
+  "table_csv_files": 15,
+  "table_latex_files": 14,
+  "visual_review": "visual_review.json"
+}

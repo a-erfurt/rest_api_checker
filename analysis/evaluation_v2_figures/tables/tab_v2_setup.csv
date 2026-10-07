@@ -1,0 +1,43 @@
+parameter,value,source
+Experiment,10003,manifest.json/experiment_id
+Dataset,3,manifest.json/dataset_id
+Prompt,P2 / checklist / v1,setup.json/bindings/prompts
+Output mode,format_json,setup.json/output_interface/mode
+Output interface,output-interface-v2,setup.json/output_interface/version
+Repetitions and seeds,1: 101; 2: 202; 3: 303,"analysis_10003.csv/repetition,seed"
+Schedule,dataset-position-model-repetition-v1,setup.json/schedule_version
+Schedule seed,0,setup.json/schedule_seed
+Ollama,0.35.1,setup.json/runtime/ollama/version
+Experiment Python,3.12.14,setup.json/runtime/python
+CPU,Apple M5 Pro,setup.json/runtime/cpu
+RAM (GiB),64.0,setup.json/runtime/ram_bytes
+OS,ProductName: macOS ProductVersion: 27.0.1 BuildVersion: 26A434,setup.json/runtime/os
+Qwen model,qwen3.6:27b,manifest.json/model_bindings
+Qwen quantization,Q4_K_M,manifest.json/model_bindings
+Qwen digest SHA-256,9d5803d493a991af27b9441c098aa56f2ed7bbd260877f075ec09b575c049bc3,manifest.json/model_bindings
+Gemma model,gemma3:27b,manifest.json/model_bindings
+Gemma quantization,Q4_K_M,manifest.json/model_bindings
+Gemma digest SHA-256,a418f5838eaf7fe2cfe0a3046c8384b68ba43a4435542c942f9db00a5f342203,manifest.json/model_bindings
+Mistral model,mistral-small3.2:24b,manifest.json/model_bindings
+Mistral quantization,Q4_K_M,manifest.json/model_bindings
+Mistral digest SHA-256,5a408ab55df5c1b5cf46533c368813b30bf9e4d8fc39263bf2a3338cfa3b895b,manifest.json/model_bindings
+draft_num_predict,0,manifest.json/run_config_bindings
+min_p,0.000,manifest.json/run_config_bindings
+num_ctx,32768,manifest.json/run_config_bindings
+num_predict,512,manifest.json/run_config_bindings
+repeat_last_n,64,manifest.json/run_config_bindings
+repeat_penalty,1.000,manifest.json/run_config_bindings
+stream,False,manifest.json/run_config_bindings
+temperature,0.200,manifest.json/run_config_bindings
+Qwen think,False,manifest.json/run_config_bindings
+Gemma think,not set (null),manifest.json/run_config_bindings
+Mistral think,not set (null),manifest.json/run_config_bindings
+timeout_seconds,300,manifest.json/run_config_bindings
+top_k,40,manifest.json/run_config_bindings
+top_p,0.900,manifest.json/run_config_bindings
+prompt_sha256,50bfce7831530c7d63dd469ed82fb9acab755bedf4808ae5574775fc5505594f,manifest.json/prompt_sha256
+setup_sha256,25f71d09efb7633510c82ac19add1556e8750f7c089f960a4960a498b9260579,manifest.json/setup_sha256
+dataset_sha256,2c831cc727cc3fd841139f6f877dc2fa725ffedecf3ee96138f705245833f44f,manifest.json/dataset_sha256
+dataset_root_sha256,3e477b77adc7d6494d5fb4b967dd849bb4ec7113f1091aa24ca5b1189a38c8a3,manifest.json/dataset_root_sha256
+original_parser_sha256,d8d7fa7a853e0a09b73067f78304ae833b90e2405645b7818139b904ffc33783,manifest.json/original_parser_sha256
+Runtime binding SHA-256,5b8b09919e8c66c0ed4ce903ab7d7c21295807ec65559d2dbcca97f38ab2da41,setup.json/runtime_binding_sha256

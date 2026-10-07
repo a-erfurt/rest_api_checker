@@ -1,0 +1,16 @@
+Creator:         Evaluation v2 presentation notebook
+Producer:        Matplotlib pdf backend v3.10.9
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           1
+Encrypted:       no
+Page size:       396.85 x 259.2 pts
+Page rot:        0
+File size:       27702 bytes
+Optimized:       no
+PDF version:     1.4

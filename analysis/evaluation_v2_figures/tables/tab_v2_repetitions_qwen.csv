@@ -1,0 +1,4 @@
+model,repetition,seed,planned,valid,parser_failure,technical_failure,valid_incorrect,exact_correct,exact_planned,exact_valid,valid_coverage,binary_available,binary_coverage,incoherent,binary_correct,binary_planned,binary_conditional,tp,tn,fp,fn,precision,recall_conditional,f1_conditional,reference_positive,available_positive,positive_coverage,tp_over_all_reference_positive,runs_with_applicability_error
+qwen3.6:27b,1,101,82,82,0,0,0,82,1.0,1.0,1.0,82,1.0,0,82,1.0,1.0,53,29,0,0,1.0,1.0,1.0,53,53,1.0,1.0,0
+qwen3.6:27b,2,202,82,82,0,0,0,82,1.0,1.0,1.0,82,1.0,0,82,1.0,1.0,53,29,0,0,1.0,1.0,1.0,53,53,1.0,1.0,0
+qwen3.6:27b,3,303,82,82,0,0,0,82,1.0,1.0,1.0,82,1.0,0,82,1.0,1.0,53,29,0,0,1.0,1.0,1.0,53,53,1.0,1.0,0

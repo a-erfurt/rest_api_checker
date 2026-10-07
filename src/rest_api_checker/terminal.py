@@ -77,14 +77,20 @@ def inspection(console, value, verbose=False):
     console.print(table('Run',('Field','Value'),[(k,v) for k,v in dict(ID=run['id'],Case=value['case'],
         Model=value['model'],Prompt=value['prompt'],Repetition=run['repetition'],Seed=run['seed'],Status=run['result'] or 'PENDING').items()]))
     pred = value['prediction']
+    parser_status = {'valid': 'VALID_OUTPUT', 'parser_failure': 'PARSER_FAILURE'}.get(
+        run['result'], 'N/A (no final parsed output)')
+    console.print('Parser: '+parser_status)
+    console.print('Vector correct? '+('yes' if all(value['correctness'].values()) else 'no'
+                                     ) if pred else 'Vector correct? N/A (no semantic verdict)')
     console.print(table('Reference and prediction',('Category','Reference','Prediction','Correctness'),
         [(c.upper(),value['reference'][c],pred[c] if pred else 'No semantic verdict',
           'correct' if value['correctness'][c] else 'incorrect' if pred else 'N/A') for c in ('c1','c2','c3')]))
     if pred:
         for c in ('c1','c2','c3'):
             console.print(Text(clean(f'{c.upper()} reason: {pred[c+"_reason"]}')))
-    console.print(table('Attempts',('Attempt','Status','Duration ms','Error'),
-        [(a['attempt'],a['result'] or 'NEEDS RECONCILIATION',a['duration_ms'] if a['duration_ms'] is not None else 'N/A',
+    console.print(table('Attempts',('Attempt','Attempt ID','Raw response file ID','Status','Duration ms','Error'),
+        [(a['attempt'],a['id'],a['response_file_id'] if a['response_file_id'] is not None else 'N/A',
+          a['result'] or 'NEEDS RECONCILIATION',a['duration_ms'] if a['duration_ms'] is not None else 'N/A',
           a['error_message'] or a['error_kind'] or '—') for a in value['attempts']]))
     if verbose and 'raw' in value:
         console.print(Text(clean(json.dumps(value['raw'],ensure_ascii=True,indent=2))))
