@@ -1,4 +1,4 @@
-"""Optional operator launcher. The explicit argparse CLI remains authoritative."""
+"""RestApiChecker interactive application and compatible command launcher."""
 import argparse
 from contextlib import closing
 import errno
@@ -153,7 +153,9 @@ def show_gate(console, value):
             console.print(terminal.clean(f'{check["status"]}: {check["check"]} — {check["detail"]}'))
 
 
-def web(config, console, *, open_browser=False):
+def web(config, console, *, open_browser=False, open_path="", opened_message=None):
+    if open_path and open_path != "/runs/latest" and not (open_path.startswith("/runs/") and open_path[6:].isdecimal()):
+        raise OperatorError("Only a stored run page can be opened directly.")
     import uvicorn
     from .web.app import create_app
 
@@ -175,15 +177,20 @@ def web(config, console, *, open_browser=False):
             async def startup(self, sockets=None):
                 await super().startup(sockets=sockets)
                 if self.started:
-                    console.print('RestApiChecker Web UI', style=terminal.ACCENT)
-                    console.print('Database   ✓ ready\nURL        '+url+'\n\nPress Ctrl-C to stop.')
+                    if opened_message is None:
+                        console.print('RestApiChecker Web UI', style=terminal.ACCENT)
+                        console.print('Database   ✓ ready\nURL        '+url+'\n\nPress Ctrl-C to stop.')
                     if open_browser:
                         try:
-                            opened = webbrowser.open(url)
+                            opened = webbrowser.open(url+open_path)
                         except webbrowser.Error:
                             opened = False
-                        if not opened:
-                            console.print('Browser could not be opened; use the URL above.')
+                        if opened and opened_message is not None:
+                            console.print(opened_message, style='dim')
+                        elif not opened:
+                            console.print('Browser could not be opened; open: '+url+open_path)
+                            if opened_message is not None:
+                                console.print('Ctrl-C returns to the menu.', style='dim')
 
         try:
             LocalServer(uvicorn.Config(create_app(), host=config.host, port=config.port, log_level='warning')).run(sockets=[sock])

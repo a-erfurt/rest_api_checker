@@ -1,3 +1,27 @@
+## 2026-10-07: final interactive root CLI for the supervisor demo
+
+Bare `rac` now launches the guided live application: dynamic service, operation,
+explained case, configured model, repetitions (default one), automatic unchanged
+P2, explicit confirmation, immediate comparison, detail/raw/Web actions and
+read-only named-context result browsing. Existing direct commands and help remain.
+The prior strict `rac demo run` path shares the wizard/runner and remains strict.
+
+Root runs use a separate `LIVE-ADHOC` setup with the actual current runtime,
+`scientific_evaluation=False` and `gate_b_complete=False`. Model/template evidence
+and an explicitly unqualified conservative byte-budget guard replace native
+qualification only for this scope. All final/scientific guards remain unchanged.
+All 36 eligible case/model combinations passed read-only budget checks on 0.40.0.
+
+Full suite: **1186 passed / 105 skipped / 5 existing baseline failures**, versus
+1098/105/5 before changes. Exactly one authorized real smoke run succeeded:
+DEV-02, Mistral Small 3.2 24B, P2, one attempt, new experiment 20003/run 20433.
+Parser valid; predicted PPF versus reference PPP, correctly shown as INCORRECT.
+Details/raw/Web and browsing were checked; no model retry or repair occurred.
+All previously existing DB rows/archive content retained identical fingerprints.
+Thesis/research files were not edited or built; no branch switch, commit or push.
+See [guide](live_demo.md), [review](../LIVE_DEMO_CLI_REVIEW.md), and
+[verification](interactive_root_cli_verification.json).
+
 ## 2026-10-07: isolated live-demo CLI
 
 `rac demo run` now discovers eligible development services/operations/cases from

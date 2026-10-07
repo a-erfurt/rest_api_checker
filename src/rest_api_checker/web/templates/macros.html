@@ -1,5 +1,9 @@
 {% macro status(value) -%}
-<span class="status {% if value in ['FAIL','parser_failure','technical_failure'] %}status-failure{% endif %}">{{ value|status }}</span>
+<span class="status badge {% if value in ['FAIL','parser_failure','technical_failure'] %}status-failure{% elif value in ['PASS','valid'] %}status-success{% else %}status-neutral{% endif %}"{% if value == 'NOT_APPLICABLE' %} title="NOT_APPLICABLE"{% endif %}>{{ 'N/A' if value == 'NOT_APPLICABLE' else (value|status) }}</span>
+{%- endmacro %}
+
+{% macro semantic(value, style='neutral') -%}
+<span class="semantic badge semantic-{{ style }}">{{ value or 'UNAVAILABLE' }}</span>
 {%- endmacro %}
 
 {% macro metric(label, value) -%}
@@ -21,8 +25,8 @@
 {%- endmacro %}
 
 {% macro experiment_selector(experiments, selected_experiment) -%}
-<form method="get" class="experiment-selector secondary-controls"><label for="experiment">Experiment</label><select name="experiment" id="experiment">
-{% for e in experiments %}<option value="{{ e.id }}" {% if e.id == selected_experiment %}selected{% endif %}>{{ e.name }} · {{ e.state|default('') }}</option>{% else %}<option>No experiments yet</option>{% endfor %}
+<form method="get" class="experiment-selector secondary-controls"><label for="experiment">Context</label><select name="experiment" id="experiment">
+{% for e in experiments %}<option value="{{ e.id }}" {% if e.id == selected_experiment %}selected{% endif %}>{{ e|context_name }}{% if not e|is_interactive %} · {{ e.state|default('') }}{% endif %}</option>{% else %}<option>No experiments yet</option>{% endfor %}
 </select><button type="submit" {% if not experiments %}disabled{% endif %}>View</button></form>
 {%- endmacro %}
 
@@ -34,8 +38,8 @@
 {%- endmacro %}
 
 {% macro run_table(items, compact=false) -%}
-<div class="table-scroll"><table class="runs-table"><thead><tr><th>Case</th><th>Model</th><th>Prompt</th>{% if not compact %}<th>Repetition</th>{% endif %}<th>Status</th>{% if not compact %}<th class="optional-column">Attempt</th><th class="optional-column number">Duration</th>{% endif %}</tr></thead><tbody>
-{% for r in items %}<tr><td><a href="/runs/{{ r.id }}">{{ r.case }}</a>{% if not compact %}<small class="medium-metadata">Attempt {{ r.attempt if r.attempt else '–' }}{% if r.duration_ms is not none %} · {{ r.duration_ms }} ms{% endif %}</small>{% endif %}</td><td><span title="{{ r.model }}">{{ r.model|model_name }}</span></td><td>{{ r.prompt }}</td>{% if not compact %}<td>{{ r.repetition }}</td>{% endif %}<td>{{ status(r.result) }}</td>{% if not compact %}<td class="optional-column">{{ r.attempt if r.attempt else '–' }}</td><td class="optional-column number">{{ r.duration_ms ~ ' ms' if r.duration_ms is not none else 'Not available' }}</td>{% endif %}</tr>
-{% else %}<tr><td colspan="7" class="empty-cell">No runs match this view.</td></tr>{% endfor %}
+<div class="table-scroll"><table class="runs-table"><thead><tr><th scope="col">Case</th><th scope="col">Service</th><th scope="col">Model</th>{% if not compact %}<th scope="col">Prompt</th><th scope="col">Repetition</th>{% endif %}<th scope="col">Parser status</th><th scope="col">Semantic result</th><th scope="col">Recorded</th></tr></thead><tbody>
+{% for r in items %}<tr><th scope="row"><a class="case-link" href="/runs/{{ r.id }}">{{ r.case }}</a>{% if not compact and r.operation|default(none) %}<small class="run-row-operation">{{ r.operation }}</small>{% endif %}</th><td>{{ r.service|default('Not available') }}</td><td><span title="{{ r.model }}">{{ r.model|model_name }}</span></td>{% if not compact %}<td>{{ r.prompt }}</td><td>{{ r.repetition }}</td>{% endif %}<td>{{ status(r.result) }}</td><td>{{ semantic(r.semantic_result|default('UNAVAILABLE'), r.semantic_class|default('neutral')) }}</td><td><time class="run-timestamp" datetime="{{ r.timestamp|default('') }}">{{ r.timestamp|default('Not available', true) }}</time></td></tr>
+{% else %}<tr><td colspan="{{ 6 if compact else 8 }}" class="empty-cell">No runs match this view.</td></tr>{% endfor %}
 </tbody></table></div>
 {%- endmacro %}

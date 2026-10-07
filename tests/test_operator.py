@@ -267,14 +267,17 @@ def test_bad_config_never_echoes_values(config, raw, capsys):
 
 
 @pytest.mark.parametrize('open_browser', [False, True])
-def test_web_reuses_app_opens_after_start_restores_environment(config, console, monkeypatch, open_browser):
+@pytest.mark.parametrize('opened_message', [None, 'Web UI opened: latest run'])
+@pytest.mark.parametrize('browser_succeeds', [False, True])
+@pytest.mark.parametrize('open_path', ['', '/runs/20440', '/runs/latest'])
+def test_web_reuses_app_opens_after_start_restores_environment(config, console, monkeypatch, open_browser, open_path, opened_message, browser_succeeds):
     import asyncio
     import uvicorn
     from rest_api_checker.web import app
     application = object()
     monkeypatch.setattr(app, 'create_app', Mock(return_value=application))
     monkeypatch.setattr(op, 'start_database', Mock())
-    browser = Mock(return_value=True)
+    browser = Mock(return_value=browser_succeeds)
     monkeypatch.setattr(op.webbrowser, 'open', browser)
     sock = Mock()
     sock.__enter__ = Mock(return_value=sock)
@@ -292,13 +295,23 @@ def test_web_reuses_app_opens_after_start_restores_environment(config, console, 
     monkeypatch.setattr(uvicorn.Server, 'startup', startup)
     monkeypatch.setattr(uvicorn.Server, 'run', run)
     monkeypatch.setenv('RAC_WEB_DATABASE', 'previous')
-    assert op.web(config, console, open_browser=open_browser) == 0
+    assert op.web(config, console, open_browser=open_browser, open_path=open_path, opened_message=opened_message) == 0
     assert browser.call_count == int(open_browser)
     if open_browser:
-        browser.assert_called_once_with('http://127.0.0.1:8000')
+        browser.assert_called_once_with('http://127.0.0.1:8000'+open_path)
     assert op.os.environ['RAC_WEB_DATABASE'] == 'previous'
     assert 'RAC_WEB_ENV_FILE' not in op.os.environ
     op.start_database.assert_called_once()
+    output = console.file.getvalue()
+    if opened_message is not None:
+        assert ('Web UI opened:' in output) == (open_browser and browser_succeeds)
+        assert 'Database' not in output and 'RestApiChecker Web UI' not in output
+        if open_browser and browser_succeeds:
+            assert output.strip() == opened_message
+        elif open_browser:
+            assert 'http://127.0.0.1:8000'+open_path in output
+    else:
+        assert 'RestApiChecker Web UI' in output and 'Database' in output
 
 
 def test_web_address_in_use_before_database_start(config, console, monkeypatch):
@@ -439,3 +452,12 @@ def test_admin_config_precedence_and_roundtrip(config,tmp_path,monkeypatch):
     assert cfg.load(SimpleNamespace()).admin_env_file==admin
     explicit=cfg.load(SimpleNamespace(env_file=str(config.env_file)))
     assert explicit.explicit_env_file
+
+
+@pytest.mark.parametrize('path', ['https://outside.invalid', '/runs/../data', '//outside.invalid', '/runs/latest?next=/data'])
+def test_web_direct_path_is_allowlisted_before_start(config, console, monkeypatch, path):
+    start = Mock()
+    monkeypatch.setattr(op, 'start_database', start)
+    with pytest.raises(cfg.OperatorError, match='stored run page'):
+        op.web(config, console, open_path=path)
+    start.assert_not_called()

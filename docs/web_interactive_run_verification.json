@@ -1,0 +1,356 @@
+{
+  "date": "2026-10-07",
+  "timezone": "Europe/Berlin",
+  "branch": "main",
+  "head": "47fc67d09108ce18e891c0c86ce2195f6aab25d9",
+  "tests": {
+    "baseline_full_suite": "1257 passed, 106 skipped, 8 failed in 38.16 seconds",
+    "sandbox_only_failures": "Three parametrizations of tests/test_main_v2.py::test_launch_wrapper_uses_one_guarded_command required temporary artifact directory writes outside the workspace sandbox.",
+    "sandbox_retry": "3 passed, 30 deselected in 2.89 seconds",
+    "comparable_baseline": {
+      "passed": 1260,
+      "skipped": 106,
+      "failed": 5
+    },
+    "failures": [
+      "tests/test_cli.py::test_json_preflight_truthful",
+      "tests/test_gate_b_closure.py::test_closure_evidence_drift_never_passes",
+      "tests/test_operator.py::test_preflight_actual_backend_stays_blocked",
+      "tests/test_runtime_evidence.py::test_captured_readiness_preserves_limitations_and_author_gate",
+      "tests/test_sensitivity_execution.py::test_final_offline_verification_and_historical_separation"
+    ],
+    "sql_test_opt_in": false,
+    "model_calls": 0,
+    "database_writes": 0,
+    "final_full_suite": {
+      "passed": 1336,
+      "skipped": 106,
+      "failed": 5,
+      "duration_seconds": 41.92
+    },
+    "final_log": "/private/tmp/rac-web-verification/final-tests-stable.log",
+    "final_web_suite": {
+      "passed": 114,
+      "failed": 0,
+      "duration_seconds": 1.9
+    },
+    "new_failures": 0,
+    "independent_review": "No further source change recommended after fixing legacy private diagnostics and blank all-context filters; shared parser-valid gating, escaped evidence, GET-only routes and SELECT-only queries remain intact."
+  },
+  "manual": {
+    "latest_run_id": 20442,
+    "routes": [
+      {
+        "path": "/runs/latest",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20442"
+      },
+      {
+        "path": "/runs/20440",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440"
+      },
+      {
+        "path": "/runs/20435",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20435"
+      },
+      {
+        "path": "/runs/11078",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/11078"
+      },
+      {
+        "path": "/runs/20436",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20436"
+      },
+      {
+        "path": "/runs/20440/files/0",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440/files/0"
+      },
+      {
+        "path": "/runs/20440/files/1",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440/files/1"
+      },
+      {
+        "path": "/runs/20440/files/2",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440/files/2"
+      },
+      {
+        "path": "/runs/20440/files/3",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440/files/3"
+      },
+      {
+        "path": "/runs/20440/files/4",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440/files/4"
+      },
+      {
+        "path": "/runs/20440/files/6",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440/files/6"
+      },
+      {
+        "path": "/",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/"
+      },
+      {
+        "path": "/runs",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs"
+      },
+      {
+        "path": "/runs?experiment=&model=&prompt=&status=&search=V2-EDX-002&repetition=&page_size=50",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs?experiment=&model=&prompt=&status=&search=V2-EDX-002&repetition=&page_size=50"
+      },
+      {
+        "path": "/evaluation?experiment=20009",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/evaluation?experiment=20009"
+      },
+      {
+        "path": "/overview?experiment=20009",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/overview?experiment=20009"
+      },
+      {
+        "path": "/overview?experiment=10003",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/overview?experiment=10003"
+      },
+      {
+        "path": "/evaluation?experiment=10003",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/evaluation?experiment=10003"
+      },
+      {
+        "path": "/runs?experiment=10003",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs?experiment=10003"
+      },
+      {
+        "path": "/data/cases?experiment=10003",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/data/cases?experiment=10003"
+      },
+      {
+        "path": "/runs/20440?tab=attempts",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440?tab=attempts"
+      },
+      {
+        "path": "/runs/20440?tab=openapi",
+        "status": 200,
+        "url": "http://127.0.0.1:8000/runs/20440?tab=openapi"
+      }
+    ],
+    "evidence": [
+      "Observed response body",
+      "OpenAPI contract",
+      "Original input file",
+      "Original API request body",
+      "Reference / explanation",
+      "Raw model response"
+    ],
+    "post_run_action_replayed_with_existing_run": 20440,
+    "raw_and_file_text_equal_stored": true,
+    "model_calls": 0,
+    "database_writes": 0
+  },
+  "browser_open_events": [
+    {
+      "event": "webbrowser.open",
+      "args": [
+        "http://127.0.0.1:8000/runs/20442"
+      ]
+    },
+    {
+      "event": "webbrowser.open",
+      "args": [
+        "http://127.0.0.1:8000/runs/20440"
+      ]
+    }
+  ],
+  "preservation": {
+    "before": "2026-10-07T08:42:13.940021+00:00",
+    "after": "2026-10-07T08:54:47.905481+00:00",
+    "all_persisted_application_tables_and_archived_bytes_unchanged": true,
+    "protected_final_scope_unchanged": true,
+    "tables": {
+      "api_contracts": {
+        "before_count": 4,
+        "after_count": 4,
+        "unchanged": true,
+        "before_sha256": "fbb347c6a4dc09e3df99a9ed537a8671d6bc8076bd712f52926a566a94591104",
+        "after_sha256": "fbb347c6a4dc09e3df99a9ed537a8671d6bc8076bd712f52926a566a94591104"
+      },
+      "api_operations": {
+        "before_count": 4,
+        "after_count": 4,
+        "unchanged": true,
+        "before_sha256": "f07490967781cafa557d03b93fc701303c84409dbfe354db20f47f9c6eb3a85c",
+        "after_sha256": "f07490967781cafa557d03b93fc701303c84409dbfe354db20f47f9c6eb3a85c"
+      },
+      "apis": {
+        "before_count": 4,
+        "after_count": 4,
+        "unchanged": true,
+        "before_sha256": "1d70b0c4cfa6623ed17bc4d6ea2798b8adb594cdf639e0ee5e74ba6d916cbfa8",
+        "after_sha256": "1d70b0c4cfa6623ed17bc4d6ea2798b8adb594cdf639e0ee5e74ba6d916cbfa8"
+      },
+      "case_families": {
+        "before_count": 40,
+        "after_count": 40,
+        "unchanged": true,
+        "before_sha256": "1135b6e6cd5a4a0e020d635ad196f3af0169cc8f8345f8d8db94bd32a0653dfe",
+        "after_sha256": "1135b6e6cd5a4a0e020d635ad196f3af0169cc8f8345f8d8db94bd32a0653dfe"
+      },
+      "dataset_cases": {
+        "before_count": 114,
+        "after_count": 114,
+        "unchanged": true,
+        "before_sha256": "6197f913069877baf7bf01d9428426679408271cf66cd748a94566ca3c78d64f",
+        "after_sha256": "6197f913069877baf7bf01d9428426679408271cf66cd748a94566ca3c78d64f"
+      },
+      "datasets": {
+        "before_count": 9,
+        "after_count": 9,
+        "unchanged": true,
+        "before_sha256": "d0808d3c7c2c3c71f81c10ca0bc986c993e8f35f2628e7699764317485a4ad0a",
+        "after_sha256": "d0808d3c7c2c3c71f81c10ca0bc986c993e8f35f2628e7699764317485a4ad0a"
+      },
+      "evaluation_reports": {
+        "before_count": 3,
+        "after_count": 3,
+        "unchanged": true,
+        "before_sha256": "5bab2ff20a1b56eca5f9565124377319a8a324982bf597ce6ecc667140687c86",
+        "after_sha256": "5bab2ff20a1b56eca5f9565124377319a8a324982bf597ce6ecc667140687c86"
+      },
+      "experiment_runs": {
+        "before_count": 1306,
+        "after_count": 1306,
+        "unchanged": true,
+        "before_sha256": "389a11b712a8719586b209459789524b717fc6cb92f2b87d99a6fb1884de320f",
+        "after_sha256": "389a11b712a8719586b209459789524b717fc6cb92f2b87d99a6fb1884de320f"
+      },
+      "experiments": {
+        "before_count": 13,
+        "after_count": 13,
+        "unchanged": true,
+        "before_sha256": "5b38815b145e96f15fe688bcae4ec60c307253f08a29719d074c5fb1c86159e6",
+        "after_sha256": "5b38815b145e96f15fe688bcae4ec60c307253f08a29719d074c5fb1c86159e6"
+      },
+      "files": {
+        "before_count": 10332,
+        "after_count": 10332,
+        "unchanged": true,
+        "before_sha256": "9ceb3f91d02f857363d654e742cfba46eb84d115ee94b90d94f2fd66c840673a",
+        "after_sha256": "9ceb3f91d02f857363d654e742cfba46eb84d115ee94b90d94f2fd66c840673a"
+      },
+      "models": {
+        "before_count": 5,
+        "after_count": 5,
+        "unchanged": true,
+        "before_sha256": "012883de61d1fe2377a2463e889b0b94b72b171fcc17884e4becbf39906bf6f9",
+        "after_sha256": "012883de61d1fe2377a2463e889b0b94b72b171fcc17884e4becbf39906bf6f9"
+      },
+      "predictions": {
+        "before_count": 922,
+        "after_count": 922,
+        "unchanged": true,
+        "before_sha256": "c15655aa321b6d0dfbe8b0e8f713ecdb5c5cbeebee7d43fc3baa84e7f96c567e",
+        "after_sha256": "c15655aa321b6d0dfbe8b0e8f713ecdb5c5cbeebee7d43fc3baa84e7f96c567e"
+      },
+      "prompts": {
+        "before_count": 4,
+        "after_count": 4,
+        "unchanged": true,
+        "before_sha256": "79f8f8e8698cdfbb54b2aa880d4e1a400ac4110de4dc34682111a826e431af77",
+        "after_sha256": "79f8f8e8698cdfbb54b2aa880d4e1a400ac4110de4dc34682111a826e431af77"
+      },
+      "reference_results": {
+        "before_count": 108,
+        "after_count": 108,
+        "unchanged": true,
+        "before_sha256": "26f8cbd6b4a1ca1bf06d486b9f1931e6f604207b88168ec1d4fa9a7c0b7ed3f9",
+        "after_sha256": "26f8cbd6b4a1ca1bf06d486b9f1931e6f604207b88168ec1d4fa9a7c0b7ed3f9"
+      },
+      "responses": {
+        "before_count": 115,
+        "after_count": 115,
+        "unchanged": true,
+        "before_sha256": "27b9195c79748faf39e7dd8d756f35845453ad97fc977e5f168292ab5e7dfb5d",
+        "after_sha256": "27b9195c79748faf39e7dd8d756f35845453ad97fc977e5f168292ab5e7dfb5d"
+      },
+      "run_attempts": {
+        "before_count": 1305,
+        "after_count": 1305,
+        "unchanged": true,
+        "before_sha256": "26c7b570bfbc1dadd42ebbbf0200275c445c26d48d69700579c83d659473de0a",
+        "after_sha256": "26c7b570bfbc1dadd42ebbbf0200275c445c26d48d69700579c83d659473de0a"
+      },
+      "run_configs": {
+        "before_count": 6,
+        "after_count": 6,
+        "unchanged": true,
+        "before_sha256": "8a94d74a19addd925595f2b00a53b6d5f3411baad604044b21f49068ba68e036",
+        "after_sha256": "8a94d74a19addd925595f2b00a53b6d5f3411baad604044b21f49068ba68e036"
+      },
+      "schema_migrations": {
+        "before_count": 2,
+        "after_count": 2,
+        "unchanged": true,
+        "before_sha256": "ae5710168dde2c90227f85f3f9d9db28ee98a7a5383032ae5aae25908eb04b05",
+        "after_sha256": "ae5710168dde2c90227f85f3f9d9db28ee98a7a5383032ae5aae25908eb04b05"
+      },
+      "test_cases": {
+        "before_count": 115,
+        "after_count": 115,
+        "unchanged": true,
+        "before_sha256": "48a8e8a15e0cc816234d345c73193f1bbd5c66410ecc0ca4bf0c7f653fe78b31",
+        "after_sha256": "48a8e8a15e0cc816234d345c73193f1bbd5c66410ecc0ca4bf0c7f653fe78b31"
+      }
+    },
+    "protected": {
+      "dataset_cases": {
+        "count": 82,
+        "sha256": "a1b748fbfb1f5ec7d036268039a77c3b16f5167b023fb7bd57439b391e6deb6e"
+      },
+      "datasets": {
+        "count": 1,
+        "sha256": "85f3e05a9c1c8f934e9e17003cfb120ccac447cc72e4c0f2612732d6c8b1235f"
+      },
+      "experiment_runs": {
+        "count": 738,
+        "sha256": "71682dab77fbb3657ee3d946aac0f2e915622d57179a7ebca0549d7cd4df1ce7"
+      },
+      "experiments": {
+        "count": 1,
+        "sha256": "860156420c8179a86f98c4fc9b40e042ae543a0eedb00df110fe2f864fa2ef11"
+      },
+      "predictions": {
+        "count": 734,
+        "sha256": "21be6bdf463beacb30f7f6135e7fb2d4730fccf5cef7ceeda6525846d4452774"
+      },
+      "run_attempts": {
+        "count": 738,
+        "sha256": "c317b68c27cae9ee06a26c09f0fe0bdaf44328517ec826e69bd1b58ec3a45f7e"
+      }
+    },
+    "database_writes": 0,
+    "model_calls": 0
+  },
+  "final_label_tests": {
+    "passed": 27,
+    "failed": 0
+  },
+  "commit_push_branch_switch": false,
+  "thesis_access": false
+}

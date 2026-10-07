@@ -16,7 +16,8 @@ class StopRequest:
 
 
 def run(repo, experiment_id, *, client, spool_directory, verify_runtime,
-        review_failure, notify=lambda event: None, stop=None, prepare_request=prepare):
+        review_failure, notify=lambda event: None, stop=None, prepare_request=prepare,
+        context_proof_factory=ContextProof):
     """Retries remain attempts of one run; reserved ambiguous slots never dispatch.
 
     SIGINT requests a cooperative stop after the active attempt has been durably
@@ -36,6 +37,10 @@ def run(repo, experiment_id, *, client, spool_directory, verify_runtime,
         with repo.dispatch_owner():
             state = status(repo,experiment_id)
             setup = json.loads(repo.file(state['experiment']['setup_file_id']))
+            if context_proof_factory is not ContextProof:
+                from ..live_adhoc_runtime import AdhocContextCheck, require_scope
+                require(context_proof_factory is AdhocContextCheck, 'Unsupported context policy')
+                require_scope(setup, experiment_id, state['experiment']['dataset_id'])
             require(setup.get('bindings')==bindings(repo,state['experiment']['dataset_id'],setup['schedule']),
                     'Missing frozen bindings or configuration/reference drift')
             repo.cn.commit()
@@ -62,7 +67,7 @@ def run(repo, experiment_id, *, client, spool_directory, verify_runtime,
                         notify(dict(event='retry',current=current,message='Technical failure — retrying identical request (attempt 2/2)'))
                     notify(dict(event='current',current=current))
                     execute_attempt(repo,run_id,attempt=attempt,client=client,spool_directory=spool_directory,
-                        context_proof=ContextProof(**setup['context_proofs'][str(scheduled['run_order'])]),
+                        context_proof=context_proof_factory(**setup['context_proofs'][str(scheduled['run_order'])]),
                         verify_runtime=verify_runtime,review_failure=review_failure,
                         prepare_request=prepare_request)
                     state = status(repo,experiment_id)

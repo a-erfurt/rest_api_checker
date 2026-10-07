@@ -194,29 +194,6 @@ def inspect_menu(config, console):
 
 
 def launch(config, console):
-    while True:
-        item = choose(console, 'RestApiChecker', ['Database', 'Web UI', 'Preflight / Gate B',
-                      'Experiments', 'Evaluation', 'Inspect data', 'Advanced CLI', 'Exit'])
-        if item == 7:
-            return 0
-        try:
-            if item == 0:
-                database_menu(config, console)
-            elif item == 1:
-                web(config, console)
-            elif item == 2:
-                value, _ = dispatch(config, ['preflight'], console)
-                show_gate(console, value)
-            elif item == 3:
-                experiments_menu(config, console)
-            elif item == 4:
-                evaluation_menu(config, console)
-            elif item == 5:
-                inspect_menu(config, console)
-            else:
-                advanced(console)
-        except (ValueError, OSError, pyodbc.Error) as exc:
-            message = sql_error(exc) if isinstance(exc, pyodbc.Error) else str(exc)
-            console.print(terminal.clean(message), style='yellow')
-        except EOFError:
-            return 0
+    """Bare rac enters the guided live application; direct commands stay available."""
+    from .interactive_app import launch as interactive_launch
+    return interactive_launch(config, console)

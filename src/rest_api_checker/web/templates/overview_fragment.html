@@ -1,10 +1,12 @@
 {% from 'macros.html' import metric, run_table %}
-<div id="overview-live" {% if experiment and experiment.started_at and not experiment.finished_at and not unavailable|default(false) %}hx-get="/fragments/overview?experiment={{ experiment.id }}" hx-trigger="every 3s" hx-swap="outerHTML" hx-indicator="#poll-indicator"{% endif %}>
+<div id="overview-live" {% if experiment and not interactive|default(false) and experiment.started_at and not experiment.finished_at and not unavailable|default(false) %}hx-get="/fragments/overview?experiment={{ experiment.id }}" hx-trigger="every 3s" hx-swap="outerHTML" hx-indicator="#poll-indicator"{% endif %}>
 {% if unavailable|default(false) %}<div class="notice" role="status"><h2>Database unavailable</h2><p>Polling paused. Reload the page after the database connection is restored. Previously shown values may be stale.</p></div>
 {% elif not experiment %}<section class="empty-state"><h2>No experiment data yet</h2><p>Experiments and study execution are managed through the CLI. Persisted experiment records will appear here.</p></section>
+{% elif interactive|default(false) %}
+<section class="interactive-overview"><div class="section-heading"><div><h2>Interactive checks</h2><p>Each stored run can be inspected independently, including unfinished or unusable outputs.</p></div><a class="button-link quiet" href="/runs?experiment={{ experiment.id }}">View runs →</a></div>{{ run_table(recent_runs, compact=true) }}</section>
 {% else %}
 {% if experiment.fabricated %}<p class="fabricated">FABRICATED / TEST DATA — not study results</p>{% endif %}
-<div class="section-heading"><div><h2>{{ experiment.name }}</h2><p class="muted">{{ experiment.state }}{% if experiment.started_at and not experiment.finished_at %} · recorded as started and unfinished; worker activity is not verified{% endif %}</p></div><span id="poll-indicator" class="htmx-indicator" role="status">Loading…</span></div>
+<div class="section-heading"><div><h2>{{ experiment|context_name }}</h2><p class="muted">{{ experiment.state }}{% if experiment.started_at and not experiment.finished_at %} · recorded as started and unfinished; worker activity is not verified{% endif %}</p></div><span id="poll-indicator" class="htmx-indicator" role="status">Loading…</span></div>
 {% if experiment.finished_at and experiment.pending == 0 and report and report.format == 'comparison-evaluation-v1' %}
 <dl class="metrics overview-completed">
 {{ metric('Selected Prompt', report.get('selected_prompt')) }}

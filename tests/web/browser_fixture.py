@@ -5,6 +5,7 @@ Every experiment and output is explicitly marked FABRICATED / TEST DATA.
 """
 from contextlib import contextmanager
 from copy import deepcopy
+import json
 
 from rest_api_checker.evaluation import evaluate
 from rest_api_checker.experiment.request import MODELS
@@ -51,6 +52,7 @@ def experiment(identifier, *, completed=False, started=True):
 
 def run(identifier, result='valid'):
     return dict(id=identifier, experiment_id=1, case=f'FAB-{identifier:03}',
+                service='edx', method='post', path='/items', operation='POST /items',
                 case_id=identifier, model=MODELS[(identifier - 1) % 3], model_id=(identifier - 1) % 3 + 1,
                 prompt=f'P{(identifier - 1) % 3 + 1}', prompt_id=(identifier - 1) % 3 + 1,
                 repetition=(identifier - 1) % 3 + 1, seed=(101,202,303)[(identifier - 1) % 3],
@@ -102,6 +104,17 @@ class FabricatedQueries:
             raise NotFound('Experiment not found')
         return dict(experiment=selected, recent_runs=self.run_rows[:5])
 
+    def latest_interactive_run(self):
+        self.calls.append(('latest_interactive_run', {}))
+        return None
+
+    def adjacent_runs(self, identifier):
+        self.calls.append(('adjacent_runs', dict(id=identifier)))
+        previous = [r for r in self.run_rows if r['id'] < identifier]
+        following = [r for r in self.run_rows if r['id'] > identifier]
+        return dict(previous=max(previous, key=lambda r: r['id']) if previous else None,
+                    next=min(following, key=lambda r: r['id']) if following else None)
+
     def runs(self, experiment_id=None, model_id=None, prompt_id=None, status=None,
              search='', page=1, page_size=50, repetition=None):
         parameters = dict(experiment_id=experiment_id, model_id=model_id, prompt_id=prompt_id,
@@ -145,8 +158,25 @@ class FabricatedQueries:
             row['response']=dict(status_code=422,content_type='application/json',body_file_id=2,observed_at=None)
         if tab=='openapi':
             row['contract']=dict(id=1,openapi_version='3.1.0',file_id=3,http_method='post',path_template='/items')
+        case = dict(service=row['service'], method=row['method'], path=row['path'],
+                    status_code=422, content_type='application/json', reference=reference,
+                    origin='synthetic_inconsistency', metadata={}, case_code=row['case'])
+        files = [dict(label=label, content=content, archive_name='fabricated.json',
+                      sha256=HASH, size_bytes=len(content.encode())) for label, content in (
+            ('Observed response body', json.dumps({'fabricated': HOSTILE})),
+            ('OpenAPI contract', json.dumps({'openapi': '3.1.0', 'info': {'title': HOSTILE}})),
+            ('Original input file', 'FABRICATED input\n'+HOSTILE),
+            ('Reference / explanation', json.dumps({'oracle': reference})),
+            ('Case provenance', json.dumps({'local_path': '/Users/fabricated/private/input.json'})),
+        )]
         return dict(run=row, reference=reference, prediction=prediction, attempts=attempts,
-                    evidence=evidence, technical=dict(id=identifier, sha256=HASH))
+                    evidence=evidence, technical=dict(id=identifier, sha256=HASH),
+                    case_details=case, files=files,
+                    raw_model_response=HOSTILE+'\n  FABRICATED raw output\n' if row['result'] else None,
+                    parser_error=dict(status='invalid', code='CATEGORY_FIELDS') if row['result']=='parser_failure' else None,
+                    runtime_evidence=dict(model_digest=HASH, ollama_version='FABRICATED',
+                        parser_diagnostics=dict(status='invalid', code='CATEGORY_FIELDS')
+                        if row['result']=='parser_failure' else None))
 
     def report(self, experiment_id):
         self.calls.append(('report', dict(experiment_id=experiment_id)))

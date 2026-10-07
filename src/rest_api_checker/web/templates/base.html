@@ -15,8 +15,8 @@
   <aside class="sidebar" aria-label="Main navigation">
     <div class="brand"><a href="/">RestApiChecker</a><span class="brand-short" aria-hidden="true">R</span><span class="brand-caption">RESEARCH WORKSPACE</span></div>
     <nav>
-      {% for key,label,letter,path in [('overview','Overview','O','/'),('evaluation','Evaluation','E','/evaluation'),('runs','Runs','R','/runs'),('data','Data','D','/data')] %}
-      <a href="{{ path }}{% if selected_experiment %}?experiment={{ selected_experiment }}{% endif %}" class="nav-link{% if page == key %} active{% endif %}" {% if page == key %}aria-current="page"{% endif %} title="{{ label }}"><span class="nav-letter" aria-hidden="true">{{ letter }}</span><span class="nav-label">{{ label }}</span></a>
+      {% for key,label,letter,path in [('overview','Overview','O','/'),('runs','Runs','R','/runs'),('evaluation','Evaluation','E','/evaluation'),('data','Data','D','/data')] %}
+      <a href="{{ path }}{% if selected_experiment and not (interactive and key in ['overview','runs']) %}?experiment={{ selected_experiment }}{% endif %}" class="nav-link{% if page == key %} active{% endif %}" {% if page == key %}aria-current="page"{% endif %} title="{{ label }}"><span class="nav-letter" aria-hidden="true">{{ letter }}</span><span class="nav-label">{{ label }}</span></a>
       {% endfor %}
     </nav>
     <div class="sidebar-foot"><p>Read-only interface<br><span>Execution remains CLI-only</span></p><button type="button" id="sidebar-toggle" aria-expanded="true" aria-label="Collapse sidebar">← <span class="nav-label">Collapse sidebar</span></button></div>

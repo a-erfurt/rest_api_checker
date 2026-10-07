@@ -1,0 +1,907 @@
+{
+  "date": "2026-10-07",
+  "scope": "supervisor interactive root CLI; thesis out of scope",
+  "tests": {
+    "baseline": {
+      "passed": 1098,
+      "skipped": 105,
+      "failed": 5,
+      "duration_seconds": 40.31,
+      "log": "/tmp/rac-root-cli-baseline-tests.log",
+      "sql_enabled": false,
+      "real_http_forbidden": true,
+      "baseline_failures": [
+        "tests/test_cli.py::test_json_preflight_truthful",
+        "tests/test_gate_b_closure.py::test_closure_evidence_drift_never_passes",
+        "tests/test_operator.py::test_preflight_actual_backend_stays_blocked",
+        "tests/test_runtime_evidence.py::test_captured_readiness_preserves_limitations_and_author_gate",
+        "tests/test_sensitivity_execution.py::test_final_offline_verification_and_historical_separation"
+      ],
+      "hash_snapshot": "/tmp/rac-root-cli-baseline-file-hashes.json"
+    },
+    "final": {
+      "passed": 1186,
+      "skipped": 105,
+      "failed": 5,
+      "duration_seconds": 40.63,
+      "new_failures": 0,
+      "log": "/tmp/rac-root-cli-final-tests.log"
+    }
+  },
+  "current_runtime_readonly": {
+    "mode": "read-only metadata and request-budget inspection",
+    "generation_calls": 0,
+    "database_writes": 0,
+    "eligible_cases": 12,
+    "models": [
+      "qwen3.6:27b",
+      "gemma3:27b",
+      "mistral-small3.2:24b"
+    ],
+    "ollama_version": "0.40.0",
+    "model_availability": {
+      "gemma3:27b": "installed · not loaded",
+      "mistral-small3.2:24b": "installed · not loaded",
+      "qwen3.6:27b": "installed · not loaded"
+    },
+    "context_policy": "unqualified-conservative-byte-budget-v1",
+    "context_limit": 32768,
+    "output_budget": 512,
+    "checks": [
+      {
+        "case": "DEV-01",
+        "service": "edx",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6692,
+        "budget_units": 18050,
+        "total_with_output": 18562,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-01",
+        "service": "edx",
+        "model": "gemma3:27b",
+        "request_bytes": 6677,
+        "budget_units": 18538,
+        "total_with_output": 19050,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-01",
+        "service": "edx",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6687,
+        "budget_units": 23728,
+        "total_with_output": 24240,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-02",
+        "service": "edx",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6592,
+        "budget_units": 17850,
+        "total_with_output": 18362,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-02",
+        "service": "edx",
+        "model": "gemma3:27b",
+        "request_bytes": 6577,
+        "budget_units": 18338,
+        "total_with_output": 18850,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-02",
+        "service": "edx",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6587,
+        "budget_units": 23528,
+        "total_with_output": 24040,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-03",
+        "service": "edx",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6592,
+        "budget_units": 17850,
+        "total_with_output": 18362,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-03",
+        "service": "edx",
+        "model": "gemma3:27b",
+        "request_bytes": 6577,
+        "budget_units": 18338,
+        "total_with_output": 18850,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-03",
+        "service": "edx",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6587,
+        "budget_units": 23528,
+        "total_with_output": 24040,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-04",
+        "service": "edx",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6591,
+        "budget_units": 17848,
+        "total_with_output": 18360,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-04",
+        "service": "edx",
+        "model": "gemma3:27b",
+        "request_bytes": 6576,
+        "budget_units": 18336,
+        "total_with_output": 18848,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-04",
+        "service": "edx",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6586,
+        "budget_units": 23526,
+        "total_with_output": 24038,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-05",
+        "service": "edx",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6600,
+        "budget_units": 17866,
+        "total_with_output": 18378,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-05",
+        "service": "edx",
+        "model": "gemma3:27b",
+        "request_bytes": 6585,
+        "budget_units": 18354,
+        "total_with_output": 18866,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-05",
+        "service": "edx",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6595,
+        "budget_units": 23544,
+        "total_with_output": 24056,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-06",
+        "service": "edx",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6607,
+        "budget_units": 17880,
+        "total_with_output": 18392,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-06",
+        "service": "edx",
+        "model": "gemma3:27b",
+        "request_bytes": 6592,
+        "budget_units": 18368,
+        "total_with_output": 18880,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-06",
+        "service": "edx",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6602,
+        "budget_units": 23558,
+        "total_with_output": 24070,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-07",
+        "service": "htts",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6733,
+        "budget_units": 18132,
+        "total_with_output": 18644,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-07",
+        "service": "htts",
+        "model": "gemma3:27b",
+        "request_bytes": 6718,
+        "budget_units": 18620,
+        "total_with_output": 19132,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-07",
+        "service": "htts",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6728,
+        "budget_units": 23810,
+        "total_with_output": 24322,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-08",
+        "service": "htts",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6580,
+        "budget_units": 17826,
+        "total_with_output": 18338,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-08",
+        "service": "htts",
+        "model": "gemma3:27b",
+        "request_bytes": 6565,
+        "budget_units": 18314,
+        "total_with_output": 18826,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-08",
+        "service": "htts",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6575,
+        "budget_units": 23504,
+        "total_with_output": 24016,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-09",
+        "service": "htts",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6719,
+        "budget_units": 18104,
+        "total_with_output": 18616,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-09",
+        "service": "htts",
+        "model": "gemma3:27b",
+        "request_bytes": 6704,
+        "budget_units": 18592,
+        "total_with_output": 19104,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-09",
+        "service": "htts",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6714,
+        "budget_units": 23782,
+        "total_with_output": 24294,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-10",
+        "service": "htts",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6684,
+        "budget_units": 18034,
+        "total_with_output": 18546,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-10",
+        "service": "htts",
+        "model": "gemma3:27b",
+        "request_bytes": 6669,
+        "budget_units": 18522,
+        "total_with_output": 19034,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-10",
+        "service": "htts",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6679,
+        "budget_units": 23712,
+        "total_with_output": 24224,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-11",
+        "service": "htts",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6727,
+        "budget_units": 18120,
+        "total_with_output": 18632,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-11",
+        "service": "htts",
+        "model": "gemma3:27b",
+        "request_bytes": 6712,
+        "budget_units": 18608,
+        "total_with_output": 19120,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-11",
+        "service": "htts",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6722,
+        "budget_units": 23798,
+        "total_with_output": 24310,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-12",
+        "service": "htts",
+        "model": "qwen3.6:27b",
+        "request_bytes": 6583,
+        "budget_units": 17832,
+        "total_with_output": 18344,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-12",
+        "service": "htts",
+        "model": "gemma3:27b",
+        "request_bytes": 6568,
+        "budget_units": 18320,
+        "total_with_output": 18832,
+        "native_input_tokens": null,
+        "status": "PASS"
+      },
+      {
+        "case": "DEV-12",
+        "service": "htts",
+        "model": "mistral-small3.2:24b",
+        "request_bytes": 6578,
+        "budget_units": 23510,
+        "total_with_output": 24022,
+        "native_input_tokens": null,
+        "status": "PASS"
+      }
+    ],
+    "maximum_per_model": {
+      "qwen3.6:27b": 18644,
+      "gemma3:27b": 19132,
+      "mistral-small3.2:24b": 24322
+    },
+    "all_passed": true,
+    "database_counts_unchanged": true
+  },
+  "case_descriptions": {
+    "verified_on": "2026-10-07",
+    "source": "Read-only current eligible development catalog",
+    "database_writes": 0,
+    "model_calls": 0,
+    "case_count": 12,
+    "vectors_by_service": {
+      "EDX": [
+        "FNN",
+        "PFN",
+        "PPF",
+        "PPP"
+      ],
+      "Resistance (stored as htts)": [
+        "PFN",
+        "PPF",
+        "PPP"
+      ]
+    },
+    "fallback": "Stored response case; no additional case description is available.",
+    "note": "Only EDX has an eligible FNN case. Resistance development cases currently cover PPP, PFN and PPF. Protected final cases remain excluded.",
+    "cases": [
+      {
+        "case_code": "DEV-01",
+        "service": "EDX",
+        "operation": "POST /edx/validation/body",
+        "title": "Response schema deviation",
+        "description": "Recorded API response. Stored reference: status and media type conform; additional properties are forbidden at body root.",
+        "vector": "PPF"
+      },
+      {
+        "case_code": "DEV-02",
+        "service": "EDX",
+        "operation": "POST /edx/validation/body",
+        "title": "Conforming response",
+        "description": "Constructed control response. Stored reference: status, media type and response body conform to the documented response contract. Controlled change: Content-Type application/json; charset=utf-8 → application/json, response body replaced.",
+        "vector": "PPP"
+      },
+      {
+        "case_code": "DEV-03",
+        "service": "EDX",
+        "operation": "POST /edx/validation/body",
+        "title": "Status-coverage deviation",
+        "description": "Controlled response variant. Stored reference: HTTP status 500 is not covered by the documented response mapping; C2/C3 are not applicable. Controlled change: HTTP status 200 → 500.",
+        "vector": "FNN"
+      },
+      {
+        "case_code": "DEV-04",
+        "service": "EDX",
+        "operation": "POST /edx/validation/body",
+        "title": "Response media-type deviation",
+        "description": "Controlled response variant. Stored reference: status is covered, but Content-Type application/xml fails the documented media-type check; C3 is not applicable. Controlled change: Content-Type application/json → application/xml.",
+        "vector": "PFN"
+      },
+      {
+        "case_code": "DEV-05",
+        "service": "EDX",
+        "operation": "POST /edx/validation/body",
+        "title": "Response schema deviation",
+        "description": "Controlled response variant. Stored reference: status and media type conform; a value has the wrong JSON type at /code. Controlled change: replacement at /code.",
+        "vector": "PPF"
+      },
+      {
+        "case_code": "DEV-06",
+        "service": "EDX",
+        "operation": "POST /edx/validation/body",
+        "title": "Response schema deviation",
+        "description": "Controlled response variant. Stored reference: status and media type conform; additional properties are forbidden at body root. Controlled change: addition at body root.",
+        "vector": "PPF"
+      },
+      {
+        "case_code": "DEV-07",
+        "service": "Resistance (stored as htts)",
+        "operation": "POST /resistance/validation/file",
+        "title": "Conforming empty-schema response",
+        "description": "Recorded API response. Stored reference: status/media type conform and valid JSON is accepted under the documented empty schema.",
+        "vector": "PPP"
+      },
+      {
+        "case_code": "DEV-08",
+        "service": "Resistance (stored as htts)",
+        "operation": "POST /resistance/validation/file",
+        "title": "Conforming empty-schema response",
+        "description": "Constructed control response. Stored reference: status/media type conform and valid JSON is accepted under the documented empty schema. Controlled change: response body replaced.",
+        "vector": "PPP"
+      },
+      {
+        "case_code": "DEV-09",
+        "service": "Resistance (stored as htts)",
+        "operation": "POST /resistance/validation/file",
+        "title": "Conforming response",
+        "description": "Recorded API response. Stored reference: status, media type and response body conform to the documented response contract.",
+        "vector": "PPP"
+      },
+      {
+        "case_code": "DEV-10",
+        "service": "Resistance (stored as htts)",
+        "operation": "POST /resistance/validation/file",
+        "title": "Response schema deviation",
+        "description": "Controlled response variant. Stored reference: status and media type conform; a required property is missing at /detail/0. Controlled change: removal at /detail/0/msg.",
+        "vector": "PPF"
+      },
+      {
+        "case_code": "DEV-11",
+        "service": "Resistance (stored as htts)",
+        "operation": "POST /resistance/validation/file",
+        "title": "Response media-type deviation",
+        "description": "Controlled response variant. Stored reference: status is covered, but Content-Type text/plain fails the documented media-type check; C3 is not applicable. Controlled change: Content-Type application/json → text/plain.",
+        "vector": "PFN"
+      },
+      {
+        "case_code": "DEV-12",
+        "service": "Resistance (stored as htts)",
+        "operation": "POST /resistance/validation/file",
+        "title": "Response schema deviation",
+        "description": "Controlled response variant. Stored reference: status and media type conform; the body is not valid JSON. Controlled change: replacement at body root.",
+        "vector": "PPF"
+      }
+    ]
+  },
+  "smoke": {
+    "experiment_id": 20003,
+    "run_id": 20433,
+    "case": "DEV-02",
+    "model": "mistral-small3.2:24b",
+    "prompt": "P2",
+    "runtime": "0.40.0",
+    "attempts": 1,
+    "parser": "VALID",
+    "duration_ms": 15403,
+    "reference": "PPP",
+    "prediction": "PPF",
+    "result": "INCORRECT",
+    "retries": 0,
+    "spool": "/Users/aerfurt/.local/state/rest-api-checker/live-demo/ff1b2ef78ed34d44890da85732750f07",
+    "web_http_statuses": {
+      "/runs/20433": 200,
+      "/runs/20433?tab=raw": 200,
+      "/runs/20433?tab=attempts": 200
+    }
+  },
+  "preservation": {
+    "baseline_file_count": 13916,
+    "changed_existing_files": [
+      "LIVE_DEMO_CLI_REVIEW.md",
+      "docs/implementation_state.md",
+      "docs/live_demo.md",
+      "src/rest_api_checker/experiment/batch.py",
+      "src/rest_api_checker/live_demo.py",
+      "src/rest_api_checker/live_demo_cli.py",
+      "src/rest_api_checker/operator.py",
+      "src/rest_api_checker/operator_menu.py"
+    ],
+    "missing_files": [],
+    "all_preexisting_db_records_and_archive_bytes_unchanged": true,
+    "before": {
+      "files": {
+        "count": 10259,
+        "sha256": "1cc42d1a38ec7f5e77f237481d570563ee4a900fac00173a5b8d6cfe1e3c6480",
+        "max_id": 19255
+      },
+      "apis": {
+        "count": 4,
+        "sha256": "21c960b1f2fc13fccdbbea4842661c2035468ba19b0105e23c99a1ef031e2733",
+        "max_id": 4
+      },
+      "api_contracts": {
+        "count": 4,
+        "sha256": "e0e7c5889c2b3bfa3935142a66d89b198e3d124a7abb031c7765ebfaef0357ec",
+        "max_id": 4
+      },
+      "api_operations": {
+        "count": 4,
+        "sha256": "a53d1f77c49e721fca46e7b3d035009d1f086a9230c1888bf2da4bfa329dfc45",
+        "max_id": 4
+      },
+      "case_families": {
+        "count": 40,
+        "sha256": "cf7bc05216f395fdbc8f3186f12435b7c07bb42fb8648a8144a327e3bbcbe5bd",
+        "max_id": 10033
+      },
+      "responses": {
+        "count": 115,
+        "sha256": "174766862a4245ff5dccdc6effb3f1f926ef5d56c7a04554aa70bfff0034bfa7",
+        "max_id": 10094
+      },
+      "test_cases": {
+        "count": 115,
+        "sha256": "1ddf13a8c1b60d08cd282ac27785d44f11bffa5995f008f6e617c4297ab35787",
+        "max_id": 10094
+      },
+      "reference_results": {
+        "count": 108,
+        "sha256": "7c12fd5f599d6a55bb133fd86ce55dbd40cd99316da3ae136fe172370ad50b2a",
+        "max_id": 10094
+      },
+      "datasets": {
+        "count": 3,
+        "sha256": "75e9031476a1fc3807cc3aeb86e3f050e980b3091e84263b87fc1083195bf1c6",
+        "max_id": 3
+      },
+      "dataset_cases": {
+        "count": 108,
+        "sha256": "542fa46c2e000ea2fb4b63f22f98699849c7dd827471650efc7c5ced099d502c",
+        "max_id": 10094
+      },
+      "models": {
+        "count": 3,
+        "sha256": "ca21444db22fec121257eded897521d458d342934eb0bbf63112076e0e1d22a5",
+        "max_id": 3
+      },
+      "prompts": {
+        "count": 4,
+        "sha256": "6c19fd22e05d2a601735093965a6ef19e88c9c7a186428b763e359376efb96f4",
+        "max_id": 4
+      },
+      "run_configs": {
+        "count": 6,
+        "sha256": "044a9bbd7bfc96ce0757135a2ac101698e2eb54be64bc0f714aaf71d82fedf09",
+        "max_id": 6
+      },
+      "experiments": {
+        "count": 4,
+        "sha256": "4cbb011de0a770a4b3824fc067de561cc1e1f9565b0407fb665c17474f3bfb2f",
+        "max_id": 10003
+      },
+      "experiment_runs": {
+        "count": 1296,
+        "sha256": "a6b61531f321f90787393b96af8df5f7398a425c89fc86d25e1e10ca97fdbe15",
+        "max_id": 11170
+      },
+      "run_attempts": {
+        "count": 1296,
+        "sha256": "f7b7bf4684c00df6a949fc344e5ec2776009219d3869477b4bdacb9e1c14386d",
+        "max_id": 11170
+      },
+      "predictions": {
+        "count": 913,
+        "sha256": "a0755e8c2a3dfd2cc2b8b8075afc4d2e55af46927475971982a0e0729e1871bb",
+        "max_id": 10872
+      },
+      "evaluation_reports": {
+        "count": 3,
+        "sha256": "355d352268013f6cac9854bb43068f0592678692d285be21a78ddb57092ddfc9",
+        "max_id": 3
+      }
+    },
+    "after_existing_only": {
+      "files": {
+        "count": 10259,
+        "sha256": "1cc42d1a38ec7f5e77f237481d570563ee4a900fac00173a5b8d6cfe1e3c6480",
+        "max_id": 19255
+      },
+      "apis": {
+        "count": 4,
+        "sha256": "21c960b1f2fc13fccdbbea4842661c2035468ba19b0105e23c99a1ef031e2733",
+        "max_id": 4
+      },
+      "api_contracts": {
+        "count": 4,
+        "sha256": "e0e7c5889c2b3bfa3935142a66d89b198e3d124a7abb031c7765ebfaef0357ec",
+        "max_id": 4
+      },
+      "api_operations": {
+        "count": 4,
+        "sha256": "a53d1f77c49e721fca46e7b3d035009d1f086a9230c1888bf2da4bfa329dfc45",
+        "max_id": 4
+      },
+      "case_families": {
+        "count": 40,
+        "sha256": "cf7bc05216f395fdbc8f3186f12435b7c07bb42fb8648a8144a327e3bbcbe5bd",
+        "max_id": 10033
+      },
+      "responses": {
+        "count": 115,
+        "sha256": "174766862a4245ff5dccdc6effb3f1f926ef5d56c7a04554aa70bfff0034bfa7",
+        "max_id": 10094
+      },
+      "test_cases": {
+        "count": 115,
+        "sha256": "1ddf13a8c1b60d08cd282ac27785d44f11bffa5995f008f6e617c4297ab35787",
+        "max_id": 10094
+      },
+      "reference_results": {
+        "count": 108,
+        "sha256": "7c12fd5f599d6a55bb133fd86ce55dbd40cd99316da3ae136fe172370ad50b2a",
+        "max_id": 10094
+      },
+      "datasets": {
+        "count": 3,
+        "sha256": "75e9031476a1fc3807cc3aeb86e3f050e980b3091e84263b87fc1083195bf1c6",
+        "max_id": 3
+      },
+      "dataset_cases": {
+        "count": 108,
+        "sha256": "542fa46c2e000ea2fb4b63f22f98699849c7dd827471650efc7c5ced099d502c",
+        "max_id": 10094
+      },
+      "models": {
+        "count": 3,
+        "sha256": "ca21444db22fec121257eded897521d458d342934eb0bbf63112076e0e1d22a5",
+        "max_id": 3
+      },
+      "prompts": {
+        "count": 4,
+        "sha256": "6c19fd22e05d2a601735093965a6ef19e88c9c7a186428b763e359376efb96f4",
+        "max_id": 4
+      },
+      "run_configs": {
+        "count": 6,
+        "sha256": "044a9bbd7bfc96ce0757135a2ac101698e2eb54be64bc0f714aaf71d82fedf09",
+        "max_id": 6
+      },
+      "experiments": {
+        "count": 4,
+        "sha256": "4cbb011de0a770a4b3824fc067de561cc1e1f9565b0407fb665c17474f3bfb2f",
+        "max_id": 10003
+      },
+      "experiment_runs": {
+        "count": 1296,
+        "sha256": "a6b61531f321f90787393b96af8df5f7398a425c89fc86d25e1e10ca97fdbe15",
+        "max_id": 11170
+      },
+      "run_attempts": {
+        "count": 1296,
+        "sha256": "f7b7bf4684c00df6a949fc344e5ec2776009219d3869477b4bdacb9e1c14386d",
+        "max_id": 11170
+      },
+      "predictions": {
+        "count": 913,
+        "sha256": "a0755e8c2a3dfd2cc2b8b8075afc4d2e55af46927475971982a0e0729e1871bb",
+        "max_id": 10872
+      },
+      "evaluation_reports": {
+        "count": 3,
+        "sha256": "355d352268013f6cac9854bb43068f0592678692d285be21a78ddb57092ddfc9",
+        "max_id": 3
+      }
+    },
+    "after_all": {
+      "files": {
+        "count": 10269,
+        "sha256": "c9bc86f749a2e380a1dfebbd959220dab4157ecd3ffdb0bfebb29a893f0bd648",
+        "max_id": 23059
+      },
+      "apis": {
+        "count": 4,
+        "sha256": "21c960b1f2fc13fccdbbea4842661c2035468ba19b0105e23c99a1ef031e2733",
+        "max_id": 4
+      },
+      "api_contracts": {
+        "count": 4,
+        "sha256": "e0e7c5889c2b3bfa3935142a66d89b198e3d124a7abb031c7765ebfaef0357ec",
+        "max_id": 4
+      },
+      "api_operations": {
+        "count": 4,
+        "sha256": "a53d1f77c49e721fca46e7b3d035009d1f086a9230c1888bf2da4bfa329dfc45",
+        "max_id": 4
+      },
+      "case_families": {
+        "count": 40,
+        "sha256": "cf7bc05216f395fdbc8f3186f12435b7c07bb42fb8648a8144a327e3bbcbe5bd",
+        "max_id": 10033
+      },
+      "responses": {
+        "count": 115,
+        "sha256": "174766862a4245ff5dccdc6effb3f1f926ef5d56c7a04554aa70bfff0034bfa7",
+        "max_id": 10094
+      },
+      "test_cases": {
+        "count": 115,
+        "sha256": "1ddf13a8c1b60d08cd282ac27785d44f11bffa5995f008f6e617c4297ab35787",
+        "max_id": 10094
+      },
+      "reference_results": {
+        "count": 108,
+        "sha256": "7c12fd5f599d6a55bb133fd86ce55dbd40cd99316da3ae136fe172370ad50b2a",
+        "max_id": 10094
+      },
+      "datasets": {
+        "count": 3,
+        "sha256": "75e9031476a1fc3807cc3aeb86e3f050e980b3091e84263b87fc1083195bf1c6",
+        "max_id": 3
+      },
+      "dataset_cases": {
+        "count": 108,
+        "sha256": "542fa46c2e000ea2fb4b63f22f98699849c7dd827471650efc7c5ced099d502c",
+        "max_id": 10094
+      },
+      "models": {
+        "count": 3,
+        "sha256": "ca21444db22fec121257eded897521d458d342934eb0bbf63112076e0e1d22a5",
+        "max_id": 3
+      },
+      "prompts": {
+        "count": 4,
+        "sha256": "6c19fd22e05d2a601735093965a6ef19e88c9c7a186428b763e359376efb96f4",
+        "max_id": 4
+      },
+      "run_configs": {
+        "count": 6,
+        "sha256": "044a9bbd7bfc96ce0757135a2ac101698e2eb54be64bc0f714aaf71d82fedf09",
+        "max_id": 6
+      },
+      "experiments": {
+        "count": 5,
+        "sha256": "b7e9ecf293a4e004c581da011182e930b903af15cd8e30d4d6e360c3980bb8ba",
+        "max_id": 20003
+      },
+      "experiment_runs": {
+        "count": 1297,
+        "sha256": "f5238c2b7f18c4aff50d5050bdab60604cc02cca8f28d8c2bc66598b83932bd3",
+        "max_id": 20433
+      },
+      "run_attempts": {
+        "count": 1297,
+        "sha256": "306b7f71ab423b1b77259d6316058a9d63f3449b8da266a95c526b645eeb54f0",
+        "max_id": 20433
+      },
+      "predictions": {
+        "count": 914,
+        "sha256": "acd12b24b44407547b60699a2d60ee70cc4b4df85d9410f96390659cea6e15da",
+        "max_id": 20139
+      },
+      "evaluation_reports": {
+        "count": 3,
+        "sha256": "355d352268013f6cac9854bb43068f0592678692d285be21a78ddb57092ddfc9",
+        "max_id": 3
+      }
+    },
+    "added_rows": {
+      "files": 10,
+      "experiments": 1,
+      "experiment_runs": 1,
+      "run_attempts": 1,
+      "predictions": 1
+    },
+    "thesis_edited": false,
+    "research_edited": false,
+    "branch": "main",
+    "head": "47fc67d09108ce18e891c0c86ce2195f6aab25d9",
+    "committed": false,
+    "pushed": false,
+    "branch_switched": false
+  },
+  "changed_files": [
+    "LIVE_DEMO_CLI_REVIEW.md",
+    "docs/implementation_state.md",
+    "docs/interactive_root_cli_verification.json",
+    "docs/live_demo.md",
+    "src/rest_api_checker/experiment/batch.py",
+    "src/rest_api_checker/interactive_app.py",
+    "src/rest_api_checker/interactive_menu.py",
+    "src/rest_api_checker/live_adhoc_runtime.py",
+    "src/rest_api_checker/live_demo.py",
+    "src/rest_api_checker/live_demo_cli.py",
+    "src/rest_api_checker/live_presenter.py",
+    "src/rest_api_checker/live_result.py",
+    "src/rest_api_checker/operator.py",
+    "src/rest_api_checker/operator_menu.py",
+    "tests/test_interactive_app.py",
+    "tests/test_live_adhoc_runtime.py",
+    "tests/test_live_presenter.py",
+    "tests/test_live_result.py",
+    "tests/test_root_live_wizard.py"
+  ],
+  "source_sha256": {
+    "LIVE_DEMO_CLI_REVIEW.md": "d51eded76a5f6b7d84377a8cbfe7070ae56991459def3811244e5b98e554aadb",
+    "docs/implementation_state.md": "e6080a30b0675a79cb82271a4931a7c918f63f4fd7fb973997710f2b88abefbf",
+    "docs/live_demo.md": "72abcc63939aa4bfff678af918142fb40061d6d5166f515e68499c46d4f44a67",
+    "src/rest_api_checker/experiment/batch.py": "d454a90e0a162e893a5840d53c4f58504cf8f24f923285a3fefad2083e75b0b0",
+    "src/rest_api_checker/live_demo.py": "162faa443c33df27c5937e8ff6b50475c8f9e56f51d14fcc5fc0697caf57211b",
+    "src/rest_api_checker/live_demo_cli.py": "5e4fb4a24b391eba20d17e290cf0e8af043096d01e8a691b2f807244528fcaa9",
+    "src/rest_api_checker/operator.py": "a3f5729a091a26c3ee48afc088c67cf53c56c9499985eb6712cfdfb14e6165ea",
+    "src/rest_api_checker/operator_menu.py": "90f34d367d44edb61a1ddfe0c33b9ba4daabbd31776beecd0574e56afa90c1c2",
+    "src/rest_api_checker/interactive_app.py": "fbfb4548ad70d0c5e33ce284ad9f7d40ee7ac54749d4b287f57a84f000d07b40",
+    "src/rest_api_checker/interactive_menu.py": "16904778a8c8af2cb575803474dcc3572a2cbe27ec586efdff02d3d60d6fe839",
+    "src/rest_api_checker/live_adhoc_runtime.py": "167981d5110a500b542e18463689e3feee752d34d5e082389b8a1e9d783035e8",
+    "src/rest_api_checker/live_presenter.py": "420bd1b8b315635151d5625d8e8d3889d1abc9cc7129b8e0dc334eae0ad44945",
+    "src/rest_api_checker/live_result.py": "4bb60d5dbe02c659dc1ac47703b5d74a96c4aad895885e9abb9724bde741051d",
+    "tests/test_interactive_app.py": "604ab2c50d0b4bd4f9953589932ab33e1ef79c06a3814ea75e19bcb95b7b02f4",
+    "tests/test_live_adhoc_runtime.py": "cd1c365f4bc57410fda3f309a0454be1fecbf3511b0ec94761ed8777a58b0a5d",
+    "tests/test_live_presenter.py": "797765f25a4e99c49e38a973d8911fc95da348872026357f2b6fcb9e9bcb87dd",
+    "tests/test_live_result.py": "d50f9e3d341af6feb8a39cfdac3f6fc8714505abf44745f076c8878a94d935d8",
+    "tests/test_root_live_wizard.py": "739c1838325d45d1f42c4ef4e1998a7badfceefb31088844da5d493d932dcd21"
+  }
+}

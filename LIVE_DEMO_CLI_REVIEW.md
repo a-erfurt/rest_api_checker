@@ -1,325 +1,386 @@
-# Live-demo CLI audit and implementation review
+# Interactive Web UI and CLI parity — 2026-10-07
 
-Date: 2026-10-07. Repository: `/Users/aerfurt/University/Bachelor/rest_api_checker`.
-Working branch: `chore/unify-rq-figures` (retained; no branch switch, commit or push).
+The existing read-only Web UI now opens the latest interactive result from bare
+`rac` option 3. Post-run **Open in Web UI** retains the exact selected run. This
+pass preserves all earlier work documented below; no branch switch, commit or push
+was performed. The current branch remains `main` at
+`47fc67d09108ce18e891c0c86ce2195f6aab25d9`.
 
-## Outcome and scope
+## Behavior and implementation
 
-**Current live execution is blocked:** metadata-only `/api/version` returned
-Ollama `0.40.0`, but the existing selected Evaluation-v2 binding requires
-`0.35.1`. The existing runtime verifier rejects this version drift before native
-measurement, generation or new demo experiment creation. The three real-database
-offline dry-runs passed. No runtime was restarted/replaced and no binding was
-rewritten to bypass the mismatch. A separately reviewed qualified-runtime setup
-or explicit new qualification is required before the supervisor's real run.
+- Latest lookup is SELECT-only, across explicit live contexts because the schema
+  has no ownership field. It excludes Dataset 3 / Experiment 10003 and prefers
+  attempted/started results over untouched pending repetitions, then newest run ID.
+  Absence falls back gracefully; normal server startup and direct commands remain.
+- The detail page presents metadata, parser status and semantic result separately,
+  the CLI-style C1/C2/C3 table and vectors, category reasons, case details, associated
+  files, exact provider output, previous/next navigation and collapsed technical
+  evidence. It reuses `live_result`, `live_presenter` and `interactive_evidence`;
+  no second parser, Oracle or scoring implementation was added.
+- Actual model digest is shown only from integrity-checked persisted request
+  provenance for a dispatched attempt. Setup metadata is not relabelled as proof
+  that a model was used. Failures/pending outputs never receive inferred verdicts.
+- Evidence links are bound to a run's associated archive entries. No filesystem
+  path input or arbitrary file-ID endpoint is introduced. Jinja escaping, CSP,
+  GET-only routes, SELECT-only queries and rollback-only connections remain.
+  Legacy diagnostic tabs omit private transport/spool metadata; reference excerpts
+  identify their source archive and clearly label any private metadata omission.
+- Runs has readable status/result rows and global browsing with existing filters.
+  Overview adds a latest-run card and avoids selecting unfinished interactive
+  containers by default. Interactive Evaluation shows a run-inspection note and
+  no meaningless P1/P2/P3 tabs. Original experiment/report views remain available.
 
-The new `rac demo run` / `rest-api-checker demo run` provides a small interactive
-service → operation → development case → model → repetitions → confirmation
-flow. It creates a separate `LIVE-DEMO <uuid>` experiment and calls the existing
-request/runner/parser/persistence components. A non-interactive form and a
-read-only offline `--dry-run` use the same selection and planning logic.
+## Tests
 
-This task implements and tests the execution path; it does not perform a real
-LLM demonstration. Frozen Dataset 3, Experiment 10003, final responses/results,
-P2, scientific verdict semantics and both thesis repositories remain protected.
-No migration, new dependency or scientific metric was introduced.
+Comparable starting baseline: **1260 passed / 106 skipped / 5 failed**.
+The first restricted run had three additional temporary-directory permission
+failures; rerunning those three with repository write permission passed all three.
+Final full suite: **1336 passed / 106 skipped / 5 failed**, 41.92 seconds.
+All five failures are unchanged baseline qualification/evidence failures:
 
-See [the operator guide](docs/live_demo.md) for the actual demonstration steps.
+- `tests/test_cli.py::test_json_preflight_truthful`
+- `tests/test_gate_b_closure.py::test_closure_evidence_drift_never_passes`
+- `tests/test_operator.py::test_preflight_actual_backend_stays_blocked`
+- `tests/test_runtime_evidence.py::test_captured_readiness_preserves_limitations_and_author_gate`
+- `tests/test_sensitivity_execution.py::test_final_offline_verification_and_historical_separation`
 
-## Audit evidence: CLI before this change
+The Web suite passes **114 tests**. The final source-archive-label clarification
+was followed by **27 passing interactive Web tests**. Coverage includes latest
+resolution/fallback, exact post-run links, valid correct/incorrect comparisons,
+stale prediction suppression after invalid outcomes, reasons, files/raw text,
+escaping/private metadata, collapsed technical evidence, blank global filters,
+interactive evaluation and unchanged final/full-experiment read-only behavior.
+Optional SQL tests remain skipped without an explicitly configured disposable
+test database. No SQL test fixture was pointed at the live database.
 
-The audit read `AGENTS.md`, the two mandated implementation/protocol skills,
-implementation state, README, CLI/evaluation/operator/web docs, entrypoints,
-query and execution code, scripts and existing tests. The user explicitly
-prohibited branch changes and commits; that overrides the local skill's normal
-commit/feature-branch instructions.
+## Manual verification using existing stored data
 
-The application uses **argparse**, not Typer or Click. Verified console scripts:
+- Actual `.venv/bin/rac` → option **3** opened `/runs/20442`, the latest stored
+  interactive run. The browser-open audit event records that exact URL; the
+  terminal prints `Web UI opened: latest run`.
+- Gemma **20440**, `V2-EDX-002`: VALID, PPP → PPP, CORRECT; EDX operation, model,
+  P2, repetition, duration, reasons and all required sections visible.
+- Incorrect Gemma **20435**, `DEV-01`: VALID, PPF → PPP; the C3 mismatch and
+  INCORRECT status are visibly distinct from parser status.
+- No interactive parser failure currently exists. Stored final run **11078** was
+  inspected read-only: PARSER FAILURE / NO USABLE PREDICTION, PFN reference,
+  prediction dashes, no inferred reasons, exact stored malformed output and
+  CATEGORY_FIELDS diagnostic. Pending **20436** also has no usable prediction.
+- The real shared post-run action was replayed with stored run **20440**, while
+  latest remained **20442**. It opened `/runs/20440` exactly. No new model run
+  was performed to test this action; fabricated execution tests cover creation.
+- **22 live HTTP routes returned 200**, including evidence files, Runs filters,
+  interactive Overview/Evaluation, and Experiment 10003 Overview/Evaluation/Runs/Data.
+  Provider output and text artifacts equal stored content after HTML unescaping;
+  reference metadata uses the explicitly labelled private-field/path projection.
+- Browser inspection at **1366 × 900** and the normal narrower **705 px** panel
+  confirmed layout, correct/incorrect/failure states and evidence navigation.
+  Experiment 10003 has no persisted Web-compatible report: its existing
+  unavailable-report message remains truthful; no report was created.
 
-| Entrypoint | Existing behavior |
+## Preservation and evidence
+
+Before/after read-only snapshots at **10:42–10:54 Europe/Berlin** match across all
+**19 tables**, including schema migrations and the actual content hashes of
+**10,332 archived files**. All historical rows are unchanged, including
+Experiment 10003's **738 runs / 738 attempts / 734 predictions** and Dataset 3's
+**82 memberships**. No DB/schema write, model call, thesis access or scientific
+artifact modification was performed.
+
+[Verification receipt](docs/web_interactive_run_verification.json) contains the
+baseline/final results, checked routes, browser-open targets and preservation
+hashes. Raw local logs and snapshots are in `/private/tmp/rac-web-verification/`
+and `/private/tmp/rac-web-work/`. Pre-existing dirty changes remain in place.
+
+---
+
+# Interactive model digest fix — 2026-10-07
+
+This bounded follow-up fixes only current-model resolution for bare `rac`.
+The earlier UX polish report is retained below. No commit, push, branch switch,
+research/thesis edit, parser change or qualified runtime change was performed.
+
+## Digest policy and implementation
+
+The blocker was `live_adhoc_runtime.capture()`: it required a unique installed tag
+whose digest equalled the historically configured model row. In the current
+Ollama 0.40.0 environment, Gemma and Mistral each have multiple same-tag runner
+manifests. `/api/show` identifies the selected manifest explicitly.
+
+Interactive capture now records that selected installed digest (or the unique
+tag digest on runtimes without selected-manifest metadata). It retains current
+version/show/template evidence and continues to reject ambiguity or changes to
+that captured identity before dispatch. A missing model gets the concise friendly
+error and returns through the existing main-menu error handler.
+
+The shared runner keeps the original source/selection snapshot intact. It builds
+canonical execution requests with the current digest, reuses an unchanged model
+row of that identity or inserts a new row through `Repository.model()`, and binds
+the new run/schedule/proofs/request inventory to it. New model metadata is covered
+by the archived file hashes. The setup additionally records the historical
+selection and current run identity. Interactive menus remain one entry per tag.
+No existing model row or digest is overwritten. Existing strict `load_runtime`,
+`freeze.verify_live`, Main-v2 admission and native context checks are unchanged.
+
+## Tests and one real interactive verification
+
+- Before this fix: **1244 passed / 105 skipped / 5 failed**.
+- After this fix: **1256 passed / 106 skipped / 5 failed** in 43.14 seconds.
+- The same five qualification/evidence baseline failures remain (listed in the
+  earlier report). There are no new failures.
+- **12 new focused tests pass**, including different installed digests, current
+  metadata persistence, unchanged historical rows, normalized digest-row reuse,
+  selected runner manifests, ambiguity, missing-model/main-menu behavior and
+  strict qualified digest rejection. The combined relevant suite passes 115 tests.
+- One new disposable SQL/Web roundtrip test is skipped because `RAC_SQL_TEST_ENV`
+  is not configured. It does not provision or use the live database implicitly.
+- All automated model transports are fabricated. The following real attempt was
+  separately authorized and was executed exactly once through bare `rac`.
+
+Real run, **7 October 2026, 10:28:04–10:28:17 Europe/Berlin**:
+
+| Field | Verified value |
 |---|---|
-| `rac` | Configured launcher, interactive operator menu and forwarding to the authoritative CLI |
-| `rest-api-checker` / `python -m rest_api_checker` | Authoritative CLI |
-| `rest-api-checker-web` | Read-only FastAPI/Uvicorn browser UI |
-| `python -m rest_api_checker.persistence` | Retained administrative compatibility entrypoint |
+| Source | Dataset 3, EDX, `V2-EDX-002`, conforming reference PPP; read only |
+| Model/runtime | Gemma 3 27B, Q4_K_M, Ollama 0.40.0 |
+| Destination | New development Dataset **10006**, `LIVE-ADHOC` Experiment **20009** |
+| Run/attempt | Run **20440**, Attempt **20439**, one repetition / seed 101 |
+| Parser/result | **VALID**, prediction **PPP**, reference **PPP**, **CORRECT** |
+| Duration | **13173 ms**, one model attempt; no retry or repair |
+| Historical model | Row **2**, unchanged digest `a418f5838eaf7fe2cfe0a3046c8384b68ba43a4435542c942f9db00a5f342203` |
+| Current model | New row **4**, digest `8dda00f4f636a0ae610bf6eae134d59de477256140276ec847510ce898cf910c` |
+| Current metadata | Exact show evidence in archive file **23099**, bound into the setup closure |
 
-All root/group/leaf help was actually executed with Python bytecode writing
-disabled. [The full successful pre-change captures](docs/live_demo_cli_help_before.md)
-contain 76 invocations, including module/script help. Two additional initial
-probes used invalid Main-v2 names; the verified replacements were
-`import-dataset` and `plan-template`. No unverified name appears in the demo guide.
-Help calls performed no SQL or runtime work.
+The menu correctly displayed Gemma as installed. The result appeared immediately
+and was then reopened through **Browse previous results**. The DB-backed Web app
+returned HTTP 200 for `/runs?experiment=20009`, `/runs/20440`, the raw tab and the
+attempts tab; the detail HTML contains the case, Gemma and the stored explanation.
+These Web checks used the actual application routes and live SQL through
+`TestClient`; no web server was listening on port 8000, and no browser rendering
+or screenshot is claimed.
 
-Compact complete core command tree **before** the addition:
+## Preservation evidence and concurrent activity
 
-```text
-rest-api-checker
-  db status | version | init | create-test | destroy-test
-  db migrate --expected-current N
-  db backup --server-path PATH | restore-test --server-path PATH
-  db import-dev --staging PATH --release PATH | import-prompts
-  dataset list | cases DATASET_ID | inventory
-  experiment list | show ID | schedule ID | progress ID
-  experiment run ID --spool PATH [--fabricated]
-  experiment resume ID --spool PATH [--fabricated]
-  experiment reconcile --spool-file PATH [--fabricated]
-  experiment demo [--keep] [--delay SECONDS] [--export NEW_DIRECTORY]
-  experiment run-batch ID --dataset-id ID [--spool PATH] [--resume] [--dry-run | --yes]
-  experiment batch-status ID --dataset-id ID
-  experiment demo-batch [--delay SECONDS]
-  evaluate comparison EXPERIMENT_ID | list | show REPORT_ID
-  evaluate export REPORT_ID --output NEW_FILE
-  inspect run RUN_ID | attempts RUN_ID
-  preflight [--experiment-id ID]
-  service capture --base-url URL --execution-origin ORIGIN --target-id ID
-      --contract-id ID --path PATH --input PATH --case-id ID [--filename NAME]
-```
+Before/after content checks confirm **Experiment 10003**, its **738 runs**, **738
+attempts** and **734 predictions**, **Dataset 3** and its **82 memberships**, all
+**three historical model rows**, and all **10298 pre-existing archived files**
+are unchanged. All original API/contract/response/case/reference/prompt/config
+rows are unchanged as well. The new run targets only its separate context and
+new model identity. No schema migration or destructive database action occurred.
 
-Common root/leaf options: `--env-file`, `--database`, `--root`, `--research`,
-`--json`, `--plain`, `--verbose`. `rac` additionally provides `configure`,
-`db start`, `db stop`, `web [--open]` and configured local defaults. Its existing
-menu could inspect data, experiments and reports; its experiment menu predates
-real batch dispatch and exposes only status plus the fabricated demo.
+The entire live database was not idle during this work window: pre-existing
+interactive run 20438 / experiment 20007 completed at 10:24:34, and separate
+interactive experiment 20008 ran at 10:24:57–10:25:09, before this task's single
+Gemma attempt. The initial global snapshot therefore differs outside the protected
+scope as well; a claim that every pre-existing database row is unchanged would be
+incorrect. These observations are not additional attempts performed by this fix.
 
-Additional verified module surfaces:
+The exact transcript, test logs, before/after snapshots, protected-scope hashes,
+Web response HTML and verification receipt are under `/tmp/rac-digest-fix/`.
+Production edits are confined to `live_adhoc_runtime.py` and `live_demo.py`, with
+two new targeted test files and the two requested documentation files. Earlier
+uncommitted changes are preserved.
 
-- `accepted_comparison` and `sensitivity_execution`: artifact-gated `prepare`,
-  `run`, `reconcile` actions, not a general single-case wizard.
-- `interface_pilot_v2` and `interface_pilot_v2_live`: the bounded two-DEV-case
-  interface preparation/pilot, with explicit input/runtime/context artifacts.
-- `main_v2`: `integrity`, `freeze-template`, `freeze`, `prepare`, `import-dataset`,
-  `plan-template`, `materialize`, `execution-template`, `authorize-execution`.
-- `main_v2_context`: explicitly confirmed native render/tokenize preparation.
-- `development_dataset`: separate development artifact materialization.
-- `tools/runtime_qualification/capture.py`, final-evaluation bases/candidates
-  preparation and SQL environment probe: argparse help captured.
+---
 
-No top-level `scripts/` directory exists. `tools/main_v2/launch.sh` is a real Main
-launcher with status/preflight then dispatch. It is not a demo setup command.
-Historical fixed-stage Gate-B and sensitivity scripts lacking an argument parser
-were inspected only: passing `--help` to them could execute their work.
+# Interactive CLI UX polish review — 2026-10-07
 
-## What already worked, and the actual gaps
+This pass polishes the existing bare `rac` flow for compact supervisor-facing use.
+It preserves the pre-existing working tree, direct commands, parser semantics and
+scientific data. No branch switch, commit or push is part of this task. The guide
+is [docs/live_demo.md](docs/live_demo.md); its screen examples are conceptual text,
+not fabricated screenshots or claims of measured output.
 
-| Area | Audit finding and implementation decision |
-|---|---|
-| Single run | No general live single-case CLI existed. `experiment run/resume` use fabricated providers and reject real execution. Add a separate demo flow. |
-| Scheduling | `experiment schedule` reads an existing schedule. New plans must use `Repository.plan_experiment`; do not pretend the command creates runs. |
-| Real batch | Main-v2 `run-batch` requires an exact authorized persisted setup; it is unsuitable for rewriting the final schedule into a subset. Reuse its request preparation and common attempt executor underneath a separate demo setup. |
-| Data selection | Generic API/contract/operation/case/membership/reference entities already exist. Join these records dynamically; no fixed EDX/Resistance menu. |
-| Model/prompt/config | `dataset inventory` already reads models/prompts/configurations. Reuse existing supported model records, exact P2 bytes and compatible stored D07 configurations. |
-| Result inspection | Existing inspect projection already compares prediction with the bound reference. Human output omitted explicit vector correctness and persistent attempt/raw IDs. Extend presentation only. |
-| Raw evidence | Old verbose inspect rebuilt a v1 request. Add a read-only stored-evidence wrapper so v2 inspection does not depend on reconstruction. |
-| Evaluation | `evaluate comparison` implements the full historical 324-slot comparison design, not arbitrary demo subsets. Keep operational summaries and existing report reads. |
-| Simulation | `experiment demo-batch` has no SQL/model access; `experiment demo` owns disposable SQL but fabricates outputs. Keep these clearly distinct from live execution. |
-| Web | Existing `/runs/{id}` detail links are sufficient; no web modification is needed. |
+## Current behavior
 
-README and earlier CLI/operator docs contain implementation-era statements such
-as “real runs have not started”. They are historical descriptions, not evidence
-of the current database. This change adds a current guide without rewriting
-historical qualification documents.
+- Compact Rich main menu, bold headings, dim supporting text and consistent status badges.
+- Dynamic service labels **EDX** and **Resistance**, without exposing storage aliases; one-line method/path/OpenAPI operation descriptions.
+- Fully referenced final evaluation cases are the root default. `s` opens other case sets with dataset names and versions; generated interactive contexts are not offered as sources.
+- Case-type filtering precedes the case list: conforming, C1, C2, C3, controls/formatting or all cases. References determine categories; metadata only identifies recorded controls and adds descriptions.
+- Short case entries with readable key, category, vector and one concise explanation. Missing descriptive metadata uses an HTTP/Content-Type/reference fallback.
+- `d NUMBER` opens C1/C2/C3 reference details, overall conforming/inconsistent status and available files. Eight items per page, search, paging and back remain available.
+- Model names use readable labels and stored quantization; installation/loading state appears only when available. One repetition is the default; 1–3 remain supported.
+- A compact confirmation table keeps P2 automatic and explains that results are stored separately. Enter declines without allocation or generation.
+- One result panel shows duration, C1/C2/C3 comparison, vectors, correctness and parser status. Reasons, IDs, attempt metadata and recovery paths require explicit details.
+- Parser failures show **NO USABLE OUTPUT** and **No prediction was inferred.** Stale stored prediction fields cannot produce a verdict for a failed run.
+- Multiple repetitions use a compact table and one coverage/correctness/agreement summary per model.
+- Post-run options provide details, raw response, case files, Web UI, another case, main menu and exit. Previous-result browsing uses the same read-only views.
 
-## Implementation and boundaries
+Normal interactive screens do not use the historical “live demo” or “Live/ad-hoc”
+wording. Internal formats, archive paths and existing command names remain intact
+where required for compatibility and provenance.
 
-The catalogue only offers fully referenced development datasets and excludes
-Dataset 3, all evaluation datasets and cases also present in an evaluation
-dataset. Services and operations are discovered through existing relationships.
-The current observed service named `htts` owns the Resistance multipart endpoint;
-its stored service identity is retained rather than silently renamed.
+## Case evidence and interpretation
 
-A dry-run builds and validates requests from existing data and local runtime
-binding files without contacting Ollama or writing an experiment, attempt,
-prediction or spool. Runtime/model readiness is checked only after execution
-confirmation. Non-interactive/JSON selection requires `--case-id` and at least
-one `--model-id`; non-interactive execution additionally requires `--yes`.
-`--yes` never selects an arbitrary first case/model. Multiple runtime bindings
-require an explicit choice; a sole discovered binding is shown in the summary.
+Case categories come from stored reference vectors; construction intent, family
+names and model output cannot change reference truth. The presenter combines only
+available stored response/provenance/reference fields and operation-specific
+OpenAPI metadata. It does not add a hard-coded case-ID explanation table or infer
+broader scientific conclusions from descriptions.
 
-The runner preserves P2, D07, `format_json`, the 512-token output budget and
-repetition seeds 101/202/303. It measures the exact native template/token context
-before creating a new experiment, rechecks source identity and then uses the
-existing sequential runner, one-attempt executor, Ollama transport, strict parser,
-spool and repository. Reference labels and case/fault metadata are not injected
-into model input. Native context measurement can load a model; it begins only
-after confirmation.
+Files are loaded through the existing read-only archive/query layer with byte
+integrity checks. Available associations can include response body, OpenAPI
+contract, original input/request, reference explanation, case provenance and raw
+model output. Missing optional artifacts are omitted. Original inputs require an
+explicit provenance association plus a resolvable stored identity/hash; filesystem
+paths are not guessed.
 
-Every setup identifies `live_demo=true`, `scientific_evaluation=false` and a
-unique `LIVE-DEMO` name. The existing schema stores it with kind `comparison`;
-the explicit setup marker/name/notes distinguish its non-scientific purpose.
-No new schema discriminator or evaluation rule is introduced. The command accepts
-no existing experiment/run target. Dataset 3 and Experiment 10003 are also
-explicitly guarded.
+Viewing displays literal stored content with terminal control characters escaped,
+syntax highlighting and a pager where available. Non-UTF-8 content is represented
+explicitly as base64. Reference/provenance JSON may be projected through its
+stored source pointer. File details disclose archive name, SHA-256, bytes and
+pointer without pretending database bytes are local files. Viewing does not modify
+the archive or repair parser failures.
 
-Parser failures remain final failures and have no semantic verdict. Technical
-or ambiguous outcomes are preserved and require inspection; no automatic retry,
-request repair, format fallback or resume mechanism is added. Cancellation before
-execution produces no run. After materialization, recovery output retains the new
-experiment/run IDs and spool location even when execution cannot finish.
+## Runtime and final-source isolation
 
-The result reader is additive because `persistence/inspection.py` contributes to
-the evaluator artifact hash. That original file remains byte-identical. The
-wrapper reuses its non-raw projection and reads the exact archived request and
-lossless provider envelopes for verbose output. Human presentation now adds
-parser state, yes/no/N/A exact-vector correctness, Attempt-ID and raw provider
-file ID, while retaining per-category correctness/reasons/duration.
+Root selection requests `plan(..., adhoc=True)`. Planning is read-only; optional
+version/tags/loaded-model probes are nonblocking metadata reads and do not load
+models. A different runtime version produces one short notice. Current installed
+identity capture and subsequent drift checks remain enforced after explicit
+confirmation; historical digest matching applies to qualified paths, as described
+in the later digest-fix verification above.
 
-## Files changed for this task
+For an evaluation source, `_execution_context` creates a new development dataset
+and membership only after confirmation and successful runtime/context checks.
+The membership reuses the selected case/reference; the original Dataset 3 or
+other evaluation membership is not updated. The new experiment targets only the
+new destination. Source bindings remain captured and checked before dispatch.
 
-| File | Purpose |
-|---|---|
-| `src/rest_api_checker/cli.py` | Register `demo run`, dispatch/presentation and stored-evidence inspection wrapper |
-| `src/rest_api_checker/live_demo.py` | Dynamic eligibility, existing-input plan, separate setup and shared runner integration |
-| `src/rest_api_checker/live_demo_cli.py` | Interactive/non-interactive selection, confirmation, plan and result links |
-| `src/rest_api_checker/live_demo_inspection.py` | Read archived requests/provider envelopes without reconstruction |
-| `src/rest_api_checker/terminal.py` | Explicit parser/vector/attempt/raw identity display |
-| `tests/test_live_demo.py` | Offline runner/eligibility/evidence/safety regression coverage |
-| `tests/test_live_demo_cli.py` | Wizard choices, confirmation, non-TTY/JSON and dry-run coverage |
-| `tests/test_live_demo_inspection.py` | Stored bytes, unattempted states, IDs and verdict presentation |
-| `tests/persistence/test_live_demo.py` | Opt-in disposable SQL round trips with fabricated provider/native receipts |
-| `docs/live_demo.md` | Operator guide, exact commands, recovery and short demonstration |
-| `docs/live_demo_cli_help_before.md` | Actual successful pre-change help captures |
-| `docs/live_demo_verification.json` | Final test, read-only smoke and preservation evidence |
-| `docs/implementation_state.md` | Bounded demo capability and current runtime blocker |
-| `LIVE_DEMO_CLI_REVIEW.md` | This audit/implementation report |
+Internal setups retain `live-adhoc-setup-v1`, `scientific_evaluation=False` and
+`gate_b_complete=False`, with exact request hashes and current runtime/template
+evidence. The operational byte-budget guard remains distinct from native-token
+qualification. The canonical runner, transport, parser, archive and retry policy
+remain authoritative; there is no automatic retry or reconstruction of failed
+model outputs.
 
-Existing changes in `pyproject.toml`, `uv.lock` and figure/analysis files predate
-this work and are not part of the demo implementation. No user file was restored
-or reset. No thesis, research-source, prompt, parser, renderer, scientific
-request-builder, repository schema or frozen-evaluation artifact edit is intended.
+The existing strict `rac demo run` path remains development-only and rejects final
+source cases. Its qualified runtime/native-token checks, explicit arguments and
+offline `--dry-run` semantics are preserved. Scientific/final commands retain
+their guards. No thesis repository, methodology, final reference or archived
+final response/result is an edit target.
 
-## Current data observed read-only
+## Files affected by this polish
 
-A read-only scientific-database inspection on 2026-10-07 found:
+The checkout already contained the root wizard and related uncommitted changes
+before this pass. This list describes polish scope, not a clean-base Git diff:
 
-| Item | Observed value |
-|---|---|
-| Eligible development memberships | 12, in Dataset 1 |
-| Service `edx` | Memberships 1–6; `/edx/validation/body` |
-| Service `htts` (Resistance endpoint) | Memberships 7–12; `/resistance/validation/file` |
-| Model 1 | `qwen3.6:27b` |
-| Model 2 | `gemma3:27b` |
-| Model 3 | `mistral-small3.2:24b` |
-| Prompt P2 | ID 2 |
-| Compatible D07 configs | ID 1 for Qwen; ID 2 for Gemma/Mistral |
-| Protected Dataset 3 | 82 memberships |
-| Protected Experiment 10003 | 738 runs, 738 attempts, 734 predictions |
+- `src/rest_api_checker/interactive_app.py` — compact root/result/browse flow and file actions.
+- `src/rest_api_checker/interactive_menu.py` — Rich menu presentation and optional actions.
+- `src/rest_api_checker/interactive_evidence.py` — read-only details and available artifact viewing.
+- `src/rest_api_checker/live_demo_cli.py` — final-source selection, categories, short confirmation and output suppression.
+- `src/rest_api_checker/live_demo.py` — read-only final-source catalog and separate execution destination.
+- `src/rest_api_checker/live_presenter.py` — concise service, operation, model and reference-derived case labels.
+- `src/rest_api_checker/live_result.py` — compact single/multiple results and explicit technical details.
+- `src/rest_api_checker/live_adhoc_runtime.py` — compact informational runtime notice.
+- `tests/test_interactive_app.py`, `tests/test_root_live_wizard.py`, `tests/test_live_demo_cli.py` — root/integration/direct-command checks.
+- `tests/test_interactive_case_sources.py` — final defaults and isolated execution with fabricated repositories.
+- `tests/test_interactive_evidence.py`, `tests/test_live_presenter.py` — available evidence, integrity and metadata/reference presentation.
+- `tests/test_interactive_output_boundaries.py` — root output deduplication and hidden/explicit provenance checks.
+- `tests/test_live_result.py`, `tests/test_live_adhoc_runtime.py` — result states, 80/100-column output and compact notice.
+- `docs/live_demo.md`, `LIVE_DEMO_CLI_REVIEW.md` — guide and review.
 
-These are observed IDs, not hard-coded application assumptions. The pre-change scientific-state record includes table counts and
-protected row/archive identity hashes for the final preservation comparison. Live generation and native context measurement were not performed by
-this task. The metadata-only runtime check explicitly returned a version-drift blocker:
-active `0.40.0`, qualified `0.35.1`. The binding file SHA-256 used by all three
-successful dry-runs was
-`5b8b09919e8c66c0ed4ce903ab7d7c21295807ec65559d2dbcca97f38ab2da41`.
+Pre-existing modifications such as the operator dispatch and optional batch
+context-proof factory are retained; their original implementation history is
+summarized below. No unrelated cleanup or commit is implied by this file list.
 
-The actual dry-run receipts reported `status=DRY RUN`, `model_calls=0`, `writes=0`
-and `runtime_contacted=false`:
+## Verification for this polish pass
 
-| Existing member/case | Model IDs | Repetitions | Planned runs |
-|---|---|---|---|
-| 2 / DEV-02 / PASS-PASS-PASS | 1 | 1 | 1 |
-| 7 / DEV-07 / PASS-PASS-PASS | 3 | 1 | 1 |
-| 3 / DEV-03 / FAIL-NOT_APPLICABLE-NOT_APPLICABLE | 1, 2, 3 | 3 | 9 |
+Pre-change full-suite baseline: **1183 passed, 105 skipped, 8 failed**. Five
+failures are the previously recorded qualification/evidence baseline issues;
+three additional `main_v2` launcher failures were caused by sandbox execution
+permissions. Baseline logs are under `/tmp/rac-ux-polish`.
 
-These checks exercised current SQL catalogue and request preparation only.
-They do not establish native context measurement or live provider readiness.
+Final full suite: **1244 passed, 105 skipped, 5 failed** in 40.59 seconds.
+The five failures are exactly the pre-existing qualification/evidence failures
+listed below. The three additional baseline launcher failures passed once their
+fabricated temporary test directories could be created. No new failure remains.
+`git diff --check` and direct `rac --help` / `rac demo run --help` passed.
 
-## Verification and known limits
+Current logs and checks are stored under `/tmp/rac-ux-polish`:
 
-- The original sandbox baseline had 1014 passed, 103 skipped and 8 failed.
-  Three wrapper tests subsequently passed with their required process permission;
-  five existing failures remain. They are:
-  `test_cli::test_json_preflight_truthful`,
-  `test_gate_b_closure::test_closure_evidence_drift_never_passes`,
-  `test_operator::test_preflight_actual_backend_stays_blocked`,
-  `test_runtime_evidence::test_captured_readiness_preserves_limitations_and_author_gate`,
-  `test_sensitivity_execution::test_final_offline_verification_and_historical_separation`.
-  Historical source qualification, including pre-existing `pyproject.toml` drift,
-  is not silently repaired by changing frozen evidence or weakening tests.
-- The result-display change alone passes all 8 new offline tests. Its combined
-  CLI/operator/terminal/web run passed 178 tests and reproduced two existing
-  preflight expectations: tests expect BLOCKED while source-bound historical
-  preflight reports FAIL for existing `experiment/batch.py`/`pyproject.toml` drift.
-- Final full suite: **1098 passed, 105 skipped, 5 failed** in 42.02 seconds.
-  The five failures are exactly the baseline failures listed above; zero new
-  failures and zero test errors. No historical hashes or test expectations changed.
-- New offline coverage: **81 passing tests** (42 runner, 31 wizard/error handling,
-  8 stored-result tests). Tests cover confirmation, protected data, exact request
-  identities, parser/runtime/config drift, missing predictions, no hidden retries,
-  and retaining recovery IDs after uncertain commits or failed setup reads.
-  Fabricated collaborators and the global HTTP guard prevent real inference.
-- The two new SQL round-trip tests are opt-in and were intentionally skipped:
-  dedicated credentials for the separate disposable SQL test instance were not
-  available, and the user explicitly authorized omitting those optional tests.
-  No disposable SQL integration acceptance is claimed. Read-only checks on the
-  scientific database are a different verification layer.
-- No successful real model demo is claimed. The active runtime version mismatch
-  remains a verified operational blocker.
-- The supported model roster and fixed configuration remain bounded by the
-  current scientific request builder. Dynamic service discovery is not automatic
-  scientific qualification of every possible API/model/runtime.
-- The existing `rac` top-level menu is retained. The direct live-demo entrypoint is
-  `rac demo run`; the historical Experiments submenu still offers the fabricated
-  presentation flow.
-- An interrupted demo has no automatic resume command. Preserve IDs/spool and
-  inspect first. A deliberate fresh demo is a new experiment.
-- Demo runs have no newly created comparison report; the web Evaluation page may
-  state that no persisted report is available while run details remain usable.
+- `baseline-tests.log`: original sandbox baseline.
+- `focused-tests.log`: 211 focused tests passed before the final wrapping/output-boundary additions.
+- `verified-final-tests.log`: final complete suite including those additions.
+- `launcher-permission-check.log`: the three fabricated launcher tests passed.
+- `manual-final.txt`: recorded bare-CLI navigation against the existing database.
+- `verification.json`, `before-files.json`, `before-db.json`, `after-db.json`: scope and preservation evidence.
 
-## Final preservation and read-only checks
+The fixture forbids real HTTP/model inference throughout the test suite. SQL
+integration tests remain skipped without disposable-database authorization.
+Final-source execution was exercised with fabricated repositories/transport,
+including source drift, parser failure, multiple repetitions and preservation of
+existing cases, references, membership, experiments and archive bytes. A new final
+case was not actually dispatched to a model in this pass.
 
-[Machine-readable verification](docs/live_demo_verification.json) records the final
-results, runtime blocker, actual dry-runs and current source hashes. Three explicit
-SQL-backed previews and a real interactive terminal preview passed with zero
-writes/runtime calls. Existing `db status`, inventory, experiment progress,
-run inspection and verbose attempts commands returned exit 0. The read-only web
-routes `/runs/10433`, `/runs/10433?tab=raw` and `?tab=attempts` returned HTTP 200
-through the actual app and database; no server lifecycle action was needed.
+Completed manual checks (terminal width 80):
 
-All 13,905 pre-existing repository files were hash-compared. Only the intended
-CLI, terminal presentation and implementation-state files changed. Existing dirty
-analysis/dependency files and all frozen source/evidence files are unchanged.
-All 137 German thesis files and all 406 English thesis files are byte-identical.
-The branch and HEAD are unchanged; no commit or push occurred.
+1. Bare main menu and dynamic EDX/Resistance service/operation selection: passed.
+2. EDX C1/C2/C3/conforming filters and Resistance conforming/C2 filters: passed.
+3. Case C1/C2/C3 details, actual response/input files and full archive details: passed.
+4. Model availability, default repetition, compact confirmation and decline: passed.
+5. Existing final valid result, explicit reasons/IDs, files/raw output and return paths: passed.
+6. Existing final parser failure (`V2-RES-020`): no inferred prediction, raw evidence accessible; passed.
+7. Main-menu/exit navigation and direct help: passed. Web UI root/deep-link routing is regression-tested; no new web server was needed.
 
-Protected Dataset 3, its 82 memberships, Experiment 10003, its 738 runs,
-738 attempts and 734 predictions have identical before/after row fingerprints.
-All scientific table counts and all 10,259 archive identities are unchanged.
-A read-only SHA-256 check of every stored archive blob found **zero integrity
-mismatches**. No real generation or native measurement was performed.
+The inspected run and parser-failure screens used stored results only. No new
+model call or database write occurred. All **19 database tables / 14331 rows**
+have identical before/after content fingerprints, including archive bytes,
+Dataset 3, Experiment 10003 and reference/prediction records. Existing local
+`artifacts/` files also retained their hashes. Files outside the listed polish
+scope retained their starting hashes; pre-existing operator, batch and
+implementation-state edits were preserved. Thesis repositories were not touched.
+No commit, push or branch switch was performed.
 
-Reproduction of the offline test suite uses the existing environment:
+The visual evidence is actual terminal text plus Rich output checks at 80/100
+columns; no native-terminal screenshot or screen-reader compliance claim is made.
+The guide's screen examples remain explicitly conceptual.
 
-```sh
-PYTHONDONTWRITEBYTECODE=1 env -u RAC_SQL_TEST_ENV -u RAC_SQL_APPLICATION_ENV \
-  -u RAC_SQL_APP_TEST_ENV -u RAC_SQL_TEST_BACKUP_DIR \
-  .venv/bin/python -m pytest -q -p no:cacheprovider
-```
+## Earlier implementation history — not re-executed by this pass
 
-## Verified command card and 5–10-minute script
+The prior root-wizard implementation recorded **1186 passed, 105 skipped, 5
+failed**, from an earlier **1098 passed, 105 skipped, 5 failed** baseline. Its
+machine-readable record is `docs/interactive_root_cli_verification.json`. Those
+figures and the following smoke evidence describe the earlier implementation,
+not the new final-case default.
 
-```sh
-cd /Users/aerfurt/University/Bachelor/rest_api_checker
-export DYLD_LIBRARY_PATH=/opt/homebrew/opt/openssl@3/lib
-.venv/bin/rac db status
-.venv/bin/rac demo run --dry-run
-.venv/bin/rac demo run
-.venv/bin/rac inspect run RUN_ID
-.venv/bin/rac inspect attempts RUN_ID --verbose --json
-.venv/bin/rac experiment progress EXPERIMENT_ID
-.venv/bin/rac experiment schedule EXPERIMENT_ID
-.venv/bin/rac web --open
-```
+The five documented baseline failures were:
 
-Before the meeting, confirm available SQL/runtime/model and rehearse the selection
-without generation. Show a stored development case and reference (1 minute), the
-dry-run summary (1–2 minutes), then authorize one real run (runtime-dependent).
-Compare parser status and the three categories (1–2 minutes), open the printed
-`http://127.0.0.1:8000/runs/RUN_ID` link and raw/attempt evidence (1–2 minutes).
-Finish with `experiment progress` to show the separate demo's completed/pending
-counts. Model cold-start can exceed this timing; no latency promise is made.
+- `test_cli.py::test_json_preflight_truthful`
+- `test_gate_b_closure.py::test_closure_evidence_drift_never_passes`
+- `test_operator.py::test_preflight_actual_backend_stays_blocked`
+- `test_runtime_evidence.py::test_captured_readiness_preserves_limitations_and_author_gate`
+- `test_sensitivity_execution.py::test_final_offline_verification_and_historical_separation`
 
-**DO NOT RUN** a Main dispatch/resume/materialization command or
-`tools/main_v2/launch.sh` against Experiment 10003 for this demonstration. Do not
-modify Dataset 3, final outcomes or parser failures. `evaluate comparison` is not
-a demo-subset aggregation command. Existing reports remain available through
-`evaluate list`, `evaluate show REPORT_ID` and non-overwriting `evaluate export`.
+The earlier pass performed one authorized real smoke run: EDX DEV-02,
+`mistral-small3.2:24b`, P2, one attempt, Ollama 0.40.0; experiment 20003/run 20433,
+15.403 seconds. Parser VALID, reference PPP, prediction PPF, result INCORRECT.
+No repair or retry occurred. Its details/raw/Web views were checked, and the
+recovery directory was
+`~/.local/state/rest-api-checker/live-demo/ff1b2ef78ed34d44890da85732750f07/`.
+
+The prior preservation record reported identical fingerprints for all existing
+rows/archive bytes, including Dataset 3 and Experiment 10003 (738 runs, 734 valid
+outputs and four retained parser failures). That run added one experiment, run,
+attempt and prediction plus ten archive rows, with no new membership or report.
+Its 36 development-case/model combinations also received read-only byte-budget
+checks. These historical checks do not establish coverage for every final case.
+
+The earlier implementation began on a clean `main`; this polish began with its
+changes already present. No old working-tree snapshot is restored by this pass.
+Thesis and research repositories remain outside implementation scope.
+
+## Remaining limitations
+
+- Five pre-existing qualification/evidence tests still fail; this presentation pass does not change those scientific/runtime artifacts.
+- In explicit plain/no-color mode, content remains readable but bypasses the interactive pager.
+- Execution on a final source is covered by fabricated integration tests, not a new real model run.
+
+- Supported model discovery remains limited to the three configured model names; it does not qualify arbitrary new models or contracts.
+- Interactive runtime/context safety is operational, not scientific runtime qualification. Large inputs or metadata drift can block a run.
+- Final cases are read-only sources; selecting one does not authorize altering the scientific evaluation or relabelling its references.
+- Input/request artifacts appear only when their real association resolves in the archive. A historical provenance path alone is insufficient.
+- A parser-valid answer can be incorrect; the UI preserves that distinction and never repairs invalid outputs.
+- Web UI occupies the terminal. Occupied ports are reported without stopping another listener; no background server manager is added.
+- Interrupted or ambiguous attempts are not retried/resumed automatically. Explicit details retain their available traceability.
+- Optional SQL tests remain skipped without disposable credentials. Baseline failures and final verification limits must remain visible in the completion record.

@@ -54,21 +54,34 @@ def _page(page, page_size):
     return (page - 1) * page_size
 
 
+# The schema has no user/owner field. The existing explicit live-context names
+# identify tool-created interactive work; final data can never become latest.
+INTERACTIVE_CONTEXT = """e.id<>10003 AND e.dataset_id<>3 AND
+    (e.name LIKE 'LIVE-ADHOC %' OR e.name LIKE 'LIVE-DEMO %')"""
+INTERACTIVE_COLUMN = 'CAST(CASE WHEN '+INTERACTIVE_CONTEXT+' THEN 1 ELSE 0 END AS BIT) AS is_interactive'
+
 RUN_FROM = '''FROM dbo.experiment_runs r
+    JOIN dbo.experiments e ON e.id=r.experiment_id
     JOIN dbo.dataset_cases dc ON dc.id=r.dataset_case_id
+    JOIN dbo.test_cases tc ON tc.id=dc.case_id
+    JOIN dbo.api_operations op ON op.id=tc.operation_id
+    JOIN dbo.api_contracts ac ON ac.id=op.contract_id
+    JOIN dbo.apis api ON api.id=ac.api_id
     JOIN dbo.models m ON m.id=r.model_id
     JOIN dbo.prompts p ON p.id=r.prompt_id
     LEFT JOIN dbo.reference_results ref ON ref.id=dc.reference_id
     LEFT JOIN dbo.predictions pred ON pred.run_id=r.id
     OUTER APPLY (SELECT TOP (1) a.attempt,a.duration_ms,a.prepared_at
         FROM dbo.run_attempts a WHERE a.run_id=r.id ORDER BY a.attempt DESC) last_attempt'''
-RUN_COLUMNS = '''r.id,r.experiment_id,dc.case_id,dc.case_code AS [case],r.model_id,m.name AS model,
+RUN_COLUMNS = '''r.id,r.experiment_id,e.name AS experiment_name,e.dataset_id,
+    dc.case_id,dc.case_code AS [case],r.model_id,m.name AS model,m.digest AS model_digest,
+    api.name AS service,op.http_method AS method,op.path_template AS path,
     r.prompt_id,p.name AS prompt,r.repetition,r.seed,r.run_order,r.result,r.started_at,r.finished_at,
     last_attempt.attempt,last_attempt.duration_ms,last_attempt.prepared_at,
     ref.c1 AS reference_c1,ref.c2 AS reference_c2,ref.c3 AS reference_c3,
-    pred.c1 AS prediction_c1,pred.c2 AS prediction_c2,pred.c3 AS prediction_c3'''
+    pred.c1 AS prediction_c1,pred.c2 AS prediction_c2,pred.c3 AS prediction_c3,'''+INTERACTIVE_COLUMN
 
-EXPERIMENT_SELECT = '''SELECT e.id,e.name,e.kind,e.dataset_id,d.name AS dataset_name,
+EXPERIMENT_SELECT = 'SELECT '+INTERACTIVE_COLUMN+''',e.id,e.name,e.kind,e.dataset_id,d.name AS dataset_name,
     d.version AS dataset_version,d.purpose AS dataset_purpose,e.started_at,e.finished_at,
     counts.planned,counts.valid,counts.parser_failure,counts.technical_failure,
     JSON_VALUE(CASE WHEN ISJSON(CONVERT(VARCHAR(MAX),f.content))=1
@@ -175,6 +188,29 @@ class WebQueries:
             e.finished_at DESC,e.started_at DESC,e.id DESC''')
         return [self._experiment(row) for row in rows]
 
+    def latest_interactive_run(self):
+        """Latest locally stored interactive run, globally because no owner is stored.
+
+        A scheduled but untouched repetition must not displace the run actually
+        inspected. Identity order records creation order without guessing dates.
+        """
+        rows = self._rows('SELECT TOP (1) '+RUN_COLUMNS+' '+RUN_FROM+' WHERE '+INTERACTIVE_CONTEXT+''' ORDER BY
+            CASE WHEN r.result IS NOT NULL OR r.started_at IS NOT NULL
+                OR last_attempt.attempt IS NOT NULL THEN 0 ELSE 1 END,r.id DESC''')
+        return rows[0] if rows else None
+
+    def adjacent_runs(self, run_id):
+        """Navigate live contexts globally or stay inside a scientific experiment."""
+        current = self._one('SELECT '+RUN_COLUMNS+' '+RUN_FROM+' WHERE r.id=?', run_id)
+        clause = INTERACTIVE_CONTEXT if current['is_interactive'] else 'r.experiment_id=?'
+        parameters = [] if current['is_interactive'] else [current['experiment_id']]
+        result = {}
+        for name, comparison, direction in [('previous', '<', 'DESC'), ('next', '>', 'ASC')]:
+            rows = self._rows('SELECT TOP (1) '+RUN_COLUMNS+' '+RUN_FROM+' WHERE '+clause+
+                              ' AND r.id'+comparison+'? ORDER BY r.id '+direction, *parameters, run_id)
+            result[name] = rows[0] if rows else None
+        return result
+
     def _get_experiment(self, experiment_id):
         return self._experiment(self._one(EXPERIMENT_SELECT + ' WHERE e.id=?', experiment_id))
 
@@ -264,8 +300,62 @@ class WebQueries:
                     raw = self._file(attempt[column])
                     evidence.append(dict(title=f"Attempt {attempt['attempt']}: {title}",
                                          content=None if raw is None else _text(raw)))
+        # Import locally: the terminal evidence helper itself uses this SELECT-only
+        # query surface. Both inspection surfaces retain identical case bindings.
+        from ..interactive_evidence import load_case, _artifact
+        case_details, files = load_case(self, run)
+        raw_model_response = None
+        for attempt in attempts:
+            artifact = _artifact(self, attempt.get('response_file_id'),
+                'Raw model response'+(f" · attempt {attempt['attempt']}" if len(attempts)>1 else ''))
+            if artifact is not None:
+                files.append(artifact)
+                if attempt is attempts[-1]:
+                    raw_model_response = artifact['content']
+        runtime_evidence = self._runtime_evidence(run, attempts)
         return dict(run=run, reference=references[0] if references else None,
-                    prediction=predictions[0] if predictions else None, attempts=attempts, evidence=evidence)
+                    prediction=predictions[0] if predictions else None, attempts=attempts, evidence=evidence,
+                    case_details=case_details, files=files, raw_model_response=raw_model_response,
+                    runtime_evidence=runtime_evidence, parser_error=runtime_evidence.get('parser_diagnostics'))
+
+    def _runtime_evidence(self, run, attempts):
+        """Allowlisted persisted identities only; no runtime probes or local paths."""
+        result = dict(model_digest=None, ollama_version=None, parser_diagnostics=None)
+        experiment = self._one('SELECT setup_file_id FROM dbo.experiments WHERE id=?', run['experiment_id'])
+        try:
+            setup = (json.loads(self._file(experiment['setup_file_id']))
+                     if experiment.get('setup_file_id') is not None else {})
+        except (ValueError, TypeError) as exc:
+            raise DataUnavailable('The persisted run setup is unavailable or invalid.') from exc
+        if isinstance(setup, dict):
+            runtime = setup.get('runtime')
+            ollama = runtime.get('ollama') if isinstance(runtime, dict) else None
+            if isinstance(ollama, dict) and isinstance(ollama.get('version'), str):
+                result['ollama_version'] = ollama['version']
+        if not attempts or attempts[-1].get('diagnostics_file_id') is None:
+            return result
+        try:
+            diagnostic = json.loads(self._file(attempts[-1]['diagnostics_file_id']))
+        except (ValueError, TypeError) as exc:
+            raise DataUnavailable('The persisted parser diagnostics are unavailable or invalid.') from exc
+        if not isinstance(diagnostic, dict):
+            return result
+        parser = diagnostic.get('parser')
+        if isinstance(parser, dict):
+            result['parser_diagnostics'] = {key: parser[key] for key in ('status','code','path') if key in parser}
+        transport = diagnostic.get('transport')
+        provenance_id = transport.get('request_provenance_file_id') if isinstance(transport, dict) else None
+        if provenance_id is not None and (attempts[-1].get('started_at') or attempts[-1].get('result')):
+            raw = self._file(provenance_id)
+            if sha256(raw).hexdigest() != transport.get('request_provenance_sha256'):
+                raise DataUnavailable('The persisted request provenance failed its integrity check.')
+            try:
+                provenance = json.loads(raw)
+            except (ValueError, TypeError) as exc:
+                raise DataUnavailable('The persisted request provenance is unavailable or invalid.') from exc
+            if isinstance(provenance, dict) and isinstance(provenance.get('model_digest'), str):
+                result['model_digest'] = provenance['model_digest']
+        return result
 
     def report(self, experiment_id):
         experiment = self._get_experiment(experiment_id)

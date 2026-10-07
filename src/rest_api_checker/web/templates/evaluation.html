@@ -6,6 +6,7 @@
   <div class="secondary-controls">{{ experiment_selector(experiments, selected_experiment) }}</div>
 </header>
 
+{% if not interactive %}
 <nav class="tabs" aria-label="Prompt candidate">
 {% for candidate in (evaluation.prompts if evaluation else []) %}
   <a href="{{ query_url(prompt=candidate) }}" {% if candidate == evaluation.prompt %}aria-current="page" class="active"{% endif %}>{{ candidate }}</a>
@@ -13,8 +14,11 @@
   {% for candidate in ('P1', 'P2', 'P3') %}<span {% if candidate == 'P1' %}class="active" aria-current="page"{% endif %}>{{ candidate }}</span>{% endfor %}
 {% endfor %}
 </nav>
+{% endif %}
 
-{% if not evaluation %}
+{% if interactive %}
+<section class="empty-state interactive-evaluation" role="status"><h2>Inspect individual runs</h2><p>Aggregate evaluation is intended for completed experiment batches. Inspect individual runs instead.</p><div class="inline-actions"><a class="button-link primary" href="/runs?experiment={{ selected_experiment }}">View runs</a><a class="button-link" href="/runs/latest">Open latest run</a></div></section>
+{% elif not evaluation %}
 <section class="empty-state" role="status">
   <h2>Evaluation not available yet</h2>
   <p>{{ evaluation_unavailable_reason|default('A completed experiment and an existing persisted evaluation report are required. Reports are created explicitly through the CLI.') }}</p>

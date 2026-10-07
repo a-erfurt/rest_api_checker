@@ -1,240 +1,265 @@
-# RestApiChecker live demo
+# RestApiChecker interactive CLI
 
-**Execution currently blocked (2026-10-07):** the metadata-only runtime check
-found Ollama **0.40.0**; the available qualified binding requires **0.35.1**.
-Three real-database offline dry-runs passed. Real execution rejects this mismatch
-before native measurement, generation or new experiment creation. A separately
-reviewed setup of the qualified runtime, or a new explicit qualification, is
-required. Do not edit frozen versions/hashes or bypass the guard. This task did
-not restart Ollama or perform a real LLM run.
-
-The demo selects a stored development case and creates a new `LIVE-DEMO <uuid>`
-experiment after confirmation. Its input is the existing contract and observed
-API response; it does not call EDX/Resistance again. The default is **one case ×
-one model × one repetition**, outside the frozen scientific evaluation.
-
-## 1. Prerequisites and environment
+Start the application:
 
 ```sh
 cd /Users/aerfurt/University/Bachelor/rest_api_checker
 export DYLD_LIBRARY_PATH=/opt/homebrew/opt/openssl@3/lib
+.venv/bin/rac
+```
+
+The application checks an **already stored API response** against its existing
+OpenAPI contract. It does not send another request to EDX or Resistance. Case
+selection, evidence viewing and previous-result browsing are read-only. Only
+explicit confirmation starts a separate model run.
+
+## Main menu
+
+The following text illustrates the menu; it is not a captured screenshot:
+
+```text
+RestApiChecker
+Choose an action:
+
+1  Run API response check
+2  Browse previous results
+3  Open Web UI
+4  Exit
+```
+
+Choose a displayed number and press Enter. Menu positions are not database IDs.
+Enter selects the first option; `q` goes back. `Ctrl-C` or end-of-input cancels
+selection safely. Confirmation defaults to **No**: only `y` or `yes` starts a run.
+
+## Guided response check
+
+| Step | Display and behavior |
+|---|---|
+| Case set | **Final evaluation (default)** when a fully referenced final case set is available. At service selection, `s` opens **Other case sets** with dataset names and versions. |
+| Service | **EDX** — Document/data-stream validation service; **Resistance** — File validation service. Services remain dynamically discovered. |
+| Operation | Method, actual OpenAPI path and a concise summary. Paths retain their contract-defined casing. |
+| Case type | Choose conforming, C1, C2, C3, controls/formatting or all cases before opening the case list. |
+| Case | Readable case key, short category label, reference vector and one explanation line. `d NUMBER` opens details and files. |
+| Model | Friendly model name, stored quantization and installed/loaded hints when those checks succeed. |
+| Repetitions | Repeat the same case/model configuration 1–3 times; default **1**. |
+| Confirmation | Compact Service / Operation / Case / Model / Prompt P2 / Repetitions table. Enter cancels without creating a run context. |
+
+Development cases remain available through the optional case-set selector. A
+final set takes precedence over development; if no fully referenced evaluation
+set is available, the menu truthfully shows the available development source.
+Generated interactive run contexts are excluded from the source selector.
+
+**P2 is automatic and unchanged.** The root path uses one configured model per
+check, compatible stored D07 settings, `format_json`, a 512-token output budget,
+and the existing repetition seeds 101/202/303. None of these settings requires
+entering a database ID.
+
+### Case types and references
+
+| Filter | Meaning |
+|---|---|
+| ✓ Conforming / baseline | The stored reference is PPP. |
+| C1 Status fault | The stored reference is FNN: the HTTP status is not covered. |
+| C2 Media-type fault | The stored reference is PFN: Content-Type is not documented for the covered response. |
+| C3 Schema fault | The stored reference is PPF: the JSON body fails the documented schema check. |
+| Controls / formatting | Explicitly recorded control or formatting metadata; the actual reference remains visible. |
+| All cases | All available cases for the selected source, service and operation. |
+
+`P` means PASS, `F` means FAIL, and `N` means not applicable. Categories come from
+the stored reference vector; mutation intent and case names never determine
+reference truth. Control metadata only adds a browsing filter and cannot change
+a verdict. A filter without matching cases reports that fact and returns to the
+case-type menu.
+
+Case explanations use available stored metadata and reference diagnostics. If a
+concrete explanation is unavailable, the fallback identifies the stored response,
+HTTP status, Content-Type and reference vector. Construction paragraphs and
+internal IDs stay out of the normal case list.
+
+Long menus display eight options per page. Use `n` / `p` to change page, `/text`
+to search labels, and `/` to clear a search. These controls also work when browsing
+previous results.
+
+### Case details and files
+
+At case selection, enter `d NUMBER`, for example `d 1`. The read-only panel shows:
+
+- Case key and service/operation.
+- HTTP status, Content-Type and reference vector.
+- Overall **CONFORMING**, **INCONSISTENT**, or **UNAVAILABLE** when no known vector exists.
+- C1 Status, C2 Media Type and C3 Body Schema as PASS / FAIL / N/A.
+
+The **Files / evidence** menu lists only associated artifacts that are actually
+available: observed response body, OpenAPI contract, original input/request where
+bound provenance resolves to an archive artifact, reference/explanation and case
+provenance. After a run it can also show the archived raw model response.
+
+Select a file to view it with terminal syntax highlighting and a pager where
+available. `d NUMBER` within that menu shows archive name, SHA-256, byte count and
+any source pointer. Database archive content is not presented as a guessed local
+filesystem path.
+
+Archive integrity is checked against stored bytes before display. Terminal
+control characters are escaped and markup is displayed literally; binary content
+uses an explicit base64 representation. Reference/provenance views can show the
+JSON record selected by a stored source pointer. Viewing never repairs, rewrites
+or reclassifies the underlying evidence.
+
+## Results and next actions
+
+A single run produces one compact panel. This illustrative comparison is not a
+claim about a particular stored case or model run:
+
+```text
+✓ Run completed   14.4 s
+Case: CASE-EXAMPLE    Model: Gemma 3 27B
+
+Check           Reference   Prediction
+C1 Status       PASS        PASS         ✓
+C2 Media Type   PASS        PASS         ✓
+C3 Body Schema  FAIL        PASS         ✗
+
+Reference: PPF   Prediction: PPP
+Overall: ✗ INCORRECT   Parser: ✓ VALID
+```
+
+Parser validity does not imply correctness. Failed or missing parsed output shows
+**Parser: ✗ NO USABLE OUTPUT** and **No prediction was inferred.** A stale or
+invalid output is never converted into a category prediction. Multiple repetitions
+use a compact table with one summary of usable output, correctness and vector
+agreement; full panels and category reasons are not repeated.
+
+The post-run choices are:
+
+- **View details** — stored category explanations, run/attempt identifiers and available recovery information.
+- **View raw model response** — the archived provider output, including parser failures.
+- **View case files** — response, contract and other available evidence.
+- **Open in Web UI** — the selected run's read-only page.
+- **Run another case**, **Main menu**, or **Exit**.
+
+Internal IDs, recovery paths and model reasons are absent from the default result.
+They remain available through explicit details. Historical storage names and
+recovery-directory names are implementation details, not menu labels.
+
+## Runtime policy and separate storage
+
+A runtime-version difference is a compact, nonblocking notice in the root flow.
+Optional local version, installed-model and loaded-model probes neither load a
+model nor generate output. If a display probe fails, selection and cancellation
+still work.
+
+After confirmation, interactive execution resolves the selected tag to its
+**currently installed digest**, even when it differs from the historical
+qualified digest. When Ollama lists multiple runner variants for one tag, the
+selected manifest reported by `/api/show` determines the identity. Ambiguous
+metadata blocks safely instead of reporting an installed tag as missing.
+
+The new context archives the actual Ollama version, model/show/template metadata,
+and configured-versus-installed identity mapping. Its run and request metadata
+use an existing matching model row or a newly inserted current-identity row;
+historical model rows are never updated. Each tag still has one menu entry.
+A genuinely missing tag reports, for example,
+`✗ Gemma 3 27B is not installed in Ollama.`, then returns to the main flow.
+
+The conservative byte budget remains an operational safeguard, not native token
+measurement or scientific runtime qualification. Changes to the captured current
+runtime/model/template before dispatch, incompatible configuration or an excessive
+budget still block execution. **Qualified thesis/final runs and strict
+`rac demo run` retain their exact historical digest/runtime guards.**
+
+When the selected source is a final evaluation set, execution allocates a new
+isolated development dataset/membership and a new non-scientific run context.
+It reuses the selected case, immutable response and stored reference without
+updating their rows or source membership. No new context is allocated during
+selection, details viewing or declined confirmation. Dataset 3, Experiment 10003,
+final references and archived final responses/results remain unchanged.
+
+Internally, root runs retain the separate `LIVE-ADHOC` setup and
+`scientific_evaluation=False`; browsing labels these contexts **Interactive run**.
+The canonical attempt runner, strict parser and archive preserve output and
+provenance. No automatic retries or output repair are added. The strict direct
+commands retain their existing qualification guards.
+
+## Browse previous results and Web UI
+
+**Browse previous results** lists named contexts, timestamps when available and
+completion counts. Select a context, search a readable case/model label, and open
+a result. This uses the same compact comparison, details, raw-output and case-file
+views. All browsing is read-only, including the final evaluation.
+
+**Supervisor flow:** `rac` → run an API response check → inspect the CLI result
+→ **Open in Web UI** → inspect the same persisted run. The post-run action opens
+that exact result, even when a newer interactive run exists. No experiment or run
+ID needs to be entered.
+
+Main-menu **3 Open Web UI** opens the newest stored interactive run directly.
+The existing schema has no user/owner field, so lookup uses all explicit
+`LIVE-ADHOC` / `LIVE-DEMO` contexts in the configured database, excluding Dataset 3
+and Experiment 10003. Started/attempted runs take precedence over untouched planned
+repetitions; ties use newest stored run identity. With no interactive result the
+CLI opens Overview, and the page's **Open latest run** action falls back to Runs.
+
+The run page shows service/operation, case, readable model, prompt, repetition,
+duration and separate parser/semantic statuses; the C1/C2/C3 reference/prediction
+comparison uses the same presentation rules as the CLI. Reasons, case details,
+associated response/contract/input/reference files and the exact raw provider
+response appear on the same page. IDs, actual captured model digest (when stored),
+runtime version and allowlisted diagnostics stay in collapsed **Technical Details**.
+Invalid output is never repaired or interpreted as category verdicts. Missing
+metadata stays unavailable. Binary evidence shows metadata; source-archive excerpts
+are identified explicitly, and private metadata/local paths are omitted from the
+reference metadata viewer without altering storage.
+
+Use **Previous run**, **Next run**, **Back to runs** or **Open latest run** to browse.
+Overview has a latest-run card; interactive contexts use friendly display labels
+and individual-run links. Their Evaluation page explains that aggregate evaluation
+is for completed batches. Full experiment routes remain available and read-only.
+
+The launcher uses the configured loopback address (default
+`http://127.0.0.1:8000`) and may check/start its configured SQL container. A newly
+started server occupies the terminal; `Ctrl-C` stops it and returns to the menu.
+An already running listener is opened only after it identifies as this read-only
+UI; an unknown listener is left untouched and its URL is printed for inspection.
+A successful interactive browser launch prints only a short confirmation.
+
+## Rehearse without calling a model
+
+Start bare `rac`, choose **Run API response check**, and follow **Final evaluation
+→ EDX or Resistance → operation → case type → case → model**. Explore `d NUMBER`
+and its evidence menu first. Accept one repetition, inspect **Ready to run**, then
+press Enter at `Run now? [y/N]`. Next browse an existing result and its files, then
+exit. Selection and declined confirmation create no run or destination dataset.
+
+Only type `y` when a real model run is intended. A model smoke run is separate
+from automated tests; [the review](../LIVE_DEMO_CLI_REVIEW.md) records what was
+actually verified in each implementation pass.
+
+## Existing direct commands
+
+Help never enters the wizard:
+
+```sh
+.venv/bin/rac --help
 .venv/bin/rac db status
-```
-
-Use the existing installed environment, SQL Server database/current schema,
-ODBC Driver 18 and a configured mode-0600 application credentials file outside
-the repository. `rac` normally reads `~/.config/rest-api-checker/config.toml`.
-If configuration is absent, register an **existing** private file:
-
-```sh
-.venv/bin/rac configure --env-file /absolute/path/to/application-credentials.env
-```
-
-`configure` refuses to rewrite an existing configuration. `rac db start` can
-start/check the existing identity-verified container; no demo command creates a
-container, initializes SQL or migrates its schema.
-
-SQL must contain referenced development memberships, unchanged P2, supported
-model records and compatible stored D07 configurations. For execution, the
-qualified local Ollama runtime at `http://127.0.0.1:11434`, model digests/native
-templates and render/tokenize support must match the selected runtime binding.
-An offline dry-run requires SQL/local files, but does not establish runtime readiness.
-
-## 2. Interactive single run
-
-```sh
-.venv/bin/rac demo run --dry-run
-.venv/bin/rac demo run
-```
-
-The first command rehearses selection without writes or runtime contact. The
-second selects service → operation → case → model → repetitions, shows the full
-plan and asks `Execute real LLM run(s)? [y/N]`. Enter keeps the default **No**.
-Choose one model and press Enter for one repetition. Services, operations and
-case labels come from existing database records.
-
-The summary shows P2, stored configuration IDs, `format_json`, fixed options,
-seeds, qualified runtime and recovery directory. Native context measurement and
-live model checks begin only after confirmation. The new experiment is created
-only after those checks pass. The existing attempt runner, transport, strict
-parser and persistence retain the result.
-
-## 3. Concrete non-interactive commands and multiple runs
-
-Read IDs and options with:
-
-```sh
 .venv/bin/rac dataset list
-.venv/bin/rac dataset cases 1
-.venv/bin/rac dataset inventory
 .venv/bin/rac demo run --help
-```
-
-`--case-id` means **dataset membership ID**, not `test_cases.id`. This current
-EDX combination passed its read-only dry-run:
-
-```sh
-.venv/bin/rac demo run --case-id 2 --model-id 1 --repetitions 1 \
-  --runtime-binding docs/runtime_qualification_2026-09-26/evaluation_v2_main_runtime_ollama_0.35.1_20261003/runtime-binding.json \
-  --dry-run
-```
-
-After resolving the runtime mismatch and reviewing the plan, replace `--dry-run`
-with `--yes` to execute that explicit selection. Non-interactive/JSON mode requires
-case and model IDs; execution also requires `--yes`. Multiple runtime bindings
-require an explicit choice. A sole discovered binding is displayed automatically.
-
-Repeat `--model-id` for several models; `--repetitions` accepts 1, 2 or 3 with
-unchanged seeds 101/202/303. The nine-run preview uses `--case-id 3 --model-id 1
---model-id 2 --model-id 3 --repetitions 3 --dry-run` and the same binding.
-`--dataset-id` optionally narrows case selection.
-
-Without `--spool`, recovery files use a unique directory under
-`~/.local/state/rest-api-checker/live-demo/`. An explicit `--spool` selects a
-recovery directory. A dry-run creates neither spool nor experiment.
-The authoritative command also accepts explicit credentials:
-
-```sh
-.venv/bin/rest-api-checker --env-file /absolute/path/to/application-credentials.env \
-  --database rest_api_checker demo run
-```
-
-## 4. Read the result and raw evidence
-
-Replace `RUN_ID` with the new ID printed during execution:
-
-```sh
-.venv/bin/rac inspect run RUN_ID
-.venv/bin/rac inspect attempts RUN_ID
-.venv/bin/rac inspect attempts RUN_ID --verbose --json
-```
-
-The result shows parser status, C1/C2/C3 prediction/reference, vector correctness,
-category differences, reasons, Attempt-ID, raw provider response file ID and
-duration. The immediate live result also shows the observed API response ID.
-A parser failure or unfinished run has **no semantic verdict** and correctness
-is **N/A**. Parser validity does not imply a correct prediction.
-
-Verbose inspection reads the exact persisted request/user evidence and lossless
-base64 provider envelopes. It does not reconstruct a request or call a model.
-Both inspect commands use the same existing result projection.
-
-## 5. Open the existing web UI
-
-In another terminal:
-
-```sh
 .venv/bin/rac web --open
 ```
 
-Default: **http://127.0.0.1:8000**. Open the printed `/runs/RUN_ID` link for reasons,
-original response, OpenAPI/request context, raw output and attempts. Select the
-`LIVE-DEMO` experiment or use `/runs?experiment=EXPERIMENT_ID` to find its runs.
-For another port, keep links consistent:
+`rac demo run` remains the existing **strict qualified, development-only** path.
+It excludes final source cases, requires its qualified runtime binding, and
+retains explicit `--case-id`, `--model-id`, `--yes` and optional multiple-model
+selection. Its `--dry-run` is offline and read-only, without runtime contact or
+generation. Bare `rac` uses the separate interactive path described above.
 
-```sh
-.venv/bin/rac web --port 8001 --open
-.venv/bin/rac demo run --ui-url http://127.0.0.1:8001
-```
+If SQL is stopped, `rac db start` checks/starts the existing configured container;
+it does not create a new database. The root application does not silently
+initialize or migrate SQL. Keep existing private credentials and
+`~/.config/rest-api-checker/config.toml`; preserve the OpenSSL environment setting
+above if the ODBC connection cannot load its SSL library.
 
-`--ui-url` changes the suggested link only. The original launcher remains:
-
-```sh
-.venv/bin/rest-api-checker-web --env-file /absolute/path/to/application-credentials.env \
-  --database rest_api_checker --host 127.0.0.1 --port 8000
-```
-
-The UI is read-only and never creates reports or executes models. `rac web` may
-start/check the configured SQL container; the original web launcher does not.
-Stopping web leaves SQL running.
-
-## 6. Summary and existing evaluation reports
-
-```sh
-.venv/bin/rac experiment show EXPERIMENT_ID
-.venv/bin/rac experiment progress EXPERIMENT_ID
-.venv/bin/rac experiment schedule EXPERIMENT_ID
-.venv/bin/rac evaluate list
-.venv/bin/rac evaluate show REPORT_ID
-.venv/bin/rac evaluate export REPORT_ID --output /absolute/path/to/new-report.json
-```
-
-Experiment commands read the schedule and completed/pending/outcome counts.
-Report commands read/export **existing** reports; export refuses overwriting.
-**Do not use `evaluate comparison` for the demo subset:** it creates a report for
-the separately approved full historical comparison design. Demo output adds no
-scientific ranking or thesis metrics. Its run pages work without a report.
-
-## 7. Current safe cases and models
-
-Observed read-only on 2026-10-07: Dataset 1 has 12 eligible memberships. Stored
-service `edx` covers members 1–6; **`htts`** covers members 7–12 and the Resistance
-operation `POST /resistance/validation/file`. Select `htts` for that endpoint;
-the wizard preserves the stored name.
-
-| Membership | Case/reference | Dry-run model selection |
-|---|---|---|
-| 2 | DEV-02 — PASS/PASS/PASS | ID 1: `qwen3.6:27b` |
-| 7 | DEV-07 — PASS/PASS/PASS | ID 3: `mistral-small3.2:24b` |
-| 3 | DEV-03 — FAIL/NOT_APPLICABLE/NOT_APPLICABLE | IDs 1/2/3, three repetitions |
-
-Model ID 2 is `gemma3:27b`. These three selections passed offline planning; they
-are demonstration choices, not evidence of model superiority. Start with one
-model and one repetition; loading time depends on the machine. The wizard keeps
-P2, compatible D07, `format_json` and the 512-token output budget unchanged.
-
-Recheck IDs if inventory changes. Only referenced development cases absent from
-all evaluation datasets are offered. A service appears only if it has eligible
-memberships; its presence in final data is insufficient. Dynamic discovery does
-not silently qualify new contracts, models or runtimes.
-
-## 8. Recovery
-
-- **No eligible cases:** inspect dataset/Data views. Do not copy, import or relabel
-  final cases to populate the demo.
-- **SQL error:** check `rac db status`, application credentials, ODBC and OpenSSL.
-  No automatic migration or administrator fallback occurs.
-- **Runtime/context mismatch:** preserve the diagnostic and check the selected
-  qualification. Do not edit frozen bindings or bypass checks.
-- **Parser failure:** inspect raw output; retain the failure. No repair, recoding,
-  fallback format or automatic retry occurs.
-- **Technical error/interruption:** preserve printed experiment/run IDs and spool;
-  use `experiment progress` and `inspect attempts --verbose`. Ambiguous/reserved
-  attempts are never automatically reissued. Do not use historical fabricated
-  resume or Main `run-batch` for a demo. A later deliberate new demo creates a
-  separate experiment and does not resolve or overwrite the previous attempt.
-- **Port occupied:** use a free loopback port and matching `--ui-url`, or open
-  the existing UI. Do not stop an unrelated process.
-
-## 9. Suggested 5–10-minute demonstration
-
-Resolve runtime readiness before the meeting; cold model loading is additional.
-Show the stored development case and reference (1 minute), rehearse
-`rac demo run --dry-run` (1–2 minutes), then run `rac demo run` with the same
-selection and confirm one attempt. Compare parser validity and C1/C2/C3 with
-`rac inspect run RUN_ID` (1–2 minutes), open the printed run link and raw evidence
-(1–2 minutes), then show `rac experiment progress EXPERIMENT_ID`.
-
-```sh
-cd /Users/aerfurt/University/Bachelor/rest_api_checker
-export DYLD_LIBRARY_PATH=/opt/homebrew/opt/openssl@3/lib
-.venv/bin/rac db status
-.venv/bin/rac demo run --dry-run
-.venv/bin/rac demo run
-.venv/bin/rac inspect run RUN_ID
-.venv/bin/rac experiment progress EXPERIMENT_ID
-.venv/bin/rac web --open
-```
-
-## 10. DO NOT RUN against final results
-
-**Experiment 10003 and Dataset 3 are protected.** Never dispatch, resume, overwrite,
-delete or repair their runs, responses, results or memberships for this demo.
-The new command accepts no existing experiment ID and excludes final cases.
-Historical `experiment run-batch`, `main_v2` authorization/materialization and
-`tools/main_v2/launch.sh` are **not demo setup commands**.
-
-This task verified SQL reads and offline planning; the runtime check exposed the
-version mismatch stated above. No real generation or successful end-to-end live
-execution is claimed. See [the audit report](../LIVE_DEMO_CLI_REVIEW.md) for tests,
-pre-existing failures and verification limits.
+Do not use `evaluate comparison` for an interactive subset: that command belongs
+to the separately approved scientific comparison workflow. Automated tests use
+fabricated responses. Optional SQL integration tests require disposable test
+credentials and must never target the scientific database. Test totals and
+remaining limitations are recorded in [the review](../LIVE_DEMO_CLI_REVIEW.md).

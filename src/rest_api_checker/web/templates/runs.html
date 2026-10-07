@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% from 'macros.html' import run_table, pagination %}
 {% block content %}
-<div class="page-heading"><div><p class="eyebrow">SCIENTIFIC INSPECTION</p><h1>Runs</h1><p class="lede">Logical runs with parser and technical failures retained.</p></div></div>
+<div class="page-heading"><div><p class="eyebrow">STORED EVIDENCE</p><h1>Runs</h1><p class="lede">Inspect a run, compare its verdicts, and open the stored evidence.</p></div><a class="button-link" href="/runs/latest">Open latest run</a></div>
 {% if experiment and experiment.fabricated %}<p class="fabricated">FABRICATED / TEST DATA — not study results</p>{% endif %}
 <form method="get" class="filters secondary-controls">
-<label>Experiment<select name="experiment">{% for e in experiments %}<option value="{{ e.id }}" {% if e.id == selected_experiment %}selected{% endif %}>{{ e.name }}</option>{% else %}<option>No experiments</option>{% endfor %}</select></label>
+<label>Context<select name="experiment"><option value="" {% if not selected_experiment %}selected{% endif %}>All contexts</option>{% for e in experiments %}<option value="{{ e.id }}" {% if e.id == selected_experiment %}selected{% endif %}>{{ e|context_name }}</option>{% else %}<option>No experiments</option>{% endfor %}</select></label>
 <label>Model<select name="model"><option value="">All models</option>{% for m in options.models %}<option value="{{ m.id }}" {% if m.id == filters.model %}selected{% endif %}>{{ m.name|model_name }}</option>{% endfor %}</select></label>
 <label>Prompt<select name="prompt"><option value="">All prompts</option>{% for p in options.prompts %}<option value="{{ p.id }}" {% if p.id == filters.prompt %}selected{% endif %}>{{ p.name }}</option>{% endfor %}</select></label>
 <label>Status<select name="status"><option value="">All statuses</option>{% for s,label in [('valid','Valid'),('parser_failure','Parser failure'),('technical_failure','Technical failure'),('pending','Pending'),('attention','Failures')] %}<option value="{{ s }}" {% if s == filters.status %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>

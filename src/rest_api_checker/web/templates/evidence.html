@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set archive_record = artifact.source_pointer is defined and artifact.source_pointer is not none %}
+<a class="back-link" href="/runs/{{ run_id }}">← Back to run</a>
+<div class="page-heading"><div><p class="eyebrow">STORED EVIDENCE · READ ONLY</p><h1>{{ artifact.label }}</h1><p class="lede">{{ artifact.notice or 'Preserved evidence from this run.' }}</p></div></div>
+{% if archive_record %}<p class="note">Selected record from the stored archive.</p>{% endif %}
+<dl class="evidence-metadata">{% if artifact.size_bytes is defined and artifact.size_bytes is not none %}<div><dt>{{ 'Source archive size' if archive_record else 'Size' }}</dt><dd>{{ artifact.size_bytes }} bytes</dd></div>{% endif %}{% if artifact.sha256 %}<div><dt>{{ 'Source archive SHA-256' if archive_record else 'SHA-256' }}</dt><dd><code>{{ artifact.sha256 }}</code></dd></div>{% endif %}</dl>
+{% if artifact.content is not none %}<pre class="full-evidence" tabindex="0">{{ artifact.content }}</pre>{% else %}<p class="empty-state">This stored artifact has no viewable text content. Available metadata is shown above.</p>{% endif %}
+{% endblock %}

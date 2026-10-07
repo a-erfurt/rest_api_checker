@@ -33,7 +33,7 @@ def core(monkeypatch):
             repetition=1, run_id=10004, attempt=1)))
         return dict(status='COMPLETED', exit_code=0, experiment_id=10004, run_ids=[999],
                     results=[], spool=str(kwargs['spool']), message=None)
-    value = SimpleNamespace(catalog=lambda repo: data, runtime_paths=lambda root: paths,
+    value = SimpleNamespace(catalog=lambda repo, **kwargs: data, runtime_paths=lambda root: paths,
                             plan=plan, execute=execute)
     monkeypatch.setattr(rest_api_checker, 'live_demo', value, raising=False)
     return SimpleNamespace(module=value, calls=calls, data=data, paths=paths)
@@ -76,7 +76,7 @@ def test_interactive_dynamic_service_operation_case_models_and_repetitions(core)
     assert core.calls[0][1]['case_id'] == 11
     assert core.calls[0][1]['model_ids'] == [4, 8] and core.calls[0][1]['repetitions'] == 2
     assert [name for name, _ in core.calls] == ['plan', 'execute']
-    assert 'Select service' in output.getvalue() and 'Running qwen3.6:27b' in output.getvalue()
+    assert 'Select service' in output.getvalue() and '→ qwen3.6:27b' in output.getvalue()
 
 
 @pytest.mark.parametrize('answer', ['', 'n', 'no', 'anything'])
