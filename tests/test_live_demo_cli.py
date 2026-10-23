@@ -26,7 +26,10 @@ def core(monkeypatch):
     paths = [Path('/qualified/runtime-binding.json')]
     def plan(repo, **kwargs):
         calls.append(('plan', kwargs))
-        return SimpleNamespace(summary={'prompt_id': 2, 'run_config_ids': [1]})
+        prompt = next((row for row in data['prompts'] if row['id'] == kwargs.get('prompt_id')), None)
+        prompt = prompt or next(row for row in data['prompts'] if row['name'] == 'P2')
+        return SimpleNamespace(summary={'prompt_id': prompt['id'], 'prompt': prompt['name'],
+                                        'run_config_ids': [1]})
     def execute(repo, plan, **kwargs):
         calls.append(('execute', kwargs))
         kwargs['notify'](dict(event='current', current=dict(model='qwen3.6:27b', case='DEV-01',

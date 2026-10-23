@@ -10,6 +10,7 @@ import json
 import re
 import urllib.request
 
+from . import live_adhoc_request
 from .experiment import request_v2
 from .experiment.encoding import digest, encode
 from .experiment.provider import OllamaClient
@@ -20,6 +21,13 @@ FORMAT = 'live-adhoc-setup-v1'
 RUNTIME_FORMAT = 'live-adhoc-runtime-v1'
 CONTEXT_METHOD = 'unqualified-conservative-byte-budget-v1'
 THESIS_VERSION = '0.35.1'
+
+
+def validate_request(request):
+    """Keep old P2 ad-hoc DTOs valid while admitting the separate prompt builder."""
+    if type(request) is request_v2.RequestV2:
+        return request_v2.validate_request_v2(request)
+    return live_adhoc_request.validate_request_adhoc(request)
 
 
 def metadata(path, data=None):
@@ -143,7 +151,7 @@ class AdhocContextCheck:
         return 2*(self.request_bytes+self.template_bytes+self.defaults_bytes)+4096
 
     def verify(self, request):
-        request_v2.validate_request_v2(request)
+        validate_request(request)
         require(self.method == CONTEXT_METHOD, 'Ad-hoc context method drift')
         require(self.request_sha256 == digest(request.body)
                 and self.model_digest == request.metadata['model_digest'], 'Ad-hoc request/model drift')
@@ -191,10 +199,10 @@ class AdhocClient:
         self.setup, self.experiment_id, self.dataset_id = setup, experiment_id, dataset_id
         self.allowed = {item['sha256'] for item in setup['request_inventory']}
         require(self.allowed, 'Explicit live/ad-hoc request inventory required')
-        self.client = client if client is not None else OllamaClient(request_validator=request_v2.validate_request_v2)
+        self.client = client if client is not None else OllamaClient(request_validator=validate_request)
 
     def send(self, request, *, on_start):
         require_scope(self.setup, self.experiment_id, self.dataset_id)
-        request_v2.validate_request_v2(request)
+        validate_request(request)
         require(digest(request.body) in self.allowed, 'Request is outside this interactive context')
         return self.client.send(request, on_start=on_start)

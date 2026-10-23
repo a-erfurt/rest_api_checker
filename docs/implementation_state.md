@@ -1,3 +1,33 @@
+## 2026-10-23: prompt selection for manual single-case checks
+
+The root interactive workflow now offers an approved stored prompt directly
+between case type and case selection. Available original P1/P2/P3 bytes are
+hash-checked; P2 is first/default when present. Back from case selection returns
+to prompts, then to case type. The chosen stored ID drives actual system-prompt
+bytes, the new run schedule, setup, request provenance and confirmation summary.
+
+A separate ad-hoc request builder reuses the unchanged approved v1 construction
+and JSON transport. Its own version/hash and reconstruction checks avoid changing
+historical v2 builder identities. Strict demos, explicit/non-interactive defaults
+and scientific batch execution retain P2. Existing prompts, references, source
+cases/datasets, saved runs and Evaluation-v2 files were not changed. Final cases
+continue to run in the existing separate non-scientific interactive context.
+
+Verification: full baseline **1336 passed / 106 skipped / 5 failed**; final
+**1412 passed / 109 skipped / the same 5 failed**. The unchanged failures concern
+historical preflight/evidence drift (including `pyproject.toml`), not this feature.
+Focused verification before the final three provenance/propagation test cases:
+**250 passed / 3 SQL skipped**; the final full suite includes those added cases.
+Tests exercise menu order/default/options/navigation, actual request bytes,
+real repository input projection and attempt orchestration with in-memory writes,
+persisted prompt IDs/sidecars, final-source isolation, tamper refusal and strict
+P2 regression. Three new opt-in SQL round trips are collected but skipped because
+no disposable SQL test credentials are configured. The configured application SQL
+server was unreachable and Docker was stopped; no live SQL acceptance or real
+model execution is claimed. All 533 other initially tracked files were byte-identical
+before this state entry; research and historical experiment inputs were untouched.
+See [interactive guide](live_demo.md).
+
 ## 2026-10-07: final interactive root CLI for the supervisor demo
 
 Bare `rac` now launches the guided live application: dynamic service, operation,

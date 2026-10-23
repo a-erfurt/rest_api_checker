@@ -41,6 +41,13 @@ def _ui_url(value):
     return value.rstrip('/')
 
 
+PROMPT_LABELS = {
+    'P1': 'Minimal / direct',
+    'P2': 'Structured C1 → C2 → C3 checklist',
+    'P3': 'Explicit contract interpretation',
+}
+
+
 class _OtherCaseSet(Exception):
     pass
 
@@ -95,11 +102,21 @@ def _select_interactive_case(repo, data, cases, console, read, dataset_id=None):
                     description = describe_case(row)
                     return (f"{row['case_code']}   {description['title']}   {description['reference_vector']}"
                             f"\n{description['description']}")
-                try:
-                    return _choose(console, 'Select case', selected_cases, case_label, read,
-                        details=lambda row: show_case_details(repo, row, console, read))
-                except Back:
-                    continue
+                require(data['prompts'], 'No approved stored prompts are available for an interactive run.')
+                prompts = sorted(data['prompts'], key=lambda p: (p['name'] != 'P2', p['name']))
+                while True:
+                    try:
+                        prompt = _choose(console, 'Select prompt', prompts,
+                            lambda p: p['name']+' — '+PROMPT_LABELS[p['name']]
+                                + (' (default)' if p is prompts[0] else ''), read)
+                    except Back:
+                        break
+                    try:
+                        selected = _choose(console, 'Select case', selected_cases, case_label, read,
+                            details=lambda row: show_case_details(repo, row, console, read))
+                        return selected, prompt
+                    except Back:
+                        continue
 
 
 def _selection(repo, args, console, read, interactive):
@@ -117,11 +134,12 @@ def _selection(repo, args, console, read, interactive):
     require(cases, 'No referenced cases are available for this case set.' if adhoc else
             'No eligible development cases for this selection. Evaluation datasets and Dataset 3 are excluded; inspect dataset list/cases.')
     require(data['models'], 'No stored approved models are available; inspect dataset inventory.')
+    prompt = None
     if args.case_id is not None:
         selected = next((row for row in cases if row['id'] == args.case_id), None)
         require(selected is not None, 'Case membership is unavailable or protected. Choose an eligible development membership ID.')
     elif adhoc:
-        selected = _select_interactive_case(repo, data, cases, console, read, args.dataset_id)
+        selected, prompt = _select_interactive_case(repo, data, cases, console, read, args.dataset_id)
     else:
         service = _choose(console, 'Select service', _unique(cases, 'service_id'), service_label, read,
             explanation='A service is the API system whose stored response and OpenAPI contract you want to inspect.')
@@ -172,7 +190,7 @@ def _selection(repo, args, console, read, interactive):
                     break
                 console.print('Enter 1, 2 or 3.')
     if adhoc:
-        return selected, models, repetitions, None
+        return selected, models, repetitions, None, prompt
     runtime = args.runtime_binding
     if runtime is None:
         paths = live_demo.runtime_paths(args.root)
@@ -182,11 +200,11 @@ def _selection(repo, args, console, read, interactive):
         else:
             require(interactive and not args.yes, 'Multiple runtime bindings exist. Supply --runtime-binding explicitly.')
             runtime = _choose(console, 'Select qualified runtime binding', paths, str, read)
-    return selected, models, repetitions, Path(runtime).expanduser().resolve()
+    return selected, models, repetitions, Path(runtime).expanduser().resolve(), prompt
 
 
 def show_plan(console, selection, summary, spool, *, adhoc=False):
-    case, models, repetitions, runtime = selection
+    case, models, repetitions, runtime, prompt = selection
     if adhoc:
         from rich import box
         from .live_presenter import service_name, operation_label, model_label
@@ -196,7 +214,7 @@ def show_plan(console, selection, summary, spool, *, adhoc=False):
             ('Operation', case['method'].upper()+' '+case['path']),
             ('Case', case['case_code']),
             ('Model', ', '.join(model_label(m) for m in models)),
-            ('Prompt', 'P2'),
+            ('Prompt', summary['prompt']),
             ('Repetitions', repetitions),
         ])
         table.box = box.ROUNDED
@@ -235,11 +253,13 @@ def run(repo, args, console, *, input_fn=None, interactive=None):
     ui_url = _ui_url(args.ui_url)
     try:
         selection = _selection(repo, args, console, read, interactive)
-        case, models, repetitions, runtime = selection
+        case, models, repetitions, runtime, prompt = selection
         planning = dict(case_id=case['id'], model_ids=[m['id'] for m in models],
                         repetitions=repetitions, runtime_path=runtime, root=args.root)
         if adhoc:
             planning['adhoc'] = True
+            if prompt is not None:
+                planning['prompt_id'] = prompt['id']
         plan = live_demo.plan(repo, **planning)
         spool = (args.spool or Path.home()/'.local/state/rest-api-checker/live-demo'/uuid.uuid4().hex).expanduser().resolve()
         if not args.json:

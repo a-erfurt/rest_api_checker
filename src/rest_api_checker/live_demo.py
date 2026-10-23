@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from uuid import uuid4
 
-from . import evaluation_batch_v2, freeze, live_adhoc_runtime, main_v2_context, runtime_evidence
+from . import evaluation_batch_v2, freeze, live_adhoc_request, live_adhoc_runtime, main_v2_context, runtime_evidence
 from .experiment import batch, parser, renderer, request_v2
 from .experiment.encoding import digest, encode
 from .experiment.provider import OllamaClient
@@ -102,8 +102,12 @@ def catalog(repo, *, adhoc=False):
             **contract_context(contract_doc, operation, reference_metadata))
         row['presentation'] = describe_case(row)
         eligible.append(row)
-    prompts = [p for p in rows(repo, 'prompts') if p['name'] == 'P2'
-               and digest(repo.file(p['file_id'])) == PROMPT_HASHES['P2']]
+    approved_names = ('P2', 'P1', 'P3') if adhoc else ('P2',)
+    prompts = [p for p in rows(repo, 'prompts') if p['name'] in approved_names
+               and digest(repo.file(p['file_id'])) == PROMPT_HASHES[p['name']]]
+    if adhoc:
+        prompts = list({p['name']: p for p in sorted(prompts, key=lambda p: p['id'], reverse=True)}.values())
+        prompts.sort(key=lambda p: approved_names.index(p['name']))
     used = {case['dataset_id'] for case in eligible}
     case_sets = []
     for dataset_id in sorted(used, key=lambda value: (
@@ -180,7 +184,7 @@ class Plan:
     adhoc: bool = False
 
 
-def _request(repo, member, prompt, model, repetition):
+def _request(repo, member, prompt, model, repetition, *, adhoc=False):
     # Explicit evidence projection only. Reference and case labels never enter LLM input.
     case = repo._row('test_cases', member['case_id'])
     operation = repo._row('api_operations', case['operation_id'])
@@ -191,12 +195,16 @@ def _request(repo, member, prompt, model, repetition):
         repo.file(response['body_file_id']))
     rendered = renderer.render(evidence, contract_identity=f'files:{contract["file_id"]}',
                                body_identity=f'files:{response["body_file_id"]}')
+    if adhoc:
+        return live_adhoc_request.build_request_adhoc(rendered, prompt_name=prompt['name'],
+            prompt=repo.file(prompt['file_id']), model=model['name'], model_digest=model['digest'],
+            repetition=repetition)
     return request_v2.build_request_v2(rendered, interface=request_v2.OutputInterfaceV2('format_json'),
         prompt=repo.file(prompt['file_id']), model=model['name'], model_digest=model['digest'],
         repetition=repetition)
 
 
-def plan(repo, *, case_id, model_ids, repetitions, runtime_path=None, root, adhoc=False):
+def plan(repo, *, case_id, model_ids, repetitions, runtime_path=None, root, adhoc=False, prompt_id=None):
     require(type(repetitions) is int and repetitions in SEEDS, 'Repetitions must be 1, 2 or 3')
     require(model_ids and len(model_ids) == len(set(model_ids)), 'Select each model identity once')
     require(type(adhoc) is bool, 'Explicit interactive source selection required')
@@ -208,8 +216,15 @@ def plan(repo, *, case_id, model_ids, repetitions, runtime_path=None, root, adho
     models = [next((m for m in inventory['models'] if m['id'] == i), None) for i in model_ids]
     require(all(m is not None for m in models), 'Select existing approved model IDs')
     require(len({m['name'] for m in models}) == len(models), 'Select only one digest per model name')
-    require(inventory['prompts'], 'Approved unchanged P2 is missing; demo cannot create or alter prompts')
-    prompt = min(inventory['prompts'], key=lambda p: p['id'])
+    if prompt_id is None:
+        defaults = [p for p in inventory['prompts'] if p['name'] == 'P2']
+        require(defaults, 'Approved unchanged P2 is missing; select an available prompt explicitly')
+        prompt = min(defaults, key=lambda p: p['id'])
+    else:
+        require(type(prompt_id) is int, 'Select an existing approved prompt ID')
+        prompt = next((p for p in inventory['prompts'] if p['id'] == prompt_id), None)
+        require(prompt is not None, 'Select an existing approved prompt ID' if adhoc
+                else 'Strict demo requires the approved unchanged P2 prompt')
     configs = []
     for model in models:
         compatible = []
@@ -234,15 +249,15 @@ def plan(repo, *, case_id, model_ids, repetitions, runtime_path=None, root, adho
             order = len(schedule)+1
             schedule.append(dict(dataset_case_id=case_id, model_id=model['id'], prompt_id=prompt['id'],
                 run_config_id=config, repetition=repetition, seed=SEEDS[repetition], run_order=order))
-            requests[order] = _request(repo, member, prompt, model, repetition)
-            request_v2.validate_request_v2(requests[order])
+            requests[order] = _request(repo, member, prompt, model, repetition, adhoc=adhoc)
+            (live_adhoc_request.validate_request_adhoc if adhoc else request_v2.validate_request_v2)(requests[order])
     snapshot = bindings(repo, member['dataset_id'], schedule)
     repo.cn.commit()  # Close the read transaction before user input/network I/O.
     summary = dict(service=case['service'], operation=f"{case['method'].upper()} {case['path']}",
         case=case['case_code'], case_id=case_id, reference=case['reference'],
         dataset_id=member['dataset_id'], dataset=case['dataset_name'],
         dataset_purpose=case['dataset_purpose'], is_final_case_set=case['is_final_case_set'],
-        models=[m['name'] for m in models], model_ids=model_ids, prompt='P2', prompt_id=prompt['id'],
+        models=[m['name'] for m in models], model_ids=model_ids, prompt=prompt['name'], prompt_id=prompt['id'],
         run_config_ids=configs, repetitions=repetitions, seeds=[SEEDS[r] for r in range(1,repetitions+1)],
         planned=len(schedule), output_mode='format_json', options=OPTIONS, timeout_seconds=TIMEOUT,
         runtime='Current local Ollama (checked after confirmation)' if adhoc else binding['runtime']['runtime_identity'],
@@ -273,7 +288,8 @@ def _unchanged(repo, prepared, root):
         require(current == prepared.binding and sources == prepared.sources, 'Runtime evidence changed after selection')
     for slot in prepared.schedule:
         req = _request(repo, repo._row('dataset_cases', slot['dataset_case_id']),
-            repo._row('prompts', slot['prompt_id']), repo._row('models', slot['model_id']), slot['repetition'])
+            repo._row('prompts', slot['prompt_id']), repo._row('models', slot['model_id']), slot['repetition'],
+            adhoc=prepared.adhoc)
         require(req == prepared.requests[slot['run_order']], 'Demo request changed after selection')
     repo.cn.commit()
 
@@ -358,7 +374,8 @@ def execute(repo, prepared, *, root, spool, notify=lambda event: None, client=No
         for slot in prepared.schedule:
             original = prepared.requests[slot['run_order']]
             req = _request(repo, repo._row('dataset_cases', slot['dataset_case_id']),
-                repo._row('prompts', slot['prompt_id']), current_models[original.metadata['model']], slot['repetition'])
+                repo._row('prompts', slot['prompt_id']), current_models[original.metadata['model']], slot['repetition'],
+                adhoc=True)
             require(req.body == original.body, 'Interactive model resolution changed the request payload')
             execution_requests[slot['run_order']] = req
         repo.cn.commit()
@@ -403,14 +420,19 @@ def execute(repo, prepared, *, root, spool, notify=lambda event: None, client=No
             setup = dict(format=setup_format, live_demo=True, live_adhoc=prepared.adhoc, fabricated=False, scientific_evaluation=False,
                 dataset_id=destination_id, schedule_seed=SEEDS[1], schedule=schedule,
                 expected_runs=len(prepared.schedule), parser_sha256=prepared.summary['parser_sha256'],
-                renderer_sha256=renderer.artifact_hash(), request_builder_sha256=request_v2.artifact_hash(),
-                files=files, bindings=snapshot, output_interface=asdict(request_v2.OutputInterfaceV2('format_json')),
+                renderer_sha256=renderer.artifact_hash(),
+                request_builder_sha256=(live_adhoc_request.artifact_hash() if prepared.adhoc else request_v2.artifact_hash()),
+                files=files, bindings=snapshot,
+                output_interface=(live_adhoc_request.output_interface() if prepared.adhoc
+                                  else asdict(request_v2.OutputInterfaceV2('format_json'))),
                 gate_b_complete=not prepared.adhoc, runtime=prepared.binding['runtime'], models=prepared.binding['models'],
                 context_proofs=proofs, context_policy=prepared.summary['context'],
                 execution_consent='Explicit demo execution confirmation; not Main authorization',
                 request_inventory=[dict(run_order=order, sha256=digest(req.body),
                     request_identity_sha256=req.metadata['request_identity_sha256']) for order,req in execution_requests.items()])
             if prepared.adhoc:
+                setup['prompt_selection'] = dict(prompt_id=prepared.summary['prompt_id'],
+                    name=prepared.summary['prompt'], sha256=execution_requests[1].metadata['prompt_sha256'])
                 setup['model_selection'] = [dict(configured_model_id=model['id'],
                     configured_digest=model['digest'], model_id=model_ids[model['name']],
                     installed_digest=next(i['digest'] for i in prepared.binding['models'] if i['name'] == model['name']))
@@ -429,14 +451,15 @@ def execute(repo, prepared, *, root, spool, notify=lambda event: None, client=No
 
         def frozen_prepare(repository, run_id):
             require(run_id in run_ids and experiment_id != PROTECTED_EXPERIMENT, 'Run is outside this new demo')
-            inputs, req = evaluation_batch_v2.prepare(repository, run_id)
+            inputs, req = (live_adhoc_request.prepare if prepared.adhoc else evaluation_batch_v2.prepare)(repository, run_id)
             require(inputs['run']['experiment_id'] == experiment_id
                     and inputs['setup'].get('format') == setup_format
                     and inputs['setup'].get('live_demo') is True
                     and inputs['setup_sha256'] == setup_hash, 'Demo setup identity drift')
             if prepared.adhoc:
                 live_adhoc_runtime.require_scope(inputs['setup'], experiment_id, inputs['run']['dataset_id'])
-            require(inputs['setup']['request_builder_sha256'] == request_v2.artifact_hash(), 'Request builder drift')
+            builder_hash = live_adhoc_request.artifact_hash() if prepared.adhoc else request_v2.artifact_hash()
+            require(inputs['setup']['request_builder_sha256'] == builder_hash, 'Request builder drift')
             require(req == execution_requests[inputs['run']['run_order']], 'Frozen demo request drift')
             return inputs, req
 
