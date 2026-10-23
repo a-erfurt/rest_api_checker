@@ -34,7 +34,7 @@ def manual(core, answers, *flags):
 
 
 @pytest.mark.parametrize('choice,name,prompt_id', [
-    ('', 'P2', 25), ('1', 'P2', 25), ('2', 'P1', 12), ('3', 'P3', 38),
+    ('', 'P1', 12), ('1', 'P1', 12), ('2', 'P2', 25), ('3', 'P3', 38),
 ])
 def test_prompt_selection_reaches_plan_and_confirmation(variants, choice, name, prompt_id):
     before = deepcopy(variants.data)
@@ -57,11 +57,12 @@ def test_prompt_menu_is_immediately_before_case_with_clear_actual_options(varian
     positions = [text.index(heading) for heading in headings]
     assert positions == sorted(positions)
     prompt_menu = text.split('Select prompt', 1)[1].split('Select case', 1)[0]
-    assert prompt_menu.index('P2') < prompt_menu.index('P1') < prompt_menu.index('P3')
-    for label in ('P2 — Structured C1 → C2 → C3 checklist (default)',
+    assert prompt_menu.index('P1') < prompt_menu.index('P2') < prompt_menu.index('P3')
+    for label in ('P2 — Structured C1 → C2 → C3 checklist',
                   'P1 — Minimal / direct', 'P3 — Explicit contract interpretation'):
         assert label in prompt_menu
     assert 'q Back' in prompt_menu
+    assert 'default' not in prompt_menu
 
 
 @pytest.mark.parametrize('invalid', ['0', '4', '-1', 'P1', 'invalid', '1,2', '1,1'])
@@ -86,7 +87,7 @@ def test_back_from_prompt_returns_to_case_type_then_uses_new_selection(variants,
 
 @pytest.mark.parametrize('back', ['q', 'back'])
 def test_back_from_case_returns_to_prompt_and_replaces_previous_choice(variants, back):
-    _, _, text = manual(variants, ['1', '1', '1', '3', back, '2', '1', '1', '', 'n'])
+    _, _, text = manual(variants, ['1', '1', '1', '3', back, '1', '1', '1', '', 'n'])
     assert variants.calls[0][1]['prompt_id'] == 12
     assert text.count('Choose case type') == 1
     assert text.count('Select prompt') == 2

@@ -39,7 +39,7 @@ selection safely. Confirmation defaults to **No**: only `y` or `yes` starts a ru
 | Service | **EDX** — Document/data-stream validation service; **Resistance** — File validation service. Services remain dynamically discovered. |
 | Operation | Method, actual OpenAPI path and a concise summary. Paths retain their contract-defined casing. |
 | Case type | Choose conforming, C1, C2, C3, controls/formatting or all cases before opening the case list. |
-| Prompt | Select a stored, hash-verified original prompt: **P2 — Structured C1 → C2 → C3 checklist** (default when available), **P1 — Minimal / direct**, or **P3 — Explicit contract interpretation**. Only available variants appear. |
+| Prompt | Select a stored, hash-verified original prompt: **P1 — Minimal / direct**, **P2 — Structured C1 → C2 → C3 checklist**, or **P3 — Explicit contract interpretation**, in that order. Only available variants appear. |
 | Case | Readable case key, short category label, reference vector and one explanation line. `d NUMBER` opens details and files. |
 | Model | Friendly model name, stored quantization and installed/loaded hints when those checks succeed. |
 | Repetitions | Repeat the same case/model configuration 1–3 times; default **1**. |
@@ -51,8 +51,8 @@ set is available, the menu truthfully shows the available development source.
 Generated interactive run contexts are excluded from the source selector.
 
 **Prompt selection comes directly after case type and before case selection.**
-Enter selects P2 when available; otherwise the first available variant is labelled
-as the default. No missing prompt is imported or fabricated. `q` / `back` from
+The menu has no default marker. Enter selects the first available variant
+(P1 when available). No missing prompt is imported or fabricated. `q` / `back` from
 the case list returns to prompt selection; from there it returns to case type.
 The selected original prompt bytes are used in the actual request. Its stored
 ID, name and hash remain bound to the new run, setup and request provenance.

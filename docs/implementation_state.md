@@ -2,9 +2,10 @@
 
 The root interactive workflow now offers an approved stored prompt directly
 between case type and case selection. Available original P1/P2/P3 bytes are
-hash-checked; P2 is first/default when present. Back from case selection returns
-to prompts, then to case type. The chosen stored ID drives actual system-prompt
-bytes, the new run schedule, setup, request provenance and confirmation summary.
+hash-checked. The menu lists P1/P2/P3
+without a default marker; Enter selects the first available variant. Back from
+case selection returns to prompts, then to case type. The chosen stored ID
+drives actual system-prompt bytes, the new run schedule, setup, request provenance and confirmation summary.
 
 A separate ad-hoc request builder reuses the unchanged approved v1 construction
 and JSON transport. Its own version/hash and reconstruction checks avoid changing

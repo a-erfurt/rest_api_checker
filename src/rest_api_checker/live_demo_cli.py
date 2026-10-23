@@ -103,12 +103,11 @@ def _select_interactive_case(repo, data, cases, console, read, dataset_id=None):
                     return (f"{row['case_code']}   {description['title']}   {description['reference_vector']}"
                             f"\n{description['description']}")
                 require(data['prompts'], 'No approved stored prompts are available for an interactive run.')
-                prompts = sorted(data['prompts'], key=lambda p: (p['name'] != 'P2', p['name']))
+                prompts = sorted(data['prompts'], key=lambda p: p['name'])
                 while True:
                     try:
                         prompt = _choose(console, 'Select prompt', prompts,
-                            lambda p: p['name']+' — '+PROMPT_LABELS[p['name']]
-                                + (' (default)' if p is prompts[0] else ''), read)
+                            lambda p: p['name']+' — '+PROMPT_LABELS[p['name']], read)
                     except Back:
                         break
                     try:
