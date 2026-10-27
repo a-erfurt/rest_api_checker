@@ -2,7 +2,9 @@
 
 This directory qualifies one local configuration using fabricated fixtures only.
 It is not the application schema, a migration system, or a persistence layer.
-See [the recorded result](../../docs/sqlserver_environment_check_2026-09-26.md).
+For application configuration and opt-in SQL tests, see the
+[persistence guide](../../docs/persistence.md). The commands below describe
+explicit qualification steps; they do not certify a new local installation.
 
 The Compose project, database names and image digest are deliberately fixed for
 this task. Do not point this probe at a study server or reuse existing resources.
@@ -54,8 +56,8 @@ docker exec rac-sql-env-20260926-sqlserver-1 mkdir -p /var/opt/mssql/backup
 Wait for SQL Server readiness before each host connection; do not interpret a
 startup timeout as success. Stop on a failed phase and retain its evidence.
 Use a new evidence pathname each time. Do not rerun `initialize` or `backup` on
-the retained completed probe. The report records the first run's timestamp
-conversion failure, its diagnosis, and verification without recreating data.
+the retained completed probe. Diagnose failed checks using the retained JSON
+evidence before deciding on any further action; do not recreate existing data.
 
 Copy the new backup to a **previously absent**, private host path with `docker cp`,
 then copy that host file to the previously absent container path

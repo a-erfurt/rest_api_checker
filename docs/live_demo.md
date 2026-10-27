@@ -1,11 +1,17 @@
 # RestApiChecker interactive CLI
 
-Start the application:
+From the repository directory, start the application:
 
 ```sh
-cd /Users/aerfurt/University/Bachelor/rest_api_checker
-export DYLD_LIBRARY_PATH=/opt/homebrew/opt/openssl@3/lib
-.venv/bin/rac
+uv sync --locked
+uv run --locked rac
+```
+
+On macOS, if the ODBC driver cannot load its OpenSSL library and OpenSSL 3 is
+installed at the Homebrew path, start with:
+
+```sh
+DYLD_LIBRARY_PATH=/opt/homebrew/opt/openssl@3/lib uv run --locked rac
 ```
 
 The application checks an **already stored API response** against its existing
@@ -40,7 +46,7 @@ selection safely. Confirmation defaults to **No**: only `y` or `yes` starts a ru
 | Operation | Method, actual OpenAPI path and a concise summary. Paths retain their contract-defined casing. |
 | Case type | Choose conforming, C1, C2, C3, controls/formatting or all cases before opening the case list. |
 | Prompt | Select a stored, hash-verified original prompt: **P1 — Minimal / direct**, **P2 — Structured C1 → C2 → C3 checklist**, or **P3 — Explicit contract interpretation**, in that order. Only available variants appear. |
-| Case | Readable case key, short category label, reference vector and one explanation line. `d NUMBER` opens details and files. |
+| Case | Readable case key, short category label and reference vector. `d NUMBER` opens full details and files. |
 | Model | Friendly model name, stored quantization and installed/loaded hints when those checks succeed. |
 | Repetitions | Repeat the same case/model configuration 1–3 times; default **1**. |
 | Confirmation | Compact Service / Operation / Case / Model / selected Prompt / Repetitions table. Enter cancels without creating a run context. |
@@ -209,6 +215,7 @@ agreement; full panels and category reasons are not repeated.
 The post-run choices are:
 
 - **View details** — stored category explanations, run/attempt identifiers and available recovery information.
+- **View LLM input** — the integrity-checked request archived for the selected run.
 - **View raw model response** — the archived provider output, including parser failures.
 - **View case files** — response, contract and other available evidence.
 - **Open in Web UI** — the selected run's read-only page.
@@ -302,14 +309,14 @@ A successful interactive browser launch prints only a short confirmation.
 ## Rehearse without calling a model
 
 Start bare `rac`, choose **Run API response check**, and follow **Final evaluation
-→ EDX or Resistance → operation → case type → case → model**. Explore `d NUMBER`
+→ EDX or Resistance → operation → case type → prompt → case → model**. Explore `d NUMBER`
 and its evidence menu first. Accept one repetition, inspect **Ready to run**, then
 press Enter at `Run now? [y/N]`. Next browse an existing result and its files, then
 exit. Selection and declined confirmation create no run or destination dataset.
 
 Only type `y` when a real model run is intended. A model smoke run is separate
-from automated tests; [the review](../LIVE_DEMO_CLI_REVIEW.md) records what was
-actually verified in each implementation pass.
+from automated tests. The regression tests below use fabricated responses;
+they do not establish that a local model is installed or ready.
 
 ## Existing direct commands
 
@@ -338,5 +345,12 @@ above if the ODBC connection cannot load its SSL library.
 Do not use `evaluate comparison` for an interactive subset: that command belongs
 to the separately approved scientific comparison workflow. Automated tests use
 fabricated responses. Optional SQL integration tests require disposable test
-credentials and must never target the scientific database. Test totals and
-remaining limitations are recorded in [the review](../LIVE_DEMO_CLI_REVIEW.md).
+credentials and must never target the scientific database.
+
+```sh
+uv run --locked pytest -q tests/test_interactive_app.py tests/test_root_live_wizard.py tests/test_live_demo_cli.py
+```
+
+See [testing prerequisites](../README.md#tests) and the
+[SQL test procedure](persistence.md#verification-command-and-stage-boundary)
+for the separate research/archive dependencies and opt-in SQL checks.

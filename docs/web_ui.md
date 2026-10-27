@@ -71,11 +71,12 @@ uv run --locked pytest tests/web tests/persistence/test_web_queries.py -q
 ```
 
 Ordinary UI tests use fabricated in-memory records and block real inference.
-SQL query tests follow the existing `RAC_SQL_TEST_ENV` opt-in; see the README
-for the full SQL/backup command. `tests/web/browser_fixture.py` is a fabricated
-visual-review fixture, not a source of study records. See
-[implementation plan](web_ui_plan.md) and
-[verification record](web_ui_verification_2026-09-26.md).
+SQL query tests follow the existing `RAC_SQL_TEST_ENV` opt-in; see the
+[persistence guide](persistence.md#verification-command-and-stage-boundary)
+for the SQL/backup command and the [README](../README.md#tests) for external
+test prerequisites. `tests/web/browser_fixture.py` is a fabricated visual-review
+fixture, not a source of study records. For CLI-to-Web result navigation, see the
+[interactive workflow](live_demo.md#browse-previous-results-and-web-ui).
 
 `web/queries.py` exposes only bounded SELECT operations to handlers. Connections
 are rolled back and closed. `web/presentation.py` formats stored ratios and

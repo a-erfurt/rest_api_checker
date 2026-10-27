@@ -4,9 +4,11 @@ Authority: research `prompt_development_protocol_v1.md` §6 (D08/D09), §7
 (D03/D10), §10 and `database_design_v1.md` §§5–7.1. This stage implements
 comparison evaluation and terminal presentation without changing methodology.
 
-**The real 324 comparison runs have NOT started. No study prompt winner exists.
-No sensitivity variant exists. Demo data is FABRICATED / TEST DATA.** No Ollama
-inference, web UI, final dataset or Main Experiment is part of this stage.
+This guide covers the original 324-slot comparison evaluator and its CLI.
+For the current interactive workflow, see [live checks](live_demo.md); for
+stored results, see the [read-only Web UI](web_ui.md) and
+[Main-v2 handoff](main_v2_handoff.md). Fabricated demo data remains explicitly
+labelled **FABRICATED / TEST DATA** and is not a scientific result.
 
 ## Commands
 
@@ -61,14 +63,14 @@ with the frozen schedule, then validates the exact approved 324-slot design.
 Missing/extra/duplicate/unfinished runs, drift and unaccountable attempt or
 prediction bindings block publication. The original report requires the released
 DEV references, revision 1, including exact manifest/source pointers. It never
-selects a newer reference. Reference-correction and sensitivity workflows remain
-deferred.
+selects a newer reference. Reference-correction and sensitivity workflows are
+outside this original comparison interface.
 
 Newly planned setups contain a content-bound projection of memberships,
 references, cases, responses, operations, contracts, prompts, models and configs.
 Old setup bytes are never augmented in place; a setup missing this binding is
-blocked for report generation/resume. No real study had started at this boundary.
-No database migration is required.
+blocked for report generation/resume. This content-binding check requires no
+additional database migration.
 
 Report creation uses a SERIALIZABLE transaction, verifies source file hashes,
 exact relational bindings, retry entitlement and terminal attempt/prediction
@@ -144,9 +146,10 @@ qualified first technical failure can use its remaining identical retry. Any
 reserved/ambiguous slot is `BLOCKED / NEEDS RECONCILIATION`, remains pending and
 is never dispatched again automatically. `experiment reconcile` consumes a
 durable spool without calling a provider. Nonqualifying failure attribution stays
-blocked. The CLI currently admits fabricated execution/reconciliation only;
-real execution is blocked before provider construction because actual runtime
-verification/attribution and Gate-B acceptance are not implemented.
+blocked. The original `experiment run`, `experiment resume` and
+`experiment reconcile` commands admit fabricated execution/reconciliation only.
+Separate interactive checks use the [live-check workflow](live_demo.md);
+qualified scientific execution uses its dedicated adapters and evidence guards.
 
 ## Plain and JSON modes
 
@@ -169,7 +172,7 @@ Missing source files produce FAIL; an unsupplied database produces BLOCKED, not
 PASS. These are concrete implemented checks, not a claim to rerun the full test
 suite. Fabricated metadata/context proofs never discharge real runtime checks.
 
-Remaining Gate-B blockers: actual full model/Q4_K_M and runtime/hardware evidence;
+Gate-B qualification requires actual full model/Q4_K_M and runtime/hardware evidence;
 native templates/defaults/effective D07 and thinking behavior; complete measured
 tokenizer/template context fit; runtime-specific failure attribution; complete
 setup/source closure, application-role deployment and exact-artifact/freeze
@@ -204,4 +207,13 @@ exact near-ties, failure denominators/N/A, plain/JSON/live/NO_COLOR output,
 SQL drift/reconciliation, append-only reports, application-role write rejection,
 actual SIGINT with fabricated provider receipts, resume/retry accounting and
 isolation. The full suite also retains Q01–Q26 and SQL backup/restore checks.
-See [verification record](evaluation_verification_2026-09-26.md).
+Run the evaluator and terminal regression tests with:
+
+```sh
+uv run --locked pytest -q tests/test_evaluation.py tests/test_cli.py tests/test_batch_terminal.py
+```
+
+SQL integration checks require an explicitly configured disposable test
+environment; see the [persistence verification command](persistence.md#verification-command-and-stage-boundary).
+The [README](../README.md#tests) describes external research and archive
+dependencies needed by the complete suite.

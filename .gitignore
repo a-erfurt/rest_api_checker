@@ -23,3 +23,13 @@ artifacts/gate_b_freeze_candidate_v1/
 # Non-executable sensitivity candidate, generated after its preparation commit.
 artifacts/sensitivity_freeze_candidate_v1/
 artifacts/sensitivity_freeze_candidate_v2/
+
+# Local analyses, agent settings, credentials and OS metadata
+/analysis/
+.DS_Store
+.agents/
+.cursor/
+CLAUDE.md
+.env
+.env.*
+*.env

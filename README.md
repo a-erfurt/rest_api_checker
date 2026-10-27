@@ -1,366 +1,160 @@
-# RestApiChecker research system
+# RestApiChecker
 
-Experimental system for **Evaluating LLM-Based Detection of Validation
-Response Contract Inconsistencies in REST APIs**. Its deterministic Reference Oracle
-produces operational reference labels for later LLM evaluation. It is **not a
-competing baseline** or a general OpenAPI validator.
+RestApiChecker is the CLI and read-only web application for the bachelor thesis
+**Evaluating LLM-Based Detection of Validation Response Contract Inconsistencies
+in REST APIs**. It compares LLM predictions with independently stored reference
+judgments for observed API responses and their OpenAPI contracts.
 
-The separately authorized SQL Server persistence stage is also implemented:
-[setup, migrations, import and recovery](docs/persistence.md),
-[verification and acceptance coverage](docs/persistence_verification_2026-09-26.md).
-It stores released evidence and fabricated integration fixtures; no LLM experiment
-has run. The bounded [renderer/parser/provider/orchestration stage](docs/experiment_stage.md)
-is now implemented, with a [non-dispatched 324-run schedule](docs/experiment_evidence/comparison_schedule_v1.json).
-See [verification and remaining Gate-B work](docs/experiment_verification_2026-09-26.md).
-The [comparison evaluator and thesis CLI](docs/evaluation_cli.md) now provide
-immutable SQL-backed reports, inspection, offline preflight and fabricated
-execution demonstrations. The real 324 comparison runs have **NOT started**;
-no study prompt winner or sensitivity variant exists. Demo data is **FABRICATED**.
-Real CLI dispatch remains blocked by Gate-B evidence and acceptance.
+The interactive workflow checks **stored response evidence**; it does not send a
+new request to the selected API. Its checks cover documented HTTP status (C1),
+response media type (C2), and response body schema (C3). The qualified Reference
+Oracle is a measurement instrument, not a competing detector. Results concern the
+supported study profile and do not establish correctness for arbitrary APIs.
 
-```sh
-uv sync --locked
-rest-api-checker --help
-rest-api-checker preflight --plain
-rest-api-checker --env-file /private/tmp/rac-sqlserver-environment-20260926/credentials.env experiment demo
-```
+## Requirements
 
-The demo owns a marked disposable SQL Server database. It never calls Ollama.
-See the [command tree, JSON, progress and resume guide](docs/evaluation_cli.md).
+- Python **3.12** and `uv`; dependency versions are recorded in `uv.lock`.
+- Microsoft SQL Server with the application schema and imported case, reference,
+  prompt, model and configuration records for interactive checks and result browsing.
+- Microsoft ODBC Driver 18 for SQL Server and the platform's ODBC runtime.
+- A local Ollama service and an installed supported model for real LLM runs.
+  Supported model tags are `qwen3.6:27b`, `gemma3:27b` and `mistral-small3.2:24b`.
 
-The separate [Evaluation-v2 batch CLI](docs/evaluation_batch_v2.md) adds complete
-preflight/dry-run, sequential execution of an explicitly materialized v2 plan,
-conservative resume and read-only status. A database-free presentation simulation
-is available with `rest-api-checker experiment demo-batch`. Real use requires the
-separately authorized Main-v2 dataset **and experiment setup**; the existing v1
-materializer does not produce this setup. The separate
-[Main-v2 handoff](docs/main_v2_handoff.md) provides review-bound freeze, final
-dataset import, exact request/native-context preparation, experiment materialization
-and post-review operator commands. It never grants human approval or starts Main.
+Database setup and imports are explicit administration steps. Normal startup does
+not create a populated database, import research data, install models or migrate
+the schema. See the [SQL Server guide](docs/persistence.md) for setup and commands.
 
-The [read-only research web UI](docs/web_ui.md) presents Overview, Evaluation,
-Runs and Data using persisted records and immutable reports. Start it locally:
+## Start the CLI
 
-```sh
-uv run --locked rest-api-checker-web --env-file /path/to/private/credentials.env --database rest_api_checker
-```
-
-Open **http://127.0.0.1:8000**. The UI cannot execute experiments or create reports.
-It includes operational polling, Focus Mode and browser print/PDF styles.
-
-## Local operator shortcuts
-
-The optional `rac` launcher reuses the existing CLI and read-only web app:
-
-```sh
-uv run rac configure --env-file /path/to/existing/private/credentials.env
-uv run rac                 # arrows, Enter, numeric shortcuts; Ctrl-C exits
-uv run rac db start        # start/check the known container and existing schema
-uv run rac db stop         # stop only; preserve container, volumes and databases
-uv run rac web             # add --open to open the browser
-uv run rac preflight       # actual Gate-B status; never inference
-```
-
-Configuration lives in `~/.config/rest-api-checker/config.toml`; credential files
-remain external with mode **0600**. No normal startup initializes, migrates or
-imports data. `rest-api-checker` and `rest-api-checker-web` remain unchanged.
-See the [operator guide](docs/operator_convenience.md) for precedence, menus,
-diagnostics and verification limits.
-
-## Reproduce
-
-Python **3.12.14**, uv **0.12.17** used for the initial qualification. From this
-repository, with uv installed:
+From the repository directory:
 
 ```sh
 uv sync --locked
-uv run --locked pytest -q
-uv run --locked pytest -v tests/test_oracle_qualification.py
+uv run --locked rac --help
+
+# Register an existing private credential file once.
+chmod 600 /absolute/path/to/private/credentials.env
+uv run --locked rac configure --env-file /absolute/path/to/private/credentials.env
+
+# Open the interactive application.
+uv run --locked rac
 ```
 
-The lockfile pins all dependencies. The original scientific tests need no API
-service, model, research checkout, or network after installation. SQL integration
-tests are explicitly opt-in and require the qualified server and released source
-checkout; see the persistence guide. Materialization reads the separate pinned
-research checkout; its tests use temporary archives with test-only acquisition
-metadata. Both contract hashes are verified at
-session start, before fixture loading, and at session end. The committed copies
-are byte-identical to the research snapshots; tests never write to the research
-repository. Do not refresh them from a live service.
+Credentials must remain outside the application and research repositories. The
+file contains `RAC_SQL_PORT`, `RAC_SQL_PASSWORD` and optionally `RAC_SQL_USER`.
+Local, non-secret defaults are stored in `~/.config/rest-api-checker/config.toml`;
+`configure` does not overwrite an existing configuration. Use an application login
+for normal operations. Administrative actions require the appropriate permissions.
 
-The experiment-boundary tests also read the approved prompt artifacts and
-released DEV staging. They use fabricated provider responses and explicitly
-forbid real HTTP calls. Run all verification, including disposable SQL Server
-integration and the existing backup/restore test, with:
+To type only `rac` in the current terminal, activate the environment:
 
 ```sh
-RAC_SQL_TEST_ENV=/private/tmp/rac-sqlserver-environment-20260926/credentials.env \
-RAC_SQL_TEST_BACKUP_DIR=/private/tmp/rac-sqlserver-persistence-20260926 \
-.venv/bin/python -m pytest tests tools/sqlserver_environment/test_probe.py -q
+source .venv/bin/activate
+rac
 ```
 
-Without these environment variables, SQL/backup tests are skipped; that does not
-establish persistence acceptance. No command above sends an Ollama request.
+Personal aliases can point to `.venv/bin/rac`; keep machine-specific paths in
+local shell configuration. Bare `rac` prints help without an interactive terminal.
 
-## Public API
+## Interactive checks
 
-```python
-from pathlib import Path
-from rest_api_checker import evaluate_response
+The main menu offers **Run API response check**, **Browse previous results**,
+**Open Web UI**, and **Exit**. Use the displayed number and Enter; `q` goes back.
 
-result = evaluate_response(
-    contract=Path("tests/contracts/edx_openapi_3.0.4.json"),
-    operation_path="/edx/validation/body",
-    method="post",
-    status=200,
-    content_type="application/json; charset=utf-8",
-    body=b'{"code":0}',
-)
-assert result.vector == ("PASS", "PASS", "PASS")
-assert result.overall == "CONSISTENT"
+1. Choose the stored case set, service, operation and case type.
+2. Select an available, hash-verified **P1**, **P2** or **P3** prompt and a case.
+3. Choose a model and one to three repetitions.
+4. At **Ready to run**, enter `p` to **Preview LLM input**. Only `y` / `yes` at
+   the confirmation prompt starts the model run.
+
+The preview uses the exact prepared request. It includes the system prompt,
+complete user message, relevant OpenAPI excerpt, HTTP status, Content-Type,
+response body and request options. Long sections have page navigation. Stored
+reference judgments are kept outside the model input. Recognized secrets are
+masked only for display, with an explicit notice.
+
+After a run, the result panel shows reference/prediction agreement, parser status,
+duration, input/output/total tokens and the requested context limit. Token counts
+come from the stored provider response. The input percentage compares input tokens
+with the archived request's context limit; it is not measured peak context
+occupancy. Missing values remain **not recorded**. With retries, token counts refer
+to the latest attempt and duration includes all attempts.
+
+**View LLM input** reads the archived request without reconstructing it. Details,
+raw model output, case files and the selected run's web page are available without another model call.
+
+Interactive runs use a separate execution context and preserve existing scientific
+results. Interactive prompt selection does not change the scientific P2 binding.
+See the [interactive CLI guide](docs/live_demo.md) for navigation and boundaries.
+
+## Start the web UI
+
+With local operator configuration and the existing database container available:
+
+```sh
+uv run --locked rac web --open
 ```
 
-`contract` can also be an already parsed document. Callers must bind external
-contract files to verified byte hashes before use; qualification fixtures enforce
-this automatically. Only the two frozen operations are scientifically qualified.
-Synthetic contract tests exercise selection mechanics without expanding API scope.
+Alternatively, serve the web application directly against an existing database:
 
-Results contain C1/C2/C3, the derived overall label, selected response/media keys,
-the selected schema's document pointer, and a deterministic tuple of diagnostics.
-`Diagnostic.schema_path` is the library's path relative to the selected schema,
-including traversal through references, **not** an absolute document pointer.
-Diagnostics and eligibility errors are reference-side information, not future
-LLM inputs or extra scientific classes.
-
-- C1 checks documented status coverage, with exact → range → default precedence.
-- C2 matches the selected response's declared media. Only the qualified JSON
-  charset exception is admitted; arbitrary parameters are not ignored.
-- C3 decodes original UTF-8 JSON and checks the selected dialect/schema without
-  changing property names, types, missing fields, or extra properties.
-- No status match produces `FAIL / NOT_APPLICABLE / NOT_APPLICABLE`.
-- A valid unmatched media type produces `PASS / FAIL / NOT_APPLICABLE`.
-- Any FAIL means `INCONSISTENT`; an all-PASS vector means `CONSISTENT`.
-
-`OracleNotReady` holds unsupported/ambiguous evidence without a completed vector
-or overall label. Its `code` explains why. In particular, declared EDX `text/plain`
-and `text/json` match C2 in component checks, but their unresolved decoding prevents
-a completed oracle result. `OracleExecutionError` signals a validator failure;
-it is never relabeled as C3 FAIL or NOT_APPLICABLE. Unexpected infrastructure errors
-also propagate without a label. An empty schema is supported; a missing schema is held.
-
-## Evidence and limits
-
-See [validator spike and qualification](docs/validator_spike.md) for candidate
-comparison, measured outcomes, versions, admission limits, and source links.
-[Provenance](tests/contracts/provenance.json) pins the research commit and all four
-methodology-file hashes as well as the two contract hashes.
-
-The 26 readable expectations in `tests/test_oracle_qualification.py` transcribe
-the author's signed review unchanged. Additional tests are implementation probes,
-not additional human-reviewed reference cases or scored LLM data. Passing these
-examples establishes bounded agreement, not universal oracle correctness.
-
-## Development case construction
-
-`rest_api_checker.construction` implements the bounded F01–F09 and K01–K03
-families in the research repository's
-[`fault_model_v1.md`](../bachelor_rest_api_checker/03_research_design/fault_model_v1.md).
-The construction layer accepts only the two byte-identical qualified snapshots.
-It leaves the Oracle implementation and interface unchanged.
-
-```python
-from pathlib import Path
-from rest_api_checker.construction import (
-    ContractSnapshot, Response, construct_parent, construct_control, mutate,
-)
-
-contract = ContractSnapshot("edx", Path("tests/contracts/edx_openapi_3.0.4.json").read_bytes())
-parent = construct_parent(
-    "dev-parent", contract, Response(200, "application/json", b'{"code":0}'),
-    construction="Explicit synthetic development parent",
-)
-child = mutate("dev-child", parent, "F03", variant="null")
-control = construct_control("dev-control", contract, "K01", "nullable")
-assert child.before.vector == ("PASS", "PASS", "PASS")
-assert child.result.vector == ("PASS", "PASS", "FAIL")
-assert child.parent is parent
+```sh
+uv run --locked rest-api-checker-web \
+  --env-file /absolute/path/to/private/credentials.env \
+  --database rest_api_checker
 ```
 
-`construct_parent` measures caller-supplied synthetic bytes and requires all PASS.
-`observe` measures an archived natural response as-is, including inconsistencies;
-it requires `Observation(source, request, response)` with original archive bytes.
-The caller supplies the corresponding status, Content-Type and body; this module
-does not acquire responses or parse wire archives. Origins remain distinct.
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000). The UI shows stored experiments,
+reports, runs, cases and evidence. It uses read-only queries and never calls Ollama,
+starts an experiment or creates a report. It serves bundled frontend assets without
+a separate frontend build. See the [web UI guide](docs/web_ui.md).
 
-`mutate` remeasures its parent before applying one approved transformation, then
-passes only contract, operation, status, Content-Type and body to the Oracle again.
-It checks the measured vector against family expectations after measurement.
-Schema failures and F09 representation failures remain distinct. Fault parents use
-exact `application/json`; the separately admitted charset control is K01 only.
+## Commands and configuration
 
-| Family | Variant names |
+```sh
+uv run --locked rac db status --plain
+uv run --locked rac db start       # Existing, configured container only
+uv run --locked rac db stop        # Preserve database and volumes
+uv run --locked rac preflight      # Readiness checks; no inference
+uv run --locked rest-api-checker --help
+```
+
+`rac` also forwards inspection, evaluation and experiment commands to `rest-api-checker`.
+Scientific batches retain explicit preparation, qualification and authorization
+checks. Configuration precedence is CLI options, environment variables, local
+configuration, then defaults. See [operator configuration](docs/operator_convenience.md)
+and the [Main-v2 procedure](docs/main_v2_handoff.md).
+
+## Tests
+
+The core qualification tests use the committed contract fixtures:
+
+```sh
+uv run --locked pytest -q tests/test_oracle_qualification.py \
+  tests/test_oracle_boundaries.py tests/test_validator_spike.py
+```
+
+The full development suite is available with `uv run --locked pytest -q`, but it
+also depends on the separate research checkout, released archives and pinned Git
+history used by the original study. It is not a standalone fresh-clone acceptance
+check. Historical integrity/preflight tests can report evidence drift; do not
+rewrite frozen evidence to make those checks pass.
+
+SQL integration tests require explicitly configured disposable resources via
+`RAC_SQL_TEST_ENV`; application-login and backup tests have additional opt-ins.
+Without those settings they are skipped. Tests use fabricated provider responses
+and forbid real inference HTTP. See the [persistence guide](docs/persistence.md)
+for integration-test setup.
+
+## Repository layout
+
+| Path | Purpose |
 | --- | --- |
-| F01 | `status_500` |
-| F02 | `undeclared_media` |
-| F03 | `string`, `boolean`, `null` |
-| F04 | `root`, `nested` |
-| F05 | `integer_key` |
-| F06 | `remove_msg` |
-| F07 | `string_loc` |
-| F08 | `null`, `integer` |
-| F09 | `broken_json` |
-| K01 | `omitted`, `integer_code`, `nullable`, `nested_strings`, `nested_optional_nullable`, `charset` |
-| K02 | `null`, `array`, `object` |
-| K03 | `omitted`, `empty_detail`, `string_locations`, `integer_location_extras` |
+| `src/rest_api_checker/` | CLI, reference checks, input rendering, execution and evaluation |
+| `src/rest_api_checker/web/` | Web routes, queries, templates and bundled static assets |
+| `src/rest_api_checker/persistence/` | SQL repositories, immutable evidence handling and migrations |
+| `tests/` | Unit, qualification, CLI/web and opt-in SQL tests |
+| `tools/` | Explicit environment, qualification and experiment administration |
+| `docs/` | Operational guides and required qualification/integrity evidence |
 
-Fault variants default to the first listed variant. Nested operations accept an
-`item_index` (default 0); other operators reject it. Controls require an explicit
-variant and construct literal Q/S boundary templates. These templates are probes,
-not new independent evaluation instances. Explicit parents retain their supplied
-construction description without claiming an additional control family.
-
-Cases and their evidence records are frozen dataclasses. Each derivative retains
-the complete parent, contract snapshot bytes/hash, family/variant, transformation
-parameters, exact byte splice (for body changes), and before/after Oracle results.
-`parent_sha256` and `response.sha256` bind original and resulting artifacts.
-Response SHA-256 hashes UTF-8 JSON encoded with `separators=(',', ':')` over
-`["response-v1", status, content_type, body.hex()]`; it covers all three response
-layers, while contract identity is bound separately. Byte edits preserve existing
-formatting and unrelated values; they never serialize or repair the whole body.
-
-`ConstructionRejected` reports invalid preconditions, nonconformant parents,
-no-op/ineffective mutations and unexpected outcomes. Its `candidate` retains the
-actual artifact and measured result when produced; mutation rejections also retain
-`parent` and `before` when measured. A conformant unsuccessful mutation retains
-its control outcome and original fault intent. Rejected construction candidates
-are not admitted cases, even when their construction intent was a control.
-`OracleNotReady` and execution failures propagate without fabricated labels.
-The construction API retains evidence in memory. The separately implemented
-persistence importer archives already released artifacts without reconstruction.
-
-## Development dataset v1
-
-DEV-01–DEV-12 were approved by the author on 2026-09-22 (12/12 manually
-reviewed) for prompt development. The current release record is
-[`docs/development_dataset_v1_release.json`](docs/development_dataset_v1_release.json).
-All cases remain excluded from final evaluation and final headline metrics.
-
-### Historical candidate materialization
-
-Materialize the exact DEV-01–DEV-12 inventory from a research checkout at
-`1cbe68ceae2bb2d146870379d72394edc083b256`:
-
-```sh
-uv run --locked python -m rest_api_checker.development_dataset \
-  --research-repository /path/to/research-checkout-at-1cbe68c
-```
-
-The default output is `artifacts/development_dataset_v1/`, ignored by Git.
-Use `--output artifacts/development_dataset_v1_repeat` for a second materialization.
-Output must be a fresh or empty directory inside this technical checkout; an
-existing candidate is never overwritten. No research files are written.
-The current research document includes the later approval and therefore no longer
-matches the pinned input hash. Use the historical checkout for materialization;
-do not repin the inventory or replace the approved artifacts. Full manifest byte
-reproduction also requires the recorded implementation commit and environment.
-
-`development_dataset_v1.json` is the bounded machine-readable transcription of
-the approved inventory, with byte hashes for the authority documents, contracts,
-and explicit pilot provenance files. These are verification targets and input
-bindings, not executed labels. The materializer refuses changed or missing sources,
-uses the existing construction API, and checks each measured response against
-its specified status, media, exact body hash, vector, overall label and lineage.
-No pilot directory discovery or fault sampling occurs.
-
-`construct_parent` and `construct_control` accept an optional `parent` to preserve
-control context. Explicit control construction may start from a nonconformant
-observation, as DEV-02 requires. It records the before result, full-body byte
-replacement and explicit status/media selection; the resulting control must pass.
-Fault construction still revalidates its conformant immediate parent.
-
-The deterministic `manifest.json` references separate response envelopes, raw
-bodies, replacement bytes, and byte-exact copies of all selected research evidence.
-References are relative to the staging directory and carry SHA-256 and byte count.
-Per-case records preserve origin, root family, immediate parent, before/after
-Oracle decisions and diagnostics, parent hashes and transformation parameters.
-Shared provenance records source commits, protocol/qualification evidence hashes,
-actual dependency versions, Oracle commit, implementation commit, working-tree
-status and source hashes. `manifest.sha256` hashes the exact manifest bytes.
-Repeated runs with the same source bytes, implementation and environment produce
-identical files; a different code commit or dependency version changes provenance.
-
-Admission failure writes `rejection.json` and any available candidate/parent
-artifacts without publishing a manifest. Resolve discrepancies explicitly; do not
-change expected outcomes to force admission. Missing inputs or Oracle exceptions
-never become scientific labels.
-
-Every successful output is `CANDIDATE_PENDING_MANUAL_REVIEW`, with zero of twelve
-cases marked reviewed. The author must independently reference-check all twelve
-exact artifacts and resolve discrepancies under the research protocol before
-release. This command cannot release references or run prompt trials.
-
-### Author-approved release metadata
-
-The content manifest SHA-256 remains
-`8cac438a328c67a550ba883cbf9953a4867dc17ad8b5ed1fdf0f2bb55b0bb974`.
-Its `CANDIDATE_PENDING_MANUAL_REVIEW`, 0/12 and per-case false review fields
-are immutable historical evidence. The separate dated release record supersedes
-those review fields for this exact manifest, recording
-`AUTHOR_APPROVED_FOR_PROMPT_DEVELOPMENT` and 12/12 approved cases.
-It does not alter measured results, construction provenance or source bindings.
-
-The ignored staging `release.json` is a deterministic serialization of the tracked
-release record, outside the content manifest. Reproduce it from the repository root
-using the existing materializer helpers (no case regeneration):
-
-```sh
-uv run --locked python - <<'PY'
-import json
-from pathlib import Path
-from rest_api_checker.development_dataset import _json, _sha, _write
-
-output = Path('artifacts/development_dataset_v1')
-release = json.loads(Path('docs/development_dataset_v1_release.json').read_bytes())
-raw = (output / 'manifest.json').read_bytes()
-if _sha(raw) != release['approved_manifest_sha256']:
-    raise ValueError('Approved manifest hash mismatch')
-manifest = json.loads(raw)
-ids = [f'DEV-{i:02}' for i in range(1, 13)]
-if ([c['case_id'] for c in manifest['cases']] != ids
-        or [c['case_id'] for c in release['cases']] != ids
-        or release['manual_review'] != {'required': 12, 'completed': 12}
-        or not all(c['manually_reviewed'] and c['approved'] for c in release['cases'])):
-    raise ValueError('Review coverage mismatch')
-
-def verify_references(value):
-    if isinstance(value, dict):
-        if {'path', 'sha256', 'size_bytes'} <= value.keys():
-            data = (output / value['path']).read_bytes()
-            if _sha(data) != value['sha256'] or len(data) != value['size_bytes']:
-                raise ValueError(f"Artifact mismatch: {value['path']}")
-        for child in value.values():
-            verify_references(child)
-    elif isinstance(value, list):
-        for child in value:
-            verify_references(child)
-
-verify_references(manifest)
-_write(output, 'release.json', _json(release))
-PY
-```
-
-This materialization command does not create final evaluation data, prompts,
-database rows or experiment runs. Released-artifact SQL import is a separate
-command described in the persistence guide.
-
-## Disposable SQL Server environment check
-
-The separately authorized 2026-09-26 local compatibility probe is documented in
-[`docs/sqlserver_environment_check_2026-09-26.md`](docs/sqlserver_environment_check_2026-09-26.md).
-Its isolated Compose configuration, fabricated fixtures and safe cleanup steps are
-under [`tools/sqlserver_environment/`](tools/sqlserver_environment/README.md).
-The historical probe dependency group remains available; pyodbc is now also a
-runtime dependency of the persistence package. The probe itself creates only
-qualification fixtures. Deployment support, emulation configuration and graceful
-shutdown limitations remain explicit in the report. The later author-authorized
-schema/persistence stage is documented separately above.
+Private credentials, model weights and local environments are not part of the
+application distribution.

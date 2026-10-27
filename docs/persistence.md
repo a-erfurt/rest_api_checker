@@ -5,11 +5,11 @@ including its documented emulation limitation. Authority:
 [`database_design_v1.md`](../../bachelor_rest_api_checker/03_research_design/database_design_v1.md),
 including the implementation correction in §14. Scientific decisions, D01–D11,
 Oracle semantics, dataset split, prompts and sampling settings remain unchanged.
-**No LLM experiment has run.** The separate
-[experiment stage](experiment_stage.md) supplies renderer, parser, provider
-boundary and bounded orchestration. The subsequent [evaluation/CLI stage](evaluation_cli.md)
-adds comparison reports and inspection; UI remains absent. Synthetic test outcomes are
-explicitly fabricated persistence fixtures, not model results.
+The [experiment layer](experiment_stage.md) supplies renderer, parser, provider
+boundary and bounded orchestration. The [evaluation CLI](evaluation_cli.md),
+[interactive CLI](live_demo.md) and [read-only Web UI](web_ui.md) use this
+persistence layer. Synthetic test outcomes are explicitly fabricated fixtures,
+not model results; historical study outcomes remain separately stored evidence.
 
 ## Schema and migrations
 
@@ -40,7 +40,7 @@ restricted operational-column UPDATE grants, no DELETE/schema alteration or
 ledger write. Immutable evidence has no update API. Lifecycle predicates on the
 operational columns are enforced transactionally by the repository; ordinary
 FKs or role membership alone do not enforce the full write policy. Administrative
-credentials can bypass application policy and must not be used by a future
+credentials can bypass application policy and must not be used by the
 runner. Provision a separate SQL login/user outside Git, then add its database
 user to `rac_application`. No login or password is embedded in a migration.
 
@@ -92,9 +92,9 @@ The Apple-Silicon emulated engine is outside Microsoft vendor support; the autho
 accepted this limitation for the local implementation task. The earlier exit-137
 shutdown (not OOM) remains a known graceful-stop limitation, not evidence of
 corruption. Stop work on actual instability, corruption or restore failure. See
-[qualification report](sqlserver_environment_check_2026-09-26.md) for historical
-observations and unresolved emulator details. This task leaves the reused
-container running; it does not destroy the qualified volume or original probes.
+the [disposable environment probe procedure](../tools/sqlserver_environment/README.md)
+for explicit readiness, restart and restore checks. Preserve the qualified volume
+and original probes when operating an existing study installation.
 
 ## Explicit administration
 
@@ -266,10 +266,11 @@ unit suite alone is not SQL acceptance. Tests create and destroy marked temporar
 databases; they retain external backups and no study database. The backup test
 uses the exact qualified container name/digest and never global Docker cleanup.
 
-See [verification and acceptance matrix](persistence_verification_2026-09-26.md)
-for actual results, deferred portions and limitations. The existing full suite
-includes Oracle qualification and synthetic fixture construction tests; these
-are regression checks, not importer remeasurement of the released DEV data.
+The [README](../README.md#tests) lists the external research checkout, archives
+and Git evidence needed by the complete suite. The suite includes Oracle
+qualification and synthetic fixture construction tests; these are regression
+checks, not importer remeasurement of the released DEV data. A test command here
+is an instruction for validation, not a claim that an environment has passed it.
 
 ## Qualified local application principal
 

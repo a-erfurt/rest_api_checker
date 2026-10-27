@@ -4,7 +4,7 @@
 validator, offline preflight and existing read-only web application. No scientific
 policy, formula, parser, schedule, persistence schema or execution guard changes.
 The original `rest-api-checker` and `rest-api-checker-web` commands remain intact.
-No new dependency is required: Rich renders menus and POSIX terminal APIs read keys.
+Rich renders the terminal output; the interactive application uses numbered menus.
 
 ## Setup and direct commands
 
@@ -32,10 +32,9 @@ its non-secret defaults explicitly. No credentials are embedded in commands or T
 
 Default config: `~/.config/rest-api-checker/config.toml`. `RAC_CONFIG` can select a
 different file. Without a configured path, credentials are discovered as
-`credentials.env` beside config.toml. The current machine's setup points to the
-already-existing private file under `/private/tmp/rac-sqlserver-environment-20260926/`;
-that temporary location is not durable storage. Move it privately to durable storage
-and update `env_file` if needed; this launcher never relocates it automatically.
+`credentials.env` beside config.toml. Keep credentials in durable private storage;
+`/private/tmp` is not a retention policy. Update `env_file` when moving them;
+this launcher never relocates a credential file automatically.
 
 | TOML key | CLI override | Environment | Project default |
 |---|---|---|---|
@@ -56,31 +55,23 @@ CLI options work before or after the command. Web hosts are restricted to loopba
 
 ## Menus
 
-The main menu has Database, Web UI, Preflight / Gate B, Experiments, Evaluation,
-Inspect data, Advanced CLI and Exit. Up/down wrap, Enter selects, and number keys
-select immediately. Ctrl-C exits with code 130 and restores the terminal. There is
-no mouse or alternate-screen application. Plain/no-color/dumb terminals display
-sequential menus without ANSI updates. Interactive keys require macOS/Linux/POSIX.
-Without a TTY on both stdin and stdout, bare `rac` prints help and exits 0; it never
-waits for input. `--json` also prevents entering the menu.
+Bare `rac` opens **Run API response check**, **Browse previous results**,
+**Open Web UI**, and **Exit**. Enter a displayed number and press Enter; Enter
+selects the first option and `q` goes back. Long selection lists support paging,
+search and `d NUMBER` for details. Confirmation defaults to No. See the
+[interactive guide](live_demo.md) for prompt selection, exact-input preview,
+token/context display and the separate storage of confirmed interactive runs.
 
-- Database: start/check, authoritative status, version, stop, administrative help, back.
-- Preflight: actual counts and non-PASS details from the existing checker. Without
-  any SQL configuration it preserves the existing offline check; a configured but
-  missing credentials file is an error. Gate B is still blocked by runtime evidence.
-- Experiments: real prompt comparison is **status only**, sensitivity/main evaluation
-  are unavailable. Opening the menu does not dispatch a run. The separately confirmed
-  **FABRICATED / TEST DATA** demo invokes the existing isolated disposable demo command.
-- Evaluation: list, inspect and export existing reports through `evaluate`; no implicit
-  report creation or new metric calculation.
-- Inspect data: paginated, SELECT-only existing web projections for datasets, cases,
-  references, prompts, models, experiments and runs. Connections roll back and close.
-- Advanced CLI: original help and reproducible command examples; no shell executor.
+Without a TTY on both stdin and stdout, bare `rac` prints help and exits 0;
+it never waits for input. `--json` also prevents entering the menu. Selection
+and browsing do not dispatch inference; a confirmed response check does.
 
-Existing explicit commands also pass through `rac` with local defaults. Real run/
-resume guards remain authoritative; the launcher does not supply `--fabricated` or
-runtime evidence. JSON direct-command stdout contains JSON only; `--plain` suppresses
-color/animation. `rac web --json` is rejected because it is a long-running server.
+Database, preflight, evaluation, inspection and other explicit commands remain
+available through `rac` with local defaults. Scientific execution guards remain
+authoritative; the launcher does not manufacture runtime evidence. The original
+`experiment run/resume/reconcile` path remains restricted to fabricated demos.
+JSON direct-command stdout contains JSON only; `--plain` suppresses color and
+animation. `rac web --json` is rejected because it is a long-running server.
 
 ## Database and web lifecycle
 
@@ -111,24 +102,27 @@ remains unchanged. Stop is reversible with start.
 Web reserves the local port, checks/starts SQL, then serves the existing `create_app()`
 through Uvicorn. Address-in-use is reported before SQL startup. `--open` opens the
 browser only after Uvicorn reports startup; temporary web environment overrides are
-restored on shutdown. Stopping the web process leaves SQL running. The UI is unchanged
-and remains read-only.
+restored on shutdown. Stopping the web process leaves SQL running. The UI remains
+read-only; current browsing behavior is described in the [Web UI guide](web_ui.md).
 
 ## Verification
 
-See [verification record](operator_verification_2026-09-26.md). Unit tests mock container
-mutations and browser launch. SQL tests use only the existing opt-in disposable test
-environment. No real Ollama inference or real experiment schedule is dispatched.
+```sh
+uv run --locked pytest -q tests/test_operator.py tests/test_interactive_app.py tests/test_root_live_wizard.py
+```
+
+Unit tests mock container mutations, browser launch and inference. SQL tests use
+only an explicitly configured disposable test environment; see the
+[persistence test procedure](persistence.md#verification-command-and-stage-boundary).
+The [README](../README.md#tests) lists the complete suite's external prerequisites.
 
 ## Application/admin credential separation (2026-09-26)
 
-Local `~/.config/rest-api-checker/config.toml` now binds `env_file` to
-`~/.config/rest-api-checker/application-credentials.env` (0600, dedicated
-`rac_application_login`). `admin_env_file` retains
-`/private/tmp/rac-sqlserver-environment-20260926/credentials.env` unchanged.
-Neither file belongs in Git. Keep the retained administrative file available for
-explicit administration; its current temporary-directory location is not a
-backup policy.
+Use `env_file` in `~/.config/rest-api-checker/config.toml` for a private
+application credential file (mode 0600, dedicated application login) and
+`admin_env_file` for separate administrative credentials. Neither file belongs
+in Git. Keep both files in durable private storage; the administrative file is
+used only for explicit administration.
 
 Normal `rac` inspection, preflight, experiment/evaluation reads and web use the
 application file. Only explicit `db init`, `migrate`, `create-test`,
@@ -148,7 +142,8 @@ the administrative binding. Legacy configs without an admin binding keep their
 previous single-file behavior. The original `rest-api-checker --env-file ...`
 commands are unchanged and remain fully explicit.
 
-The menu and existing run/resume commands retain their fabricated-only guards.
-The separate, acceptance-gated comparison adapter is documented in the
-[technical closure report](gate_b_closure_2026-09-26/report.md). Preparing the
-candidate or opening the web UI never schedules an experiment.
+The original `experiment run/resume/reconcile` commands retain their
+fabricated-only guards. The separate, acceptance-gated comparison adapter is
+documented in the [technical closure report](gate_b_closure_2026-09-26/report.md).
+Current interactive runs follow the [live-check policy](live_demo.md#runtime-policy-and-separate-storage).
+Opening the Web UI never schedules an experiment.
