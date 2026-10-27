@@ -82,7 +82,7 @@ def test_real_input_sections_return_to_confirmation_without_executing(core, monk
     monkeypatch.setattr(core.module, 'plan', Mock(return_value=prepared))
     execute = Mock(side_effect=AssertionError('Preview must not execute'))
     monkeypatch.setattr(core.module, 'execute', execute)
-    choices = iter(['p', '1', '3', 'q', 'n'])
+    choices = iter(['p', '1', '2', '3', 'q', 'n'])
     prompts = []
     def read(prompt):
         prompts.append(prompt)
@@ -92,8 +92,11 @@ def test_real_input_sections_return_to_confirmation_without_executing(core, monk
     execute.assert_not_called()
     assert prompts.count('Run now? [y/N]: ') == 2
     text = output.getvalue()
-    for phrase in ('TASK POLICY', 'FABRICATED response', 'not yet sent', 'Request SHA-256:'):
+    for phrase in ('TASK POLICY', 'FABRICATED response', 'Recorded API Response', 'OpenAPI Contract'):
         assert phrase in text
+    assert prompts == ['Run now? [y/N]: ']+['Selection [1]: ']*4+['Run now? [y/N]: ']
+    assert 'Request SHA-256:' not in text and 'not yet sent' not in text
+    assert 'The run will be stored separately' not in text
 
 
 @pytest.mark.parametrize('flag,status', [('--yes', 'COMPLETED'), ('--dry-run', 'DRY RUN')])

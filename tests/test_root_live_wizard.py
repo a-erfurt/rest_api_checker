@@ -26,9 +26,10 @@ def test_adhoc_default_one_p2_no_runtime_selection(core):
     assert core.calls[0][1]['repetitions']==1
     assert core.calls[0][1]['model_ids']==[4]
     assert core.calls[0][1]['prompt_id']==2
-    for phrase in ('P2','Ollama 0.40.0','will not modify existing evaluation results','PPP','installed · not loaded'):
+    for phrase in ('P2','Ollama 0.40.0','PPP','installed · not loaded'):
         assert phrase in ' '.join(text.split())
-    for hidden in ('live demo','live/ad-hoc','10003','membership 11','Prompt ID','ID 4','Recovery evidence'):
+    for hidden in ('live demo','live/ad-hoc','10003','membership 11','Prompt ID','ID 4','Recovery evidence',
+                   'will not modify existing evaluation results'):
         assert hidden not in text
     assert len(core.calls)==1
 

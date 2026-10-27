@@ -222,7 +222,6 @@ def show_plan(console, selection, summary, spool, *, adhoc=False):
         table.box = box.ROUNDED
         table.width = min(console.width, 96)
         console.print(table)
-        console.print('The run will be stored separately and will not modify existing evaluation results.', style='dim')
         return
     console.print('RestApiChecker — Live Run', style=terminal.ACCENT)
     console.print('Separate interactive experiment; real LLM calls after confirmation.')

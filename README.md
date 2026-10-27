@@ -67,11 +67,12 @@ The main menu offers **Run API response check**, **Browse previous results**,
 4. At **Ready to run**, enter `p` to **Preview LLM input**. Only `y` / `yes` at
    the confirmation prompt starts the model run.
 
-The preview uses the exact prepared request. It includes the system prompt,
-complete user message, relevant OpenAPI excerpt, HTTP status, Content-Type,
-response body and request options. Long sections have page navigation. Stored
-reference judgments are kept outside the model input. Recognized secrets are
-masked only for display, with an explicit notice.
+The preview reads the exact prepared request and offers three sections:
+**Prompt**, **Recorded API Response** (operation, HTTP status, Content-Type and
+complete body), and **OpenAPI Contract**. Selecting a section prints its full
+content and returns directly to the three choices; use terminal scrollback for
+long content and `q` to go back. Stored reference judgments are kept outside the
+model input. Recognized secrets are masked only for display, with an explicit notice.
 
 After a run, the result panel shows reference/prediction agreement, parser status,
 duration, input/output/total tokens and the requested context limit. Token counts

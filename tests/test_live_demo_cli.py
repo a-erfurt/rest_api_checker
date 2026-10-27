@@ -135,7 +135,7 @@ def test_compact_case_selection_preserves_configuration_and_cancel(core, monkeyp
         details.assert_called_once_with(repo, case, view, read)
         assert notice in text and 'installed · not loaded' in text
         assert 'Case set: Final evaluation (default)' in text
-        assert 'The run will be stored separately and will not modify existing evaluation results.' in text
+        assert 'The run will be stored separately' not in text
         assert prompts[-1] == 'Run now? [y/N]: '
     else:
         assert 'Dataset 3 and Experiment 10003 are protected.' in text

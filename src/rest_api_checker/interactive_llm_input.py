@@ -88,7 +88,7 @@ def safe_text(text):
 
 
 def sections(raw):
-    """Project only this payload. Message strings and wire JSON remain exact."""
+    """Project only this payload, keeping prompt and response body text intact."""
     payload = loads(raw)
     if (not isinstance(payload, dict) or not {'model', 'stream', 'messages', 'options'} <= set(payload)
             or set(payload) - {'model', 'stream', 'messages', 'options', 'think', 'format'}
@@ -113,69 +113,37 @@ def sections(raw):
             or response['content_type'] is not None and not isinstance(response['content_type'], str)):
         raise ValueError('Unsupported response body')
     return [
-        ('System message — prompt / evaluation rules', messages[0]['content']),
-        ('Operation / HTTP status / Content-Type — from user message', _pretty(dict(
-            operation=user['operation'], status=response['status'], content_type=response['content_type']))),
-        ('Response body — from user message', response['body']),
-        ('OpenAPI excerpt — from user message', _pretty(user['openapi'])),
-        ('Complete user message', messages[1]['content']),
-        ('Request options — outside messages', _pretty({k: v for k, v in payload.items() if k != 'messages'})),
-        ('Complete request JSON', raw.decode('utf-8')),
+        ('Prompt', messages[0]['content']),
+        ('Recorded API Response', (_pretty(dict(operation=user['operation'],
+            status=response['status'], content_type=response['content_type'])), response['body'])),
+        ('OpenAPI Contract', _pretty(user['openapi'])),
     ]
 
 
-def _show_section(console, label, content, read):
+def _show_section(console, label, content):
     # Text prevents Rich markup interpretation; clean makes terminal controls visible.
-    content, redacted = safe_text(content)
+    # Filter response metadata/body independently so nested JSON secrets are detected.
+    parts = [safe_text(part) for part in (content if isinstance(content, tuple) else (content,))]
+    content = '\n\n'.join(part for part, _ in parts)
     # Also neutralize C1 controls and bidi overrides that the shared clean()
     # intentionally leaves alone for other UI text. Request bytes stay untouched.
     content = ''.join(f'\\u{ord(c):04x}' if 0x80 <= ord(c) <= 0x9f or
                       ord(c) in (*range(0x202a, 0x202f), *range(0x2066, 0x206a)) else c for c in content)
-    title = Text(label, style='bold cyan')
-    notice = ('Secrets redacted for display; sent/stored bytes are unchanged.' if redacted else
-              'From the request payload. Line wrapping / escaped control characters are display only.')
-    # Plain/no-color output still needs pages when attached to a terminal.
-    if not (console.is_terminal or getattr(console.file, 'isatty', lambda: False)()):
-        console.print(title)
-        console.print(notice, style='dim')
-        console.print(Text(terminal.clean(content)))
-        return
-    lines = Text(terminal.clean(content)).wrap(console, max(20, console.width-2), overflow='fold')
-    page_size = max(4, console.height-8)
-    pages = max(1, (len(lines)+page_size-1)//page_size)
-    page = 0
-    while True:
-        console.print(title)
-        console.print(notice, style='dim')
-        for line in lines[page*page_size:(page+1)*page_size]:
-            console.print(line)
-        console.print(f'Page {page+1}/{pages} · Enter/n next · p previous · q Back', style='dim')
-        answer = read('Page: ').strip().lower()
-        if answer in ('q', 'b', 'back') or not answer and page == pages-1:
-            return
-        if answer in ('', 'n'):
-            page = min(pages-1, page+1)
-        elif answer == 'p':
-            page = max(0, page-1)
-        else:
-            console.print('Use Enter/n, p or q.')
+    console.print(Text(label, style='bold cyan'))
+    if any(redacted for _, redacted in parts):
+        console.print('Secrets redacted for display; sent/stored bytes are unchanged.', style='yellow')
+    console.print(Text(terminal.clean(content)), overflow='fold', crop=False)
 
 
-def show_payload(console, raw, read, *, source):
+def show_payload(console, raw, read):
     items = sections(raw)
     console.print('LLM input', style='bold cyan')
-    console.print(source, style='dim')
-    console.print('System = evaluation rules; user = operation, OpenAPI and observed response. '
-                  'Case selection/reference metadata is not added to this view.', style='dim')
-    console.print('Request SHA-256: '+digest(raw), style='dim')
-    console.print(f'Request bytes: {len(raw)} · View only; no model call.', style='dim')
     while True:
         try:
-            label, content = choose(console, 'Input sections', items, lambda item: item[0], read,
-                explanation='Complete messages and request included. q returns to the previous screen.')
+            label, content = choose(console, 'Input sections', items, lambda item: item[0], read)
         except Back:
             return
-        _show_section(console, label, content, read)
+        _show_section(console, label, content)
 
 
 def show_plan_input(console, plan, read):
@@ -184,11 +152,9 @@ def show_plan_input(console, plan, read):
         if not requests:
             raise ValueError('No prepared requests')
         while True:
-            order, request = requests[0] if len(requests) == 1 else choose(
+            _, request = requests[0] if len(requests) == 1 else choose(
                 console, 'Select prepared input', requests, lambda item: f'Planned run {item[0]}', read)
-            show_payload(console, request.body, read,
-                source=f'Prepared request {order}; not yet sent. Execution verifies these exact bytes. '
-                       'Runtime template/tokenization is applied by Ollama and is not shown here.')
+            show_payload(console, request.body, read)
             if len(requests) == 1:
                 return
     except Back:
@@ -217,8 +183,8 @@ def load_run_payload(query, run_id):
 
 def show_run_input(query, run_id, console, read):
     try:
-        raw, source = load_run_payload(query, run_id)
-        show_payload(console, raw, read, source=source)
+        raw, _ = load_run_payload(query, run_id)
+        show_payload(console, raw, read)
     except (DataUnavailable, NotFound, IntegrityViolation, pyodbc.Error, ValueError, TypeError,
             KeyError, AttributeError, UnicodeError, RecursionError, OSError):
         console.print('The stored LLM input is missing, unsupported or failed its integrity check. '

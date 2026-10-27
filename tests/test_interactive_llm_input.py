@@ -93,18 +93,20 @@ def test_preview_sent_and_archived_bytes_match_without_reference_leakage(prompts
     raw = selected.requests[1].body
     items = viewer.sections(raw)
     sent_payload = json.loads(raw)
+    sent_user = json.loads(sent_payload['messages'][1]['content'])
+    assert [label for label, _ in items] == ['Prompt', 'Recorded API Response', 'OpenAPI Contract']
     assert items[0][1] == PROMPTS[name].decode()
-    assert items[4][1] == sent_payload['messages'][1]['content']
-    assert items[6][1].encode() == raw
-    assert items[2][1].encode() == prompts.files[3]
-    assert json.loads(items[3][1]) == json.loads(items[4][1])['openapi']
-    assert json.loads(items[1][1])['status'] == 200
+    metadata, body = items[1][1]
+    assert body.encode() == prompts.files[3]
+    assert json.loads(items[2][1]) == sent_user['openapi']
+    assert json.loads(metadata) == dict(operation=sent_user['operation'], status=200,
+                                        content_type=sent_user['observed_response']['content_type'])
     assert 'GT_SENTINEL' not in raw.decode()
     view, output = console()
-    viewer.show_plan_input(view, selected, answers('1', '2', '3', '4', '5', '6', '7', 'q'))
+    viewer.show_plan_input(view, selected, answers('1', '2', '3', 'q'))
     assert 'GT_SENTINEL' not in output.getvalue()
     assert 'expected_label' in output.getvalue() and 'actual API data' in output.getvalue()
-    assert 'not yet sent' in output.getvalue() and 'no model call' in output.getvalue()
+    assert 'Prepared request' not in output.getvalue() and 'Request SHA-256:' not in output.getvalue()
     assert prompts.writes == [] and (prompts.tables, prompts.files) == before
     calls = []
     content = encode({key: dict(verdict='PASS', reason='FABRICATED') for key in ('c1', 'c2', 'c3')}).decode()
@@ -181,22 +183,22 @@ def test_multiple_prepared_requests_are_selected_without_mutation():
     selected = SimpleNamespace(requests={1: SimpleNamespace(body=first), 2: SimpleNamespace(body=second)})
     before = deepcopy(selected)
     view, output = console()
-    viewer.show_plan_input(view, selected, answers('2', '3', 'q', '1', '3', 'q', 'q'))
+    viewer.show_plan_input(view, selected, answers('2', '2', 'q', '1', '2', 'q', 'q'))
     assert 'second body' in output.getvalue() and 'first body' in output.getvalue()
     assert selected == before
 
 
-def test_terminal_pages_reach_end_and_back_without_truncating_or_interpreting_markup():
+def test_terminal_prints_full_section_without_paging_or_interpreting_markup():
     stream = StringIO()
     view = Console(file=stream, force_terminal=True, width=60, height=12, color_system='standard')
     content = '\n'.join(f'LINE-{i:02} literal [red] \x1b[2J' for i in range(12))
-    viewer._show_section(view, 'Full input', content, answers('n', 'p', 'n', 'n', ''))
+    viewer._show_section(view, 'Full input', content)
     text = Text.from_ansi(stream.getvalue()).plain
     for i in range(12):
         assert f'LINE-{i:02}' in text
     assert '[red]' in text and '\\x1b[2J' in text
-    assert 'Page 1/3' in text and 'Page 3/3' in text
-    assert text.count('LINE-00') == 2
+    assert 'Page' not in text and 'From the request payload' not in text
+    assert text.count('LINE-00') == 1
     assert '…' not in text
 
 
@@ -218,13 +220,19 @@ def test_terminal_pages_reach_end_and_back_without_truncating_or_interpreting_ma
     {'aws_secret_access_key': 'AWS_SECRET_VALUE'},
     {'csrf_token': 'CSRF_VALUE'},
 ])
-@pytest.mark.parametrize('section', [2, 4, 6])
+@pytest.mark.parametrize('section', ['response', 'user', 'request'])
 def test_nested_secret_redaction_in_body_user_and_full_request_is_display_only(secret, section):
     body = json.dumps(dict(secret, expected_label='visible API data'))
     raw = payload(body)
     before = bytes(raw)
-    label, text = viewer.sections(raw)[section]
-    filtered, changed = viewer.safe_text(text)
+    label, text = viewer.sections(raw)[1]
+    if section == 'user':
+        text = json.loads(raw)['messages'][1]['content']
+    elif section == 'request':
+        text = raw.decode()
+    parts = [viewer.safe_text(part) for part in (text if isinstance(text, tuple) else (text,))]
+    filtered = '\n\n'.join(part for part, _ in parts)
+    changed = any(redacted for _, redacted in parts)
     assert changed and '[REDACTED]' in filtered
     for token in ('PASSWORD_VALUE', 'AUTH_VALUE', 'COOKIE_VALUE', 'SET_COOKIE_VALUE', 'CLIENT_SECRET_VALUE',
                   'TOKEN_VALUE', 'APIKEY_VALUE', 'HEADER_VALUE', 'URL_PASSWORD_VALUE', 'PEM_VALUE',
@@ -233,7 +241,7 @@ def test_nested_secret_redaction_in_body_user_and_full_request_is_display_only(s
         assert token not in filtered
     assert 'expected_label' in filtered and 'visible API data' in filtered
     view, output = console()
-    viewer._show_section(view, label, text, answers())
+    viewer._show_section(view, label, text)
     assert 'Secrets redacted for display' in output.getvalue()
     assert 'sent/stored bytes are unchanged' in output.getvalue()
     assert raw == before
@@ -259,7 +267,7 @@ def test_unredacted_messages_and_secret_named_contract_properties_remain_exact()
     ('example', 'SCHEMA_SECRET'), ('examples', ['SCHEMA_SECRET']), ('default', 'SCHEMA_SECRET'),
     ('enum', ['SCHEMA_SECRET']), ('const', 'SCHEMA_SECRET'),
 ])
-@pytest.mark.parametrize('section', [3, 4, 6])
+@pytest.mark.parametrize('section', ['contract', 'user', 'request'])
 def test_secret_schema_literals_are_masked_but_contract_structure_stays_visible(keyword, value, section):
     request = json.loads(payload())
     user = json.loads(request['messages'][1]['content'])
@@ -270,14 +278,16 @@ def test_secret_schema_literals_are_masked_but_contract_structure_stays_visible(
     request['messages'][1]['content'] = json.dumps(user)
     raw = encode(request)
     before = bytes(raw)
-    text, changed = viewer.safe_text(viewer.sections(raw)[section][1])
+    content = (viewer.sections(raw)[2][1] if section == 'contract' else
+               request['messages'][1]['content'] if section == 'user' else raw.decode())
+    text, changed = viewer.safe_text(content)
     assert changed and 'SCHEMA_SECRET' not in text and '[REDACTED]' in text
     assert 'password' in text and 'minLength' in text and 'required' in text
     assert 'additionalProperties' in text and 'public sample' in text
     assert raw == before and b'SCHEMA_SECRET' in raw
 
 
-def test_projected_contract_and_options_preserve_decimal_precision():
+def test_projected_contract_preserves_decimal_precision_and_request_options_stay_unchanged():
     precise = Decimal('0.123456789012345678901234567890123456789')
     request = loads(payload(temperature=precise))
     user = loads(request['messages'][1]['content'].encode())
@@ -285,10 +295,9 @@ def test_projected_contract_and_options_preserve_decimal_precision():
     request['messages'][1]['content'] = encode(user).decode()
     raw = encode(request)
     items = viewer.sections(raw)
-    assert loads(items[3][1].encode())['components']['schemas']['Bounded']['minimum'] == precise
-    assert loads(items[5][1].encode())['options']['temperature'] == precise
-    assert items[4][1] == request['messages'][1]['content']
-    assert items[6][1].encode() == raw
+    assert loads(items[2][1].encode())['components']['schemas']['Bounded']['minimum'] == precise
+    assert loads(raw)['options']['temperature'] == precise
+    assert encode(request) == raw
     # Secret removal may reserialize JSON, but must not round unrelated numbers.
     filtered, changed = viewer.safe_text(encode({'password': 'PRIVATE', 'minimum': precise}).decode())
     assert changed and loads(filtered.encode())['minimum'] == precise
@@ -317,7 +326,7 @@ def test_c1_and_bidi_controls_are_escaped_without_changing_input():
     content = 'start\u009b2J\u202ehidden\u2066isolated\u2069end'
     before = content
     view, output = console()
-    viewer._show_section(view, 'Controls', content, answers())
+    viewer._show_section(view, 'Controls', content)
     text = output.getvalue()
     for value in ('\u009b', '\u202e', '\u2066', '\u2069'):
         assert value not in text
@@ -325,13 +334,48 @@ def test_c1_and_bidi_controls_are_escaped_without_changing_input():
     assert content == before
 
 
-def test_plain_interactive_terminal_still_paginates():
+def test_plain_interactive_terminal_prints_full_section_without_paging():
     class PlainTerminal(StringIO):
         def isatty(self):
             return True
     stream = PlainTerminal()
     view = Console(file=stream, force_terminal=False, width=60, height=12)
     assert not view.is_terminal
-    viewer._show_section(view, 'Plain input', '\n'.join(f'LINE-{i}' for i in range(8)), answers('n', ''))
-    assert 'Page 1/2' in stream.getvalue() and 'Page 2/2' in stream.getvalue()
+    viewer._show_section(view, 'Plain input', '\n'.join(f'LINE-{i}' for i in range(8)))
+    assert 'Page' not in stream.getvalue()
     assert 'LINE-7' in stream.getvalue() and '\x1b' not in stream.getvalue()
+
+
+@pytest.mark.parametrize('stored', [False, True])
+def test_three_sections_return_directly_to_menu_without_extra_input(stored):
+    stream = StringIO()
+    view = Console(file=stream, force_terminal=True, width=80, height=12)
+    body = '\n'.join(f'RESPONSE-LINE-{i:03}' for i in range(100))
+    raw = payload(body)
+    choices = iter(['1', '2', '3', 'q'])
+    prompts = []
+    def read(prompt):
+        prompts.append(prompt)
+        return next(choices)
+    if stored:
+        query = Query(raw)
+        viewer.show_run_input(query, 77, view, read)
+        assert query.files[5]['content'] == raw
+    else:
+        selected = SimpleNamespace(requests={1: SimpleNamespace(body=raw)})
+        viewer.show_plan_input(view, selected, read)
+        assert selected.requests[1].body == raw
+    text = Text.from_ansi(stream.getvalue()).plain
+    assert prompts == ['Selection [1]: ']*4
+    assert text.count('Input sections') == 4
+    for label in ('1  Prompt', '2  Recorded API Response', '3  OpenAPI Contract'):
+        assert text.count(label) == 4
+    for line in body.splitlines():
+        assert text.count(line) == 1
+    assert all(word in text for word in ('post', '/validate', '201', 'application/json', 'openapi'))
+    for removed in ('Page', 'from user message', 'Request SHA-256', 'Request bytes',
+                    'Prepared request', 'Stored request', 'System =', 'Complete user message',
+                    'Complete request JSON', 'Request options', 'From the request payload',
+                    'Complete messages and request included'):
+        assert removed not in text
+    assert text.rindex('Input sections') > text.index('RESPONSE-LINE-099')
