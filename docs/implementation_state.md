@@ -1,3 +1,24 @@
+## 2026-10-27: stored token usage and requested context limit
+
+Interactive result panels now show provider-reported input/output tokens and their
+sum, plus the context limit from the exact archived request and the input/limit
+percentage. Stored-result browsing uses the same projection. Repetition summaries
+include a usage table; details retain each attempt's counts. Missing telemetry
+stays unavailable, zero remains zero, and retries never inflate context usage.
+The displayed limit is requested configuration, not measured peak occupancy.
+
+No provider/request/parser/schema changes or database writes were required.
+The ad-hoc byte-budget guard is not interpreted as measured tokens. Existing local
+menu changes remain outside this feature's commit.
+
+Verification: 79 new tests; 370 targeted tests passed. Full suite: 1592 passed,
+109 skipped and the same five historical evidence/preflight baseline failures.
+Q01-Q26 remain green. A SELECT-only check of the stored V2-RES-001/Gemma result
+(12.7 s) confirmed 1301 input + 60 output = 1361 tokens, a requested limit of 32768,
+and 4.0% input usage. The connection was rolled back; no new inference or SQL
+write occurred. SQL integration tests remain opt-in and were skipped.
+See [interactive guide](live_demo.md#results-and-next-actions).
+
 ## 2026-10-27: exact LLM input preview in the interactive CLI
 
 At Ready to run, `p` opens a read-only, paginated view of the existing prepared

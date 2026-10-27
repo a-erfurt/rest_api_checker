@@ -6,6 +6,7 @@ from rich.table import Table
 from rich.text import Text
 
 from . import terminal
+from .live_usage import counts
 
 CATEGORIES = ('c1', 'c2', 'c3')
 LABELS = ('C1 Status', 'C2 Media Type', 'C3 Body Schema')
@@ -64,6 +65,33 @@ def _table(columns):
     return table
 
 
+
+def _usage(detail):
+    return detail.get('usage') or counts(detail)
+
+
+def _tokens(value):
+    return f'{value:,}' if type(value) is int and value >= 0 else 'not recorded'
+
+
+def _usage_lines(detail):
+    usage = _usage(detail)
+    tokens = Text.assemble(('Tokens: ', 'bold'),
+        f"Input {_tokens(usage.get('input_tokens'))} · Output {_tokens(usage.get('output_tokens'))}"
+        f" · Total {_tokens(usage.get('total_tokens'))}")
+    limit = usage.get('context_limit')
+    context = Text.assemble(('Context limit: ', 'bold'), _tokens(limit))
+    if limit is not None:
+        context.append(' tokens (requested)')
+    percentage = usage.get('input_context_percent')
+    if percentage is not None:
+        context.append(f' · Input {percentage:.1f}%')
+    lines = [tokens, context]
+    if usage.get('attempt_count', 0) > 1:
+        lines.append(_text('Token counts: latest attempt. Duration includes all attempts.', 'dim'))
+    return lines
+
+
 def show(console, detail):
     """Render the default result without reasons, identifiers or recovery paths."""
     run, reference = detail['run'], detail.get('reference') or {}
@@ -90,7 +118,7 @@ def show(console, detail):
     outcome, style = _outcome(detail)
     footer = Text.assemble(('Overall: ', 'bold'), (outcome, style), ('   Parser: ', 'bold'),
                            ('✓ VALID', 'green') if prediction is not None else ('✗ NO USABLE OUTPUT', 'red'))
-    parts = [names, comparison, vectors, footer]
+    parts = [names, *_usage_lines(detail), comparison, vectors, footer]
     if prediction is None:
         parts.append(_text('No prediction was inferred.', 'dim'))
     console.print(Panel(Group(*parts), title=title, title_align='left', border_style='cyan',
@@ -133,6 +161,10 @@ def show_details(console, detail):
                            ('error_message', 'Error')):
             if attempt.get(key) is not None:
                 table.add_row(_text(label, 'bold'), _text(attempt[key]))
+        attempt_usage = counts({'attempts': [attempt]})
+        for key, label in (('input_tokens', 'Input tokens'), ('output_tokens', 'Output tokens'),
+                           ('total_tokens', 'Total tokens')):
+            table.add_row(_text(label, 'bold'), _text(_tokens(attempt_usage.get(key))))
         console.print(table)
 
 
@@ -152,6 +184,15 @@ def repetitions(console, details):
                           _text(vector(prediction)), _text(outcome, style),
                           _text('✓ VALID', 'green') if prediction is not None else _text('✗ NO OUTPUT', 'red'),
                           _text(_duration(detail)))
+        usage_table = _table(('#', 'Input', 'Output', 'Total', 'Context limit'))
+        for column in usage_table.columns:
+            column.overflow = 'fold'
+        for detail in group:
+            usage = _usage(detail)
+            usage_table.add_row(_text(detail['run'].get('repetition', '—')),
+                *(_text(_tokens(usage.get(key))) for key in
+                  ('input_tokens', 'output_tokens', 'total_tokens', 'context_limit')))
+        usage_caption = _text('Tokens per latest attempt · Context limit requested', 'dim')
         valid = [detail for detail in group if usable(detail)]
         vectors = [vector(detail['prediction']) for detail in valid]
         agreement = ('vectors differ' if len(set(vectors)) > 1 else 'vectors identical' if len(vectors) > 1
@@ -159,6 +200,6 @@ def repetitions(console, details):
         summary = _text(f'Usable output {len(valid)}/{len(group)} · correct '
                         f'{sum(correct(detail) for detail in group)}/{len(group)} · {agreement}')
         case_names = ', '.join(dict.fromkeys(str(_name(detail, 'case')) for detail in group))
-        console.print(Panel(Group(_text('Case: ' + case_names), table, summary),
+        console.print(Panel(Group(_text('Case: ' + case_names), table, summary, usage_caption, usage_table),
                             title=_text('Repetitions · ' + str(model), 'bold cyan'), title_align='left',
                             border_style='cyan', padding=(0, 1), width=min(console.width, 96)))

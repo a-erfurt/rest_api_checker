@@ -39,7 +39,7 @@ def test_valid_result_is_compact_and_hides_technical_details(console):
                    'explanation.', 'C1 reason', 'live demo', 'Live/ad-hoc'):
         assert hidden not in text
     assert '✗' not in text
-    assert len(text.splitlines()) <= 15
+    assert len(text.splitlines()) <= 17
     assert max(map(len, text.splitlines())) <= console.width
     assert stored == before
 
@@ -127,7 +127,7 @@ def test_repetition_summary_counts_parser_coverage_agreement_and_correctness(con
     assert text.count('Repetitions') == 1
     assert 'Run completed' not in text and 'explanation.' not in text
     assert '80001' not in text and 'recovery-hidden-path' not in text
-    assert len(text.splitlines()) <= 14
+    assert len(text.splitlines()) <= 23
     assert max(map(len, text.splitlines())) <= console.width
 
 

@@ -302,8 +302,9 @@ def run(repo, args, console, *, input_fn=None, interactive=None):
             return
         if event.get('event') == 'result' and adhoc:
             from .live_result import show
+            from .live_usage import with_usage
             if repetitions == 1:
-                show(console, event['detail'])
+                show(console, with_usage(event['detail'], lambda file_id: repo.file(file_id)))
             displayed.append(event['detail']['run']['id'])
         elif event.get('event') == 'runtime' and adhoc:
             pass  # A compact optional notice was already shown before confirmation.
@@ -326,6 +327,9 @@ def run(repo, args, console, *, input_fn=None, interactive=None):
                         'Preparing native context and executing demo', spinner_style=terminal.ACCENT) \
             if console.is_terminal and not args.json else nullcontext():
         result = live_demo.execute(repo, plan, root=args.root, spool=spool, notify=notify)
+    if adhoc:
+        from .live_usage import with_usage
+        result = dict(result, results=[with_usage(detail, lambda file_id: repo.file(file_id)) for detail in result.get('results', [])])
     result = {**result, 'ui_url': ui_url, 'displayed_run_ids': displayed}
     return result, result['exit_code']
 

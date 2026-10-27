@@ -108,8 +108,9 @@ def detail_projection(value):
 
 
 def stored_detail(config, run_id, tab='reasons'):
+    from .live_usage import with_usage
     with queries(config) as query:
-        return detail_projection(query.run_detail(run_id, tab))
+        return with_usage(detail_projection(query.run_detail(run_id, tab)), lambda file_id: query._file(file_id))
 
 
 def show_raw(console, value):

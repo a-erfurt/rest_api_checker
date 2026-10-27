@@ -172,6 +172,8 @@ claim about a particular stored case or model run:
 ```text
 ✓ Run completed   14.4 s
 Case: CASE-EXAMPLE    Model: Gemma 3 27B
+Tokens: Input 1,200 · Output 85 · Total 1,285
+Context limit: 32,768 tokens (requested) · Input 3.7%
 
 Check           Reference   Prediction
 C1 Status       PASS        PASS         ✓
@@ -181,6 +183,22 @@ C3 Body Schema  FAIL        PASS         ✗
 Reference: PPF   Prediction: PPP
 Overall: ✗ INCORRECT   Parser: ✓ VALID
 ```
+
+Input and output token counts are the provider-reported values persisted for the
+latest attempt (`prompt_tokens` / `output_tokens`). Total is their sum only when
+both values are available. Missing or invalid telemetry shows **not recorded**;
+a recorded zero remains zero. Parser-invalid output can still have valid token
+counts. Counts are not reconstructed by tokenizing the visible answer.
+
+The context limit is `options.num_ctx` from the integrity-checked archived request,
+not a current configuration or a model's theoretical maximum. Input percentage is
+input tokens divided by that requested limit; it is not measured peak context
+occupancy. Missing or damaged request evidence leaves the limit unavailable.
+The ad-hoc byte-budget guard is never displayed as measured tokens. With retries,
+the panel labels token counts as belonging to the latest attempt, while duration
+continues to include all attempts. Each attempt's counts appear under **View
+details**. Repetition summaries include a separate token/context table.
+These views are read-only and perform no model call.
 
 Parser validity does not imply correctness. Failed or missing parsed output shows
 **Parser: ✗ NO USABLE OUTPUT** and **No prediction was inferred.** A stale or
