@@ -131,7 +131,8 @@ repetitions as usual. At **Ready to run**, enter `p` (**Preview LLM input**) at
 
 - **Prompt**: the complete selected prompt and its evaluation rules.
 - **Recorded API Response**: operation, HTTP status, Content-Type and the complete
-  observed response body together.
+  observed response body together. Valid JSON bodies are indented for readability;
+  other bodies stay as text. Formatting only affects the display, never the payload.
 - **OpenAPI Contract**: the operation-scoped OpenAPI excerpt present in the request.
 
 Selecting a section prints its full content, then displays the three choices

@@ -28,7 +28,12 @@ _XML_SECRET = re.compile(r'(?is)(<(?P<tag>'+_SECRET_NAME+r')\b[^>]*>).*?(</(?P=t
 
 def _pretty(value):
     """Indent the canonical JSON without rounding Decimal contract assertions."""
-    tokens = re.findall(r'"(?:[^"\\]|\\.)*"|[^\s{}\[\],:]+|[{}\[\],:]', encode(value).decode('ascii'))
+    return _indent_json(encode(value).decode('ascii'))
+
+
+def _indent_json(text):
+    """Change whitespace outside JSON strings; retain key order and number text."""
+    tokens = re.findall(r'"(?:[^"\\]|\\.)*"|[^\s{}\[\],:]+|[{}\[\],:]', text)
     result, level = [], 0
     for index, token in enumerate(tokens):
         if token in ('{', '['):
@@ -48,6 +53,14 @@ def _pretty(value):
         else:
             result.append(token)
     return ''.join(result)
+
+
+def _body_for_display(text):
+    try:
+        loads(text.encode('utf-8'))
+    except (ValueError, UnicodeError, RecursionError):
+        return text
+    return _indent_json(text)
 
 
 def safe_text(text):
@@ -124,6 +137,9 @@ def _show_section(console, label, content):
     # Text prevents Rich markup interpretation; clean makes terminal controls visible.
     # Filter response metadata/body independently so nested JSON secrets are detected.
     parts = [safe_text(part) for part in (content if isinstance(content, tuple) else (content,))]
+    if isinstance(content, tuple):
+        body, redacted = parts[1]
+        parts[1] = (_body_for_display(body), redacted)
     content = '\n\n'.join(part for part, _ in parts)
     # Also neutralize C1 controls and bidi overrides that the shared clean()
     # intentionally leaves alone for other UI text. Request bytes stay untouched.

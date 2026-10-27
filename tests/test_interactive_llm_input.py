@@ -379,3 +379,62 @@ def test_three_sections_return_directly_to_menu_without_extra_input(stored):
                     'Complete messages and request included'):
         assert removed not in text
     assert text.rindex('Input sections') > text.index('RESPONSE-LINE-099')
+
+
+@pytest.mark.parametrize('stored', [False, True])
+def test_response_body_is_indented_only_for_display_without_changing_json_values(stored):
+    body = ('{"message":"Ungültig: [red]","details":[{"field":"age",'
+            '"minimum":0.123456789012345678901234567890,"scale":1.00e+03}],'
+            '"valid":false,"extra":null}')
+    expected = '''{
+  "message": "Ungültig: [red]",
+  "details": [
+    {
+      "field": "age",
+      "minimum": 0.123456789012345678901234567890,
+      "scale": 1.00e+03
+    }
+  ],
+  "valid": false,
+  "extra": null
+}'''
+    raw = payload(body)
+    before = digest(raw)
+    view, output = console()
+    if stored:
+        query = Query(raw)
+        viewer.show_run_input(query, 77, view, answers('2', 'q'))
+        assert query.files[5]['content'] == raw
+    else:
+        selected = SimpleNamespace(requests={1: SimpleNamespace(body=raw)})
+        viewer.show_plan_input(view, selected, answers('2', 'q'))
+        assert selected.requests[1].body == raw
+    assert expected in output.getvalue()
+    assert output.getvalue().count('Input sections') == 2
+    assert 'Secrets redacted' not in output.getvalue()
+    assert viewer.sections(raw)[1][1][1] == body and digest(raw) == before
+
+
+@pytest.mark.parametrize('body', [
+    'not JSON\nsecond line', '<response>XML</response>', '{"incomplete":',
+    '{"duplicate":1,"duplicate":2}', '{"value":NaN}',
+])
+def test_non_json_or_ambiguous_response_body_remains_text(body):
+    raw = payload(body)
+    label, content = viewer.sections(raw)[1]
+    view, output = console()
+    viewer._show_section(view, label, content)
+    assert body in output.getvalue()
+    assert viewer.sections(raw)[1][1][1] == body
+
+
+def test_indented_json_array_keeps_secrets_masked_and_payload_intact():
+    body = '[{"name":"public","password":"PRIVATE_VALUE"},{"value":42}]'
+    raw = payload(body)
+    label, content = viewer.sections(raw)[1]
+    view, output = console()
+    viewer._show_section(view, label, content)
+    text = output.getvalue()
+    assert '[\n  {\n    "name": "public",\n    "password": "[REDACTED]"\n  },' in text
+    assert 'PRIVATE_VALUE' not in text and 'Secrets redacted for display' in text
+    assert viewer.sections(raw)[1][1][1] == body and b'PRIVATE_VALUE' in raw

@@ -69,8 +69,8 @@ The main menu offers **Run API response check**, **Browse previous results**,
 
 The preview reads the exact prepared request and offers three sections:
 **Prompt**, **Recorded API Response** (operation, HTTP status, Content-Type and
-complete body), and **OpenAPI Contract**. Selecting a section prints its full
-content and returns directly to the three choices; use terminal scrollback for
+complete body, with JSON indented for display), and **OpenAPI Contract**. Selecting
+a section prints its full content and returns directly to the three choices; use terminal scrollback for
 long content and `q` to go back. Stored reference judgments are kept outside the
 model input. Recognized secrets are masked only for display, with an explicit notice.
 
