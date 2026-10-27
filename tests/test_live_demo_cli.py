@@ -9,6 +9,7 @@ import pytest
 
 import rest_api_checker
 from rest_api_checker import cli, live_demo_cli, terminal
+from rest_api_checker import interactive_evidence, live_adhoc_runtime, live_presenter
 
 
 def args(*extra):
@@ -80,6 +81,82 @@ def test_interactive_dynamic_service_operation_case_models_and_repetitions(core)
     assert core.calls[0][1]['model_ids'] == [4, 8] and core.calls[0][1]['repetitions'] == 2
     assert [name for name, _ in core.calls] == ['plan', 'execute']
     assert 'Select service' in output.getvalue() and '→ qwen3.6:27b' in output.getvalue()
+
+
+@pytest.mark.parametrize('adhoc', [False, True])
+def test_compact_case_selection_preserves_configuration_and_cancel(core, monkeypatch, tmp_path, adhoc):
+    from copy import deepcopy
+    from unittest.mock import Mock
+    view, output = console()
+    view.width = 140
+    case = core.data['cases'][0]
+    case.update(case_code='FABRICATED-C3', service='edx', case_set_label='Final evaluation',
+        reference=['PASS', 'PASS', 'FAIL'], reference_metadata={'diagnostics': [
+            {'code': 'SCHEMA_ASSERTION_FAILED', 'keyword': 'additionalProperties'}]})
+    core.data['default_dataset_id'] = case['dataset_id']
+    before = deepcopy(core.data)
+    details = Mock()
+    monkeypatch.setattr(interactive_evidence, 'show_case_details', details)
+    monkeypatch.setattr(live_adhoc_runtime, 'model_availability',
+                        lambda: {'qwen3.6:27b': 'installed · not loaded'})
+    notice = 'Runtime differs from the qualified version: Ollama 0.40.0. Interactive checks remain available.'
+    monkeypatch.setattr(live_adhoc_runtime, 'probe_runtime', lambda: dict(
+        available=True, version='0.40.0', thesis_version='0.35.1', notice=notice))
+    choices = iter(['1', '1', '4', '', 'd 1', '1', '1', '2', 'n'] if adhoc else
+                   ['1', '1', '1', '1', '2', 'n'])
+    prompts = []
+    def read(prompt):
+        prompts.append(prompt)
+        return next(choices)
+    spool = tmp_path/'not-created'
+    options = args('--spool', str(spool))
+    options.adhoc = adhoc
+    repo = object()
+    value, code = live_demo_cli.run(repo, options, view, input_fn=read, interactive=True)
+    assert code == 0 and value['status'] == 'CANCELLED'
+    assert [name for name, _ in core.calls] == ['plan']
+    assert core.calls[0][1]['model_ids'] == [4]
+    assert core.calls[0][1]['repetitions'] == 2
+    assert core.data == before and not spool.exists()
+    text = output.getvalue()
+    expected = 'FABRICATED-C3   C3 fault   PPF' if adhoc else 'FABRICATED-C3 — C3 fault   PPF'
+    assert expected in text
+    assert 'Additional properties are forbidden at body root.' not in text
+    assert 'Document/data-stream validation service' not in text
+    for _, label, description in live_presenter.CASE_TYPES:
+        if description:
+            assert description not in text
+        if adhoc:
+            assert label in text
+    for phrase in ('q Back', 'Qwen 3.6 27B', 'Gemma 3 27B', 'Prompt', 'P2', 'Repetitions'):
+        assert phrase in text
+    assert 'Repetitions per model [1]: ' in prompts
+    if adhoc:
+        details.assert_called_once_with(repo, case, view, read)
+        assert notice in text and 'installed · not loaded' in text
+        assert 'Case set: Final evaluation (default)' in text
+        assert 'The run will be stored separately and will not modify existing evaluation results.' in text
+        assert prompts[-1] == 'Run now? [y/N]: '
+    else:
+        assert 'Dataset 3 and Experiment 10003 are protected.' in text
+        assert prompts[-1] == 'Execute real LLM run(s)? [y/N]: '
+
+
+def test_direct_case_search_and_explicit_details_keep_full_description(core):
+    view, output = console()
+    view.width = 140
+    case = core.data['cases'][0]
+    case.update(reference=['PASS', 'PASS', 'FAIL'], reference_metadata={'diagnostics': [
+        {'code': 'SCHEMA_ASSERTION_FAILED', 'keyword': 'additionalProperties'}]})
+    choices = iter(['1', '1', '/additional', 'd 1', '1', '1', '1'])
+    selected, models, repetitions, runtime, prompt = live_demo_cli._selection(
+        object(), args(), view, lambda _: next(choices), True)
+    assert selected is case and models == [core.data['models'][0]] and repetitions == 1
+    assert prompt is None
+    text = output.getvalue()
+    assert text.count('Additional properties are forbidden at body root.') == 1
+    assert ('DEV-01 — C3 fault\nAdditional properties are forbidden at body root.\n'
+            'Reference: PPF (C1 PASS, C2 PASS, C3 FAIL)') in text
 
 
 @pytest.mark.parametrize('answer', ['', 'n', 'no', 'anything'])

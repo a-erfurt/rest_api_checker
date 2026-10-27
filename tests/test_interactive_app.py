@@ -7,6 +7,8 @@ from types import SimpleNamespace
 from unittest.mock import Mock
 
 import pytest
+from rich.console import Console
+from rich.text import Text
 
 from rest_api_checker import interactive_app as app, interactive_menu as menu
 from rest_api_checker import operator, operator_menu, terminal
@@ -149,6 +151,37 @@ def test_menu_neutralizes_terminal_control_sequences(console):
     assert '\x1b' not in text and '[red]' in text and '\\x1b[2J' in text
 
 
+def test_menu_shows_only_blue_label_but_keeps_navigation_search_and_details():
+    console = Console(file=io.StringIO(), force_terminal=True, color_system='standard', no_color=False,
+                      width=120, markup=False, highlight=False)
+    items = ['CASE-01   C3 fault   PPF\nAdditional properties are forbidden at body root.',
+             'CASE-02   ✓ conforming   PPP\nResponse matches the documented contract.']
+    details = Mock()
+    other_sets = Mock()
+    prompts = []
+    choices = iter(['s', '/additional', 'd 1', ''])
+    def read(prompt):
+        prompts.append(prompt)
+        return next(choices)
+    selected = menu.choose(console, 'Select case', items, str, read, page_size=1,
+        explanation='Case set: Final evaluation', details=details,
+        actions={'s': ('Other case sets', other_sets)})
+    assert selected == items[0]
+    other_sets.assert_called_once_with()
+    details.assert_called_once_with(items[0])
+    assert prompts == ['Selection [1]: ']*4
+    rendered = Text.from_ansi(console.file.getvalue())
+    assert 'Additional properties' not in rendered.plain
+    assert 'Response matches' not in rendered.plain
+    for phrase in ('Case set: Final evaluation', 'Page 1/2', 'q Back', 'n next',
+                   '/text search', 'd NUMBER Details / files', 's Other case sets'):
+        assert phrase in rendered.plain
+    position = rendered.plain.index('CASE-01')
+    style = rendered.get_style_at_offset(console, position)
+    assert style.color.number == 6 and style.bold and not style.dim
+    assert rendered.get_style_at_offset(console, rendered.plain.index('q Back')).dim
+
+
 def test_query_context_rolls_back_and_closes_on_error(monkeypatch, config):
     cn = Mock()
     query = object()
@@ -198,6 +231,7 @@ def stored(monkeypatch):
 
 
 def test_browse_final_context_details_raw_and_back_without_ids(monkeypatch, config, console, stored):
+    console.width = 180
     detailed = Mock()
     monkeypatch.setattr(app.live_result, 'show_details', detailed)
     assert app.browse(config, console, answers('1', '/case-10', '1', '1', '2', '6', 'q')) == 'main'
@@ -210,6 +244,8 @@ def test_browse_final_context_details_raw_and_back_without_ids(monkeypatch, conf
     for phrase in ('Previous results · read-only', 'Final thesis evaluation', 'CASE-10', 'NO USABLE OUTPUT', 'Raw model response'):
         assert phrase in ' '.join(text.split())
     assert '\x1b' not in text and '[red]' in text
+    assert '1  Final thesis evaluation · 738/738 completed' in text
+    assert ('1  CASE-10 · Fabricated model · repetition 1 · parser_failure · 2026-10-07') in text
 
 
 def test_browse_empty_context_returns_to_main(monkeypatch, config, console):

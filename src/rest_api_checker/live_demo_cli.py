@@ -149,11 +149,14 @@ def _selection(repo, args, console, read, interactive):
         candidates = [row for row in candidates if row['operation_id'] == operation['operation_id']]
         def case_label(row):
             description = describe_case(row)
-            return (f"{row['case_code']} — {description['title']}\n{description['description']}\n"
+            return (f"{row['case_code']} — {description['title']}   {description['reference_vector']}\n"
+                    f"{description['description']}\n"
                     f"Reference: {description['reference_vector']} ({description['reference_text']})")
         def case_details(row):
             description = describe_case(row)
-            console.print(terminal.clean(case_label(row)))
+            console.print(terminal.clean(
+                f"{row['case_code']} — {description['title']}\n{description['description']}\n"
+                f"Reference: {description['reference_vector']} ({description['reference_text']})"))
             for line in description['details']:
                 console.print(terminal.clean(line))
         selected = _choose(console, 'Select case', candidates, case_label, read,

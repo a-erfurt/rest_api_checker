@@ -170,7 +170,7 @@ def context_label(context):
         name = 'Interactive run'
     timestamp = context.get('started_at') or context.get('finished_at')
     suffix = ' · '+str(timestamp)[:16] if timestamp else ''
-    return f"{name}{suffix}\n{context['completed']}/{context['planned']} completed"
+    return f"{name}{suffix} · {context['completed']}/{context['planned']} completed"
 
 
 def browse(config, console, read):
@@ -193,7 +193,7 @@ def browse(config, console, read):
                 continue
             while True:
                 selected = choose(console, 'Select previous result', records,
-                    lambda r: f"{r['case']} · {model_label({'name': r['model']})} · repetition {r['repetition']}\n"
+                    lambda r: f"{r['case']} · {model_label({'name': r['model']})} · repetition {r['repetition']} · "
                               f"{r.get('result') or 'pending'} · {r.get('finished_at') or 'not completed'}", read,
                     explanation='Search /case or /model.')
                 detail = stored_detail(config, selected['id'])

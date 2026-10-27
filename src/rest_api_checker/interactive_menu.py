@@ -26,8 +26,6 @@ def choose(console, title, items, label, read, *, explanation='', multiple=False
             heading = Text(f'  {index}  ', style='cyan')
             heading.append(terminal.clean(lines[0]), style='bold')
             console.print(heading)
-            for line in lines[1:]:
-                console.print('     '+terminal.clean(line), style='dim')
         if not visible:
             console.print('No matching options. Enter / to clear the search.')
         if len(items)>page_size:
