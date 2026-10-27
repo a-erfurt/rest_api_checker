@@ -74,7 +74,7 @@ def test_completed_repetitions_render_only_one_compact_summary(setup, monkeypatc
     repeated = Mock(wraps=live_result.repetitions)
     monkeypatch.setattr(app.live_result, 'show', individual)
     monkeypatch.setattr(app.live_result, 'repetitions', repeated)
-    assert app.run_check(config, console, answer('6')) == 'main'
+    assert app.run_check(config, console, answer('7')) == 'main'
     text = console.file.getvalue()
     individual.assert_not_called()
     repeated.assert_called_once_with(console, records)
@@ -94,7 +94,7 @@ def test_single_result_already_shown_by_runner_is_not_printed_twice(setup, monke
         live_result.show(console, record)
         return value, 0
     monkeypatch.setattr(app.live_demo_cli, 'run', completed)
-    assert app.run_check(config, console, answer('6')) == 'main'
+    assert app.run_check(config, console, answer('7')) == 'main'
     text = console.file.getvalue()
     assert text.count('✓ Run completed') == 1
     assert 'Repetitions' not in text
@@ -136,7 +136,7 @@ def test_completed_explicit_details_receive_hidden_recovery_path(setup, monkeypa
     value = result_value([record])
     monkeypatch.setattr(app.live_demo_cli, 'run', lambda *args, **kwargs: (value, 0))
     monkeypatch.setattr(app, 'stored_detail', lambda *args: record)
-    assert app.run_check(config, console, answer('1', '6')) == 'main'
+    assert app.run_check(config, console, answer('1', '7')) == 'main'
     text = console.file.getvalue()
     assert 'Run ID' in text and '9835101' in text
     assert 'Recovery directory' in text and '/private/internal/recovery-evidence' in text

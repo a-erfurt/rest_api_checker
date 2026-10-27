@@ -117,6 +117,53 @@ uses an explicit base64 representation. Reference/provenance views can show the
 JSON record selected by a stored source pointer. Viewing never repairs, rewrites
 or reclassifies the underlying evidence.
 
+## Preview and inspect the actual LLM input
+
+In the root interactive `rac` workflow, select the case, prompt, model and
+repetitions as usual. At **Ready to run**, enter `p` (**Preview LLM input**) at
+`Run now? [y/N]`. Choose an input section:
+
+- System message: the complete selected prompt and its evaluation rules.
+- Operation, HTTP status and Content-Type from the user message.
+- The complete observed response body.
+- The operation-scoped OpenAPI excerpt actually present in the user message.
+- The complete user message, request options, or complete request JSON.
+
+Long terminal content has pages: Enter/`n` advances, `p` goes back one page,
+and `q` returns to the sections. Another `q` returns to confirmation. A preview
+never confirms execution; only `y`/`yes` starts the existing run workflow.
+For several repetitions, choose a prepared input first; each includes its actual
+seed/options. No model call, new experiment, or preview file is created.
+
+After a run, choose **View LLM input** under **Next action** (also available when
+browsing previous results). This reads the exact archived request, verifies archive
+integrity and its agreement with attempt request files, and never reconstructs
+old input from the current prompt or case. Missing/incompatible evidence is
+reported as unavailable. A reserved payload alone is not proof of dispatch;
+the screen reports whether a transport start was recorded.
+
+The preview consumes `Plan.requests[run_order].body`. Existing execution checks
+require that these bytes match the runtime-bound request and the request prepared
+immediately before dispatch. The provider sends that body; reservation archives
+those same bytes before dispatch. Prompt ID/name/hash, configured and installed
+model identities, runtime/template evidence, options and request provenance are
+already retained by the ad-hoc runner. No schema or historical record is changed.
+The view shows the HTTP request messages/options, not an invented rendering of
+Ollama's internal template or token stream. Current model/runtime identity is
+captured after confirmation by the existing runner.
+
+Ground-truth judgments and case-selection metadata are not added to the model
+input. The existing explicit evidence projection remains unchanged. Display
+wrapping and escaped terminal controls do not change the underlying bytes;
+formatted sections are projections of the request, and complete message/raw JSON
+views are also available. Recognized credential keys, authorization strings,
+URL credentials, common token patterns and private-key blocks are masked in every
+view, with an explicit display-only notice. Secret-named OpenAPI properties retain their schema structure while
+sensitive example/default values are masked. Arbitrary unlabeled secrets cannot
+be recognized reliably. The viewer never reads connection credentials, changes the
+payload, or exports an unfiltered copy. The displayed hash identifies the original
+request bytes, including when display redaction occurs.
+
 ## Results and next actions
 
 A single run produces one compact panel. This illustrative comparison is not a

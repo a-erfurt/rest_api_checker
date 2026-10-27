@@ -200,7 +200,7 @@ def stored(monkeypatch):
 def test_browse_final_context_details_raw_and_back_without_ids(monkeypatch, config, console, stored):
     detailed = Mock()
     monkeypatch.setattr(app.live_result, 'show_details', detailed)
-    assert app.browse(config, console, answers('1', '/case-10', '1', '1', '2', '5', 'q')) == 'main'
+    assert app.browse(config, console, answers('1', '/case-10', '1', '1', '2', '6', 'q')) == 'main'
     assert ('detail', 81009, 'reasons') in stored
     assert ('detail', 81009, 'raw-output') in stored
     assert [call for call in stored if call[0] == 'open'] == [('open',)]*5
@@ -269,7 +269,7 @@ def test_post_run_web_action_uses_exact_created_run_without_latest_lookup(monkey
     opened = Mock()
     monkeypatch.setattr(app, 'open_web', opened)
     monkeypatch.setattr(app, 'queries', lambda *args: pytest.fail('Must not substitute latest for selected run'))
-    assert app.result_actions(config, console, [current], answers('4', '6')) == 'main'
+    assert app.result_actions(config, console, [current], answers('4', '7')) == 'main'
     opened.assert_called_once_with(config, console, 20440)
 
 

@@ -1,3 +1,26 @@
+## 2026-10-27: exact LLM input preview in the interactive CLI
+
+At Ready to run, `p` opens a read-only, paginated view of the existing prepared
+request bytes. After execution and in result browsing, View LLM input reads the
+integrity-checked archived request. System/user messages, observed response,
+operation-scoped OpenAPI and transport options remain separate. The viewer never
+reconstructs historical input or starts inference. Missing or conflicting evidence
+is reported as unavailable; display redaction of recognized secrets is explicit.
+
+Existing ad-hoc execution already binds and archives the exact prepared/sent
+bytes and prompt/model/runtime provenance; no persistence migration, prompt,
+renderer, request-builder, reference, source dataset or historical run changed.
+Existing local menu edits were preserved outside this feature's commit.
+
+Verification: 101 new offline tests, including real orchestration with a fabricated
+transport, byte identity from preview through archive, independent-reference
+exclusion, secret masking, schema/decimal preservation and navigation. Full suite:
+1513 passed, 109 skipped and the same five pre-existing historical evidence/preflight
+failures as baseline. Q01-Q26 remain green. SQL integration was not enabled; no real
+model inference or application database writes were performed. An existing prepared
+V2-EDX-001/Qwen/P2 payload was also inspected in the terminal without executing it.
+See [interactive guide](live_demo.md#preview-and-inspect-the-actual-llm-input).
+
 ## 2026-10-23: prompt selection for manual single-case checks
 
 The root interactive workflow now offers an approved stored prompt directly

@@ -241,6 +241,21 @@ def show_plan(console, selection, summary, spool, *, adhoc=False):
     console.print('Dataset 3 and Experiment 10003 are protected. No retries are automatic.')
 
 
+def _confirm_adhoc_run(console, plan, read):
+    while True:
+        console.print('p Preview LLM input · q Back', style='dim')
+        answer = read('Run now? [y/N]: ').strip().lower()
+        if answer in ('p', 'preview'):
+            from .interactive_llm_input import show_plan_input
+            show_plan_input(console, plan, read)
+        elif answer in ('y', 'yes'):
+            return True
+        elif answer in ('', 'n', 'no', 'q', 'b', 'back'):
+            return False
+        else:
+            console.print('Enter y to run, n to cancel, or p to preview the LLM input.')
+
+
 def run(repo, args, console, *, input_fn=None, interactive=None):
     """No write/generation before confirmation; optional metadata probes never load models."""
     from . import live_demo
@@ -271,8 +286,11 @@ def run(repo, args, console, *, input_fn=None, interactive=None):
         if args.dry_run:
             return dict(status='DRY RUN', exit_code=0, plan=plan.summary, model_calls=0,
                         writes=0, runtime_contacted=False, spool=str(spool), ui_url=ui_url), 0
-        if not args.yes and read('Run now? [y/N]: ' if adhoc else 'Execute real LLM run(s)? [y/N]: ').strip().lower() not in ('y', 'yes'):
-            return dict(status='CANCELLED', exit_code=0, message='No experiment created and no model called.'), 0
+        if not args.yes:
+            confirmed = (_confirm_adhoc_run(console, plan, read) if adhoc and interactive else
+                read('Run now? [y/N]: ' if adhoc else 'Execute real LLM run(s)? [y/N]: ').strip().lower() in ('y', 'yes'))
+            if not confirmed:
+                return dict(status='CANCELLED', exit_code=0, message='No experiment created and no model called.'), 0
     except Back:
         return dict(status='CANCELLED', exit_code=0, message='Selection cancelled; no experiment created and no model called.'), 0
     except (EOFError, KeyboardInterrupt):

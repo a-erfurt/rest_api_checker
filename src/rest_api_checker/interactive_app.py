@@ -133,12 +133,12 @@ def show_raw(console, value):
 
 def result_actions(config, console, details, read, *, browsing=False, context=None):
     while True:
-        actions = ['View details', 'View raw model response', 'View case files', 'Open in Web UI',
+        actions = ['View details', 'View raw model response', 'View case files', 'Open in Web UI', 'View LLM input',
                    'Back to run list' if browsing else 'Run another case', 'Main menu', 'Exit']
         try:
             action = choose(console, 'Next action', list(range(len(actions))), lambda i: actions[i], read)
-            if action>=4:
-                return ('back' if browsing else 'another', 'main', 'exit')[action-4]
+            if action>=5:
+                return ('back' if browsing else 'another', 'main', 'exit')[action-5]
             selected = details[0] if len(details)==1 else choose(console, 'Select a result', details,
                 lambda d: f"{d.get('case') or d['run'].get('case')} · repetition {d['run']['repetition']}", read)
         except Back:
@@ -155,8 +155,12 @@ def result_actions(config, console, details, read, *, browsing=False, context=No
             from .interactive_evidence import show_run_case_files
             with queries(config) as query:
                 show_run_case_files(query, selected, console, read)
-        else:
+        elif action==3:
             open_web(config, console, run_id)
+        else:
+            from .interactive_llm_input import show_run_input
+            with queries(config) as query:
+                show_run_input(query, run_id, console, read)
 
 
 def context_label(context):
